@@ -1,4 +1,5 @@
 package com.t4.LiveServer.business.interfaze;
 
-public class Sample2Business {
+public interface Sample2Business {
+    String sample2Echo();
 }

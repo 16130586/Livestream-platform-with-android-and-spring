@@ -1,11 +1,10 @@
 package com.t4.LiveServer.controller;
 
 import com.t4.LiveServer.core.JsonHelper;
+import com.t4.LiveServer.middleware.RestTemplateHandleException;
 import com.t4.LiveServer.model.wowza.WowzaStream;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +16,6 @@ public class StreamController {
     private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
 
     public StreamController() {
-    }
-
-    @RequestMapping({"/hello"})
-    public abc getHello() {
-        return new abc();
     }
 
     @PostMapping("/create")

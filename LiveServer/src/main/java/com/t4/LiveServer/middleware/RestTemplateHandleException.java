@@ -1,4 +1,4 @@
-package com.t4.LiveServer.controller;
+package com.t4.LiveServer.middleware;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
