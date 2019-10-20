@@ -1,115 +1,199 @@
 package com.t4.LiveServer.controller;
 
-import com.t4.LiveServer.core.JsonHelper;
-import com.t4.LiveServer.middleware.RestTemplateHandleException;
-import com.t4.LiveServer.model.wowza.WowzaStream;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import com.t4.LiveServer.business.interfaze.StreamBusiness;
+import com.t4.LiveServer.core.ApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping({"/stream"})
 public class StreamController {
-    private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
+
+    @Autowired
+    StreamBusiness streamBusiness;
 
     public StreamController() {
     }
 
     @PostMapping("/create")
-    public String createLiveStream() {
-        WowzaStream wowzaStream = new WowzaStream(1280, 720, "pay_as_you_go", "asia_pacific_singapore", "other_rtmp", "test", "transcoded");
-        String jsonData = JsonHelper.serialize(wowzaStream);
-        jsonData = "{\"live_stream\":" + jsonData + "}";
-        HttpEntity<String> requestBody = new HttpEntity<>(jsonData, wowzaStream.getWowzaConfigHeaders());
-
-        ResponseEntity<String> result = restTemplate.exchange(wowzaStream.URL_LIVE_STREAM, HttpMethod.POST, requestBody, String.class);
-        return result.getBody();
+    public ApiResponse createLiveStream() {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message="create live stream success!";
+        response.dataAsString = streamBusiness.create();
+        return response;
     }
 
     @GetMapping("/fetchAll")
-    public String fetchAllLiveStream() {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM, HttpMethod.GET, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse fetchAllLiveStream() {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message="fetch all live stream!";
+        response.dataAsString = streamBusiness.fetchAll();
+        return response;
     }
 
     @GetMapping("/fetch/{id}")
-    public String fetchALiveStream(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id, HttpMethod.GET, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse fetchALiveStream(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "fetch one live stream!";
+        response.dataAsString = streamBusiness.fetchOne(id);
+        return response;
     }
 
     @PatchMapping("/update")
-    public String updateALiveStream() {
-        return "TBD";
+    public ApiResponse updateALiveStream() {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 400;
+        response.message = "TBD!";
+        response.dataAsString = null;
+        response.errorCode = 1;
+        return response;
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteALiveStream(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id, HttpMethod.DELETE,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse deleteALiveStream(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "delete one live stream!";
+        response.dataAsString = streamBusiness.delete(id);
+        return response;
     }
 
     @PutMapping("/start/{id}")
-    public String startALiveStream(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/start", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse startALiveStream(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "delete one live stream!";
+        response.dataAsString = streamBusiness.delete(id);
+        return response;
     }
 
     @PutMapping("/stop/{id}")
-    public String stopALiveStream(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/stop", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse stopALiveStream(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "stop one live stream!";
+        response.dataAsString = streamBusiness.stop(id);
+        return response;
     }
 
     @PutMapping("/reset/{id}")
-    public String resetALiveStream(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/reset", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse resetALiveStream(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "reset one live stream!";
+        response.dataAsString = streamBusiness.reset(id);
+        return response;
     }
 
     @PutMapping("/regenerateCode/{id}")
-    public String regenerateConnectionCode(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/regenerate_connection_code", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse regenerateConnectionCode(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "regenerate connection code!";
+        response.dataAsString = streamBusiness.regenerate(id);
+        return response;
     }
 
     @GetMapping("/fetchThumbnail/{id}")
-    public String fetchThumbnailURL(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/thumbnail_url", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse fetchThumbnailURL(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "fetch thumbnail!";
+        response.dataAsString = streamBusiness.fetchThumbnail(id);
+        return response;
     }
 
     @GetMapping("/fetchState/{id}")
-    public String fetchState(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/state", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse fetchState(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "fetch state live stream!";
+        response.dataAsString = streamBusiness.fetchState(id);
+        return response;
     }
 
     @GetMapping("/fetchMetrics/{id}")
-    public String fetchMetrics(@PathVariable("id") String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/stats", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+    public ApiResponse fetchMetrics(@PathVariable("id") final String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.dataAsString = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "fetch metrics live stream!";
+        response.dataAsString = streamBusiness.fetchMetrics(id);
+        return response;
     }
 
     @GetMapping("/versions")
-    public String getVersionsApi() {
-        WowzaStream wowzaStream = new WowzaStream(1280, 720, "pay_as_you_go", "asia_pacific_singapore", "other_rtmp", "CREATE_" + System.currentTimeMillis(), "transcoded");
-
-        ResponseEntity<String> rs = restTemplate.exchange("https://api.cloud.wowza.com/api/versions", HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody().toString();
+    public ApiResponse getVersionsApi() {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message = "fetch versions live stream!";
+        response.dataAsString = streamBusiness.fetchVersions();
+        return response;
 
     }
 }
