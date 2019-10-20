@@ -1,8 +1,8 @@
 package com.t4.LiveServer.config;
 
 public class WowzaConfig {
-    private String accessKey = "i9FRGMNjl6huKVNYRvOSiqdoMHYJSFi9L96jvnZbfErgd2wqTF7tJkJGJsCd343d";
-    private String apiKey = "EjBZVM6xfoK4m0Kt3Ild3FgoGffSbRpirqjUUEz2sEJj78fuQp3RAhWvsdOg350d";
+    public static String accessKey = "CietQHXlVWFizqrZv1o34c2jUoebGBn2fcQ1FrQswavtIguLz0VLy2gQhHKI355e";
+    public static String apiKey = "vGhGQ6fxr97mTrpfSfoIl7v4f4JFCWVEWkOfBsVpWhElXQMii6TLx7K3VYnQ3424";
 
     public WowzaConfig() {
     }

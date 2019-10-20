@@ -16,6 +16,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 //	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'mysql:mysql-connector-java'
 	//https://square.github.io/okhttp/
 	implementation("com.squareup.okhttp3:okhttp:4.2.0")
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind

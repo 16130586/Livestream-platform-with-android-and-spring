@@ -1,0 +1,81 @@
+﻿<mockup version="5.3" minAllowVersion="5.3" ID="5BBA9183-4534-4251-867E-97954A612A39" platform="MtMobile" defaultW="360" defaultH="640" measureW="360" measureH="640" screenOrientation="MoPortrait" mobileScreenScale="1.77777779102325" clipArea="(0,0,0,0)">
+  <controls controlCount="9">
+    <control controlID="7A849DDF-06E3-4FA6-8A41-E45505FBB357" controlTypeID="Panel" x="-2" y="0" w="360" h="640" zOrder="0">
+      <color>4281545523</color>
+      <groupChildrenDescriptors>
+        <control controlID="F0351723-7AA7-4CD9-A070-92FE0B6B0267" controlTypeID="Border" x="0" y="0" w="360" h="640" zOrder="0">
+          <alias>borderLayer</alias>
+        </control>
+      </groupChildrenDescriptors>
+      <thinkness>1</thinkness>
+    </control>
+    <control controlID="5ACA614C-65FD-48C0-BF42-D1DA315AC7D9" controlTypeID="Icon" x="10" y="12" w="24" h="24" zOrder="1">
+      <color>4294940928</color>
+      <links eventType="AtClick" animate="AmNone" animateAutoDelay="0" animateDuration="500">
+        <link targetPageID="F075ACFD-5EF1-4B70-A9E0-0AE308723B5A" linkType="ltPageLink" isApplyIncludePage="False" title="Login">
+          <area shape="0" alt="" ID="{8AD95BA1-E9A1-432A-95ED-617F6334E744}" coords="(0,0,24,24)"/>
+        </link>
+      </links>
+      <icon>
+        <ID/>
+        <iconFontName>jdIonicons</iconFontName>
+        <iconCode>62415</iconCode>
+      </icon>
+      <URL>D6859759E093AABA6D618DD6AA733504.svg</URL>
+    </control>
+    <control controlID="C54236F3-878A-4120-88F8-C5B8F345AA20" controlTypeID="Label" x="49" y="10" w="144" h="27" zOrder="2">
+      <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False"/>
+      <text>Forget+Password</text>
+      <textColor>4294940928</textColor>
+      <textSize>20</textSize>
+      <lineSpacing>0</lineSpacing>
+      <useDefaultTextSize>False</useDefaultTextSize>
+      <selectedIndex>-1</selectedIndex>
+    </control>
+    <control controlID="BD0994B3-77DE-403C-A075-25A6450AC078" controlTypeID="Line" x="-1" y="46" w="357" h="2" zOrder="3">
+      <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False"/>
+      <textSize>16</textSize>
+      <lineSpacing>0</lineSpacing>
+      <selectedIndex>-1</selectedIndex>
+      <controlPoint>(179,1)</controlPoint>
+      <startPoint>(1,1)</startPoint>
+      <endPoint>(357,1)</endPoint>
+    </control>
+    <control controlID="DBB626A2-F043-4610-B45D-74AF78C30917" controlTypeID="__group__" x="32" y="119" w="275" h="72" zOrder="4">
+      <caption>Username</caption>
+      <groupChildrenDescriptors>
+        <control controlID="B36E4014-FB73-40A2-841D-63C7D709910E" controlTypeID="TextInput" x="0" y="33" w="275" h="39" zOrder="0">
+          <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False"/>
+          <text>example@gmail.com</text>
+          <textSize>16</textSize>
+          <lineSpacing>0</lineSpacing>
+          <selectedIndex>-1</selectedIndex>
+        </control>
+        <control controlID="4D921AA9-B790-45BD-920B-EB1345CAF4B0" controlTypeID="Label" x="0" y="0" w="45" h="24" zOrder="1">
+          <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False"/>
+          <text>Email%3A</text>
+          <textColor>4294940928</textColor>
+          <textSize>18</textSize>
+          <lineSpacing>0</lineSpacing>
+          <useDefaultTextSize>False</useDefaultTextSize>
+          <selectedIndex>-1</selectedIndex>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="23A1E54F-9E40-41FC-B2DA-4F78CA14323F" controlTypeID="Button" x="81" y="244" w="178" h="48" zOrder="5">
+      <color>4294940928</color>
+      <borderColor>4294940928</borderColor>
+      <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False"/>
+      <text>Reset+Password</text>
+      <textSize>16</textSize>
+      <lineSpacing>0</lineSpacing>
+      <selectedIndex>-1</selectedIndex>
+    </control>
+  </controls>
+  <param>
+    <backgroundColor>4294967295</backgroundColor>
+    <fontSize>16</fontSize>
+    <fontFamily>Segoe+UI</fontFamily>
+    <guideLines/>
+  </param>
+</mockup>

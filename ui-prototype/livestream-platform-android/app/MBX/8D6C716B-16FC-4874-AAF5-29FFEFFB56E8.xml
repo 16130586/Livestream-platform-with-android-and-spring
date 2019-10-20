@@ -1,0 +1,171 @@
+﻿<mockup version="5.3" minAllowVersion="5.3" ID="0FB212D8-36A7-42AF-8366-0CB487C07F09" platform="MtMobile" defaultW="360" defaultH="640" measureW="360" measureH="640" screenOrientation="MoPortrait" mobileScreenScale="1.77777779102325" clipArea="(0,0,0,0)">
+  <controls controlCount="19">
+    <control controlID="713AFFDF-F5E5-417F-ADBE-5EDAE6E86F2A" controlTypeID="__group__" x="0" y="0" w="360" h="49" zOrder="0">
+      <caption>Header</caption>
+      <links eventType="AtClick" animate="AmNone" animateAutoDelay="0" animateDuration="500">
+        <link targetPageID="5BBA9183-4534-4251-867E-97954A612A39" linkType="ltPageLink" isApplyIncludePage="False" title="Page">
+          <area shape="0" alt="" ID="{BE172849-6364-4889-8F4E-C9486BDE9446}" coords="(0,0,360,49)"/>
+        </link>
+      </links>
+      <groupChildrenDescriptors>
+        <control controlID="F6D1D641-E595-4244-B693-CE2D49E51BF1" controlTypeID="Panel" x="0" y="0" w="360" h="49" zOrder="0">
+          <color>4281545523</color>
+          <groupChildrenDescriptors>
+            <control controlID="233541D1-B37C-4EF3-84DC-16455B98A6E0" controlTypeID="Border" x="0" y="0" w="360" h="49" zOrder="0">
+              <alias>borderLayer</alias>
+            </control>
+          </groupChildrenDescriptors>
+          <thinkness>1</thinkness>
+        </control>
+        <control controlID="FA8450DC-6655-466E-B5AC-7E285EEE45C4" controlTypeID="__group__" x="24" y="10" w="88" h="28" zOrder="1">
+          <caption>Logo</caption>
+          <groupChildrenDescriptors>
+            <control controlID="2B4998BB-0A81-44E8-973D-0A4D8307CFBF" controlTypeID="Image" x="0" y="0" w="39" h="28" zOrder="0">
+              <URL>24667BEFA7335EEF8EEDC855F715D927.png</URL>
+            </control>
+            <control controlID="F66DABCE-8BA7-4E30-A20A-BB82B537EA95" controlTypeID="Label" x="49" y="0" w="39" h="24" zOrder="1">
+              <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False"/>
+              <text>4Tub</text>
+              <textColor>4294940928</textColor>
+              <textSize>18</textSize>
+              <lineSpacing>0</lineSpacing>
+              <useDefaultTextSize>False</useDefaultTextSize>
+              <selectedIndex>-1</selectedIndex>
+            </control>
+          </groupChildrenDescriptors>
+        </control>
+        <control controlID="9FE02223-2438-4E74-A09C-B074E19E2287" controlTypeID="Icon" x="224" y="12" w="25" h="25" zOrder="2">
+          <color>4294940928</color>
+          <icon>
+            <ID/>
+            <iconFontName>jdIonicons</iconFontName>
+            <iconCode>62669</iconCode>
+          </icon>
+          <URL>7D34168CB3374D39FEFCE9D0FCF04759.svg</URL>
+        </control>
+        <control controlID="68E8C57D-E73B-4CA7-85B3-301049CB8B45" controlTypeID="Icon" x="274" y="12" w="25" h="25" zOrder="3">
+          <color>4294940928</color>
+          <icon>
+            <ID/>
+            <iconFontName>jdFontAwesome</iconFontName>
+            <iconCode>61442</iconCode>
+          </icon>
+          <URL>4316E1C307CC30565C10942536930CD7.svg</URL>
+        </control>
+        <control controlID="DCAB5A13-C560-452E-8821-F64B3CEFCD05" controlTypeID="Icon" x="319" y="10" w="25" h="25" zOrder="4">
+          <color>4294940928</color>
+          <links eventType="AtClick" animate="AmNone" animateAutoDelay="0" animateDuration="500">
+            <link targetPageID="5BBA9183-4534-4251-867E-97954A612A39" linkType="ltPageLink" isApplyIncludePage="False" title="Page">
+              <area shape="0" alt="" ID="{B9DF99BC-48BE-42D8-B215-1E6BFEFEE92E}" coords="(0,0,25,25)"/>
+            </link>
+          </links>
+          <icon>
+            <ID/>
+            <iconFontName>jdiconfontB</iconFontName>
+            <iconCode>59651</iconCode>
+          </icon>
+          <URL>B64512564078BE31571E4B8E32EDD2AD.svg</URL>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="D8EDC72F-0E6F-48A2-811B-4D39EE9A1414" controlTypeID="__group__" x="0" y="590" w="360" h="50" zOrder="1">
+      <caption>Footer</caption>
+      <groupChildrenDescriptors>
+        <control controlID="28201171-0611-40B0-B348-1A22644F002B" controlTypeID="ScopeBar" x="0" y="0" w="360" h="50" zOrder="0">
+          <color>4281545523</color>
+          <borderColor>4281545523</borderColor>
+          <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False" useDefaultFontFamily="False"/>
+          <text>Home%2C+Trending%2C+Subscription%2C+Inbox</text>
+          <textColor>4291611852</textColor>
+          <textSize>10</textSize>
+          <lineSpacing>0</lineSpacing>
+          <useDefaultTextSize>False</useDefaultTextSize>
+          <selectedIndex>3</selectedIndex>
+          <selectedColor>4294940928</selectedColor>
+          <radius>0</radius>
+          <radiusIsPercent>False</radiusIsPercent>
+        </control>
+        <control controlID="56E03FEA-E595-43E1-881C-E7407EEB713D" controlTypeID="__group__" x="10" y="12" w="289" h="24" zOrder="1">
+          <groupChildrenDescriptors>
+            <control controlID="FF1A91E6-7392-4A94-BB27-A65D5D822F2C" controlTypeID="Icon" x="0" y="4" w="15" h="15" zOrder="0">
+              <color>4291611852</color>
+              <links eventType="AtClick" animate="AmNone" animateAutoDelay="0" animateDuration="500">
+                <link targetPageID="0FB212D8-36A7-42AF-8366-0CB487C07F09" linkType="ltPageLink" isApplyIncludePage="False" title="Home">
+                  <area shape="0" alt="" ID="{568CC8B0-7043-4D01-8AC3-1F0C74DFAECA}" coords="(0,0,15,15)"/>
+                </link>
+              </links>
+              <icon>
+                <ID/>
+                <iconFontName>jdIcoFont</iconFontName>
+                <iconCode>59061</iconCode>
+              </icon>
+              <URL>1AD3E4AA478BAABFA5D1CA896D10F9F7.svg</URL>
+            </control>
+            <control controlID="C41A8579-34A6-4972-B2C9-7DAEB8EA1CF9" controlTypeID="Icon" x="87" y="3" w="15" h="15" zOrder="1">
+              <color>4291611852</color>
+              <links eventType="AtClick" animate="AmNone" animateAutoDelay="0" animateDuration="500">
+                <link targetPageID="6AF7D038-81E5-4387-A17B-34C68D62E78B" linkType="ltPageLink" isApplyIncludePage="False" title="Trending">
+                  <area shape="0" alt="" ID="{D1077815-6AC0-49A7-AFD2-860CDE1291CE}" coords="(0,0,15,15)"/>
+                </link>
+              </links>
+              <icon>
+                <ID/>
+                <iconFontName>jdIonicons</iconFontName>
+                <iconCode>62066</iconCode>
+              </icon>
+              <URL>29007C01C4FD9459FD40C0CD987E4EBB.svg</URL>
+            </control>
+            <control controlID="68F35946-6F3D-48F6-AE3A-FD486E7D1060" controlTypeID="Icon" x="171" y="6" w="12" h="12" zOrder="2">
+              <color>4291611852</color>
+              <links eventType="AtClick" animate="AmNone" animateAutoDelay="0" animateDuration="500">
+                <link targetPageID="A9A3A0D0-EF9F-4FF8-B67F-5D67B07C6626" linkType="ltPageLink" isApplyIncludePage="False" title="Subcription">
+                  <area shape="0" alt="" ID="{F278312D-1F01-441C-95BE-378381D7F306}" coords="(0,0,12,12)"/>
+                </link>
+              </links>
+              <icon>
+                <ID/>
+                <iconFontName>jdIonicons</iconFontName>
+                <iconCode>62344</iconCode>
+              </icon>
+              <URL>9DA58F6FCBD77A56BA4CDD80AFFCE333.svg</URL>
+            </control>
+            <control controlID="B8A88B70-7D13-4B33-AC90-0EB6C4D959FA" controlTypeID="Icon" x="265" y="0" w="24" h="24" zOrder="3">
+              <color>4278190080</color>
+              <icon>
+                <ID/>
+                <iconFontName>jdFontAwesome</iconFontName>
+                <iconCode>61664</iconCode>
+              </icon>
+              <URL>5D367CFD73639FC1561938F2A24E899A.svg</URL>
+            </control>
+          </groupChildrenDescriptors>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="99A5086F-52F8-485A-A649-27F7D38BD9F0" controlTypeID="Panel" x="0" y="49" w="360" h="541" zOrder="2">
+      <color>4281545523</color>
+      <groupChildrenDescriptors>
+        <control controlID="0CFCE088-5E0A-4AC0-A989-2F0D9D2AD9CA" controlTypeID="Border" x="0" y="0" w="360" h="541" zOrder="0">
+          <alias>borderLayer</alias>
+        </control>
+      </groupChildrenDescriptors>
+      <thinkness>1</thinkness>
+    </control>
+    <control controlID="B8932956-F86E-49B9-8112-CF2FC2BC1BD3" controlTypeID="List" x="0" y="50" w="360" h="541" zOrder="3">
+      <color>4281545523</color>
+      <verticalScrollbarShow>True</verticalScrollbarShow>
+      <font family="Segoe+UI" displayName="Segoe+UI" postScript="" weightStyle="Regular" weight="400" isBold="False" isItalic="False" useDefaultFontFamily="False"/>
+      <text>11-10-2019+6%3A00+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A01+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A02+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A03+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A04+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A05+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A06+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A07+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A08+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A09+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A10+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A11+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A12+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A13+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A14+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A15+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A16+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A17+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A18+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A19+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A20+AM+-+Tretor+has+new+video%0D%0A11-10-2019+6%3A21+AM+-+Tretor+has+new+video</text>
+      <textColor>4291611852</textColor>
+      <textSize>14</textSize>
+      <lineSpacing>0</lineSpacing>
+      <useDefaultTextSize>False</useDefaultTextSize>
+    </control>
+  </controls>
+  <param>
+    <backgroundColor>4294967295</backgroundColor>
+    <fontSize>16</fontSize>
+    <fontFamily>Segoe+UI</fontFamily>
+    <guideLines/>
+  </param>
+</mockup>
