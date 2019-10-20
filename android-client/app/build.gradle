@@ -35,4 +35,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.2.0")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+    implementation 'com.facebook.android:facebook-login:[5,6)'
+    // Include the GoCoder SDK library dependency declaration
+
 }
