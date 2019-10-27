@@ -37,7 +37,6 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public String fetchOne(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id, HttpMethod.GET, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
@@ -49,7 +48,6 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public String delete(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id, HttpMethod.DELETE,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
@@ -63,49 +61,42 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public String stop(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/stop", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
     @Override
     public String reset(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/reset", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
     @Override
     public String regenerate(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/regenerate_connection_code", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
     @Override
     public String fetchThumbnail(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/thumbnail_url", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
     @Override
     public String fetchState(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/state", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
     @Override
     public String fetchMetrics(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/stats", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return result.getBody();
     }
 
     @Override
     public String fetchVersions() {
         ResponseEntity<String> rs = restTemplate.exchange("https://api.cloud.wowza.com/api/versions", HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-
         return rs.getBody().toString();
     }
 }
