@@ -3,15 +3,15 @@ package com.t4.LiveServer.business.interfaze;
 public interface StreamBusiness {
     String create();
     String fetchAll();
-    String fetchOne();
+    String fetchOne(String id);
     String update();
-    String delete();
-    String start();
-    String stop();
-    String reset();
-    String regenrate();
-    String fetchThumbnail();
-    String fetchState();
-    String fetchMetrics();
+    String delete(String id);
+    String start(String id);
+    String stop(String id);
+    String reset(String id);
+    String regenerate(String id);
+    String fetchThumbnail(String id);
+    String fetchState(String id);
+    String fetchMetrics(String id);
     String fetchVersions();
 }
