@@ -1,0 +1,5 @@
+[mysqld]
+user=mysql
+server-id=1
+log-bin=/usr/custom-storage/logs/log-bin
+binlog_format=row
