@@ -3,14 +3,11 @@ package com.t4.LiveServer.model.wowza;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.t4.LiveServer.config.WowzaConfig;
-import com.t4.LiveServer.controller.RestTemplateHandleException;
-import com.t4.LiveServer.core.JsonHelper;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
 
 public class WowzaStream {
     public static final String URL_LIVE_STREAM="https://api.cloud.wowza.com/api/v1.3/live_streams";
+    public static final String URL_STREAM_TARGETS ="https://api.cloud.wowza.com/api/v1.3/stream_targets";
 
     @JsonProperty("id")
     public String id;

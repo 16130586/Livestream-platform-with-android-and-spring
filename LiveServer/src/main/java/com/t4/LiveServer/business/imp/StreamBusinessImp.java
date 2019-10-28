@@ -97,6 +97,52 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public String fetchVersions() {
         ResponseEntity<String> rs = restTemplate.exchange("https://api.cloud.wowza.com/api/versions", HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody().toString();
+        return rs.getBody();
     }
+
+    @Override
+    public String createCustomStreamTarget() {
+        Object customStreamtarget = null; // TBD
+        String jsonData = JsonHelper.serialize(customStreamtarget);
+        jsonData = "{\"stream_target_custom\":" + jsonData + "}";
+        HttpEntity<String> entity = new HttpEntity<>(jsonData, WowzaStream.getWowzaConfigHeaders());
+        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom", HttpMethod.POST, entity, String.class);
+        return rs.getBody();
+    }
+
+    @Override
+    public String fetchAllCustomStreamTargets() {
+        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom", HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
+        return rs.getBody();
+    }
+
+    @Override
+    public String fetchCustomStreamTarget(String id) {
+        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom/"+id, HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
+        return rs.getBody();
+    }
+
+    @Override
+    public String updateCustomStreamTarget(String id) {
+        Object customStreamtarget = null; // TBD
+        String jsonData = JsonHelper.serialize(customStreamtarget);
+        jsonData = "{\"stream_target_custom\":" + jsonData + "}";
+        HttpEntity<String> entity = new HttpEntity<>(jsonData, WowzaStream.getWowzaConfigHeaders());
+        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom/"+id, HttpMethod.PATCH, entity, String.class);
+        return "TBD";
+    }
+
+    @Override
+    public String deleteCustomStreamTarget(String id) {
+        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom/"+id, HttpMethod.DELETE, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
+        return rs.getBody();
+    }
+
+    @Override
+    public String regenerateCodeForAnyStreamTarget(String id) {
+        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS + id + "/regenerate_connection_code", HttpMethod.DELETE, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
+        return rs.getBody();
+    }
+
+
 }
