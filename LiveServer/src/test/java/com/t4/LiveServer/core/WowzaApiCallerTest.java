@@ -16,7 +16,7 @@ public class WowzaApiCallerTest extends TestCase {
         try {
             ApiResponse response = wowzaCaller.get("/versions", (Object)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
                 System.out.println(response.statusCode + "| " + response.message);
             }
@@ -33,7 +33,7 @@ public class WowzaApiCallerTest extends TestCase {
         try {
             ApiResponse response = wowzaCaller.get("/v1.3/live_streams", (Object)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
                 System.out.println(response.statusCode + "| " + response.message);
             }
@@ -51,7 +51,7 @@ public class WowzaApiCallerTest extends TestCase {
             String dumpId = "ABCDEF123";
             ApiResponse response = wowzaCaller.get("/v1.3/live_streams/" + dumpId, (Object)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
                 System.out.println(response.statusCode + "| " + response.message);
             }
@@ -69,7 +69,7 @@ public class WowzaApiCallerTest extends TestCase {
             String dumpId = "xlffyjcg";
             ApiResponse response = wowzaCaller.get("/v1.3/live_streams/" + dumpId, (Object)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
                 System.out.println(response.statusCode + "| " + response.message);
             }
@@ -90,9 +90,9 @@ public class WowzaApiCallerTest extends TestCase {
             System.out.print(jsonData);
             ApiResponse response = wowzaCaller.otherMethodAsJson("POST", "/v1.3/live_streams/", jsonData);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
-                System.out.println(response.statusCode + "| " + response.message + " | \n" + response.dataAsString);
+                System.out.println(response.statusCode + "| " + response.message + " | \n" + response.data);
             }
         } catch (Exception var5) {
             var5.printStackTrace();
@@ -108,9 +108,9 @@ public class WowzaApiCallerTest extends TestCase {
             String existedId = "xlffyjcg";
             ApiResponse response = wowzaCaller.otherMethodAsJson("PUT", "/v1.3/live_streams/" + existedId + "/start", (String)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
-                System.out.println(response.statusCode + "| " + response.message + "\n" + response.dataAsString);
+                System.out.println(response.statusCode + "| " + response.message + "\n" + response.data);
             }
         } catch (Exception var4) {
             var4.printStackTrace();
@@ -126,9 +126,9 @@ public class WowzaApiCallerTest extends TestCase {
             String existedId = "xlffyjcg";
             ApiResponse response = wowzaCaller.otherMethodAsJson("PUT", "/v1.3/live_streams/" + existedId + "/stop", (String)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
-                System.out.println(response.statusCode + "| " + response.message + "\n" + response.dataAsString);
+                System.out.println(response.statusCode + "| " + response.message + "\n" + response.data);
             }
         } catch (Exception var4) {
             var4.printStackTrace();
@@ -144,9 +144,9 @@ public class WowzaApiCallerTest extends TestCase {
             String existedId = "xlffyjcg";
             ApiResponse response = wowzaCaller.otherMethodAsJson("PUT", "/v1.3/live_streams/" + existedId + "/reset", (String)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
-                System.out.println(response.statusCode + "| " + response.message + "\n" + response.dataAsString);
+                System.out.println(response.statusCode + "| " + response.message + "\n" + response.data);
             }
         } catch (Exception var4) {
             var4.printStackTrace();
@@ -162,9 +162,9 @@ public class WowzaApiCallerTest extends TestCase {
             String existedId = "xlffyjcg";
             ApiResponse response = wowzaCaller.otherMethodAsJson("PUT", "/v1.3/live_streams/" + existedId + "/regenerate_connection_code", (String)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
-                System.out.println(response.statusCode + "| " + response.message + "\n" + response.dataAsString);
+                System.out.println(response.statusCode + "| " + response.message + "\n" + response.data);
             }
         } catch (Exception var4) {
             var4.printStackTrace();
@@ -180,9 +180,9 @@ public class WowzaApiCallerTest extends TestCase {
             String existedId = "xlffyjcg";
             ApiResponse response = wowzaCaller.get("/v1.3/live_streams/" + existedId + "/state", (Object)null);
             if (response.statusCode >= 200 && response.statusCode < 400) {
-                System.out.println(response.dataAsString);
+                System.out.println(response.data);
             } else {
-                System.out.println(response.statusCode + "| " + response.message + "\n" + response.dataAsString);
+                System.out.println(response.statusCode + "| " + response.message + "\n" + response.data);
             }
         } catch (Exception var4) {
             var4.printStackTrace();

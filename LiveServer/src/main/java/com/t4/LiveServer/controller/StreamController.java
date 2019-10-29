@@ -20,7 +20,7 @@ public class StreamController {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
         response.message="create live stream success!";
-        response.dataAsString = streamBusiness.create();
+        response.data = streamBusiness.create();
         return response;
     }
 
@@ -29,7 +29,7 @@ public class StreamController {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
         response.message="fetch all live stream!";
-        response.dataAsString = streamBusiness.fetchAll();
+        response.data = streamBusiness.fetchAll();
         return response;
     }
 
@@ -39,13 +39,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "fetch one live stream!";
-        response.dataAsString = streamBusiness.fetchOne(id);
+        response.data = streamBusiness.fetchOne(id);
         return response;
     }
 
@@ -54,7 +54,7 @@ public class StreamController {
         ApiResponse response = new ApiResponse();
         response.statusCode = 400;
         response.message = "TBD!";
-        response.dataAsString = null;
+        response.data = null;
         response.errorCode = 1;
         return response;
     }
@@ -65,13 +65,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "delete one live stream!";
-        response.dataAsString = streamBusiness.delete(id);
+        response.data = streamBusiness.delete(id);
         return response;
     }
 
@@ -81,13 +81,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
-        response.message = "delete one live stream!";
-        response.dataAsString = streamBusiness.delete(id);
+        response.message = "start one live stream!";
+        response.data = streamBusiness.start(id);
         return response;
     }
 
@@ -97,13 +97,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "stop one live stream!";
-        response.dataAsString = streamBusiness.stop(id);
+        response.data = streamBusiness.stop(id);
         return response;
     }
 
@@ -113,13 +113,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "reset one live stream!";
-        response.dataAsString = streamBusiness.reset(id);
+        response.data = streamBusiness.reset(id);
         return response;
     }
 
@@ -129,13 +129,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "regenerate connection code!";
-        response.dataAsString = streamBusiness.regenerate(id);
+        response.data = streamBusiness.regenerate(id);
         return response;
     }
 
@@ -145,13 +145,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "fetch thumbnail!";
-        response.dataAsString = streamBusiness.fetchThumbnail(id);
+        response.data = streamBusiness.fetchThumbnail(id);
         return response;
     }
 
@@ -161,13 +161,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "fetch state live stream!";
-        response.dataAsString = streamBusiness.fetchState(id);
+        response.data = streamBusiness.fetchState(id);
         return response;
     }
 
@@ -177,13 +177,13 @@ public class StreamController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "ID stream must be not null!";
-            response.dataAsString = null;
+            response.data = null;
             response.errorCode = 1;
             return response;
         }
         response.statusCode = 200;
         response.message = "fetch metrics live stream!";
-        response.dataAsString = streamBusiness.fetchMetrics(id);
+        response.data = streamBusiness.fetchMetrics(id);
         return response;
     }
 
@@ -192,7 +192,7 @@ public class StreamController {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
         response.message = "fetch versions live stream!";
-        response.dataAsString = streamBusiness.fetchVersions();
+        response.data = streamBusiness.fetchVersions();
         return response;
 
     }

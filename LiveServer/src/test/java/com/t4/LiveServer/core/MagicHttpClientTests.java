@@ -55,7 +55,7 @@ public class MagicHttpClientTests extends TestCase {
         try {
             ApiResponse response = client.get((Map)null, fullyURL, "", (Object)null);
             if (response.statusCode > 200 && response.statusCode < 400) {
-                assertEquals("{\"ApiResponse\":3,\"JsonHelper\":10,\"c\":\"abc\",\"array\":[\"ApiResponse\",\"JsonHelper\",3]}", response.dataAsString.replaceAll("\\s+", ""));
+                assertEquals("{\"ApiResponse\":3,\"JsonHelper\":10,\"c\":\"abc\",\"array\":[\"ApiResponse\",\"JsonHelper\",3]}", response.data.replaceAll("\\s+", ""));
             }
         } catch (Exception var4) {
             var4.printStackTrace();
@@ -71,7 +71,7 @@ public class MagicHttpClientTests extends TestCase {
         try {
             ApiResponse response = client.post((Map)null, fullyURL, "", (String)null);
             if (response.statusCode > 200 && response.statusCode < 400) {
-                assertEquals("{\"statusCode\":200,\"message\":\"Success\"}", response.dataAsString.replaceAll("\\s+", ""));
+                assertEquals("{\"statusCode\":200,\"message\":\"Success\"}", response.data.replaceAll("\\s+", ""));
             }
         } catch (Exception var4) {
             var4.printStackTrace();
