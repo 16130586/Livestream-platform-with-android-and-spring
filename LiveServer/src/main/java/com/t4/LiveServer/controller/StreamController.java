@@ -196,4 +196,86 @@ public class StreamController {
         return response;
 
     }
+
+    @PostMapping("/custom")
+    public ApiResponse createCustomStreamTarget() {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message = "create custom live stream!";
+        response.data = streamBusiness.createCustomStreamTarget();
+        return response;
+    }
+
+    @GetMapping("/custom")
+    public ApiResponse fetchAllCustomStreamTargets() {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message = "fetch all custom live stream!";
+        response.data = streamBusiness.fetchAllCustomStreamTargets();
+        return response;
+    }
+
+    @GetMapping("/custom/{id}")
+    public ApiResponse fetchCustomStreamTarget(@PathVariable("id") String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.data = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "fetch a custom live stream!";
+        response.data = streamBusiness.fetchCustomStreamTarget(id);
+        return response;
+    }
+
+    @PatchMapping("/custom/{id}")
+    public ApiResponse updateCustomStreamTarget(@PathVariable("id") String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.data = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "update a custom live stream!";
+        response.data = streamBusiness.updateCustomStreamTarget(id);
+        return response;
+    }
+
+    @DeleteMapping("/custom/{id}")
+    public ApiResponse deleteCustomStreamTarget(@PathVariable("id") String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.data = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "delete a custom live stream!";
+        response.data = streamBusiness.deleteCustomStreamTarget(id);
+        return response;
+    }
+
+    @PutMapping("/custom/regenerate/{id}")
+    public ApiResponse regenerateCodeForAnyStreamTarget(@PathVariable("id") String id) {
+        ApiResponse response = new ApiResponse();
+        if(null == id || "".equals(id)){
+            response.statusCode = 400;
+            response.message = "ID stream must be not null!";
+            response.data = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "regenerate code for any custom live stream!";
+        response.data = streamBusiness.deleteCustomStreamTarget(id);
+        return response;
+    }
 }

@@ -7,7 +7,9 @@ import org.springframework.http.*;
 
 public class WowzaStream {
     public static final String URL_LIVE_STREAM="https://api.cloud.wowza.com/api/v1.3/live_streams";
-    public WowzaStream(){
+    public static final String URL_STREAM_TARGETS ="https://api.cloud.wowza.com/api/v1.3/stream_targets";
+
+    public WowzaStream() {
 
     }
     @JsonProperty("id")
