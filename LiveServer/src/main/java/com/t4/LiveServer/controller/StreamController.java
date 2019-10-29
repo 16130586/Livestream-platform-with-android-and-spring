@@ -197,7 +197,7 @@ public class StreamController {
 
     }
 
-    @PostMapping("/custom")
+    @PostMapping("/target")
     public ApiResponse createCustomStreamTarget() {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
@@ -206,7 +206,7 @@ public class StreamController {
         return response;
     }
 
-    @GetMapping("/custom")
+    @GetMapping("/targets")
     public ApiResponse fetchAllCustomStreamTargets() {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
@@ -215,7 +215,7 @@ public class StreamController {
         return response;
     }
 
-    @GetMapping("/custom/{id}")
+    @GetMapping("/target/{id}")
     public ApiResponse fetchCustomStreamTarget(@PathVariable("id") String id) {
         ApiResponse response = new ApiResponse();
         if(null == id || "".equals(id)){
@@ -231,7 +231,7 @@ public class StreamController {
         return response;
     }
 
-    @PatchMapping("/custom/{id}")
+    @PatchMapping("/target/{id}")
     public ApiResponse updateCustomStreamTarget(@PathVariable("id") String id) {
         ApiResponse response = new ApiResponse();
         if(null == id || "".equals(id)){
@@ -247,7 +247,7 @@ public class StreamController {
         return response;
     }
 
-    @DeleteMapping("/custom/{id}")
+    @DeleteMapping("/target/{id}")
     public ApiResponse deleteCustomStreamTarget(@PathVariable("id") String id) {
         ApiResponse response = new ApiResponse();
         if(null == id || "".equals(id)){
@@ -263,7 +263,7 @@ public class StreamController {
         return response;
     }
 
-    @PutMapping("/custom/regenerate/{id}")
+    @PutMapping("/target/regenerate/{id}")
     public ApiResponse regenerateCodeForAnyStreamTarget(@PathVariable("id") String id) {
         ApiResponse response = new ApiResponse();
         if(null == id || "".equals(id)){
@@ -275,7 +275,7 @@ public class StreamController {
         }
         response.statusCode = 200;
         response.message = "regenerate code for any custom live stream!";
-        response.data = streamBusiness.deleteCustomStreamTarget(id);
+        response.data = streamBusiness.regenerateCodeForAnyStreamTarget(id);
         return response;
     }
 }
