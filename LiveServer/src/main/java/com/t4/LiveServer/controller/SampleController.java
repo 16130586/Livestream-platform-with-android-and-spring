@@ -28,7 +28,7 @@ public class SampleController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "Just a example message!";
-            response.dataAsString = null;
+            response.data = null;
             // team defined error code for mutil purpose (localization, mutil handling for mutil client)
             response.errorCode = 1;
             return response;
@@ -44,7 +44,7 @@ public class SampleController {
         if(null == id || "".equals(id)){
             response.statusCode = 400;
             response.message = "Just a example message!";
-            response.dataAsString = null;
+            response.data = null;
             // team defined error code for mutil purpose (localization, mutil handling for mutil client)
             response.errorCode = 1;
             return response;

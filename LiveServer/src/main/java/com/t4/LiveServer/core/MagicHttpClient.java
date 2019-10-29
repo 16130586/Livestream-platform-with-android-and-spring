@@ -85,7 +85,7 @@ public class MagicHttpClient {
             try {
                 responseReturn.statusCode = response.code();
                 responseReturn.message = response.message();
-                responseReturn.dataAsString = response.body() != null ? response.body().string() : null;
+                responseReturn.data = response.body() != null ? response.body().string() : null;
                 var11 = responseReturn;
             } catch (Throwable var22) {
                 var10 = var22;
@@ -138,7 +138,7 @@ public class MagicHttpClient {
             try {
                 responseReturn.statusCode = response.code();
                 responseReturn.message = response.message();
-                responseReturn.dataAsString = response.body() != null ? response.body().string() : null;
+                responseReturn.data = response.body() != null ? response.body().string() : null;
                 var11 = responseReturn;
             } catch (Throwable var21) {
                 var10 = var21;
@@ -191,7 +191,7 @@ public class MagicHttpClient {
             try {
                 responseReturn.statusCode = response.code();
                 responseReturn.message = response.message();
-                responseReturn.dataAsString = response.body() != null ? response.body().string() : null;
+                responseReturn.data = response.body() != null ? response.body().string() : null;
                 var11 = responseReturn;
             } catch (Throwable var21) {
                 var10 = var21;
@@ -244,7 +244,7 @@ public class MagicHttpClient {
             try {
                 responseReturn.statusCode = response.code();
                 responseReturn.message = response.message();
-                responseReturn.dataAsString = response.body() != null ? response.body().string() : null;
+                responseReturn.data = response.body() != null ? response.body().string() : null;
                 var11 = responseReturn;
             } catch (Throwable var21) {
                 var10 = var21;
@@ -297,7 +297,7 @@ public class MagicHttpClient {
             try {
                 responseReturn.statusCode = response.code();
                 responseReturn.message = response.message();
-                responseReturn.dataAsString = response.body() != null ? response.body().string() : null;
+                responseReturn.data = response.body() != null ? response.body().string() : null;
                 var11 = responseReturn;
             } catch (Throwable var21) {
                 var10 = var21;

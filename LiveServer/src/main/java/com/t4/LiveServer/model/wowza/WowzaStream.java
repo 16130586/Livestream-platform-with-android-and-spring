@@ -3,15 +3,15 @@ package com.t4.LiveServer.model.wowza;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.t4.LiveServer.config.WowzaConfig;
-import com.t4.LiveServer.controller.RestTemplateHandleException;
-import com.t4.LiveServer.core.JsonHelper;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
 
 public class WowzaStream {
     public static final String URL_LIVE_STREAM="https://api.cloud.wowza.com/api/v1.3/live_streams";
+    public static final String URL_STREAM_TARGETS ="https://api.cloud.wowza.com/api/v1.3/stream_targets";
 
+    public WowzaStream() {
+
+    }
     @JsonProperty("id")
     public String id;
     @JsonProperty("aspect_ratio_height")
@@ -167,5 +167,181 @@ public class WowzaStream {
         headers.add("wsc-access-key", WowzaConfig.accessKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public String getBillingMode() {
+        return billingMode;
+    }
+
+    public void setBillingMode(String billingMode) {
+        this.billingMode = billingMode;
+    }
+
+    public String getBroadCastLocation() {
+        return broadCastLocation;
+    }
+
+    public void setBroadCastLocation(String broadCastLocation) {
+        this.broadCastLocation = broadCastLocation;
+    }
+
+    public String getClosedCaptionType() {
+        return closedCaptionType;
+    }
+
+    public void setClosedCaptionType(String closedCaptionType) {
+        this.closedCaptionType = closedCaptionType;
+    }
+
+    public String getEncoder() {
+        return encoder;
+    }
+
+    public void setEncoder(String encoder) {
+        this.encoder = encoder;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTransCoderType() {
+        return transCoderType;
+    }
+
+    public void setTransCoderType(String transCoderType) {
+        this.transCoderType = transCoderType;
+    }
+
+    public String getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public void setDeliveryMethod(String deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public String[] getDeliveryProtocols() {
+        return deliveryProtocols;
+    }
+
+    public void setDeliveryProtocols(String[] deliveryProtocols) {
+        this.deliveryProtocols = deliveryProtocols;
+    }
+
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
+
+    public boolean isDisableAuthentication() {
+        return isDisableAuthentication;
+    }
+
+    public void setDisableAuthentication(boolean disableAuthentication) {
+        isDisableAuthentication = disableAuthentication;
+    }
+
+    public boolean isLowLatency() {
+        return isLowLatency;
+    }
+
+    public void setLowLatency(boolean lowLatency) {
+        isLowLatency = lowLatency;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isPlayerResponsive() {
+        return isPlayerResponsive;
+    }
+
+    public void setPlayerResponsive(boolean playerResponsive) {
+        isPlayerResponsive = playerResponsive;
+    }
+
+    public String getPlayerType() {
+        return playerType;
+    }
+
+    public void setPlayerType(String playerType) {
+        this.playerType = playerType;
+    }
+
+    public boolean isRecording() {
+        return isRecording;
+    }
+
+    public void setRecording(boolean recording) {
+        isRecording = recording;
+    }
+
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+    }
+
+    public String getTargetDeliveryProtocol() {
+        return targetDeliveryProtocol;
+    }
+
+    public void setTargetDeliveryProtocol(String targetDeliveryProtocol) {
+        this.targetDeliveryProtocol = targetDeliveryProtocol;
+    }
+
+    public boolean isUseStreamSource() {
+        return isUseStreamSource;
+    }
+
+    public void setUseStreamSource(boolean useStreamSource) {
+        isUseStreamSource = useStreamSource;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
