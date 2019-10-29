@@ -18,7 +18,7 @@ public class SampleBusinessImp implements SampleBusiness {
     public ApiResponse sampleEcho() {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
-        response.dataAsString = "SampleBusinessImp";
+        response.data = "SampleBusinessImp";
         response.message = "Oke";
         return response;
     }
@@ -30,13 +30,13 @@ public class SampleBusinessImp implements SampleBusiness {
         if(id.length() < 10) {
             response.errorCode = 1;
             response.statusCode = 400;
-            response.dataAsString = null;
+            response.data = null;
             response.message = "length less than 10";
             return response;
         }
 
         response.statusCode = 200;
-        response.dataAsString = "oke you got it! "  + id;
+        response.data = "oke you got it! "  + id;
         response.message = "oke";
         return response;
     }

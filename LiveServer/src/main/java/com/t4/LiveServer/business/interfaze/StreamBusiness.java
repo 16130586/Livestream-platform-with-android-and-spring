@@ -14,4 +14,10 @@ public interface StreamBusiness {
     String fetchState(String id);
     String fetchMetrics(String id);
     String fetchVersions();
+    String createCustomStreamTarget();
+    String fetchAllCustomStreamTargets();
+    String fetchCustomStreamTarget(String id);
+    String updateCustomStreamTarget(String id);
+    String deleteCustomStreamTarget(String id);
+    String regenerateCodeForAnyStreamTarget(String id);
 }
