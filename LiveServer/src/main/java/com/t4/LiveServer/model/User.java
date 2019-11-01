@@ -1,17 +1,23 @@
 package com.t4.LiveServer.model;
 
 import java.util.Base64;
+import java.util.List;
 
 public class User {
     private Integer userId;
-    private  String userName;
-    private  String password;
-    private  String nickName;
+    private String userName;
+    private String password;
+    private String nickName;
     private Base64 avatar;
     private String gmail;
     private String forgotToken;
-    private  Integer subcriberTotal;
-    private StreamType favouraiteType;
+    private Integer subcriberTotal;
+    private List<Notification> notifications;
+    private List<StreamType> favouriteType;
+    private List<FavoriteSaved> favoriteSaveds;
+    private List<User> subcribers;
+    private List<PaySubscription> paySubscriptions;
+    private List<Stream> streams;
 
     public Integer getUserId() {
         return userId;
@@ -77,11 +83,51 @@ public class User {
         this.subcriberTotal = subcriberTotal;
     }
 
-    public StreamType getFavouraiteType() {
-        return favouraiteType;
+    public List<StreamType> getFavouriteType() {
+        return favouriteType;
     }
 
-    public void setFavouraiteType(StreamType favouraiteType) {
-        this.favouraiteType = favouraiteType;
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void setFavouriteType(List<StreamType> favouriteType) {
+        this.favouriteType = favouriteType;
+    }
+
+    public List<FavoriteSaved> getFavoriteSaveds() {
+        return favoriteSaveds;
+    }
+
+    public void setFavoriteSaveds(List<FavoriteSaved> favoriteSaveds) {
+        this.favoriteSaveds = favoriteSaveds;
+    }
+
+    public List<User> getSubcribers() {
+        return subcribers;
+    }
+
+    public void setSubcribers(List<User> subcribers) {
+        this.subcribers = subcribers;
+    }
+
+    public List<PaySubscription> getPaySubscriptions() {
+        return paySubscriptions;
+    }
+
+    public void setPaySubscriptions(List<PaySubscription> paySubscriptions) {
+        this.paySubscriptions = paySubscriptions;
+    }
+
+    public List<Stream> getStreams() {
+        return streams;
+    }
+
+    public void setStreams(List<Stream> streams) {
+        this.streams = streams;
     }
 }

@@ -1,15 +1,21 @@
 package com.t4.LiveServer.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Stream {
     private Integer streamId;
-    private  String wowzaId;
-    private  StreamType streamType;
-    private  Integer totalView;
+    private String wowzaId;
+    private List<StreamType> streamType;
+    private User owner;
+    private Integer totalView;
     private Date startTime;
     private Date endTime;
-    private StreamStatus status;
+    private Integer status;
+    private String forwards;
+    private String forwardsUrl;
+    private String storedUrl;
+    private List<Comment> comments;
 
     public Integer getStreamId() {
         return streamId;
@@ -27,11 +33,11 @@ public class Stream {
         this.wowzaId = wowzaId;
     }
 
-    public StreamType getStreamType() {
+    public List<StreamType> getStreamType() {
         return streamType;
     }
 
-    public void setStreamType(StreamType streamType) {
+    public void setStreamType(List<StreamType> streamType) {
         this.streamType = streamType;
     }
 
@@ -59,11 +65,51 @@ public class Stream {
         this.endTime = endTime;
     }
 
-    public StreamStatus getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(StreamStatus status) {
+    public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getForwards() {
+        return forwards;
+    }
+
+    public void setForwards(String forwards) {
+        this.forwards = forwards;
+    }
+
+    public String getForwardsUrl() {
+        return forwardsUrl;
+    }
+
+    public void setForwardsUrl(String forwardsUrl) {
+        this.forwardsUrl = forwardsUrl;
+    }
+
+    public String getStoredUrl() {
+        return storedUrl;
+    }
+
+    public void setStoredUrl(String storedUrl) {
+        this.storedUrl = storedUrl;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

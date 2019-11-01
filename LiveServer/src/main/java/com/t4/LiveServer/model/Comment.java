@@ -6,8 +6,8 @@ public class Comment {
     private Integer commentId;
     private String message;
     private Date createTime;
-    private StreamStatus streamStatus;
-    private CommentSource commentSource;
+    private Integer streamStatus;
+    private Integer commentSource;
 
     public Integer getCommentId() {
         return commentId;
@@ -33,19 +33,19 @@ public class Comment {
         this.createTime = createTime;
     }
 
-    public StreamStatus getStreamStatus() {
+    public Integer getStreamStatus() {
         return streamStatus;
     }
 
-    public void setStreamStatus(StreamStatus streamStatus) {
+    public void setStreamStatus(Integer streamStatus) {
         this.streamStatus = streamStatus;
     }
 
-    public CommentSource getCommentSource() {
+    public Integer getCommentSource() {
         return commentSource;
     }
 
-    public void setCommentSource(CommentSource commentSource) {
+    public void setCommentSource(Integer commentSource) {
         this.commentSource = commentSource;
     }
 }
