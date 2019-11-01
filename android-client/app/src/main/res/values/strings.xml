@@ -2,11 +2,6 @@
     <string name="app_name">AndroidClient</string>
     <string name="facebook_app_id">706523699820130</string>
     <string name="fb_login_protocol_scheme">fb329357964525905</string>
-
-
-    <string name="app_name_short">GoCoder SDK</string>
-    <string name="app_name_long">Wowza GoCoder SDK Examples</string>
-
     <string name="camera_example_title">GoCoder SDK Capture Example</string>
     <string name="event_example_title">GoCoder SDK Events and Metadata Example</string>
     <string name="mp4_broadcast_title">GoCoder SDK MP4 Broadcast Example</string>
@@ -23,8 +18,6 @@
     <string name="bitmap_overlay_title">GoCoder SDK Bitmap Overlay Example</string>
     <string name="gocoder_version">GoCoder SDK v %1$s</string>
     <string name="table_fragment_data_value">} %1$s</string>
-
-
     <string name="audio_meter_help">Press the mic icon to toggle the audio level meter</string>
     <string name="press_the_gear">Press the gear icon to select a stream and then press the play button</string>
 
@@ -215,8 +208,8 @@
     <string name="mute_button">Mute</string>
     <string name="zero_time">00:00:00</string>
     <string name="title_activity_main3">Main3Activity</string>
-    <string name="wz_live_host_address_default">be82ef.entrypoint.cloud.wowza.com</string>
-    <string name="wz_live_app_name_default_value">app-2cd0</string>
-    <string name="wz_live_stream_name_default_value">3dbdb753</string>
+    <string name="wz_live_host_address_default">b656a1.entrypoint.cloud.wowza.com</string>
+    <string name="wz_live_app_name_default_value">app-c5bc</string>
+    <string name="wz_live_stream_name_default_value">9a54386c</string>
     <string name="wz_video_frame_size_default_value">13</string>
 </resources>

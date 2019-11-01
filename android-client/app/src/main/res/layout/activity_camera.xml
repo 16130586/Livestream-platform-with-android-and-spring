@@ -68,7 +68,7 @@
                 android:onClick="onToggleTorch"
                 android:background="#000000ff"
                 android:padding="10dp"
-                android:contentDescription="@string/app_name_short" />
+                />
 
         </LinearLayout>
 

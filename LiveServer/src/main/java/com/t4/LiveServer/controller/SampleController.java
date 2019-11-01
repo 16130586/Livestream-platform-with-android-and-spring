@@ -1,12 +1,11 @@
 package com.t4.LiveServer.controller;
 
+import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.SampleBusiness;
+import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.core.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping({"/sample"})
@@ -52,5 +51,16 @@ public class SampleController {
         return sampleBusiness.sampleEcho(id);
     }
 
+    @Autowired
+    FacebookLiveBusiness facebookLiveBusiness;
+    FacebookConfig fbConfig = new FacebookConfig();
+    @GetMapping("/create")
+    public ApiResponse create(){
+        return facebookLiveBusiness.individualCreate(fbConfig);
+    }
 
+    @GetMapping("/stop/{id}")
+    public ApiResponse create(@PathVariable("id") String id){
+        return facebookLiveBusiness.stop(fbConfig , id);
+    }
 }

@@ -1,148 +1,50 @@
 package com.t4.LiveServer.business.imp;
 
+import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
-import com.t4.LiveServer.core.JsonHelper;
+import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
+import com.t4.LiveServer.config.FacebookConfig;
+import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
+import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
-import com.t4.LiveServer.model.wowza.WowzaStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
 public class StreamBusinessImp implements StreamBusiness {
     private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
 
+    @Autowired
+    WOWZAStreamBusiness wowzaStreamBusiness;
+    @Autowired
+    FacebookLiveBusiness facebookLiveBusiness;
 
     @Override
-    public String create() {
-        WowzaStream wowzaStream = new WowzaStream(1280, 720, "pay_as_you_go", "asia_pacific_singapore", "other_rtmp", "test", "transcoded");
-        String jsonData = JsonHelper.serialize(wowzaStream);
-        jsonData = "{\"live_stream\":" + jsonData + "}";
-        HttpEntity<String> requestBody = new HttpEntity<>(jsonData, wowzaStream.getWowzaConfigHeaders());
+    public Object create(CreatingStreamEntryParams entryParams) {
+        try {
+            String wowzaLive = wowzaStreamBusiness.create();
+            if (entryParams.forwards.size() > 0) {
+                entryParams.forwards.forEach(fw -> {
+                    fw.platform = fw.platform.toUpperCase();
+                    if (StreamingForward.ForwardPlatform.FACEBOOK.name().toUpperCase().equals(fw.platform)) {
+                        FacebookConfig fbConfig = new FacebookConfig();
+                        fbConfig.accessToken = fw.token;
+                        Object fbData = facebookLiveBusiness.individualCreate(fbConfig);
+                    }
+                    else if (StreamingForward.ForwardPlatform.YOUTUBE.name().toUpperCase().equals(fw.platform)) {
 
-        ResponseEntity<String> result = restTemplate.exchange(wowzaStream.URL_LIVE_STREAM, HttpMethod.POST, requestBody, String.class);
-        return result.getBody();
-    }
+                    }
+                    else if (StreamingForward.ForwardPlatform.TWITCH.name().toUpperCase().equals(fw.platform)) {
 
-    @Override
-    public String fetchAll() {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM, HttpMethod.GET, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
+                    }
+                    else if (StreamingForward.ForwardPlatform.DISCORD.name().toUpperCase().equals(fw.platform)) {
 
-        return result.getBody();
-    }
+                    }
+                });
+            }
+        } catch (Exception e) {
 
-    @Override
-    public String fetchOne(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id, HttpMethod.GET, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String update() {
+        }
         return null;
     }
-
-    @Override
-    public String delete(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id, HttpMethod.DELETE,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String start(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/start", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
-    }
-
-    @Override
-    public String stop(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/stop", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String reset(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/reset", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String regenerate(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/regenerate_connection_code", HttpMethod.PUT,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String fetchThumbnail(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/thumbnail_url", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String fetchState(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/state", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String fetchMetrics(String id) {
-        ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM+"/"+id+"/stats", HttpMethod.GET,new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
-    }
-
-    @Override
-    public String fetchVersions() {
-        ResponseEntity<String> rs = restTemplate.exchange("https://api.cloud.wowza.com/api/versions", HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody();
-    }
-
-    @Override
-    public String createCustomStreamTarget() {
-        Object customStreamtarget = null; // TBD
-        String jsonData = JsonHelper.serialize(customStreamtarget);
-        jsonData = "{\"stream_target_custom\":" + jsonData + "}";
-        HttpEntity<String> entity = new HttpEntity<>(jsonData, WowzaStream.getWowzaConfigHeaders());
-        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom", HttpMethod.POST, entity, String.class);
-        return rs.getBody();
-    }
-
-    @Override
-    public String fetchAllCustomStreamTargets() {
-        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom", HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody();
-    }
-
-    @Override
-    public String fetchCustomStreamTarget(String id) {
-        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom/"+id, HttpMethod.GET, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody();
-    }
-
-    @Override
-    public String updateCustomStreamTarget(String id) {
-        Object customStreamtarget = null; // TBD
-        String jsonData = JsonHelper.serialize(customStreamtarget);
-        jsonData = "{\"stream_target_custom\":" + jsonData + "}";
-        HttpEntity<String> entity = new HttpEntity<>(jsonData, WowzaStream.getWowzaConfigHeaders());
-        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom/"+id, HttpMethod.PATCH, entity, String.class);
-        return "TBD";
-    }
-
-    @Override
-    public String deleteCustomStreamTarget(String id) {
-        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS +"/custom/"+id, HttpMethod.DELETE, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody();
-    }
-
-    @Override
-    public String regenerateCodeForAnyStreamTarget(String id) {
-        ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS + id + "/regenerate_connection_code", HttpMethod.DELETE, new HttpEntity<>(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return rs.getBody();
-    }
-
-
 }

@@ -116,7 +116,7 @@ public class MainActivity2 extends ListActivity {
         setContentView(R.layout.activity_main2);
 
         if (getActionBar() != null) {
-            getActionBar().setTitle(getResources().getString(R.string.app_name_long));
+            getActionBar().setTitle(getResources().getString(R.string.app_name));
         }
 
         setListAdapter(new SimpleAdapter(this, createActivityList(),

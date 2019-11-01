@@ -1,7 +1,9 @@
 package com.t4.LiveServer.core;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.cfg.ConfigFeature;
 
 import java.io.IOException;
 
@@ -22,6 +24,15 @@ public class JsonHelper {
     public static <E> E deserialize(String json, Class<E> targetClass) {
         ObjectMapper mapper = new ObjectMapper();
 
+        try {
+            return mapper.readValue(json, targetClass);
+        } catch (IOException var4) {
+            return null;
+        }
+    }
+    public static <E> E deserialize(DeserializationFeature configRoot , String json, Class<E> targetClass) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(configRoot , true);
         try {
             return mapper.readValue(json, targetClass);
         } catch (IOException var4) {
