@@ -33,7 +33,7 @@ import java.util.Arrays;
 //        setContentView(R.layout.activity_main);
 //    }
 //}
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private TextView mTvInfo;
     private LoginButton mBtnLoginFacebook;
