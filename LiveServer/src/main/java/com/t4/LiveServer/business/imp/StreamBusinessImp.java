@@ -2,11 +2,12 @@ package com.t4.LiveServer.business.imp;
 
 import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
-import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
+import com.t4.LiveServer.business.interfaze.Wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
+import com.t4.LiveServer.model.wowza.WowzaStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +23,7 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public Object create(CreatingStreamEntryParams entryParams) {
         try {
-            String wowzaLive = wowzaStreamBusiness.create();
+            WowzaStream wowzaLive = wowzaStreamBusiness.create("test");
             if (entryParams.forwards.size() > 0) {
                 entryParams.forwards.forEach(fw -> {
                     fw.platform = fw.platform.toUpperCase();

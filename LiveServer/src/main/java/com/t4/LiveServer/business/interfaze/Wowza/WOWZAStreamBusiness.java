@@ -1,13 +1,14 @@
-package com.t4.LiveServer.business.interfaze;
+package com.t4.LiveServer.business.interfaze.Wowza;
 
 import com.t4.LiveServer.model.wowza.OutputStreamTarget;
 import com.t4.LiveServer.model.wowza.StreamOutput;
 import com.t4.LiveServer.model.wowza.StreamTarget;
+import com.t4.LiveServer.model.wowza.WowzaStream;
 
 import java.util.List;
 
 public interface WOWZAStreamBusiness {
-    String create();
+    WowzaStream create(String name);
     String fetchAll();
     String fetchOne(String id);
     String update();

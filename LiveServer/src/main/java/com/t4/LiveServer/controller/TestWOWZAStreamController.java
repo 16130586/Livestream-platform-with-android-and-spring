@@ -1,6 +1,6 @@
 package com.t4.LiveServer.controller;
 
-import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
+import com.t4.LiveServer.business.interfaze.Wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.model.wowza.StreamTarget;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,11 @@ public class TestWOWZAStreamController {
     }
 
     @PostMapping("/create")
-    public ApiResponse createLiveStream() {
+    public ApiResponse createLiveStream(@RequestBody  String name) {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
         response.message="create live stream success!";
-        response.data = WOWZAStreamBusiness.create();
+        response.data = WOWZAStreamBusiness.create(name);
         return response;
     }
 

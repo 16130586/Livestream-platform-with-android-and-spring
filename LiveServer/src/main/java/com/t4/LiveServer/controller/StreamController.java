@@ -16,6 +16,7 @@ public class StreamController {
 
     @Autowired
     StreamBusiness streamBusiness;
+
     @PostMapping("/create")
     public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams){
         ApiResponse apiResponse = new ApiResponse();
