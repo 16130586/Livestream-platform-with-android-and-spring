@@ -16,13 +16,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 //	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	runtimeOnly 'mysql:mysql-connector-java'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'mysql:mysql-connector-java'
 	//https://square.github.io/okhttp/
 	implementation("com.squareup.okhttp3:okhttp:4.2.0")
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
 	// https://mvnrepository.com/artifact/org.projectlombok/lombok
 	implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
-
+	// security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
