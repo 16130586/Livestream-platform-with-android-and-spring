@@ -1,11 +1,22 @@
 package com.t4.LiveServer.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "notification")
 public class Notification {
+    @Id
+    @Column(name = "id")
     private Integer notificationId;
+    @Column(name = "message")
     private String message;
-    private String url;
+    @OneToOne
+    @JsonIgnoreProperties(value = {"owner", "comments"})
+    @JoinColumn(name = "stream_id")
+    private Stream stream;
+    @Column(name = "status")
     private Integer status;
 
     public Integer getNotificationId() {
@@ -24,12 +35,12 @@ public class Notification {
         this.message = message;
     }
 
-    public String getUrl() {
-        return url;
+    public Stream getStream() {
+        return stream;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setStream(Stream stream) {
+        this.stream = stream;
     }
 
     public Integer getStatus() {

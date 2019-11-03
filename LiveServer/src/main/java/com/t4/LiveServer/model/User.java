@@ -1,22 +1,55 @@
 package com.t4.LiveServer.model;
 
-import java.util.Base64;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
     private Integer userId;
+    @Column(name = "username")
     private String userName;
+    @Column(name = "password")
     private String password;
+    @Column(name = "nick_name")
     private String nickName;
-    private Base64 avatar;
+    @Column(name = "avatar")
+    private byte[] avatar;
+    @Column(name = "gmail")
     private String gmail;
+    @Column(name = "forgot_token")
     private String forgotToken;
-    private Integer subcriberTotal;
+    @Column(name = "subscribe_total")
+    private Integer subscribeTotal;
+    @ManyToMany
+    @JoinTable(name = "notification_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "notify_id"))
     private List<Notification> notifications;
+    @ManyToMany
+    @JoinTable(name = "user_favourite",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
     private List<StreamType> favouriteType;
-    private List<FavoriteSaved> favoriteSaveds;
-    private List<User> subcribers;
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<FavoriteSaved> favouriteSaved;
+    @ManyToMany
+    @JsonIgnoreProperties(value = {"streams", "subscribers", "favouriteType", "notifications", "favouriteSaved"})
+    @JoinTable(name = "subscriber",
+            joinColumns = @JoinColumn(name = "publisher_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
+    private List<User> subscribers;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private List<PaySubscription> paySubscriptions;
+    @OneToMany
+    @JsonIgnoreProperties("owner")
+    @JoinColumn(name = "owner_id")
     private List<Stream> streams;
 
     public Integer getUserId() {
@@ -51,11 +84,11 @@ public class User {
         this.nickName = nickName;
     }
 
-    public Base64 getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Base64 avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 
@@ -75,12 +108,12 @@ public class User {
         this.forgotToken = forgotToken;
     }
 
-    public Integer getSubcriberTotal() {
-        return subcriberTotal;
+    public Integer getSubscribeTotal() {
+        return subscribeTotal;
     }
 
-    public void setSubcriberTotal(Integer subcriberTotal) {
-        this.subcriberTotal = subcriberTotal;
+    public void setSubscribeTotal(Integer subscribeTotal) {
+        this.subscribeTotal = subscribeTotal;
     }
 
     public List<StreamType> getFavouriteType() {
@@ -91,6 +124,14 @@ public class User {
         return notifications;
     }
 
+    public List<FavoriteSaved> getFavouriteSaved() {
+        return favouriteSaved;
+    }
+
+    public void setFavouriteSaved(List<FavoriteSaved> favouriteSaved) {
+        this.favouriteSaved = favouriteSaved;
+    }
+
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
@@ -99,20 +140,12 @@ public class User {
         this.favouriteType = favouriteType;
     }
 
-    public List<FavoriteSaved> getFavoriteSaveds() {
-        return favoriteSaveds;
+    public List<User> getSubscribers() {
+        return subscribers;
     }
 
-    public void setFavoriteSaveds(List<FavoriteSaved> favoriteSaveds) {
-        this.favoriteSaveds = favoriteSaveds;
-    }
-
-    public List<User> getSubcribers() {
-        return subcribers;
-    }
-
-    public void setSubcribers(List<User> subcribers) {
-        this.subcribers = subcribers;
+    public void setSubscribers(List<User> subscribers) {
+        this.subscribers = subscribers;
     }
 
     public List<PaySubscription> getPaySubscriptions() {
@@ -129,5 +162,14 @@ public class User {
 
     public void setStreams(List<Stream> streams) {
         this.streams = streams;
+    }
+
+    public boolean checkExpiredSubscription() {
+        if (paySubscriptions == null || paySubscriptions.size() == 0)
+            return false;
+        Date endTime = this.paySubscriptions.get(paySubscriptions.size()-1).getEndTime();
+        if (endTime == null)
+            return false;
+        return (endTime.compareTo(new Date()) >= 0);
     }
 }

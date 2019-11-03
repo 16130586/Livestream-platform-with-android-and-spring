@@ -1,9 +1,20 @@
 package com.t4.LiveServer.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "subscription")
 public class Subscription {
+    @Id
     private Integer id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "type")
     private Integer type;
+    @Column(name = "unit_price")
     private Double unitPrice;
 
     public Integer getId() {

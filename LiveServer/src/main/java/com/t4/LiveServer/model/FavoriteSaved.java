@@ -1,10 +1,22 @@
 package com.t4.LiveServer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "favourite_saved")
 public class FavoriteSaved {
+    @Id
+    private Integer id;
+    @ManyToOne
+    @JsonIgnoreProperties("owner")
+    @JoinColumn(name = "stream_id")
     private Stream stream;
+    @Column(name = "saved_time")
     private Date savedTime;
+    @Column(name = "status")
     private Integer status;
 
     public Stream getStream() {

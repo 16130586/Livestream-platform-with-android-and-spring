@@ -1,12 +1,21 @@
 package com.t4.LiveServer.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "comment")
 public class Comment {
+    @Id
     private Integer commentId;
+    @Column(name = "message")
     private String message;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_time")
     private Date createTime;
+    @Column(name = "status")
     private Integer streamStatus;
+    @Column(name = "source")
     private Integer commentSource;
 
     public Integer getCommentId() {

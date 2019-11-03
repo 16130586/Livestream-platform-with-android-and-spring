@@ -1,20 +1,45 @@
 package com.t4.LiveServer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "stream")
 public class Stream {
+    @Id
     private Integer streamId;
+    @Column(name = "wowza_id")
     private String wowzaId;
+    @ManyToMany
+    @JoinTable(name = "stream_type",
+            joinColumns = @JoinColumn(name = "stream_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
     private List<StreamType> streamType;
+    @ManyToOne
+    @JsonIgnoreProperties("streams")
+    @JoinColumn(name = "owner_id")
     private User owner;
+    @Column(name = "total_view")
     private Integer totalView;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_time")
     private Date startTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_time")
     private Date endTime;
+    @Column(name = "stream_status")
     private Integer status;
+    @Column(name = "forwards")
     private String forwards;
+    @Column(name = "forwards_url")
     private String forwardsUrl;
+    @Column(name = "stored_url")
     private String storedUrl;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stream_id")
     private List<Comment> comments;
 
     public Integer getStreamId() {
