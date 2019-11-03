@@ -1,5 +1,6 @@
 package com.t4.LiveServer.controller;
 
+import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.Wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.model.wowza.StreamTarget;
@@ -12,6 +13,9 @@ public class TestWOWZAStreamController {
 
     @Autowired
     WOWZAStreamBusiness WOWZAStreamBusiness;
+
+    @Autowired
+    FacebookLiveBusiness facebookLiveBusiness;
 
     public TestWOWZAStreamController() {
     }
@@ -316,6 +320,38 @@ public class TestWOWZAStreamController {
         response.statusCode = 200;
         response.message = "all output of trans coder  " + id  + " information!";
         response.data = WOWZAStreamBusiness.fetchAllOutputOfATransCoder(id);
+        return response;
+    }
+
+    @GetMapping("/fb/group/{access_token}")
+    public ApiResponse getFacebookGroups(@PathVariable ("access_token") String access_token) {
+        ApiResponse response = new ApiResponse();
+        if(null == access_token || "".equals(access_token)){
+            response.statusCode = 400;
+            response.message = "access_token must not be null!";
+            response.data = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "all the information about user's group";
+        response.data = facebookLiveBusiness.getFacebookGroups(access_token);
+        return response;
+    }
+
+    @GetMapping("/fb/pages/{access_token}")
+    public ApiResponse getFacebookPages(@PathVariable ("access_token") String access_token) {
+        ApiResponse response = new ApiResponse();
+        if(null == access_token || "".equals(access_token)){
+            response.statusCode = 400;
+            response.message = "access_token must not be null!";
+            response.data = null;
+            response.errorCode = 1;
+            return response;
+        }
+        response.statusCode = 200;
+        response.message = "all the information about user's pages";
+        response.data = facebookLiveBusiness.getFacebookPages(access_token);
         return response;
     }
 }

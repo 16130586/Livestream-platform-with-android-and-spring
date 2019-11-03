@@ -1,6 +1,6 @@
 package com.t4.LiveServer.controller;
 
-import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
+import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.SampleBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.core.ApiResponse;

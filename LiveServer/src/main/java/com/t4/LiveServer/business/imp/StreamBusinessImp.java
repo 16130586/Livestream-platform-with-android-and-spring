@@ -1,6 +1,6 @@
 package com.t4.LiveServer.business.imp;
 
-import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
+import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import com.t4.LiveServer.business.interfaze.Wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
