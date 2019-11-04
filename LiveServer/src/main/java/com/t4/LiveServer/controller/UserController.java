@@ -3,18 +3,15 @@ package com.t4.LiveServer.controller;
 
 import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.core.ApiResponse;
-import com.t4.LiveServer.jwt.JwtProvider;
-import com.t4.LiveServer.model.security.CustomUserDetails;
+import com.t4.LiveServer.model.User;
+import com.t4.LiveServer.validation.form.RegistryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,32 +19,23 @@ import java.util.Map;
 public class UserController {
 
     @Autowired
-    private UserBusiness userBusiness;
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtProvider tokenProvider;
+    UserBusiness userBusiness;
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody Map<String, String> datas) {
         ApiResponse response = new ApiResponse();
-        // Xác thực từ username và password.
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        datas.get("username"),
-                        datas.get("password")
-                )
-        );
-
-        // Nếu không xảy ra exception tức là thông tin hợp lệ
-        // Set thông tin authentication vào Security Context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Trả về jwt cho người dùng.
-        String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
         response.statusCode = 200;
         response.message="Login success!";
-        response.data = jwt;
+        response.data = userBusiness.login(datas.get("username"), datas.get("password"));
+        return response;
+    }
+
+    @PostMapping("/registry")
+    public ApiResponse registry(@Valid @RequestBody RegistryForm registryForm) {
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message="Register success!";
+        response.data = userBusiness.registry(registryForm);
         return response;
     }
 

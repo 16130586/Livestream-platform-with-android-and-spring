@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         // authorize
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/registry").permitAll()
                 .antMatchers("/test").hasRole("SUBSCRIBER")
                 .antMatchers("/not-role").hasAnyRole("USER", "SUBSCRIBER")
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
