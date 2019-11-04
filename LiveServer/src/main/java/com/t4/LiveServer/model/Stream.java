@@ -10,6 +10,7 @@ import java.util.List;
 @Table(name = "stream")
 public class Stream {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer streamId;
     @Column(name = "wowza_id")
     private String wowzaId;

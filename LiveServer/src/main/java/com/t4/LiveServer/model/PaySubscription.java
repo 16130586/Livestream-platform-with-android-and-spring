@@ -7,6 +7,7 @@ import java.util.Date;
 @Table(name = "pay_subscription")
 public class PaySubscription {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "subscription_id")

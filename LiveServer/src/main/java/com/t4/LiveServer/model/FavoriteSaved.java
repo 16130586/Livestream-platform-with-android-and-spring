@@ -9,6 +9,7 @@ import java.util.Date;
 @Table(name = "favourite_saved")
 public class FavoriteSaved {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
     @JsonIgnoreProperties("owner")

@@ -7,6 +7,7 @@ import java.util.Date;
 @Table(name = "comment")
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
     @Column(name = "message")
     private String message;
