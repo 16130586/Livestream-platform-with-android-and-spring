@@ -1,0 +1,323 @@
+var express = require("express");
+var app = express();
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.set("views", "./views");
+
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+
+const { fork } = require('child_process');
+const serverPort = 3000;
+const socketCheckTime = 10000;
+
+server.listen(serverPort);
+
+// workers and sockets
+var workers = [];
+var sockets = [];
+var socketCounter = 1;
+
+setInterval(removeDisconnectedSockets, socketCheckTime);
+
+// router index to know if the server working
+app.get('/', function(req, res){
+	res.send('server working');
+})
+
+// =============================================================================
+//
+// HANDLE KAFKA MESSAGE
+//
+// =============================================================================
+
+const kafka = require('kafka-node');
+const ConsumerGroup = kafka.ConsumerGroup;
+
+try {
+	var options = {
+		kafkaHost: '192.168.1.4:9092', // connect directly to kafka broker (instantiates a KafkaClient)
+		batch: undefined, // put client batch settings if you need them
+		ssl: false, // optional (defaults to false) or tls options hash
+		groupId: 'ExampleTestGroup',
+		sessionTimeout: 15000,
+		// An array of partition assignment protocols ordered by preference.
+		// 'roundrobin' or 'range' string for built ins (see below to pass in custom assignment protocol)
+		protocol: ['roundrobin'],
+		encoding: 'utf8', // default is utf8, use 'buffer' for binary data
+
+		// Offsets to use for new groups other options could be 'earliest' or 'none' (none will emit an error if no offsets were saved)
+		// equivalent to Java client's auto.offset.reset
+		fromOffset: 'latest', // default
+		commitOffsetsOnFirstJoin: true, // on the very first time this consumer group subscribes to a topic, record the offset returned in fromOffset (latest/earliest)
+		// how to recover from OutOfRangeOffset error (where save offset is past server retention) accepts same value as fromOffset
+		outOfRangeOffset: 'earliest', // default
+		// Callback to allow consumers with autoCommit false a chance to commit before a rebalance finishes
+		// isAlreadyMember will be false on the first connection, and true on rebalances triggered after that
+	};
+
+
+	// Or for a single topic pass in a string
+
+	var consumerGroup = new ConsumerGroup(options, 'M_EVENT');
+	consumerGroup.on('message' , message => {
+		let msg = JSON.parse(message.value);
+		kafkaMessageBroker(msg);
+		// create
+		//  -> event loop / 2s check 1
+		// 	+ if (checkTime <= 3){
+		// 		if(dc reply roi) -> checkTime = 0 , reply = false
+		// 		else 
+		// 			checkTime++;
+		// 	}
+		// 	+ else {					
+		// 		kill process loop
+		// 		dung socketio -> gui ma loi
+		// 	}
+		// // delete
+		// 	kill process loop
+		// 	->? lay socket io -> gui thong tin delete ve
+		// // reply
+		// 	-> lay cai gi do len , lq cai message nay
+		// 	-> reply = true,
+		// 	-> if(message.reply != null || len(message.reply) > 0)
+		// 	-> lay socket io -> gui reply ve cho client
+	})
+
+} catch (e) {
+	console.log(e);
+}
+
+function kafkaMessageBroker(msg) {
+	switch(msg.eventType) {
+		case 'CREATE':
+			onCreate(msg.ownerId);
+			break;
+		case 'DELETE':
+			console.log(msg);
+			break;
+		case 'REPLY':
+			console.log(msg);
+			break;
+		default:
+			console.log('error kafka event');
+			break;
+	}
+}
+
+function onCreate(id) {
+	createWorker(id);
+}
+
+function onDelete(id) {
+	deleteWorker(id);
+	
+	var socket = getSocketByID(id);
+	// socket.emit('broker-send-delete', {
+
+	// })
+	listWorkers('onDelete');
+}
+
+function onReply(workerID, reply) {
+	sendReplyToWorker(workerID, reply);
+}
+
+// =============================================================================
+//
+// HANDLE SOCKET IO
+//
+// =============================================================================
+
+io.on("connection", initSocket);
+
+// -----------------------------------------------------------------------------
+// initSocket
+// desc:
+// 		- do some configure when a socket connect
+// -----------------------------------------------------------------------------
+function initSocket(socket) {
+	socket.on('disconnect', function(){
+		console.log('a client disconnected');
+	});
+
+	// send to client
+	socket.emit('broker-send-create', {
+		socketID: socketCounter
+	});
+
+	// handle from client
+    socket.on('client-send-data', function(data){
+		console.log(data);
+		socket.emit('server-send-data', data);
+    });
+
+	// socket will send its own id back -> add to sockets, create a process
+	// this is just a example, later the sockerCounter replace by data.id
+	socket.on('client-send-id', function(data){
+		sockets.push({
+			socket: socket,
+			socketID: socketCounter++
+		});
+		socket.emit('server-send-data', data);
+	});
+
+	console.log(socket.connected);
+}
+
+// -----------------------------------------------------------------------------
+// removeDisconnectedSockets
+// desc:
+// 		- remove the unexpected disconnected sockets
+// -----------------------------------------------------------------------------
+function removeDisconnectedSockets() {
+	// sockets = sockets.filter((current) => {
+	// 	return current.socket.connected;
+	// })
+	for (var i = 0; i < sockets.length; i++) {
+		if (sockets[i].socket.connected === false) {
+			onDelete(sockets[i].socketID);
+			console.log('remove dis socket', sockets[i].socketID);
+			sockets.splice(i, 1);
+		}
+	}
+	listSockets();
+}
+
+function listSockets() {
+	var socketsString = '';
+	sockets.map((current) => {
+		socketsString = socketsString
+						.concat('socketID: ')
+						.concat(current.socketID)
+						.concat('	');
+	});
+	console.log(socketsString);
+}
+
+function getSocketByID(id) {
+	for (var i = 0; i < sockets.length; i++){
+		if (sockets[i].socketID == id)
+			return sockets[i].socket;
+	}
+	return undefined;
+}
+
+// =============================================================================
+//
+// HANDLE WORKER
+//
+// =============================================================================
+
+function messageBroker(msg) {
+	switch(msg.event) {
+		case 'onCreate':
+			finishOnCreate(msg.data);
+			break;
+			
+		case 'onDelete':
+			finishOnDelete(msg.data);
+			break;
+		
+		case 'onReply':
+			finishOnReply(msg.data);
+			break;
+
+		case 'test':
+			console.log(msg);
+			break;	
+
+		default:
+			console.log('Error: Wrong event from worker');
+			break;
+	}
+}
+
+function finishOnCreate(msg){
+	console.log('finish on create');
+}
+
+function finishOnDelete(msg){
+	console.log('finish on delete');
+}
+
+function finishOnReply(data){
+	console.log('finish on reply', data.id);
+	var socket = getSocketByID(data.id);
+	socket.emit('broker-send-reply', data);
+}
+
+function listWorkers(msg) {
+	var workersString = '';
+	if (msg) {
+		workersString = workersString.concat(msg);
+	}
+	workers.map((current) => {
+		workersString = workersString.concat('	').concat(current.workerID);
+	})
+
+	console.log(workersString);
+}
+
+function createWorker(workerID) {
+	const worker = fork('worker.js');
+	worker.send({ event: 'onCreate', value: workerID });
+	worker.on('message', (msg) => {
+		messageBroker(msg);
+	});
+	workers.push({
+		worker: worker,
+		workerID: workerID
+	});
+	listWorkers('onCreate');
+}
+
+function sendReplyToWorker(workerID, reply) {
+	var worker = getWorkerByID(workerID);
+	worker.send({
+		event: 'onReply',
+		value: reply
+	});
+}
+
+function deleteWorker(workerID) {
+	var worker = getWorkerByID(workerID);
+	worker.send({
+		event: 'onDelete'
+	});
+	removeWorkerByID(workerID);
+}
+
+function removeWorkerByID(id) {
+	for(var i = 0; i < workers.length; i++){
+		if (workers[i].workerID === id){
+			workers.splice(i, 1);
+			return;
+		}
+	}
+	console.log('ERROR removeWorkerByID id not found');
+}
+
+function getWorkerByID(id) {
+	for(var i = 0; i < workers.length; i++){
+		if (workers[i].workerID === id){
+			return workers[i].worker;
+		}
+	}
+	return undefined;
+}
+
+// -----------------------------------------------------------------------------
+// TEST
+// -----------------------------------------------------------------------------
+
+// onCreate('1');
+// onCreate('2');
+
+// setTimeout(function(){
+// 	onDelete('1');
+// }, 5000);
+
+// setInterval(() => {
+// 	onReply('2', 'message');
+// }, 8000);
