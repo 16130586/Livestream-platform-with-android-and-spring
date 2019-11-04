@@ -1,10 +1,17 @@
 package com.t4.LiveServer.model.wowza;
 
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.t4.LiveServer.config.WowzaConfig;
 import org.springframework.http.*;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@JsonRootName("live_stream")
 public class WowzaStream {
     public static final String URL_LIVE_STREAM="https://api.cloud.wowza.com/api/v1.3/live_streams";
     public static final String URL_STREAM_TARGETS ="https://api.cloud.wowza.com/api/v1.3/stream_targets";
@@ -16,14 +23,15 @@ public class WowzaStream {
     @JsonProperty("id")
     public String id;
     @JsonProperty("aspect_ratio_height")
-    public int height;
+    public int height = 720;
     @JsonProperty("aspect_ratio_width")
-    public int width;
+    public int width = 1280;
     @JsonProperty("billing_mode")
     public String billingMode = "pay_as_you_go";
     @JsonProperty("broadcast_location")
     public String broadCastLocation = "asia_pacific_singapore";
     @JsonProperty("closed_caption_type ")
+    @JsonAlias({"closed_caption_type"})
     public String closedCaptionType = "none";
     @JsonProperty("encoder")
     public String encoder = "other_rtmp";
@@ -57,6 +65,41 @@ public class WowzaStream {
     public boolean isUseStreamSource = false;
     @JsonProperty("username")
     public String userName = "GENRATE_USERNAME";
+    @JsonProperty("created_at")
+    public Date createdAt;
+    @JsonProperty("updated_at")
+    public Date updatedAt;
+    @JsonProperty("connection_code")
+    public String connectionCode;
+    @JsonProperty("connection_code_expires_at")
+    public Date connectionCodeExpiresAt;
+    @JsonProperty("source_connection_information")
+    public SourceConnectionInformation sourceConnectionInformation;
+    @JsonProperty("player_id")
+    public String playerId;
+    @JsonProperty("player_width")
+    public Integer playerWidth;
+    @JsonProperty("player_countdown")
+    public boolean playerCountdown;
+    @JsonProperty("player_embed_code")
+    public String playerEmbedCode;
+    @JsonProperty("player_hls_playback_url")
+    public String playerHlsPlaybackUrl;
+    @JsonProperty("hosted_page")
+    public boolean hostedPage;
+    @JsonProperty("hosted_page_title")
+    public String hostedPageTitle;
+    @JsonProperty("hosted_page_url")
+    public String hostedPageUrl;
+    @JsonProperty("hosted_page_description")
+    public String hostedPageDescription;
+    @JsonProperty("hosted_page_sharing_icons")
+    public boolean hostedPageSharingIcons;
+    @JsonProperty("stream_targets")
+    public List<StreamTarget> streamTargets;
+    @JsonProperty("direct_playback_urls")
+    public DirectPlaybackUrls directPlaybackUrls;
+
 
     public WowzaStream(int height, int width, String billingMode, String broadCastLocation, String encoder, String name, String transCoderType) {
         this.height = height;

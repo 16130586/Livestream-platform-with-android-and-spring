@@ -5,4 +5,6 @@ import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 
 public interface StreamBusiness {
     Object create(CreatingStreamEntryParams entryParams);
+    Object start(String id);
+    Object stop(String id);
 }

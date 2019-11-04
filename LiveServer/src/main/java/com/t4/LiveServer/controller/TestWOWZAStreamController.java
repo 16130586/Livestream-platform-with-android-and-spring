@@ -1,7 +1,10 @@
 package com.t4.LiveServer.controller;
 
+import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
+import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.core.ApiResponse;
+import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.model.wowza.StreamTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +24,7 @@ public class TestWOWZAStreamController {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
         response.message="create live stream success!";
-        response.data = WOWZAStreamBusiness.create();
+        response.data = WOWZAStreamBusiness.create("auto genrating name : " + System.currentTimeMillis());
         return response;
     }
 
@@ -318,4 +321,29 @@ public class TestWOWZAStreamController {
         response.data = WOWZAStreamBusiness.fetchAllOutputOfATransCoder(id);
         return response;
     }
+    @PostMapping("/transcoders/{transCoderId}/outputs/{outputId}/output_stream_targets/{streamTargetId}")
+    public ApiResponse addOutputStreamTargetToTransCoderOfAStream(
+            @PathVariable("transCoderId") String transCoderId,
+            @PathVariable("outputId") String outputId,
+            @PathVariable("streamTargetId") String streamTargetId){
+        ApiResponse response = new ApiResponse();
+        response.statusCode = 200;
+        response.message = "add  output stream to a" +
+                " target trans coder of a stream  " + transCoderId + ", " + outputId;
+        AdditionOutputStreamTargetToTransCoderEntryParam entry = new AdditionOutputStreamTargetToTransCoderEntryParam();
+        entry.streamTargetId = streamTargetId;
+        entry.outputId = outputId;
+        entry.transCoderId = transCoderId;
+        response.data = WOWZAStreamBusiness.addOutputStreamTargetToTransCoderOfAStream(entry);
+        return response;
+    }
+
+//    @Autowired
+//    FacebookLiveBusiness fb;
+//    @PostMapping("facebook-live")
+//    public ApiResponse addOutputStreamTargetToTransCoderOfAStream(){
+//        FacebookConfig fbConfig = new FacebookConfig();
+//        return fb.individualCreate(fbConfig);
+//    }
+
 }

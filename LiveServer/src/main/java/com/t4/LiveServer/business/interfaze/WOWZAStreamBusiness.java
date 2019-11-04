@@ -1,16 +1,15 @@
 package com.t4.LiveServer.business.interfaze;
 
-import com.t4.LiveServer.model.wowza.OutputStreamTarget;
-import com.t4.LiveServer.model.wowza.StreamOutput;
-import com.t4.LiveServer.model.wowza.StreamTarget;
+import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
+import com.t4.LiveServer.model.wowza.*;
 
 import java.util.List;
 
 public interface WOWZAStreamBusiness {
-    String create();
-    String fetchAll();
-    String fetchOne(String id);
-    String update();
+    WowzaStream create(String name);
+    List<WowzaStream> fetchAll();
+    WowzaStream fetchOne(String id);
+    String update(WowzaStream entry);
     String delete(String id);
     String start(String id);
     String stop(String id);
@@ -20,13 +19,17 @@ public interface WOWZAStreamBusiness {
     String fetchState(String id);
     String fetchMetrics(String id);
     String fetchVersions();
-    StreamTarget createCustomStreamTarget(StreamTarget entry);
+
     String fetchAllCustomStreamTargets();
     String fetchCustomStreamTarget(String id);
     String updateCustomStreamTarget(String id);
     String deleteCustomStreamTarget(String id);
     String regenerateCodeForAnyStreamTarget(String id);
 
-    String getDefaultTransCoder(String id);
+
+    StreamTarget createCustomStreamTarget(StreamTarget entry);
+    TransCoder getDefaultTransCoder(String id);
+    String addOutputStreamTargetToTransCoderOfAStream(
+            AdditionOutputStreamTargetToTransCoderEntryParam entry);
     List<StreamOutput> fetchAllOutputOfATransCoder(String id);
 }

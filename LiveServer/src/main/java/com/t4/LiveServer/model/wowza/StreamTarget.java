@@ -2,13 +2,13 @@ package com.t4.LiveServer.model.wowza;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@NoArgsConstructor
 @JsonRootName("stream_target_custom")
 public class StreamTarget {
+    public static final String PROVIDER_RTMPS = "rtmps";
+    public static final String PROVIDER_RTMP = "rtmp";
     @JsonProperty("connection_code")
     public String connectionCode;
     @JsonProperty("connection_code_expires_at")
@@ -40,6 +40,16 @@ public class StreamTarget {
     @JsonProperty("username")
     public String username;
 
+    private StreamTarget(){
+
+    }
+
+    public StreamTarget(String provider ,String targetName , String primaryUrl , String streamName){
+        this.name = targetName;
+        this.primaryUrl = primaryUrl;
+        this.streamName = streamName;
+        this.provider = provider;
+    }
     public String getConnectionCode() {
         return connectionCode;
     }
@@ -160,3 +170,4 @@ public class StreamTarget {
         this.username = username;
     }
 }
+

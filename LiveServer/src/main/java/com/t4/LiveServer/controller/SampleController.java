@@ -4,6 +4,7 @@ import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.SampleBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.core.ApiResponse;
+import com.t4.LiveServer.model.facebook.LiveStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +56,7 @@ public class SampleController {
     FacebookLiveBusiness facebookLiveBusiness;
     FacebookConfig fbConfig = new FacebookConfig();
     @GetMapping("/create")
-    public ApiResponse create(){
+    public LiveStream create(){
         return facebookLiveBusiness.individualCreate(fbConfig);
     }
 
