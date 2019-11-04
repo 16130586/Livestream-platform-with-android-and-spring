@@ -1,8 +1,8 @@
 package com.t4.LiveServer.business.imp;
 
-import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
+import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
-import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
+import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;

@@ -1,8 +1,8 @@
 package com.t4.LiveServer.dependency;
 
-import com.t4.LiveServer.business.imp.LiveObjectV3FBBusinessImp;
+import com.t4.LiveServer.business.imp.facebook.FacebookLiveBusinessImp;
 import com.t4.LiveServer.business.imp.StreamBusinessImp;
-import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
+import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class Business {
 
     @Bean
-    public FacebookLiveBusiness getV3FacebookLiveBusiness(){
-        return new LiveObjectV3FBBusinessImp();
+    public FacebookLiveBusiness getFacebookLiveBusiness(){
+        return new FacebookLiveBusinessImp();
     }
     @Bean
     public StreamBusiness getStreamBusiness(){

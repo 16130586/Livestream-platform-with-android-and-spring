@@ -1,17 +1,26 @@
-package com.t4.LiveServer.business.imp;
+package com.t4.LiveServer.business.imp.facebook;
 
-import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.core.JsonHelper;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
 import com.t4.LiveServer.model.facebook.LiveStream;
+import com.t4.LiveServer.model.facebook.group.FacebookGroup;
+import com.t4.LiveServer.model.facebook.group.Group;
+import com.t4.LiveServer.model.facebook.page.FacebookPage;
+import com.t4.LiveServer.model.facebook.page.Page;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
-public class LiveObjectV3FBBusinessImp implements FacebookLiveBusiness {
+public class FacebookLiveBusinessImp implements FacebookLiveBusiness {
     private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
 
     private LiveStream create(FacebookConfig fbConfig , String streamToId) {
@@ -65,5 +74,39 @@ public class LiveObjectV3FBBusinessImp implements FacebookLiveBusiness {
             e.printStackTrace();
         }
         return response;
+    }
+    @Override
+    public List<Group> getFacebookGroups (String accessToken) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        String url = FacebookConfig.V5_BASE_URL + "me/groups?access_token="
+                + accessToken + "&limit=5000";
+        ResponseEntity<String> rs = restTemplate.getForEntity(url, String.class);
+        try {
+            FacebookGroup facebookGroup = objectMapper.readValue(rs.getBody(), FacebookGroup.class);
+
+            return (facebookGroup.data != null && facebookGroup.data.size() > 0)
+                    ? facebookGroup.data : Collections.emptyList();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Page> getFacebookPages(String accessToken) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        String url = FacebookConfig.V5_BASE_URL + "me/accounts?access_token="
+                + accessToken;
+        ResponseEntity<String> rs = restTemplate.getForEntity(url, String.class);
+        try {
+            FacebookPage facebookPage = objectMapper.readValue(rs.getBody(), FacebookPage.class);
+            return (facebookPage.data != null && facebookPage.data.size() > 0)
+                    ? facebookPage.data : Collections.emptyList();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 }

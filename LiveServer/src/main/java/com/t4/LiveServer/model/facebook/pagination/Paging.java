@@ -1,0 +1,33 @@
+package com.t4.LiveServer.model.facebook.pagination;
+
+import com.t4.LiveServer.model.facebook.pagination.Cursors;
+
+public class Paging {
+    Cursors cursors;
+    private String previos;
+    private String next;
+
+    public Cursors getCursors() {
+        return cursors;
+    }
+
+    public void setCursors(Cursors cursors) {
+        this.cursors = cursors;
+    }
+
+    public String getPrevios() {
+        return previos;
+    }
+
+    public void setPrevios(String previos) {
+        this.previos = previos;
+    }
+
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
+}

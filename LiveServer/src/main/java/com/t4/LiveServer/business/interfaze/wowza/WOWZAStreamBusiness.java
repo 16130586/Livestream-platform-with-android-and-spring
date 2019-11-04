@@ -1,4 +1,4 @@
-package com.t4.LiveServer.business.interfaze;
+package com.t4.LiveServer.business.interfaze.wowza;
 
 import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.model.wowza.*;

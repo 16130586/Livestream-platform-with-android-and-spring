@@ -1,14 +1,11 @@
-package com.t4.LiveServer.business.imp;
+package com.t4.LiveServer.business.imp.wowza;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
-import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
+import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.core.JsonHelper;
 import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
 import com.t4.LiveServer.model.wowza.*;
-import org.apache.el.stream.Stream;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -16,14 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class WOWZAStreamBusinessImp implements com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness {
+public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
     private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
 
 
