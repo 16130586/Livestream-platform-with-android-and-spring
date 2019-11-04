@@ -1,8 +1,6 @@
 package com.t4.LiveServer.controller;
 
-import com.t4.LiveServer.business.interfaze.FacebookLiveBusiness;
-import com.t4.LiveServer.business.interfaze.WOWZAStreamBusiness;
-import com.t4.LiveServer.config.FacebookConfig;
+import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.model.wowza.StreamTarget;
