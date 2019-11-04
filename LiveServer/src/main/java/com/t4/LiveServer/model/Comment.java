@@ -1,13 +1,22 @@
 package com.t4.LiveServer.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "comment")
 public class Comment {
+    @Id
     private Integer commentId;
+    @Column(name = "message")
     private String message;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_time")
     private Date createTime;
-    private StreamStatus streamStatus;
-    private CommentSource commentSource;
+    @Column(name = "status")
+    private Integer streamStatus;
+    @Column(name = "source")
+    private Integer commentSource;
 
     public Integer getCommentId() {
         return commentId;
@@ -33,19 +42,19 @@ public class Comment {
         this.createTime = createTime;
     }
 
-    public StreamStatus getStreamStatus() {
+    public Integer getStreamStatus() {
         return streamStatus;
     }
 
-    public void setStreamStatus(StreamStatus streamStatus) {
+    public void setStreamStatus(Integer streamStatus) {
         this.streamStatus = streamStatus;
     }
 
-    public CommentSource getCommentSource() {
+    public Integer getCommentSource() {
         return commentSource;
     }
 
-    public void setCommentSource(CommentSource commentSource) {
+    public void setCommentSource(Integer commentSource) {
         this.commentSource = commentSource;
     }
 }

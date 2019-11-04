@@ -1,17 +1,56 @@
 package com.t4.LiveServer.model;
 
-import java.util.Base64;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
     private Integer userId;
-    private  String userName;
-    private  String password;
-    private  String nickName;
-    private Base64 avatar;
+    @Column(name = "username")
+    private String userName;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "nick_name")
+    private String nickName;
+    @Column(name = "avatar")
+    private byte[] avatar;
+    @Column(name = "gmail")
     private String gmail;
+    @Column(name = "forgot_token")
     private String forgotToken;
-    private  Integer subcriberTotal;
-    private StreamType favouraiteType;
+    @Column(name = "subscribe_total")
+    private Integer subscribeTotal;
+    @ManyToMany
+    @JoinTable(name = "notification_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "notify_id"))
+    private List<Notification> notifications;
+    @ManyToMany
+    @JoinTable(name = "user_favourite",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
+    private List<StreamType> favouriteType;
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<FavoriteSaved> favouriteSaved;
+    @ManyToMany
+    @JsonIgnoreProperties(value = {"streams", "subscribers", "favouriteType", "notifications", "favouriteSaved"})
+    @JoinTable(name = "subscriber",
+            joinColumns = @JoinColumn(name = "publisher_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
+    private List<User> subscribers;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private List<PaySubscription> paySubscriptions;
+    @OneToMany
+    @JsonIgnoreProperties("owner")
+    @JoinColumn(name = "owner_id")
+    private List<Stream> streams;
 
     public Integer getUserId() {
         return userId;
@@ -45,11 +84,11 @@ public class User {
         this.nickName = nickName;
     }
 
-    public Base64 getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Base64 avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 
@@ -69,19 +108,68 @@ public class User {
         this.forgotToken = forgotToken;
     }
 
-    public Integer getSubcriberTotal() {
-        return subcriberTotal;
+    public Integer getSubscribeTotal() {
+        return subscribeTotal;
     }
 
-    public void setSubcriberTotal(Integer subcriberTotal) {
-        this.subcriberTotal = subcriberTotal;
+    public void setSubscribeTotal(Integer subscribeTotal) {
+        this.subscribeTotal = subscribeTotal;
     }
 
-    public StreamType getFavouraiteType() {
-        return favouraiteType;
+    public List<StreamType> getFavouriteType() {
+        return favouriteType;
     }
 
-    public void setFavouraiteType(StreamType favouraiteType) {
-        this.favouraiteType = favouraiteType;
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public List<FavoriteSaved> getFavouriteSaved() {
+        return favouriteSaved;
+    }
+
+    public void setFavouriteSaved(List<FavoriteSaved> favouriteSaved) {
+        this.favouriteSaved = favouriteSaved;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void setFavouriteType(List<StreamType> favouriteType) {
+        this.favouriteType = favouriteType;
+    }
+
+    public List<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public List<PaySubscription> getPaySubscriptions() {
+        return paySubscriptions;
+    }
+
+    public void setPaySubscriptions(List<PaySubscription> paySubscriptions) {
+        this.paySubscriptions = paySubscriptions;
+    }
+
+    public List<Stream> getStreams() {
+        return streams;
+    }
+
+    public void setStreams(List<Stream> streams) {
+        this.streams = streams;
+    }
+
+    public boolean checkExpiredSubscription() {
+        if (paySubscriptions == null || paySubscriptions.size() == 0)
+            return false;
+        Date endTime = this.paySubscriptions.get(paySubscriptions.size()-1).getEndTime();
+        if (endTime == null)
+            return false;
+        return (endTime.compareTo(new Date()) >= 0);
     }
 }
