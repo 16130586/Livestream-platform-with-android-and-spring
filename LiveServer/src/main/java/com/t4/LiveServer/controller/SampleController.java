@@ -52,16 +52,16 @@ public class SampleController {
         return sampleBusiness.sampleEcho(id);
     }
 
-    @Autowired
-    FacebookLiveBusiness facebookLiveBusiness;
-    FacebookConfig fbConfig = new FacebookConfig();
-    @GetMapping("/create")
-    public LiveStream create(){
-        return facebookLiveBusiness.individualCreate(fbConfig);
-    }
+//    @Autowired
+//    FacebookLiveBusiness facebookLiveBusiness;
+//    FacebookConfig fbConfig = new FacebookConfig();
+//    @GetMapping("/create")
+//    public LiveStream create(){
+//        return facebookLiveBusiness.individualCreate(fbConfig);
+//    }
 
-    @GetMapping("/stop/{id}")
-    public ApiResponse create(@PathVariable("id") String id){
-        return facebookLiveBusiness.stop(fbConfig , id);
-    }
+//    @GetMapping("/stop/{id}")
+//    public ApiResponse create(@PathVariable("id") String id){
+//        return facebookLiveBusiness.stop(fbConfig , id);
+//    }
 }
