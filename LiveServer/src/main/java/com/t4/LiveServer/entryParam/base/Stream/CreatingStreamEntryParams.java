@@ -7,6 +7,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class CreatingStreamEntryParams {
+    public String name;
     public int isStored;
     public List<StreamingForward> forwards;
 

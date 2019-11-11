@@ -3,6 +3,7 @@ package com.t4.LiveServer.business.imp.wowza;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.core.JsonHelper;
+import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
 import com.t4.LiveServer.model.wowza.*;
@@ -13,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
@@ -24,9 +22,11 @@ public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
 
 
     @Override
-    public WowzaStream create(String name) {
+    public WowzaStream create(CreatingStreamEntryParams entryParams) {
         WowzaStream wowzaStream = new WowzaStream(1280, 720, "pay_as_you_go", "asia_pacific_singapore",
-                "other_rtmp", name, "transcoded");
+                "other_rtmp", entryParams.name, "transcoded");
+        wowzaStream.isRecording = entryParams.isStored > 0;
+        wowzaStream.hostedPageTitle = entryParams.name;
         String jsonData = JsonHelper.serialize(wowzaStream);
         jsonData = "{\"live_stream\":" + jsonData + "}";
         HttpEntity<String> requestBody = new HttpEntity<>(jsonData, wowzaStream.getWowzaConfigHeaders());
@@ -69,16 +69,15 @@ public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
     }
 
     @Override
-    public String start(String id) {
+    public WowzaStream start(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM + "/" + id + "/start", HttpMethod.PUT, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-
-        return result.getBody();
+        return JsonHelper.deserialize(DeserializationFeature.UNWRAP_ROOT_VALUE, result.getBody(), WowzaStream.class);
     }
 
     @Override
-    public String stop(String id) {
+    public WowzaStream stop(String id) {
         ResponseEntity<String> result = restTemplate.exchange(WowzaStream.URL_LIVE_STREAM + "/" + id + "/stop", HttpMethod.PUT, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
-        return result.getBody();
+        return JsonHelper.deserialize(DeserializationFeature.UNWRAP_ROOT_VALUE, result.getBody(), WowzaStream.class);
     }
 
     @Override
@@ -207,4 +206,12 @@ public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
         return Collections.emptyList();
     }
 
+    @Override
+    public StreamOutput getStreamOutput(String streamId, String name) {
+        List<StreamOutput> outputs = fetchAllOutputOfATransCoder(streamId);
+        Optional<StreamOutput> rs = outputs.stream().filter(transCoder -> {
+            return transCoder.name.contains(name);
+        }).findAny();
+        return rs.isPresent() ? rs.get() : null;
+    }
 }

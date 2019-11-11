@@ -2,6 +2,7 @@ package com.t4.LiveServer.model.wowza;
 
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.t4.LiveServer.config.WowzaConfig;
@@ -13,13 +14,17 @@ import java.util.Map;
 
 @JsonRootName("live_stream")
 public class WowzaStream {
-    public static final String URL_LIVE_STREAM="https://api.cloud.wowza.com/api/v1.3/live_streams";
-    public static final String URL_STREAM_TARGETS ="https://api.cloud.wowza.com/api/v1.3/stream_targets";
+    @JsonIgnore
+    public static final String URL_LIVE_STREAM = "https://api.cloud.wowza.com/api/v1.3/live_streams";
+    @JsonIgnore
+    public static final String URL_STREAM_TARGETS = "https://api.cloud.wowza.com/api/v1.3/stream_targets";
+    @JsonIgnore
     public static final String URL_TRANSCODERS = "https://api.cloud.wowza.com/api/v1.3/transcoders";
 
     public WowzaStream() {
 
     }
+
     @JsonProperty("id")
     public String id;
     @JsonProperty("aspect_ratio_height")
@@ -36,7 +41,7 @@ public class WowzaStream {
     @JsonProperty("encoder")
     public String encoder = "other_rtmp";
     @JsonProperty("name")
-    public String name;
+    public String name = "";
     @JsonProperty("transcoder_type")
     public String transCoderType = "transcoded";
     @JsonProperty("delivery_method")
@@ -78,7 +83,7 @@ public class WowzaStream {
     @JsonProperty("player_id")
     public String playerId;
     @JsonProperty("player_width")
-    public Integer playerWidth;
+    public Integer playerWidth = 640;
     @JsonProperty("player_countdown")
     public boolean playerCountdown;
     @JsonProperty("player_embed_code")
@@ -86,20 +91,185 @@ public class WowzaStream {
     @JsonProperty("player_hls_playback_url")
     public String playerHlsPlaybackUrl;
     @JsonProperty("hosted_page")
-    public boolean hostedPage;
+    public boolean hostedPage = false;
     @JsonProperty("hosted_page_title")
-    public String hostedPageTitle;
+    public String hostedPageTitle = "";
     @JsonProperty("hosted_page_url")
-    public String hostedPageUrl;
+    public String hostedPageUrl = "";
+    @JsonProperty("hosted_page_logo_image_url")
+    public String hostedPageLogoUrl = "";
     @JsonProperty("hosted_page_description")
-    public String hostedPageDescription;
+    public String hostedPageDescription = "";
     @JsonProperty("hosted_page_sharing_icons")
-    public boolean hostedPageSharingIcons;
+    public boolean hostedPageSharingIcons = false;
     @JsonProperty("stream_targets")
     public List<StreamTarget> streamTargets;
     @JsonProperty("direct_playback_urls")
     public DirectPlaybackUrls directPlaybackUrls;
+    @JsonProperty("ip_address")
+    public String ipAddress;
+    @JsonProperty("state")
+    public String state;
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getConnectionCode() {
+        return connectionCode;
+    }
+
+    public void setConnectionCode(String connectionCode) {
+        this.connectionCode = connectionCode;
+    }
+
+    public Date getConnectionCodeExpiresAt() {
+        return connectionCodeExpiresAt;
+    }
+
+    public void setConnectionCodeExpiresAt(Date connectionCodeExpiresAt) {
+        this.connectionCodeExpiresAt = connectionCodeExpiresAt;
+    }
+
+    public SourceConnectionInformation getSourceConnectionInformation() {
+        return sourceConnectionInformation;
+    }
+
+    public void setSourceConnectionInformation(SourceConnectionInformation sourceConnectionInformation) {
+        this.sourceConnectionInformation = sourceConnectionInformation;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
+
+    public Integer getPlayerWidth() {
+        return playerWidth;
+    }
+
+    public void setPlayerWidth(Integer playerWidth) {
+        this.playerWidth = playerWidth;
+    }
+
+    public boolean isPlayerCountdown() {
+        return playerCountdown;
+    }
+
+    public void setPlayerCountdown(boolean playerCountdown) {
+        this.playerCountdown = playerCountdown;
+    }
+
+    public String getPlayerEmbedCode() {
+        return playerEmbedCode;
+    }
+
+    public void setPlayerEmbedCode(String playerEmbedCode) {
+        this.playerEmbedCode = playerEmbedCode;
+    }
+
+    public String getPlayerHlsPlaybackUrl() {
+        return playerHlsPlaybackUrl;
+    }
+
+    public void setPlayerHlsPlaybackUrl(String playerHlsPlaybackUrl) {
+        this.playerHlsPlaybackUrl = playerHlsPlaybackUrl;
+    }
+
+    public boolean isHostedPage() {
+        return hostedPage;
+    }
+
+    public void setHostedPage(boolean hostedPage) {
+        this.hostedPage = hostedPage;
+    }
+
+    public String getHostedPageTitle() {
+        return hostedPageTitle;
+    }
+
+    public void setHostedPageTitle(String hostedPageTitle) {
+        this.hostedPageTitle = hostedPageTitle;
+    }
+
+    public String getHostedPageUrl() {
+        return hostedPageUrl;
+    }
+
+    public void setHostedPageUrl(String hostedPageUrl) {
+        this.hostedPageUrl = hostedPageUrl;
+    }
+
+    public String getHostedPageLogoUrl() {
+        return hostedPageLogoUrl;
+    }
+
+    public void setHostedPageLogoUrl(String hostedPageLogoUrl) {
+        this.hostedPageLogoUrl = hostedPageLogoUrl;
+    }
+
+    public String getHostedPageDescription() {
+        return hostedPageDescription;
+    }
+
+    public void setHostedPageDescription(String hostedPageDescription) {
+        this.hostedPageDescription = hostedPageDescription;
+    }
+
+    public boolean isHostedPageSharingIcons() {
+        return hostedPageSharingIcons;
+    }
+
+    public void setHostedPageSharingIcons(boolean hostedPageSharingIcons) {
+        this.hostedPageSharingIcons = hostedPageSharingIcons;
+    }
+
+    public List<StreamTarget> getStreamTargets() {
+        return streamTargets;
+    }
+
+    public void setStreamTargets(List<StreamTarget> streamTargets) {
+        this.streamTargets = streamTargets;
+    }
+
+    public DirectPlaybackUrls getDirectPlaybackUrls() {
+        return directPlaybackUrls;
+    }
+
+    public void setDirectPlaybackUrls(DirectPlaybackUrls directPlaybackUrls) {
+        this.directPlaybackUrls = directPlaybackUrls;
+    }
 
     public WowzaStream(int height, int width, String billingMode, String broadCastLocation, String encoder, String name, String transCoderType) {
         this.height = height;

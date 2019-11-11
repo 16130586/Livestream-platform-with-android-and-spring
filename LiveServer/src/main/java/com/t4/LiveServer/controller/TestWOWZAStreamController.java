@@ -17,14 +17,14 @@ public class TestWOWZAStreamController {
     public TestWOWZAStreamController() {
     }
 
-    @PostMapping("/create")
-    public ApiResponse createLiveStream() {
-        ApiResponse response = new ApiResponse();
-        response.statusCode = 200;
-        response.message="create live stream success!";
-        response.data = WOWZAStreamBusiness.create("auto genrating name : " + System.currentTimeMillis());
-        return response;
-    }
+//    @PostMapping("/create")
+//    public ApiResponse createLiveStream() {
+//        ApiResponse response = new ApiResponse();
+//        response.statusCode = 200;
+//        response.message="create live stream success!";
+//        response.data = WOWZAStreamBusiness.create("auto genrating name : " + System.currentTimeMillis());
+//        return response;
+//    }
 
     @GetMapping("/fetchAll")
     public ApiResponse fetchAllLiveStream() {
