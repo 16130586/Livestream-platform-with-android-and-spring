@@ -15,42 +15,54 @@ public class StreamController {
     StreamBusiness streamBusiness;
 
     @PostMapping("/create")
-    public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams){
+    public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams) {
         ApiResponse apiResponse = new ApiResponse();
-        try{
+        try {
             Object rs = streamBusiness.create(entryParams);
             apiResponse.statusCode = 200;
             apiResponse.message = "Ok";
             apiResponse.data = rs;
-        }catch (Exception e){
+        } catch (Exception e) {
             apiResponse.statusCode = 500;
             apiResponse.message = e.getMessage();
         }
         return apiResponse;
     }
+
     @PostMapping("/{id}/start")
-    public ApiResponse start(@PathVariable("id") String id){
+    public ApiResponse start(@PathVariable("id") String id) {
         ApiResponse apiResponse = new ApiResponse();
-        try{
+        try {
             Object rs = streamBusiness.start(id);
-            apiResponse.statusCode = 200;
-            apiResponse.message = "Ok";
-            apiResponse.data = rs;
-        }catch (Exception e){
+            if (rs != null) {
+                apiResponse.statusCode = 200;
+                apiResponse.message = "Ok";
+                apiResponse.data = rs;
+            }else {
+                apiResponse.statusCode = 400;
+                apiResponse.message = "Not started!";
+            }
+        } catch (Exception e) {
             apiResponse.statusCode = 500;
             apiResponse.message = e.getMessage();
         }
         return apiResponse;
     }
+
     @PostMapping("/{id}/stop")
-    public ApiResponse stop(@PathVariable("id") String id){
+    public ApiResponse stop(@PathVariable("id") String id) {
         ApiResponse apiResponse = new ApiResponse();
-        try{
+        try {
             Object rs = streamBusiness.stop(id);
-            apiResponse.statusCode = 200;
-            apiResponse.message = "Ok";
-            apiResponse.data = rs;
-        }catch (Exception e){
+            if (rs != null) {
+                apiResponse.statusCode = 200;
+                apiResponse.message = "Ok";
+                apiResponse.data = rs;
+            }else {
+                apiResponse.statusCode = 400;
+                apiResponse.message = "Not stopped!";
+            }
+        } catch (Exception e) {
             apiResponse.statusCode = 500;
             apiResponse.message = e.getMessage();
         }

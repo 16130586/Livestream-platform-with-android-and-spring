@@ -1,6 +1,9 @@
 package com.t4.LiveServer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.t4.LiveServer.model.wowza.WowzaStream;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "stream")
+@NoArgsConstructor
+@Data
 public class Stream {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +47,57 @@ public class Stream {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "stream_id")
     private List<Comment> comments;
+
+    // new
+    @Column(name = "primary_server_url")
+    private String primaryServerURL;
+    @Column(name = "host_port")
+    private int hostPort;
+    @Column(name = "application")
+    private String application;
+    @Column(name = "stream_name")
+    private String streamName;
+    // end new
+    public Stream(WowzaStream liveWowza){
+        setWowzaId(liveWowza.id);
+        setStatus(-1);
+        setPrimaryServerURL(liveWowza.sourceConnectionInformation.primaryServer);
+        setHostPort(liveWowza.sourceConnectionInformation.hostPort);
+        setApplication(liveWowza.sourceConnectionInformation.application);
+        setStreamName(liveWowza.sourceConnectionInformation.streamName);
+    }
+
+    public String getPrimaryServerURL() {
+        return primaryServerURL;
+    }
+
+    public void setPrimaryServerURL(String primaryServerURL) {
+        this.primaryServerURL = primaryServerURL;
+    }
+
+    public int getHostPort() {
+        return hostPort;
+    }
+
+    public void setHostPort(int hostPort) {
+        this.hostPort = hostPort;
+    }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getStreamName() {
+        return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+        this.streamName = streamName;
+    }
 
     public Integer getStreamId() {
         return streamId;

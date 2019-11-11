@@ -2,6 +2,7 @@ package com.t4.LiveServer.model.wowza;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.t4.LiveServer.model.ForwardStream;
 
 import java.util.Date;
 
@@ -49,6 +50,13 @@ public class StreamTarget {
         this.primaryUrl = primaryUrl;
         this.streamName = streamName;
         this.provider = provider;
+    }
+    public StreamTarget(ForwardStream fw){
+        this.name = fw.streamName;
+        this.primaryUrl = fw.primaryUrl;
+        this.streamName = fw.forwardType.name();
+        this.provider = fw.provider;
+
     }
     public String getConnectionCode() {
         return connectionCode;
