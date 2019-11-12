@@ -31,6 +31,7 @@ public class ValidationHandleException extends ResponseEntityExceptionHandler {
         response.statusCode = HttpStatus.BAD_REQUEST.value();
         response.message = "error validate";
         response.data = errors;
+        System.out.println("here");
         return handleExceptionInternal(ex, response, headers, HttpStatus.BAD_REQUEST, request);
     }
 }

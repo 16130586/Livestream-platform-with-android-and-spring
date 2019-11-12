@@ -8,18 +8,25 @@ import java.util.Date;
 @Entity
 @Table(name = "favourite_saved")
 public class FavoriteSaved {
+
+    private Integer id;
+    private Stream stream;
+    private Date savedTime;
+    private Integer status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @ManyToOne
     @JsonIgnoreProperties("owner")
     @JoinColumn(name = "stream_id")
-    private Stream stream;
-    @Column(name = "saved_time")
-    private Date savedTime;
-    @Column(name = "status")
-    private Integer status;
-
     public Stream getStream() {
         return stream;
     }
@@ -28,6 +35,7 @@ public class FavoriteSaved {
         this.stream = stream;
     }
 
+    @Column(name = "saved_time")
     public Date getSavedTime() {
         return savedTime;
     }
@@ -36,6 +44,7 @@ public class FavoriteSaved {
         this.savedTime = savedTime;
     }
 
+    @Column(name = "status")
     public Integer getStatus() {
         return status;
     }

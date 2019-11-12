@@ -53,56 +53,56 @@ services:
     networks:
       - M_REP
 #ELK - stack
-  kibana:
-    image: kibana:7.3.2
-    container_name: kibana-client
-    ports:
-        - "5601:5601"
-    networks:
-        - ELK
-        #restart: always
-    environment:
-        SERVER_NAME: kibana
-        ELASTICSEARCH_HOSTS: http://elasticsearch-server:9200
-  elasticsearch:
-    image: elasticsearch:7.3.2
-    container_name: elasticsearch-server
-    ports:
-        - "9200:9200"
-        - "9300:9300"
-        #restart: always
-    networks:
-        - ELK
-    ulimits:
-        nproc: 65535
-        memlock:
-           soft: -1
-           hard: -1
-    environment:
-        - node.name=elasticsearch1
-        - cluster.name=docker-cluster
-        - cluster.initial_master_nodes=elasticsearch1
-        - bootstrap.memory_lock=true
-        - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
-        - http.cors.enabled=true
-        - http.cors.allow-origin=*
-        - network.host=_eth0_
-  logstash:
-    image: logstash:7.3.2
-    container_name: logstash-client
-    networks:
-        - ELK
-    ports:
-        - "5043:5043"
-        - "3232:3232"
-        - "5044:5044"
-    environment:
-        LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    volumes:
-        - ./LiveServer/log:/usr/log-storage
-        - ./docker-storage/elk/sincedb:/usr/storage/
-        - ./docker-storage/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-        - ./docker-storage/elk/logstash.yml:/usr/share/logstash/config/logstash.yml  
+#  kibana:
+#    image: kibana:7.3.2
+#    container_name: kibana-client
+#    ports:
+#        - "5601:5601"
+#    networks:
+#        - ELK
+#        #restart: always
+#    environment:
+#        SERVER_NAME: kibana
+#        ELASTICSEARCH_HOSTS: http://elasticsearch-server:9200
+#  elasticsearch:
+#    image: elasticsearch:7.3.2
+#    container_name: elasticsearch-server
+#    ports:
+#        - "9200:9200"
+#        - "9300:9300"
+#        #restart: always
+#    networks:
+#        - ELK
+#    ulimits:
+#        nproc: 65535
+#        memlock:
+#           soft: -1
+#           hard: -1
+#    environment:
+#        - node.name=elasticsearch1
+#        - cluster.name=docker-cluster
+#        - cluster.initial_master_nodes=elasticsearch1
+#        - bootstrap.memory_lock=true
+#        - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
+#        - http.cors.enabled=true
+#        - http.cors.allow-origin=*
+#        - network.host=_eth0_
+#  logstash:
+#    image: logstash:7.3.2
+#    container_name: logstash-client
+#    networks:
+#        - ELK
+#    ports:
+#        - "5043:5043"
+#        - "3232:3232"
+#        - "5044:5044"
+#    environment:
+#        LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+#    volumes:
+#        - ./LiveServer/log:/usr/log-storage
+#        - ./docker-storage/elk/sincedb:/usr/storage/
+#       - ./docker-storage/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#        - ./docker-storage/elk/logstash.yml:/usr/share/logstash/config/logstash.yml  
 networks:
      M_REP:
      ELK:

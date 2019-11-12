@@ -7,19 +7,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "notification")
 public class Notification {
+
+    private Integer notificationId;
+    private String message;
+    private Stream stream;
+    private Integer status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer notificationId;
-    @Column(name = "message")
-    private String message;
-    @OneToOne
-    @JsonIgnoreProperties(value = {"owner", "comments"})
-    @JoinColumn(name = "stream_id")
-    private Stream stream;
-    @Column(name = "status")
-    private Integer status;
-
     public Integer getNotificationId() {
         return notificationId;
     }
@@ -28,6 +24,7 @@ public class Notification {
         this.notificationId = notificationId;
     }
 
+    @Column(name = "message")
     public String getMessage() {
         return message;
     }
@@ -36,6 +33,9 @@ public class Notification {
         this.message = message;
     }
 
+    @OneToOne
+    @JsonIgnoreProperties(value = {"owner", "comments"})
+    @JoinColumn(name = "stream_id")
     public Stream getStream() {
         return stream;
     }
@@ -44,6 +44,7 @@ public class Notification {
         this.stream = stream;
     }
 
+    @Column(name = "status")
     public Integer getStatus() {
         return status;
     }

@@ -6,21 +6,25 @@ import java.util.Date;
 @Entity
 @Table(name = "pay_subscription")
 public class PaySubscription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "subscription_id")
     private Subscription subscription;
-    @Column(name = "start_time")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_time")
     private Date endTime;
-    @Column(name = "amount")
     private Double amount;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "subscription_id")
     public Subscription getSubscription() {
         return subscription;
     }
@@ -29,6 +33,8 @@ public class PaySubscription {
         this.subscription = subscription;
     }
 
+    @Column(name = "start_time")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getStartTime() {
         return startTime;
     }
@@ -37,6 +43,8 @@ public class PaySubscription {
         this.startTime = startTime;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_time")
     public Date getEndTime() {
         return endTime;
     }
@@ -45,6 +53,7 @@ public class PaySubscription {
         this.endTime = endTime;
     }
 
+    @Column(name = "amount")
     public Double getAmount() {
         return amount;
     }

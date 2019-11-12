@@ -25,8 +25,8 @@ public class Stream {
             inverseJoinColumns = @JoinColumn(name = "type_id"))
     private List<StreamType> streamType;
     @ManyToOne
-    @JsonIgnoreProperties("streams")
     @JoinColumn(name = "owner_id")
+    @JsonIgnoreProperties("streams")
     private User owner;
     @Column(name = "total_view")
     private Integer totalView;
@@ -47,8 +47,6 @@ public class Stream {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "stream_id")
     private List<Comment> comments;
-
-    // new
     @Column(name = "primary_server_url")
     private String primaryServerURL;
     @Column(name = "host_port")
@@ -57,7 +55,7 @@ public class Stream {
     private String application;
     @Column(name = "stream_name")
     private String streamName;
-    // end new
+
     public Stream(WowzaStream liveWowza){
         setWowzaId(liveWowza.id);
         setStatus(-1);
@@ -75,6 +73,7 @@ public class Stream {
         this.primaryServerURL = primaryServerURL;
     }
 
+
     public int getHostPort() {
         return hostPort;
     }
@@ -82,6 +81,7 @@ public class Stream {
     public void setHostPort(int hostPort) {
         this.hostPort = hostPort;
     }
+
 
     public String getApplication() {
         return application;
@@ -106,6 +106,7 @@ public class Stream {
     public void setStreamId(Integer streamId) {
         this.streamId = streamId;
     }
+
 
     public String getWowzaId() {
         return wowzaId;

@@ -6,19 +6,15 @@ import java.util.Date;
 @Entity
 @Table(name = "comment")
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer commentId;
-    @Column(name = "message")
     private String message;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_time")
     private Date createTime;
-    @Column(name = "status")
     private Integer streamStatus;
-    @Column(name = "source")
     private Integer commentSource;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getCommentId() {
         return commentId;
     }
@@ -27,6 +23,7 @@ public class Comment {
         this.commentId = commentId;
     }
 
+    @Column(name = "message")
     public String getMessage() {
         return message;
     }
@@ -35,6 +32,8 @@ public class Comment {
         this.message = message;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_time")
     public Date getCreateTime() {
         return createTime;
     }
@@ -43,6 +42,7 @@ public class Comment {
         this.createTime = createTime;
     }
 
+    @Column(name = "status")
     public Integer getStreamStatus() {
         return streamStatus;
     }
@@ -51,6 +51,7 @@ public class Comment {
         this.streamStatus = streamStatus;
     }
 
+    @Column(name = "source")
     public Integer getCommentSource() {
         return commentSource;
     }
