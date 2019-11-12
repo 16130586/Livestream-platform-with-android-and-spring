@@ -9,50 +9,26 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer userId;
-    @Column(name = "username")
     private String userName;
-    @Column(name = "password")
     private String password;
-    @Column(name = "nick_name")
     private String nickName;
-    @Column(name = "avatar")
     private byte[] avatar;
-    @Column(name = "gmail")
     private String gmail;
-    @Column(name = "forgot_token")
     private String forgotToken;
-    @Column(name = "subscribe_total")
     private Integer subscribeTotal;
-    @ManyToMany
-    @JoinTable(name = "notification_user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "notify_id"))
     private List<Notification> notifications;
-    @ManyToMany
-    @JoinTable(name = "user_favourite",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "type_id"))
     private List<StreamType> favouriteType;
-    @OneToMany
-    @JoinColumn(name = "user_id")
     private List<FavoriteSaved> favouriteSaved;
-    @ManyToMany
     @JsonIgnoreProperties(value = {"streams", "subscribers", "favouriteType", "notifications", "favouriteSaved"})
-    @JoinTable(name = "subscriber",
-            joinColumns = @JoinColumn(name = "publisher_id"),
-            inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
     private List<User> subscribers;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
     private List<PaySubscription> paySubscriptions;
-    @OneToMany
     @JsonIgnoreProperties("owner")
-    @JoinColumn(name = "owner_id")
     private List<Stream> streams;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getUserId() {
         return userId;
     }
@@ -61,6 +37,7 @@ public class User {
         this.userId = userId;
     }
 
+    @Column(name = "username")
     public String getUserName() {
         return userName;
     }
@@ -69,6 +46,7 @@ public class User {
         this.userName = userName;
     }
 
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -77,6 +55,7 @@ public class User {
         this.password = password;
     }
 
+    @Column(name = "nick_name")
     public String getNickName() {
         return nickName;
     }
@@ -85,6 +64,7 @@ public class User {
         this.nickName = nickName;
     }
 
+    @Column(name = "avatar")
     public byte[] getAvatar() {
         return avatar;
     }
@@ -93,6 +73,7 @@ public class User {
         this.avatar = avatar;
     }
 
+    @Column(name = "gmail")
     public String getGmail() {
         return gmail;
     }
@@ -101,6 +82,7 @@ public class User {
         this.gmail = gmail;
     }
 
+    @Column(name = "forgot_token")
     public String getForgotToken() {
         return forgotToken;
     }
@@ -109,6 +91,7 @@ public class User {
         this.forgotToken = forgotToken;
     }
 
+    @Column(name = "subscribe_total")
     public Integer getSubscribeTotal() {
         return subscribeTotal;
     }
@@ -117,14 +100,24 @@ public class User {
         this.subscribeTotal = subscribeTotal;
     }
 
+    @ManyToMany
+    @JoinTable(name = "user_favourite",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
     public List<StreamType> getFavouriteType() {
         return favouriteType;
     }
 
+    @ManyToMany
+    @JoinTable(name = "notification_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "notify_id"))
     public List<Notification> getNotifications() {
         return notifications;
     }
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
     public List<FavoriteSaved> getFavouriteSaved() {
         return favouriteSaved;
     }
@@ -141,6 +134,10 @@ public class User {
         this.favouriteType = favouriteType;
     }
 
+    @ManyToMany
+    @JoinTable(name = "subscriber",
+            joinColumns = @JoinColumn(name = "publisher_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
     public List<User> getSubscribers() {
         return subscribers;
     }
@@ -149,6 +146,8 @@ public class User {
         this.subscribers = subscribers;
     }
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     public List<PaySubscription> getPaySubscriptions() {
         return paySubscriptions;
     }
@@ -157,6 +156,8 @@ public class User {
         this.paySubscriptions = paySubscriptions;
     }
 
+    @OneToMany
+    @JoinColumn(name = "owner_id")
     public List<Stream> getStreams() {
         return streams;
     }

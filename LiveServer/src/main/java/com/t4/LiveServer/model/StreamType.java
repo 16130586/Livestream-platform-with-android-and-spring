@@ -8,11 +8,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "types")
 public class StreamType {
-    @Id
+
     private Integer typeId;
-    @Column(name = "type_name")
     private String typeName;
 
+    @Id
     public Integer getTypeId() {
         return typeId;
     }
@@ -21,6 +21,7 @@ public class StreamType {
         this.typeId = typeId;
     }
 
+    @Column(name = "type_name")
     public String getTypeName() {
         return typeName;
     }

@@ -10,6 +10,7 @@ public class Notification {
 
     private Integer notificationId;
     private String message;
+    @JsonIgnoreProperties(value = {"owner", "comments"})
     private Stream stream;
     private Integer status;
 
@@ -34,7 +35,6 @@ public class Notification {
     }
 
     @OneToOne
-    @JsonIgnoreProperties(value = {"owner", "comments"})
     @JoinColumn(name = "stream_id")
     public Stream getStream() {
         return stream;

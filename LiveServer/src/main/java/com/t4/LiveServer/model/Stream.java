@@ -14,49 +14,29 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Stream {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer streamId;
-    @Column(name = "wowza_id")
     private String wowzaId;
-    @ManyToMany
-    @JoinTable(name = "stream_type",
-            joinColumns = @JoinColumn(name = "stream_id"),
-            inverseJoinColumns = @JoinColumn(name = "type_id"))
     private List<StreamType> streamType;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
     @JsonIgnoreProperties("streams")
     private User owner;
-    @Column(name = "total_view")
     private Integer totalView;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_time")
     private Date startTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_time")
     private Date endTime;
-    @Column(name = "stream_status")
     private Integer status;
-    @Column(name = "forwards")
     private String forwards;
-    @Column(name = "forwards_url")
     private String forwardsUrl;
-    @Column(name = "stored_url")
     private String storedUrl;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stream_id")
     private List<Comment> comments;
-    @Column(name = "primary_server_url")
     private String primaryServerURL;
-    @Column(name = "host_port")
     private int hostPort;
-    @Column(name = "application")
     private String application;
-    @Column(name = "stream_name")
     private String streamName;
 
-    public Stream(WowzaStream liveWowza){
+    public Stream() {
+    }
+
+    public Stream(WowzaStream liveWowza) {
         setWowzaId(liveWowza.id);
         setStatus(-1);
         setPrimaryServerURL(liveWowza.sourceConnectionInformation.primaryServer);
@@ -65,6 +45,7 @@ public class Stream {
         setStreamName(liveWowza.sourceConnectionInformation.streamName);
     }
 
+    @Column(name = "primary_server_url")
     public String getPrimaryServerURL() {
         return primaryServerURL;
     }
@@ -73,7 +54,7 @@ public class Stream {
         this.primaryServerURL = primaryServerURL;
     }
 
-
+    @Column(name = "host_port")
     public int getHostPort() {
         return hostPort;
     }
@@ -82,7 +63,7 @@ public class Stream {
         this.hostPort = hostPort;
     }
 
-
+    @Column(name = "application")
     public String getApplication() {
         return application;
     }
@@ -91,6 +72,7 @@ public class Stream {
         this.application = application;
     }
 
+    @Column(name = "stream_name")
     public String getStreamName() {
         return streamName;
     }
@@ -99,6 +81,8 @@ public class Stream {
         this.streamName = streamName;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getStreamId() {
         return streamId;
     }
@@ -107,7 +91,7 @@ public class Stream {
         this.streamId = streamId;
     }
 
-
+    @Column(name = "wowza_id")
     public String getWowzaId() {
         return wowzaId;
     }
@@ -116,6 +100,10 @@ public class Stream {
         this.wowzaId = wowzaId;
     }
 
+    @ManyToMany
+    @JoinTable(name = "stream_type",
+            joinColumns = @JoinColumn(name = "stream_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
     public List<StreamType> getStreamType() {
         return streamType;
     }
@@ -124,6 +112,7 @@ public class Stream {
         this.streamType = streamType;
     }
 
+    @Column(name = "total_view")
     public Integer getTotalView() {
         return totalView;
     }
@@ -132,6 +121,8 @@ public class Stream {
         this.totalView = totalView;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_time")
     public Date getStartTime() {
         return startTime;
     }
@@ -140,6 +131,8 @@ public class Stream {
         this.startTime = startTime;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_time")
     public Date getEndTime() {
         return endTime;
     }
@@ -148,6 +141,7 @@ public class Stream {
         this.endTime = endTime;
     }
 
+    @Column(name = "stream_status")
     public Integer getStatus() {
         return status;
     }
@@ -156,6 +150,7 @@ public class Stream {
         this.status = status;
     }
 
+    @Column(name = "forwards")
     public String getForwards() {
         return forwards;
     }
@@ -164,6 +159,7 @@ public class Stream {
         this.forwards = forwards;
     }
 
+    @Column(name = "forwards_url")
     public String getForwardsUrl() {
         return forwardsUrl;
     }
@@ -172,6 +168,7 @@ public class Stream {
         this.forwardsUrl = forwardsUrl;
     }
 
+    @Column(name = "stored_url")
     public String getStoredUrl() {
         return storedUrl;
     }
@@ -180,6 +177,8 @@ public class Stream {
         this.storedUrl = storedUrl;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     public User getOwner() {
         return owner;
     }
@@ -188,6 +187,8 @@ public class Stream {
         this.owner = owner;
     }
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stream_id")
     public List<Comment> getComments() {
         return comments;
     }

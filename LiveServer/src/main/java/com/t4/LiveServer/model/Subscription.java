@@ -8,15 +8,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "subscription")
 public class Subscription {
-    @Id
+
     private Integer id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "type")
     private Integer type;
-    @Column(name = "unit_price")
     private Double unitPrice;
 
+    @Id
     public Integer getId() {
         return id;
     }
@@ -25,6 +23,7 @@ public class Subscription {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -33,6 +32,7 @@ public class Subscription {
         this.name = name;
     }
 
+    @Column(name = "type")
     public Integer getType() {
         return type;
     }
@@ -41,6 +41,7 @@ public class Subscription {
         this.type = type;
     }
 
+    @Column(name = "unit_price")
     public Double getUnitPrice() {
         return unitPrice;
     }
