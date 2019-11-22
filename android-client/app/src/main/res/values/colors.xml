@@ -6,4 +6,7 @@
     <color name="controlButtonPressed">#80ff8400</color>
     <color name="multiStateButtonPressed">#80ff8400</color>
     <color name="multiStateButtonDisabled">#c1636363</color>
+    <color name="white">#FFFFFF</color>
+    <color name="metal_black_light">#666666</color>
+    <color name="metal_black">#333333</color>
 </resources>
