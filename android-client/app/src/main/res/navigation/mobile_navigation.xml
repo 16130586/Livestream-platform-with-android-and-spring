@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.t4.androidclient.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_trending"
+        android:name="com.t4.androidclient.ui.trending.TrendingFragment"
+        android:label="@string/title_trending"
+        tools:layout="@layout/fragment_trending" />
+
+    <fragment
+        android:id="@+id/navigation_subscription"
+        android:name="com.t4.androidclient.ui.subscription.SubscriptionFragment"
+        android:label="@string/title_subscription"
+        tools:layout="@layout/fragment_subscription" />
+    <fragment
+        android:id="@+id/navigation_inbox"
+        android:name="com.t4.androidclient.ui.inbox.InboxFragment"
+        android:label="@string/title_inbox"
+        tools:layout="@layout/fragment_inbox" />
+</navigation>
