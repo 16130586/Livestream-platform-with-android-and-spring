@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5AF88"
+    android:orientation="vertical">
+    <!--FA983B -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_fire"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/profile_fullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="Hãy kết nối tài khoản Facebook của bạn để truy cập các chức năng người dùng"
+        android:textSize="26sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_login_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#133895"
+        android:layout_marginTop="15dp"
+        android:clickable="true"
+        android:textSize="26sp"
+       />
+
+</LinearLayout>

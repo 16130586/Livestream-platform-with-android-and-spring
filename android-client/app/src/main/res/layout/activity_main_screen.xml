@@ -8,17 +8,6 @@
     tools:openDrawer="start"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/slide_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="90dp"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/slide_header"
-        app:menu="@menu/menu_slide">
-    </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
@@ -122,5 +111,18 @@
             app:navGraph="@navigation/mobile_navigation"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/slide_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="90dp"
+        android:fitsSystemWindows="true" >
+    </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>
 

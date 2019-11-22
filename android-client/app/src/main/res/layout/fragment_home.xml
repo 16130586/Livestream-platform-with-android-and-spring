@@ -38,7 +38,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/ads_title"
+            android:id="@+id/stream_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

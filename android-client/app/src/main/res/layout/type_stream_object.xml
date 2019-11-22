@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <?xml version="1.0" encoding="utf-8"?>
+
+    <ImageButton
+        android:id="@+id/show_type_stream"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_info"
+        />
+
+        <TextView
+            android:id="@+id/type_stream_name"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Âm nhạc" />
+
+
+    </LinearLayout>

@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_facebook);
         mCallbackManager = CallbackManager.Factory.create();
         mTvInfo = (TextView) findViewById(R.id.tv_info);
-        mBtnLoginFacebook = (LoginButton) findViewById(R.id.btn_login_facebook);
+        mBtnLoginFacebook = (LoginButton) findViewById(R.id.btn_login_facebook1);
         mBtnLoginFacebook.setPermissions("user_location", "publish_video" , "user_events" , "manage_pages");
         mBtnLoginFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override

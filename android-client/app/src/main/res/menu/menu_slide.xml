@@ -4,19 +4,22 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+
     <item
-        android:id="@+id/search_action"
+        android:id="@+id/your_videos"
         android:title="Your videos"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/about"
+        android:id="@+id/watched_videos"
         android:title="Watched Videos"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/help"
+        android:id="@+id/subscription"
         android:title="Subscription"
         app:showAsAction="always" />
+
+
 
 </menu>

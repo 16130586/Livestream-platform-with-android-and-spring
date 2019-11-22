@@ -1,5 +1,6 @@
 package com.t4.androidclient;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -8,26 +9,34 @@ import android.speech.RecognizerIntent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
-import com.t4.androidclient.ui.home.HomeFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,23 +44,74 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     FloatingSearchView mSearchView;
     DrawerLayout mDrawerLayout;
     ImageView app_logo;
-    private asyn a = null;
     MakeSuggestion makeSuggestion = this;
+    NavigationView slide_view;
+    private asyn a = null;
+    private LoginButton mBtnFacebook;
+    private CallbackManager mCallbackManager;
+    private Activity current = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-        ///////////// toolbar vào thay thế AppBar
-//        ActionBar actionbar = this.getSupportActionBar();
-//        actionbar.setDisplayHomeAsUpEnabled(true);
-//        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_manage); //hiện menu buger bên trái phía trên
-
+        mCallbackManager = CallbackManager.Factory.create();
 
         ///////////// thêm slide menu navigation
+        // Kiểm tra session đã đăng nhập thì slide menu khác
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView slide_view = findViewById(R.id.slide_view);
+        slide_view = findViewById(R.id.slide_view);
+//
+
+
+        if (isLoggedIn==true) {
+            slide_view.getMenu().clear();
+            slide_view.inflateHeaderView(R.layout.slide_header);
+            slide_view.inflateMenu(R.menu.menu_slide);
+            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
+            System.out.println("Đã đăng nhập");
+            TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
+            profile_fullname.setText("Họ tên : " + accessToken.getUserId());
+
+        }else {
+            slide_view.getMenu().clear();
+            slide_view.inflateHeaderView(R.layout.slide_header_not_login);
+            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login_facebook);
+            System.out.println("Chưa đăng nhập");
+        }
+
+        mBtnFacebook.setPermissions("user_location", "publish_video" , "user_events" , "manage_pages");
+        mBtnFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                LoginManager.getInstance().logInWithReadPermissions(current , Arrays.asList("user_events" , "manage_pages"));
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, accessToken.getToken());
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, "Chọn gì nào");
+                startActivity(shareIntent);
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e)
+            {
+
+            }
+        });
+
+
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -62,15 +122,14 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-
+                        int id = menuItem.getItemId();
+                        if (id == R.id.your_videos) {
+                            System.out.println("Chọn 1");
+                        }
                         return true;
                     }
+
                 });
 
         mDrawerLayout.addDrawerListener(
@@ -82,17 +141,33 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
-                        // Respond when the drawer is opened
+                        System.out.println("Mở menu");
                     }
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
-                        // Respond when the drawer is closed
+                        System.out.println("Đóng menu");
                     }
 
                     @Override
                     public void onDrawerStateChanged(int newState) {
-                        // Respond when the drawer motion state changes
+                        if (isLoggedIn==true) {
+                            slide_view.getMenu().clear();
+                            slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                            slide_view.inflateHeaderView(R.layout.slide_header);
+                            slide_view.inflateMenu(R.menu.menu_slide);
+                            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
+                            System.out.println("Đã đăng nhập");
+                            TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
+                            profile_fullname.setText("Họ tên : " + accessToken.getUserId());
+
+                        }else {
+                            slide_view.getMenu().clear();
+                            slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                            slide_view.inflateHeaderView(R.layout.slide_header_not_login);
+                            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login_facebook);
+                            System.out.println("Chưa đăng nhập");
+                        }
                     }
                 }
         );
@@ -166,19 +241,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
     }
 
-    // kiểm tra kết quả search
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            ArrayList<String> results = data.getStringArrayListExtra(
-                    RecognizerIntent.EXTRA_RESULTS);
-            mSearchView.setFocusable(true);
-            mSearchView.setSearchText(results.get(0));
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    // đề xuất search ( tự làm thêm )
 
     @Override
     public void getSuggestion(List<Suggestion> suggestions) {
@@ -196,6 +259,20 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             Toast.makeText(this, "Voice recognizer not present",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
+        //        // kiểm tra kết quả search
+//        if (requestCode == 0 && resultCode == RESULT_OK) {
+//            ArrayList<String> results = data.getStringArrayListExtra(
+//                    RecognizerIntent.EXTRA_RESULTS);
+//            mSearchView.setFocusable(true);
+//            mSearchView.setSearchText(results.get(0));
+//        }
     }
 }
     ///////////// Thêm slide menu navigation
