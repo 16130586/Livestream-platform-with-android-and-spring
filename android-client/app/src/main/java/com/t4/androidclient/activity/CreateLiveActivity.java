@@ -85,7 +85,7 @@ public class CreateLiveActivity extends Activity {
             public void onClick(View view) {
                 LiveStream liveStream = saveLiveStream();
                 System.out.println(liveStream.toString());
-                sendLiveStreamToServer(LiveStream);
+                sendLiveStreamToServer();
             }
         });
 

@@ -19,7 +19,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/back" />
+            android:src="@drawable/com_facebook_close" />
 
         <TextView
             android:layout_width="match_parent"
