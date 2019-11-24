@@ -55,4 +55,9 @@ public class UserBusinessImp implements UserBusiness {
         return userRepository.existsByUserName(username);
     }
 
+    @Override
+    public User getUserById(int id) {
+        return userRepository.findById(id).get();
+    }
+
 }

@@ -7,4 +7,5 @@ public interface UserBusiness {
     String login(String username, String password);
     User registry(RegistryForm registryForm);
     boolean checkExistsUsername(String username);
+    User getUserById(int id);
 }

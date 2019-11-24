@@ -10,16 +10,18 @@ import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
 import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
-import com.t4.LiveServer.model.ForwardStream;
-import com.t4.LiveServer.model.Stream;
+import com.t4.LiveServer.model.*;
 import com.t4.LiveServer.model.facebook.LiveStream;
 import com.t4.LiveServer.model.wowza.ListWowzaStream;
 import com.t4.LiveServer.model.wowza.StreamOutput;
 import com.t4.LiveServer.model.wowza.StreamTarget;
 import com.t4.LiveServer.model.wowza.WowzaStream;
 import com.t4.LiveServer.repository.StreamRepository;
+import com.t4.LiveServer.repository.StreamTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,8 @@ public class StreamBusinessImp implements StreamBusiness {
 
     @Autowired
     private StreamRepository streamRepository;
+    @Autowired
+    private StreamTypeRepository streamTypeRepository;
 
     @Override
     public Stream create(CreatingStreamEntryParams entryParams) {
@@ -171,5 +175,16 @@ public class StreamBusinessImp implements StreamBusiness {
             return op;
         }
         return null;
+    }
+
+    @Override
+    public Object getRecommendForUser(List<StreamType> streamTypes, int offset, int pageSize) {
+        Pageable pageable = new PageRequest(offset,pageSize);
+        return streamRepository.findAllByStreamTypeInAndStatus(streamTypes, StreamStatus.REAL_TIME, pageable);
+    }
+
+    @Override
+    public List<StreamType> getAllGenre() {
+        return streamTypeRepository.findAll();
     }
 }

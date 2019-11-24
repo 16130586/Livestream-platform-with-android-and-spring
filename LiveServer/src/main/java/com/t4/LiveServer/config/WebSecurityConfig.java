@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/registry").permitAll()
                 .antMatchers("/test").hasRole("SUBSCRIBER")
                 .antMatchers("/not-role").hasAnyRole("USER", "SUBSCRIBER")
+                .anyRequest().hasAnyRole("USER", "SUBSCRIBE")
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
         // add filter for url
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

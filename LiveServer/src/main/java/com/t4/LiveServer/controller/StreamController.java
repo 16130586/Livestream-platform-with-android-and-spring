@@ -1,8 +1,10 @@
 package com.t4.LiveServer.controller;
 
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
+import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
+import com.t4.LiveServer.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ public class StreamController {
 
     @Autowired
     StreamBusiness streamBusiness;
+
+    @Autowired
+    UserBusiness userBusiness;
 
     @PostMapping("/create")
     public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams) {
@@ -66,6 +71,27 @@ public class StreamController {
             apiResponse.statusCode = 500;
             apiResponse.message = e.getMessage();
         }
+        return apiResponse;
+    }
+
+    @GetMapping("/recommend/{userId}/{offset}/{pageSize}")
+    public ApiResponse getRecommendForUser(@PathVariable Integer userId, @PathVariable Integer offset, @PathVariable Integer pageSize) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get recommend live stream!";
+        User user = userBusiness.getUserById(userId);
+        apiResponse.data = streamBusiness.getRecommendForUser(user.getFavouriteType(), offset, pageSize);
+
+        return apiResponse;
+    }
+
+    @GetMapping("/genre")
+    public ApiResponse getAllGenre() {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get all genre of stream";
+        apiResponse.data = streamBusiness.getAllGenre();
+
         return apiResponse;
     }
 }

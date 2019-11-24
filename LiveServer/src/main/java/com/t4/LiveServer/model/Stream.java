@@ -18,7 +18,7 @@ public class Stream {
     private Integer streamId;
     private String wowzaId;
     private List<StreamType> streamType;
-    @JsonIgnoreProperties("streams")
+    @JsonIgnoreProperties(value = {"streams", "notifications", "favouriteType", "favouriteSaved"})
     private User owner;
     private Integer totalView;
     private Date startTime;
