@@ -8,6 +8,8 @@ import java.util.Date;
 public class Comment {
 
     private Integer commentId;
+    private Integer ownerId;
+    private Integer streamId;
     private String message;
     private Date createTime;
     private Integer streamStatus;
@@ -21,6 +23,24 @@ public class Comment {
 
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
+    }
+
+    @Column(name = "owner_id")
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    @Column(name = "stream_id")
+    public Integer getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(Integer streamId) {
+        this.streamId = streamId;
     }
 
     @Column(name = "message")

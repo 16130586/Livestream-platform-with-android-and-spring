@@ -11,11 +11,10 @@ import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
 import com.t4.LiveServer.entryParam.base.Wowza.AdditionOutputStreamTargetToTransCoderEntryParam;
 import com.t4.LiveServer.middleware.RestTemplateHandleException;
 import com.t4.LiveServer.model.*;
-import com.t4.LiveServer.model.facebook.LiveStream;
-import com.t4.LiveServer.model.wowza.ListWowzaStream;
 import com.t4.LiveServer.model.wowza.StreamOutput;
 import com.t4.LiveServer.model.wowza.StreamTarget;
 import com.t4.LiveServer.model.wowza.WowzaStream;
+import com.t4.LiveServer.repository.CommentRepository;
 import com.t4.LiveServer.repository.StreamRepository;
 import com.t4.LiveServer.repository.StreamTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.security.RunAs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +42,8 @@ public class StreamBusinessImp implements StreamBusiness {
     private StreamRepository streamRepository;
     @Autowired
     private StreamTypeRepository streamTypeRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public Stream create(CreatingStreamEntryParams entryParams) {
@@ -186,5 +186,27 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public List<StreamType> getAllGenre() {
         return streamTypeRepository.findAll();
+    }
+
+    @Override
+    public StreamType getGenreByName(String name) {
+        return streamTypeRepository.findByTypeName(name);
+    }
+
+    @Override
+    public List<Stream> getStreamsByName(String streamName) {
+        return streamRepository.findByStreamNameContaining(streamName);
+    }
+
+    @Override
+    public List<Stream> getStreamsByNameAndType(String streamName, List<StreamType> streamTypes) {
+        if (streamName != null && !streamName.isEmpty())
+            return streamRepository.findByStreamNameContainingAndStreamTypeIn(streamName, streamTypes);
+        return streamRepository.findByStreamTypeIn(streamTypes);
+    }
+
+    @Override
+    public Comment saveComment(Comment comment) {
+        return commentRepository.save(comment);
     }
 }

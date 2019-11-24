@@ -10,4 +10,8 @@ import java.util.List;
 
 public interface StreamRepository extends JpaRepository<Stream, Integer> {
     List<Stream> findAllByStreamTypeInAndStatus(List<StreamType> streamTypes, Integer status, Pageable pageable);
+    List<Stream> findByStreamNameContaining(String streamName);
+    List<Stream> findByStreamNameContainingAndStreamTypeIn(String streamName, List<StreamType> streamTypes);
+    List<Stream> findByStreamTypeIn(List<StreamType> streamTypes);
+
 }

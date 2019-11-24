@@ -4,9 +4,14 @@ import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
-import com.t4.LiveServer.model.User;
+import com.t4.LiveServer.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -91,6 +96,61 @@ public class StreamController {
         apiResponse.statusCode = 200;
         apiResponse.message = "get all genre of stream";
         apiResponse.data = streamBusiness.getAllGenre();
+
+        return apiResponse;
+    }
+
+    @GetMapping("/find/{streamName}")
+    public ApiResponse getStreamsByName(@PathVariable String streamName) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get stream by name";
+        apiResponse.data = streamBusiness.getStreamsByName(streamName);
+
+        return apiResponse;
+    }
+
+    @GetMapping("/findAdvance/{streamName}")
+    public ApiResponse getStreamsByNameAndType(@PathVariable String streamName, @RequestBody Map<String, String> datas) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get stream by name and type";
+        List<StreamType> streamTypes = new ArrayList<>();
+        for (Map.Entry<String, String> entry : datas.entrySet()) {
+            streamTypes.add((StreamType) streamBusiness.getGenreByName(entry.getValue()));
+        }
+        apiResponse.data = streamBusiness.getStreamsByNameAndType(streamName, streamTypes);
+
+        return apiResponse;
+    }
+
+    @GetMapping("/findAdvance")
+    public ApiResponse getStreamsByType(@RequestBody Map<String, String> datas) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get stream by name and type";
+        List<StreamType> streamTypes = new ArrayList<>();
+        for (Map.Entry<String, String> entry : datas.entrySet()) {
+            streamTypes.add((StreamType) streamBusiness.getGenreByName(entry.getValue()));
+        }
+        apiResponse.data = streamBusiness.getStreamsByNameAndType(null, streamTypes);
+
+        return apiResponse;
+    }
+
+    @PostMapping("/comment")
+    public ApiResponse comment(@RequestBody Map<String, String> datas) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "User comment to live stream";
+        Comment comment = new Comment();
+        comment.setOwnerId(Integer.parseInt(datas.get("ownerId")));
+        comment.setStreamId(Integer.parseInt(datas.get("streamId")));
+        comment.setMessage(datas.get("message"));
+        comment.setStreamStatus(Integer.parseInt(datas.get("streamStatus")));
+        comment.setCommentSource(CommentSource.INTERNAL);
+        comment.setCreateTime(new Date());
+        apiResponse.data = streamBusiness.saveComment(comment);
 
         return apiResponse;
     }
