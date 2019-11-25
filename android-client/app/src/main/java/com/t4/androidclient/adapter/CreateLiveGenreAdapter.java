@@ -5,22 +5,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 
 import com.t4.androidclient.R;
 
 import java.util.List;
 
-public class CreateLiveGenreAdapter extends ArrayAdapter<String> {
+public class CreateLiveGenreAdapter extends BaseAdapter {
     private Context context;
-    private int resource;
+    private LayoutInflater layoutInflater;
     private List<String> genreList;
 
-    public CreateLiveGenreAdapter(Context context, int resource, List<String> genreList) {
-        super(context, resource, genreList);
-        this.context = context;
-        this.resource = resource;
+    public CreateLiveGenreAdapter(Context aContext, List<String> genreList) {
+        this.context = aContext;
         this.genreList = genreList;
+        layoutInflater = LayoutInflater.from(aContext);
+    }
+
+    @Override
+    public int getCount() {
+        return this.genreList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return this.genreList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
