@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `created_time` datetime DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `source` int(11) DEFAULT NULL,
+  `video_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`comment_id`),
   KEY `owner_id` (`owner_id`),
   KEY `stream_id` (`stream_id`),

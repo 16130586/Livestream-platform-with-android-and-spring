@@ -14,6 +14,7 @@ public class Comment {
     private Date createTime;
     private Integer streamStatus;
     private Integer commentSource;
+    private Integer videoTime;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,5 +79,14 @@ public class Comment {
 
     public void setCommentSource(Integer commentSource) {
         this.commentSource = commentSource;
+    }
+
+    @Column(name = "video_time")
+    public Integer getVideoTime() {
+        return videoTime;
+    }
+
+    public void setVideoTime(Integer videoTime) {
+        this.videoTime = videoTime;
     }
 }

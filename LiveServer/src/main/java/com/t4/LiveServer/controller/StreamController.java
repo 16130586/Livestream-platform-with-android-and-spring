@@ -6,8 +6,10 @@ import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,13 +81,13 @@ public class StreamController {
         return apiResponse;
     }
 
-    @GetMapping("/recommend/{userId}/{offset}/{pageSize}")
-    public ApiResponse getRecommendForUser(@PathVariable Integer userId, @PathVariable Integer offset, @PathVariable Integer pageSize) {
+    @GetMapping("/recommend/{offset}/{pageSize}")
+    public ApiResponse getRecommendForUser(@PathVariable Integer offset, @PathVariable Integer pageSize, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get recommend live stream!";
-        User user = userBusiness.getUserById(userId);
-        apiResponse.data = streamBusiness.getRecommendForUser(user.getFavouriteType(), offset, pageSize);
+        apiResponse.data = streamBusiness.getRecommendForUser(user.getUserId(), offset, pageSize);
 
         return apiResponse;
     }
@@ -128,7 +130,7 @@ public class StreamController {
     public ApiResponse getStreamsByType(@RequestBody Map<String, String> datas) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
-        apiResponse.message = "get stream by name and type";
+        apiResponse.message = "get stream by type";
         List<StreamType> streamTypes = new ArrayList<>();
         for (Map.Entry<String, String> entry : datas.entrySet()) {
             streamTypes.add((StreamType) streamBusiness.getGenreByName(entry.getValue()));
@@ -138,16 +140,18 @@ public class StreamController {
         return apiResponse;
     }
 
-    @PostMapping("/comment")
-    public ApiResponse comment(@RequestBody Map<String, String> datas) {
+    @PostMapping("/{streamId}/comment")
+    public ApiResponse comment(@RequestBody Map<String, String> datas, @PathVariable Integer streamId, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.statusCode = 200;
+        apiResponse.statusCode = 201;
         apiResponse.message = "User comment to live stream";
         Comment comment = new Comment();
-        comment.setOwnerId(Integer.parseInt(datas.get("ownerId")));
-        comment.setStreamId(Integer.parseInt(datas.get("streamId")));
+        comment.setOwnerId(user.getUserId());
+        comment.setStreamId(streamId);
         comment.setMessage(datas.get("message"));
         comment.setStreamStatus(Integer.parseInt(datas.get("streamStatus")));
+        comment.setVideoTime(Integer.parseInt(datas.get("videoTime")));
         comment.setCommentSource(CommentSource.INTERNAL);
         comment.setCreateTime(new Date());
         apiResponse.data = streamBusiness.saveComment(comment);

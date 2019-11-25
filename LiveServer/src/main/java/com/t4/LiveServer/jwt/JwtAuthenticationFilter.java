@@ -1,6 +1,7 @@
 package com.t4.LiveServer.jwt;
 
 
+import com.t4.LiveServer.model.security.CustomUserDetails;
 import com.t4.LiveServer.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +45,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 // Lấy username từ chuỗi jwt
                 String userName = jwtProvider.getUserNameFromJWT(jwt);
                 // Lấy thông tin người dùng từ username
-                UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+                CustomUserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+                // Set attribute user into httpRequest
+                ((HttpServletRequest) request).setAttribute("user", userDetails.getUser());
                 // Nếu người dùng hợp lệ, set thông tin cho Seturity Context
                 UsernamePasswordAuthenticationToken
                         authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

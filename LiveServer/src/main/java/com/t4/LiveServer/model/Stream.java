@@ -196,4 +196,11 @@ public class Stream {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null || !(obj instanceof Stream)) return false;
+        Stream s = (Stream) obj;
+        return this.getStreamId() == s.getStreamId();
+    }
 }

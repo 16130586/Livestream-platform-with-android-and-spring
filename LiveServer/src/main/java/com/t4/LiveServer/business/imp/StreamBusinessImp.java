@@ -1,6 +1,7 @@
 package com.t4.LiveServer.business.imp;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +46,8 @@ public class StreamBusinessImp implements StreamBusiness {
     private StreamTypeRepository streamTypeRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private UserBusiness userBusiness;
 
     @Override
     public Stream create(CreatingStreamEntryParams entryParams) {
@@ -178,9 +182,16 @@ public class StreamBusinessImp implements StreamBusiness {
     }
 
     @Override
-    public Object getRecommendForUser(List<StreamType> streamTypes, int offset, int pageSize) {
+    public List<Stream> getRecommendForUser(int userId, int offset, int pageSize) {
+        User user = userBusiness.getUserById(userId);
         Pageable pageable = new PageRequest(offset,pageSize);
-        return streamRepository.findAllByStreamTypeInAndStatus(streamTypes, StreamStatus.REAL_TIME, pageable);
+        List<Stream> subResult = streamRepository.findAllByStreamTypeInAndStatus(user.getFavouriteType(), StreamStatus.REAL_TIME, pageable);
+        List<Stream> result = new LinkedList<>();
+        for (Stream stream: subResult) {
+            if (!result.contains(stream))
+                result.add(stream);
+        }
+        return result;
     }
 
     @Override
