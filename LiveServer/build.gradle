@@ -13,7 +13,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compile('org.springframework.boot:spring-boot-starter-web','org.apache.tomcat.embed:tomcat-embed-jasper'
+			,'javax.servlet:jstl')
 //	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -28,4 +29,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }

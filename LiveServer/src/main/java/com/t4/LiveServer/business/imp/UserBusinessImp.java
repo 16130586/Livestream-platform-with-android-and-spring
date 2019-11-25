@@ -60,4 +60,14 @@ public class UserBusinessImp implements UserBusiness {
         return userRepository.findById(id).get();
     }
 
+    @Override
+    public User getUserByGmail(String gmail) {
+        return userRepository.findByGmail(gmail);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
 }

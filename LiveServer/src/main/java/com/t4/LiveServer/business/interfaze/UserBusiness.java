@@ -8,4 +8,6 @@ public interface UserBusiness {
     User registry(RegistryForm registryForm);
     boolean checkExistsUsername(String username);
     User getUserById(int id);
+    User getUserByGmail(String gmail);
+    void saveUser(User user);
 }

@@ -2,7 +2,9 @@ package com.t4.LiveServer.controller;
 
 
 import com.t4.LiveServer.business.interfaze.UserBusiness;
+import com.t4.LiveServer.business.interfaze.mail.MailBusiness;
 import com.t4.LiveServer.core.ApiResponse;
+import com.t4.LiveServer.model.User;
 import com.t4.LiveServer.validation.form.RegistryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ public class UserController {
 
     @Autowired
     UserBusiness userBusiness;
+    @Autowired
+    MailBusiness mailBusiness;
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody Map<String, String> datas) {
@@ -44,4 +48,26 @@ public class UserController {
         return "success!";
     }
 
+    @GetMapping("/forgot/{email}")
+    public ApiResponse forgotPassword(@PathVariable String email) {
+        User user = userBusiness.getUserByGmail(email);
+        ApiResponse response = new ApiResponse();
+        if (user != null) {
+            try {
+                String forgotOtp = mailBusiness.sendMailForgot(email, "Forgot Password", user.getUserId());
+                response.statusCode = 200;
+                response.message = "Please check your mail!";
+                user.setForgotToken(forgotOtp);
+                userBusiness.saveUser(user);
+            } catch (Exception e) {
+                response.statusCode = 500;
+                response.message = "something wrong! pls try later!";
+                return response;
+            }
+        } else {
+            response.statusCode = 400;
+            response.message = "User not found! wrong mail";
+        }
+        return response;
+    }
 }
