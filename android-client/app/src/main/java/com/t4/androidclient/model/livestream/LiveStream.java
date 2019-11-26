@@ -4,7 +4,7 @@ import java.util.List;
 
 public class LiveStream {
     private String title;
-    private String thumbnailUrl;
+    private String thumbnail;
     private List<String> genreList;
     private FacebookUser facebookUser;
 
@@ -14,8 +14,13 @@ public class LiveStream {
 
 
     public String toString() {
+        if (facebookUser == null) {
+            return this.title + ", "
+                    + this.thumbnail +", "
+                    + this.genreList.toString();
+        }
         return this.title + ", "
-                + this.thumbnailUrl +", "
+                + this.thumbnail +", "
                 + this.genreList.toString() + ", "
                 + this.facebookUser.toString();
     }
@@ -28,12 +33,12 @@ public class LiveStream {
         this.title = title;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public List<String> getGenreList() {
