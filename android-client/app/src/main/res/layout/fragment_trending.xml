@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    // Đây là nới show ra các button type stream , ấn vào thì
+    list bên dưới nó sẽ hiện các trending của loại type đó
     <ListView
         android:id="@+id/list_type_stream"
         android:layout_width="match_parent"
