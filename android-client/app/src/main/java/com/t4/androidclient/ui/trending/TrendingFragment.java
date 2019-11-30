@@ -23,13 +23,6 @@ public class TrendingFragment extends Fragment {
         trendingViewModel =
                 ViewModelProviders.of(this).get(TrendingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_trending, container, false);
-        final TextView textView = root.findViewById(R.id.text_trending);
-        trendingViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }
