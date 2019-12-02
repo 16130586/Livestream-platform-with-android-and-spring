@@ -102,40 +102,40 @@ public class StreamController {
         return apiResponse;
     }
 
-    @GetMapping("/find/{streamName}")
-    public ApiResponse getStreamsByName(@PathVariable String streamName) {
+    @GetMapping("/find/{streamName}/{offset}/{pageSize}")
+    public ApiResponse getStreamsByName(@PathVariable String streamName, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get stream by name";
-        apiResponse.data = streamBusiness.getStreamsByName(streamName);
+        apiResponse.data = streamBusiness.getStreamsByName(streamName, offset, pageSize);
 
         return apiResponse;
     }
 
-    @GetMapping("/findAdvance/{streamName}")
-    public ApiResponse getStreamsByNameAndType(@PathVariable String streamName, @RequestBody Map<String, String> datas) {
+    @GetMapping("/findAdvance/{streamName}/{offset}/{pageSize}")
+    public ApiResponse getStreamsByNameAndType(@PathVariable String streamName, @RequestBody Map<String, String> datas, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get stream by name and type";
-        List<StreamType> streamTypes = new ArrayList<>();
+        List<String> streamTypes = new ArrayList<>();
         for (Map.Entry<String, String> entry : datas.entrySet()) {
-            streamTypes.add((StreamType) streamBusiness.getGenreByName(entry.getValue()));
+            streamTypes.add(entry.getValue());
         }
-        apiResponse.data = streamBusiness.getStreamsByNameAndType(streamName, streamTypes);
+        apiResponse.data = streamBusiness.getStreamsByNameAndType(streamName, streamTypes, offset, pageSize);
 
         return apiResponse;
     }
 
-    @GetMapping("/findAdvance")
-    public ApiResponse getStreamsByType(@RequestBody Map<String, String> datas) {
+    @GetMapping("/findAdvance/{offset}/{pageSize}")
+    public ApiResponse getStreamsByType(@RequestBody Map<String, String> datas, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get stream by type";
-        List<StreamType> streamTypes = new ArrayList<>();
+        List<String> streamTypes = new ArrayList<>();
         for (Map.Entry<String, String> entry : datas.entrySet()) {
-            streamTypes.add((StreamType) streamBusiness.getGenreByName(entry.getValue()));
+            streamTypes.add(entry.getValue());
         }
-        apiResponse.data = streamBusiness.getStreamsByNameAndType(null, streamTypes);
+        apiResponse.data = streamBusiness.getStreamsByNameAndType(null, streamTypes, offset, pageSize);
 
         return apiResponse;
     }

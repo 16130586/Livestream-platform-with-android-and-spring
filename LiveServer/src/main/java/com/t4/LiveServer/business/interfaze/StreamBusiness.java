@@ -15,7 +15,7 @@ public interface StreamBusiness {
     List<Stream> getRecommendForUser(int userId, int offset, int pageSize);
     List<StreamType> getAllGenre();
     StreamType getGenreByName(String name);
-    List<Stream> getStreamsByName(String streamName);
-    List<Stream> getStreamsByNameAndType(String streamName, List<StreamType> streamTypes);
+    List<Stream> getStreamsByName(String streamName, int offset, int pageSize);
+    List<Stream> getStreamsByNameAndType(String streamName, List<String> streamTypes, int offset, int pageSize);
     Comment saveComment(Comment comment);
 }

@@ -184,14 +184,12 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public List<Stream> getRecommendForUser(int userId, int offset, int pageSize) {
         User user = userBusiness.getUserById(userId);
-        Pageable pageable = new PageRequest(offset,pageSize);
-        List<Stream> subResult = streamRepository.findAllByStreamTypeInAndStatus(user.getFavouriteType(), StreamStatus.REAL_TIME, pageable);
-        List<Stream> result = new LinkedList<>();
-        for (Stream stream: subResult) {
-            if (!result.contains(stream))
-                result.add(stream);
+        List<String> streamTypeString = new ArrayList<>();
+        for (StreamType streamType : user.getFavouriteType()) {
+            streamTypeString.add(streamType.getTypeName());
         }
-        return result;
+        Pageable pageable = new PageRequest(offset,pageSize);
+        return streamRepository.findAllByStreamTypeInAndStatus(streamTypeString, StreamStatus.REAL_TIME, streamTypeString.size(), pageable);
     }
 
     @Override
@@ -205,15 +203,18 @@ public class StreamBusinessImp implements StreamBusiness {
     }
 
     @Override
-    public List<Stream> getStreamsByName(String streamName) {
-        return streamRepository.findByStreamNameContaining(streamName);
+    public List<Stream> getStreamsByName(String streamName, int offset, int pageSize) {
+        Pageable pageable = new PageRequest(offset, pageSize);
+        return streamRepository.findByStreamNameContaining(streamName, pageable);
     }
 
     @Override
-    public List<Stream> getStreamsByNameAndType(String streamName, List<StreamType> streamTypes) {
+    public List<Stream> getStreamsByNameAndType(String streamName, List<String> streamTypes, int offset, int pageSize) {
+        System.out.println("stream name: "+ streamName);
+        Pageable pageable = new PageRequest(offset, pageSize);
         if (streamName != null && !streamName.isEmpty())
-            return streamRepository.findByStreamNameContainingAndStreamTypeIn(streamName, streamTypes);
-        return streamRepository.findByStreamTypeIn(streamTypes);
+            return streamRepository.findByStreamNameAndStreamType(streamName, streamTypes, streamTypes.size(), pageable);
+        return streamRepository.findByStreamType(streamTypes, streamTypes.size(), pageable);
     }
 
     @Override

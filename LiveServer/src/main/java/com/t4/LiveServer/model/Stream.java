@@ -36,6 +36,11 @@ public class Stream {
     public Stream() {
     }
 
+    public Stream(Integer streamId, String wowzaId) {
+        this.streamId = streamId;
+        this.wowzaId = wowzaId;
+    }
+
     public Stream(WowzaStream liveWowza) {
         setWowzaId(liveWowza.id);
         setStatus(-1);
