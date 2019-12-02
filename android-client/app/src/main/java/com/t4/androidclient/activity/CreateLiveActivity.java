@@ -1,6 +1,7 @@
 package com.t4.androidclient.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -59,6 +60,7 @@ public class CreateLiveActivity extends Activity {
     private LiveStream liveStream;
 
     private final int PICK_PHOTO_FOR_AVATAR = 1;
+    private final int FACEBOOK_OPTION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +107,11 @@ public class CreateLiveActivity extends Activity {
         } else {
             //facebook callback
             callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if (requestCode == FACEBOOK_OPTION && resultCode == Activity.RESULT_OK) {
+            facebookUser.setFacebookOption(data.getStringExtra("OPTION"));
+            facebookUser.setFacebookOptionId(data.getStringExtra("ID"));
         }
     }
 
@@ -179,7 +186,7 @@ public class CreateLiveActivity extends Activity {
         });
 
         //test - remove later
-        checkAccesToken(":asd");
+        //checkAccesToken(":asd");
     }
 
     private void getGenreListFromServer() {
@@ -246,12 +253,18 @@ public class CreateLiveActivity extends Activity {
             @Override
             public void processFinish(String output) {
                 tokenPermissionChecker.setText(output);
+
+                // permission true
+                if (output.equals("true")) {
+                    callFacebookOptionActivity();
+                }
             }
         });
 
         // temp
-        String tempToken = "EAAKClF4nNmIBAJnQiZBWJaLNocaeloDqR8OrMAFpdWTPc5RoRqtUbboVEpG6Jv6EAolmdX2grGjixkZAwCl0GupyqZB6vrPmzX6ah3ADHbHl4Lp5r5lvu7xRVIQCQ84kgINk5uOriTjHTmK4DVRhGrmHkMJkjBbDVm3a7uf6jenc3zHfh3lsxFkoCdtEzWjMFZByExgahwZDZD";
-        checkTokenPermission.execute(tempToken);
+        //String tempToken = "EAAKClF4nNmIBAJnQiZBWJaLNocaeloDqR8OrMAFpdWTPc5RoRqtUbboVEpG6Jv6EAolmdX2grGjixkZAwCl0GupyqZB6vrPmzX6ah3ADHbHl4Lp5r5lvu7xRVIQCQ84kgINk5uOriTjHTmK4DVRhGrmHkMJkjBbDVm3a7uf6jenc3zHfh3lsxFkoCdtEzWjMFZByExgahwZDZD";
+        System.out.println(accessToken);
+        checkTokenPermission.execute(accessToken);
     }
 
     // interface AsyncResponse
@@ -325,6 +338,12 @@ public class CreateLiveActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
+
+    public void callFacebookOptionActivity() {
+        Intent intent = new Intent(this, FacebookOptionActivity.class);
+        intent.putExtra("ACCESS_TOKEN", facebookUser.getAccessToken());
+        startActivityForResult(intent, FACEBOOK_OPTION);
     }
 
 }
