@@ -1,4 +1,4 @@
-package com.t4.LiveServer.model.facebook.page;
+package com.t4.androidclient.model.livestream.page;
 
 public class Category {
     String id;

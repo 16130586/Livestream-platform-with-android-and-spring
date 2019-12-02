@@ -1,4 +1,4 @@
-package com.t4.androidclient.model.livestream;
+package com.t4.androidclient.model.livestream.group;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.t4.androidclient.model.livestream.pagination.Paging;

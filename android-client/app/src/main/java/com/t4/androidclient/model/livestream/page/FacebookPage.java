@@ -1,8 +1,8 @@
-package com.t4.LiveServer.model.facebook.page;
+package com.t4.androidclient.model.livestream.page;
 
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.t4.LiveServer.model.facebook.pagination.Paging;
+import com.t4.androidclient.model.livestream.pagination.Paging;
 
 import java.util.List;
 

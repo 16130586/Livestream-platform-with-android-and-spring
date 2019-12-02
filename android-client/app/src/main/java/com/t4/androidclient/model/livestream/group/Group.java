@@ -1,4 +1,4 @@
-package com.t4.androidclient.model.livestream;
+package com.t4.androidclient.model.livestream.group;
 
 public class Group {
     private String name;
@@ -10,7 +10,7 @@ public class Group {
     }
 
     public String toString() {
-        return "name: " + this.name + ", id" + this.id;
+        return this.name;
     }
 
     public String getName() {

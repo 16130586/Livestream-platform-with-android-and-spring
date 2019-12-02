@@ -1,4 +1,4 @@
-package com.t4.LiveServer.model.facebook.page;
+package com.t4.androidclient.model.livestream.page;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
@@ -13,6 +13,10 @@ public class Page {
     private String name;
     private String id;
     private String[] tasks;
+
+    public String toString() {
+        return this.name;
+    }
 
     public String getAccessToken() {
         return accessToken;
