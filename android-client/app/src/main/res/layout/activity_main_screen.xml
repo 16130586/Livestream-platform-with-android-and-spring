@@ -8,7 +8,6 @@
     tools:openDrawer="start"
     android:fitsSystemWindows="true">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E5AF88"
+            android:background="#FFFFFF"
             android:gravity="left"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +37,20 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
                     android:foregroundGravity="center"
-                    android:src="@drawable/ic_headphone" />
+                    android:src="@drawable/ic_logo" />
+
+                <TextView
+                    android:id="@+id/y_logo"
+                    android:layout_width="8.7dp"
+                    android:layout_height="17dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@id/app_logo"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Y"
+                    android:layout_marginLeft="-29.5dp"
+                    android:textSize="13.5dp"/>
 
                 <com.arlib.floatingsearchview.FloatingSearchView
                     android:id="@+id/floating_search_view"
@@ -47,23 +59,23 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_toRightOf="@+id/app_logo"
-                    app:floatingSearch_actionMenuOverflowColor="#E5AF88"
+                    app:floatingSearch_actionMenuOverflowColor="#FF006F"
                     app:floatingSearch_backgroundColor="@null"
                     app:floatingSearch_close_search_on_keyboard_dismiss="true"
                     app:floatingSearch_dimBackground="false"
-                    app:floatingSearch_hintTextColor="#E5AF88"
-                    app:floatingSearch_leftActionColor="#E5AF88"
+                    app:floatingSearch_hintTextColor="#000000"
+                    app:floatingSearch_leftActionColor="#000000"
                     app:floatingSearch_leftActionMode="showSearch"
                     app:floatingSearch_menu="@menu/menu_searchview"
-                    app:floatingSearch_menuItemIconColor="#E5AF88"
+                    app:floatingSearch_menuItemIconColor="#000000"
                     app:floatingSearch_searchBarMarginLeft="10dp"
                     app:floatingSearch_searchBarMarginRight="10dp"
                     app:floatingSearch_searchBarMarginTop="10dp"
                     app:floatingSearch_searchHint="Search..."
                     app:floatingSearch_showSearchKey="true"
-                    app:floatingSearch_suggestionRightIconColor="#E5AF88"
+                    app:floatingSearch_suggestionRightIconColor="#000000"
                     app:floatingSearch_suggestionsListAnimDuration="250"
-                    app:floatingSearch_viewSearchInputTextColor="#E5AF88"
+                    app:floatingSearch_viewSearchInputTextColor="#000000"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="MissingConstraints"
@@ -91,7 +103,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:background="#E5AF88"
+            android:background="#FFFFFF"
+            app:itemTextColor="@color/menu_colors"
+            app:itemIconTint="@color/menu_colors"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

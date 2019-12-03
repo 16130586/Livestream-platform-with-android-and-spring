@@ -37,9 +37,8 @@ public class HomeFragment extends Fragment {
         clip_ads = root.findViewById(R.id.clip_ads);
         Uri videoUrl = Uri.parse("android.resource://"+ getActivity().getApplicationContext().getPackageName() +"/"+R.raw.clip_ads_example);
         clip_ads.setVideoURI(videoUrl);
-        clip_ads.requestFocus();
-        clip_ads.start();
-
+//        clip_ads.requestFocus();
+//        clip_ads.start();
         // thêm object live stream
 
 
@@ -49,7 +48,7 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                clip_ads.start();
+
             }
         });
         return root;

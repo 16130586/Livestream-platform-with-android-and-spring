@@ -7,6 +7,7 @@
 
     <VideoView
         android:id="@+id/clip_ads"
+
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_centerInParent="true"

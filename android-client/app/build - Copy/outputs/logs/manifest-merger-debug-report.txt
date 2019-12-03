@@ -1,0 +1,507 @@
+-- Merging decision tree log ---
+manifest
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+MERGED from [com.github.arimorty:floatingsearchview:2.1.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\00602b20dc59eae80745dd648b98ab78\jetified-floatingsearchview-2.1.1\AndroidManifest.xml:2:1-14:12
+MERGED from [com.bartoszlipinski:viewpropertyobjectanimator:1.2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\a850a252f45739e50b64c8c3059f25ee\jetified-viewpropertyobjectanimator-1.2.0\AndroidManifest.xml:2:1-11:12
+MERGED from [com.facebook.android:facebook-login:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\3e30ee2fcf4c4fcf0810002eb8619af6\jetified-facebook-login-5.11.0\AndroidManifest.xml:21:1-31:12
+MERGED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:21:1-37:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\1964611a1907e3ea07b40ce4c516c284\legacy-support-v4-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [de.hdodenhof:circleimageview:3.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\71f5d38547a23a82dc59577c9e825601\circleimageview-3.0.0\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.navigation:navigation-ui:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7e172cbf772516f8861952e8a0998f60\jetified-navigation-ui-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\cb634fe4b4d1fdfcd5255e485d30a0c1\material-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\8392647ca9531c13a8f0d6b7ad086e7e\constraintlayout-1.1.3\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.navigation:navigation-fragment:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\03960375614ad4ea21ed2b73ce693c42\navigation-fragment-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df470e1373f88845f5f332cb0d11af75\lifecycle-extensions-2.1.0\AndroidManifest.xml:17:1-25:12
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f6a183f8595ca34f3d5cc99d1f8bc322\appcompat-1.0.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\bbc51c53aec70aeae5178e82f15e817a\recyclerview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\ccc4f60e4549c263b614feec2a027fa2\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\a6ce3afbff3f1ae3fa1fe13048b173d9\media-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d382ba9b8c9ea9d7b43a9cfaea0ecdf4\vectordrawable-animated-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.browser:browser:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d52aa75563c2cc8edb955a24f2134bd9\browser-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\abc680e55824c418c024460e31034ed4\legacy-support-core-ui-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:21:1-61:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\ba2af06f417607d7ef1ca9f201a0d139\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\add2bdb41de46d90e5d3bd4e75929820\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.0.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\80b2360a587be5f7a2d6fa8510bd68ae\transition-1.0.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.lifecycle:lifecycle-service:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f297fd1a37e8f1e094c72340601523f6\lifecycle-service-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\324a702de98e8e0560de88ae82ee3427\vectordrawable-1.0.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\331f61861c2d3a925f2252286afb1f53\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f3997ce16a5c00ae84a772d300d0e1e8\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\04087833f388d5ffa97a080d757646c2\coordinatorlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\34085af895daa23049fd0af188e6a001\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\eb11c4797d5d5b24d5dcbbebe26babf4\slidingpanelayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\740a70a0c89c8c085b6e012b4bd7790e\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\31dc29ba3158cee4b1ca2bf2f6ff141b\swiperefreshlayout-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\435f1166e6a428a0025d9cd273cb35a2\asynclayoutinflater-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\25184bdd3b8b86ccb574529c2d71d374\navigation-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\daa47187fb0f0a7c419d1b10e1677cdd\activity-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.navigation:navigation-common:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\dc8d52f8dfaa327f6112d600b705a5ab\navigation-common-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0554424e228349ffc3db0700d1324aa1\lifecycle-runtime-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\35ea013adaf2265b5a814edcc0e48b35\lifecycle-livedata-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\77486900ea0f341dcb2eb60412232b54\lifecycle-livedata-core-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\384e1b5d703f7ead48bd253f34125353\core-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7acef2a7bfef3795312317efec15d83e\savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\bad233a64070d55cab9a83b26afbf154\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\aa91d8d2653c363bbd5da9d9892260d3\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\9d52be8c254a228a91eaf05f51d52923\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\9093771a98b01557e81860f4122d7892\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7ec682ca46f5c90ea9a9e0cba0c0310a\print-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d4ef17d609918d2a5f5a86d1ea02678f\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c9c8616d74aa0ab3eb457d24b669c685\versionedparcelable-1.1.0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df1ec259d50e7e51dd742acdf330d5a8\com.wowza.gocoder.sdk\AndroidManifest.xml:2:1-12:12
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+	package
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:3:5-35
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:1-146:12
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:5:5-65
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:5:22-62
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:6:5-80
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:6:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:7:5-81
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:7:22-78
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:8:5-71
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:8:22-68
+uses-permission#android.permission.INTERNET
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:9:22-64
+uses-permission#android.permission.FLASHLIGHT
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:10:5-69
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:10:22-66
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:11:22-77
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:12:5-79
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:12:22-76
+uses-feature#android.hardware.camera.any
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:14:5-16:36
+	android:required
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:16:9-33
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:15:9-51
+uses-feature#android.hardware.camera.autofocus
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:17:5-19:36
+	android:required
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:19:9-33
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:18:9-57
+uses-feature#android.hardware.camera.flash
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:20:5-22:36
+	android:required
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:22:9-33
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:21:9-53
+uses-feature#android.hardware.microphone
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:23:5-25:36
+	android:required
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:25:9-33
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:24:9-51
+uses-feature#0x00020000
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:28:9-32
+application
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:30:5-144:19
+MERGED from [com.github.arimorty:floatingsearchview:2.1.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\00602b20dc59eae80745dd648b98ab78\jetified-floatingsearchview-2.1.1\AndroidManifest.xml:12:5-20
+MERGED from [com.github.arimorty:floatingsearchview:2.1.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\00602b20dc59eae80745dd648b98ab78\jetified-floatingsearchview-2.1.1\AndroidManifest.xml:12:5-20
+MERGED from [com.facebook.android:facebook-login:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\3e30ee2fcf4c4fcf0810002eb8619af6\jetified-facebook-login-5.11.0\AndroidManifest.xml:28:5-29:19
+MERGED from [com.facebook.android:facebook-login:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\3e30ee2fcf4c4fcf0810002eb8619af6\jetified-facebook-login-5.11.0\AndroidManifest.xml:28:5-29:19
+MERGED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:28:5-35:19
+MERGED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:28:5-35:19
+MERGED from [de.hdodenhof:circleimageview:3.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\71f5d38547a23a82dc59577c9e825601\circleimageview-3.0.0\AndroidManifest.xml:9:5-20
+MERGED from [de.hdodenhof:circleimageview:3.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\71f5d38547a23a82dc59577c9e825601\circleimageview-3.0.0\AndroidManifest.xml:9:5-20
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\cb634fe4b4d1fdfcd5255e485d30a0c1\material-1.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\cb634fe4b4d1fdfcd5255e485d30a0c1\material-1.0.0\AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\8392647ca9531c13a8f0d6b7ad086e7e\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\8392647ca9531c13a8f0d6b7ad086e7e\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df470e1373f88845f5f332cb0d11af75\lifecycle-extensions-2.1.0\AndroidManifest.xml:22:5-23:19
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df470e1373f88845f5f332cb0d11af75\lifecycle-extensions-2.1.0\AndroidManifest.xml:22:5-23:19
+MERGED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:28:5-59:19
+MERGED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:28:5-59:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:22:5-28:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:22:5-28:19
+MERGED from [androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c9c8616d74aa0ab3eb457d24b669c685\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c9c8616d74aa0ab3eb457d24b669c685\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
+MERGED from [com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df1ec259d50e7e51dd742acdf330d5a8\com.wowza.gocoder.sdk\AndroidManifest.xml:9:5-10:19
+MERGED from [com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df1ec259d50e7e51dd742acdf330d5a8\com.wowza.gocoder.sdk\AndroidManifest.xml:9:5-10:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:35:9-35
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:33:9-41
+	android:roundIcon
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:34:9-54
+	android:icon
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:32:9-43
+	android:allowBackup
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:31:9-35
+	android:theme
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:36:9-40
+activity#com.t4.androidclient.ui.login.LoginRegisterActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:37:9-39:69
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:39:13-57
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:38:13-51
+activity#com.t4.androidclient.MainScreenActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:51:9-60:20
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:53:13-45
+	android:theme
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:54:13-56
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:52:13-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:55:13-59:29
+action#android.intent.action.MAIN
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:56:17-69
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:56:25-66
+category#android.intent.category.LAUNCHER
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:58:17-77
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:58:27-74
+activity#com.t4.androidclient.activity.CreateLiveActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:61:9-71:20
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:65:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:64:13-57
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:63:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:62:13-56
+activity#com.t4.androidclient.external.FacebookActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:72:9-75:48
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:75:13-45
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:74:13-96
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:73:13-54
+activity#com.t4.androidclient.CameraActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:85:9-89:63
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:89:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:88:13-57
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:87:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:86:13-43
+activity#com.t4.androidclient.EventActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:90:9-94:63
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:94:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:93:13-56
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:92:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:91:13-42
+activity#com.t4.androidclient.mp4.MP4BroadcastActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:95:9-99:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:99:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:98:13-56
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:97:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:96:13-53
+activity#com.t4.androidclient.mp4.MP4CaptureActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:100:9-104:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:104:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:103:13-54
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:102:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:101:13-51
+activity#com.t4.androidclient.audio.AudioMeterActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:105:9-109:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:109:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:108:13-54
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:107:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:106:13-53
+activity#com.t4.androidclient.audio.BluetoothActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:110:9-114:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:114:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:113:13-58
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:112:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:111:13-52
+activity#com.t4.androidclient.graphics.BitmapOverlayActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:115:9-119:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:119:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:118:13-57
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:117:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:116:13-59
+activity#com.t4.androidclient.graphics.TextOverlayActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:120:9-124:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:124:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:123:13-55
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:122:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:121:13-57
+activity#com.t4.androidclient.graphics.OpenGLActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:125:9-129:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:129:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:128:13-49
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:127:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:126:13-52
+activity#com.t4.androidclient.ScreenshotActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:130:9-134:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:134:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:133:13-53
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:132:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:131:13-47
+activity#com.t4.androidclient.PlayerActivity
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:135:9-139:54
+	android:screenOrientation
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:139:13-51
+	android:label
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:138:13-56
+	android:configChanges
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:137:13-74
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:136:13-43
+meta-data#com.facebook.sdk.ApplicationId
+ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:141:9-143:55
+	android:value
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:143:13-52
+	android:name
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:142:13-58
+uses-sdk
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+MERGED from [com.github.arimorty:floatingsearchview:2.1.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\00602b20dc59eae80745dd648b98ab78\jetified-floatingsearchview-2.1.1\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.arimorty:floatingsearchview:2.1.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\00602b20dc59eae80745dd648b98ab78\jetified-floatingsearchview-2.1.1\AndroidManifest.xml:8:5-10:41
+MERGED from [com.bartoszlipinski:viewpropertyobjectanimator:1.2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\a850a252f45739e50b64c8c3059f25ee\jetified-viewpropertyobjectanimator-1.2.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.bartoszlipinski:viewpropertyobjectanimator:1.2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\a850a252f45739e50b64c8c3059f25ee\jetified-viewpropertyobjectanimator-1.2.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.android:facebook-login:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\3e30ee2fcf4c4fcf0810002eb8619af6\jetified-facebook-login-5.11.0\AndroidManifest.xml:24:5-26:41
+MERGED from [com.facebook.android:facebook-login:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\3e30ee2fcf4c4fcf0810002eb8619af6\jetified-facebook-login-5.11.0\AndroidManifest.xml:24:5-26:41
+MERGED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:24:5-26:41
+MERGED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:24:5-26:41
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\1964611a1907e3ea07b40ce4c516c284\legacy-support-v4-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\1964611a1907e3ea07b40ce4c516c284\legacy-support-v4-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [de.hdodenhof:circleimageview:3.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\71f5d38547a23a82dc59577c9e825601\circleimageview-3.0.0\AndroidManifest.xml:5:5-7:41
+MERGED from [de.hdodenhof:circleimageview:3.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\71f5d38547a23a82dc59577c9e825601\circleimageview-3.0.0\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.navigation:navigation-ui:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7e172cbf772516f8861952e8a0998f60\jetified-navigation-ui-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-ui:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7e172cbf772516f8861952e8a0998f60\jetified-navigation-ui-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\cb634fe4b4d1fdfcd5255e485d30a0c1\material-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\cb634fe4b4d1fdfcd5255e485d30a0c1\material-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\8392647ca9531c13a8f0d6b7ad086e7e\constraintlayout-1.1.3\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\8392647ca9531c13a8f0d6b7ad086e7e\constraintlayout-1.1.3\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.navigation:navigation-fragment:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\03960375614ad4ea21ed2b73ce693c42\navigation-fragment-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-fragment:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\03960375614ad4ea21ed2b73ce693c42\navigation-fragment-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df470e1373f88845f5f332cb0d11af75\lifecycle-extensions-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df470e1373f88845f5f332cb0d11af75\lifecycle-extensions-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f6a183f8595ca34f3d5cc99d1f8bc322\appcompat-1.0.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f6a183f8595ca34f3d5cc99d1f8bc322\appcompat-1.0.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\bbc51c53aec70aeae5178e82f15e817a\recyclerview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\bbc51c53aec70aeae5178e82f15e817a\recyclerview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\ccc4f60e4549c263b614feec2a027fa2\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\ccc4f60e4549c263b614feec2a027fa2\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\a6ce3afbff3f1ae3fa1fe13048b173d9\media-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\a6ce3afbff3f1ae3fa1fe13048b173d9\media-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d382ba9b8c9ea9d7b43a9cfaea0ecdf4\vectordrawable-animated-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d382ba9b8c9ea9d7b43a9cfaea0ecdf4\vectordrawable-animated-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.browser:browser:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d52aa75563c2cc8edb955a24f2134bd9\browser-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.browser:browser:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d52aa75563c2cc8edb955a24f2134bd9\browser-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\abc680e55824c418c024460e31034ed4\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\abc680e55824c418c024460e31034ed4\legacy-support-core-ui-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:24:5-26:41
+MERGED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:24:5-26:41
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\ba2af06f417607d7ef1ca9f201a0d139\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\ba2af06f417607d7ef1ca9f201a0d139\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\add2bdb41de46d90e5d3bd4e75929820\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\add2bdb41de46d90e5d3bd4e75929820\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.0.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\80b2360a587be5f7a2d6fa8510bd68ae\transition-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.0.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\80b2360a587be5f7a2d6fa8510bd68ae\transition-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f297fd1a37e8f1e094c72340601523f6\lifecycle-service-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f297fd1a37e8f1e094c72340601523f6\lifecycle-service-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\324a702de98e8e0560de88ae82ee3427\vectordrawable-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable:1.0.1] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\324a702de98e8e0560de88ae82ee3427\vectordrawable-1.0.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\331f61861c2d3a925f2252286afb1f53\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\331f61861c2d3a925f2252286afb1f53\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f3997ce16a5c00ae84a772d300d0e1e8\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\f3997ce16a5c00ae84a772d300d0e1e8\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\04087833f388d5ffa97a080d757646c2\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\04087833f388d5ffa97a080d757646c2\coordinatorlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\34085af895daa23049fd0af188e6a001\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\34085af895daa23049fd0af188e6a001\drawerlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\eb11c4797d5d5b24d5dcbbebe26babf4\slidingpanelayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\eb11c4797d5d5b24d5dcbbebe26babf4\slidingpanelayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\740a70a0c89c8c085b6e012b4bd7790e\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\740a70a0c89c8c085b6e012b4bd7790e\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\31dc29ba3158cee4b1ca2bf2f6ff141b\swiperefreshlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\31dc29ba3158cee4b1ca2bf2f6ff141b\swiperefreshlayout-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\435f1166e6a428a0025d9cd273cb35a2\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\435f1166e6a428a0025d9cd273cb35a2\asynclayoutinflater-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\25184bdd3b8b86ccb574529c2d71d374\navigation-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\25184bdd3b8b86ccb574529c2d71d374\navigation-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\daa47187fb0f0a7c419d1b10e1677cdd\activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\daa47187fb0f0a7c419d1b10e1677cdd\activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-common:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\dc8d52f8dfaa327f6112d600b705a5ab\navigation-common-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.navigation:navigation-common:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\dc8d52f8dfaa327f6112d600b705a5ab\navigation-common-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0554424e228349ffc3db0700d1324aa1\lifecycle-runtime-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0554424e228349ffc3db0700d1324aa1\lifecycle-runtime-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\35ea013adaf2265b5a814edcc0e48b35\lifecycle-livedata-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\35ea013adaf2265b5a814edcc0e48b35\lifecycle-livedata-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\77486900ea0f341dcb2eb60412232b54\lifecycle-livedata-core-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\77486900ea0f341dcb2eb60412232b54\lifecycle-livedata-core-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\384e1b5d703f7ead48bd253f34125353\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\384e1b5d703f7ead48bd253f34125353\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7acef2a7bfef3795312317efec15d83e\savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7acef2a7bfef3795312317efec15d83e\savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\bad233a64070d55cab9a83b26afbf154\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\bad233a64070d55cab9a83b26afbf154\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\aa91d8d2653c363bbd5da9d9892260d3\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\aa91d8d2653c363bbd5da9d9892260d3\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\9d52be8c254a228a91eaf05f51d52923\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\9d52be8c254a228a91eaf05f51d52923\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\9093771a98b01557e81860f4122d7892\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\9093771a98b01557e81860f4122d7892\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7ec682ca46f5c90ea9a9e0cba0c0310a\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\7ec682ca46f5c90ea9a9e0cba0c0310a\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d4ef17d609918d2a5f5a86d1ea02678f\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\d4ef17d609918d2a5f5a86d1ea02678f\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c9c8616d74aa0ab3eb457d24b669c685\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c9c8616d74aa0ab3eb457d24b669c685\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df1ec259d50e7e51dd742acdf330d5a8\com.wowza.gocoder.sdk\AndroidManifest.xml:7:5-44
+MERGED from [com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:2.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\df1ec259d50e7e51dd742acdf330d5a8\com.wowza.gocoder.sdk\AndroidManifest.xml:7:5-44
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		ADDED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+		INJECTED from F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+activity#com.facebook.FacebookActivity
+ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:29:9-32:66
+	android:configChanges
+		ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:31:13-96
+	android:theme
+		ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:32:13-63
+	android:name
+		ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:30:13-57
+activity#com.facebook.CustomTabMainActivity
+ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:33:9-71
+	android:name
+		ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:33:19-68
+activity#com.facebook.CustomTabActivity
+ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:34:9-67
+	android:name
+		ADDED from [com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:34:19-64
+provider#com.facebook.internal.FacebookInitProvider
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:39:9-42:40
+	android:authorities
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:41:13-72
+	android:exported
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:42:13-37
+	android:name
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:40:13-70
+receiver#com.facebook.CurrentAccessTokenExpirationBroadcastReceiver
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:44:9-50:20
+	android:exported
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:46:13-37
+	android:name
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:45:13-86
+intent-filter#action:name:com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:47:13-49:29
+action#com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:48:17-95
+	android:name
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:48:25-92
+receiver#com.facebook.CampaignTrackingReceiver
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:51:9-58:20
+	android:exported
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:53:13-36
+	android:permission
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:54:13-69
+	android:name
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:52:13-65
+intent-filter#action:name:com.android.vending.INSTALL_REFERRER
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:55:13-57:29
+action#com.android.vending.INSTALL_REFERRER
+ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:56:17-79
+	android:name
+		ADDED from [com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:56:25-76
+provider#androidx.lifecycle.ProcessLifecycleOwnerInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:23:9-27:43
+	android:authorities
+		ADDED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:25:13-69
+	android:multiprocess
+		ADDED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:27:13-40
+	android:exported
+		ADDED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:26:13-37
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:24:13-79

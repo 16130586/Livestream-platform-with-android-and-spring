@@ -1,0 +1,7 @@
+#Mon Dec 02 11:30:07 ICT 2019
+base.0=F\:\\GitHub Repositories\\Livestream-platform-with-android-and-spring\\android-client\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
+path.1=classes.dex
+renamed.1=classes2.dex
+path.0=classes.dex
+renamed.0=classes.dex
+base.1=F\:\\GitHub Repositories\\Livestream-platform-with-android-and-spring\\android-client\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
