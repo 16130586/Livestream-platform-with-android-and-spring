@@ -104,6 +104,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:background="#FFFFFF"
+            app:itemTextColor="@color/menu_colors"
+            app:itemIconTint="@color/menu_colors"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

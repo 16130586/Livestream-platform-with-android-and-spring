@@ -1,0 +1,351 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.t4.androidclient"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.CAMERA" />
+11-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:5:5-65
+11-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:5:22-62
+12    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+12-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:6:5-80
+12-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:6:22-77
+13    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+13-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:7:5-81
+13-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:7:22-78
+14    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+14-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:8:5-71
+14-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:8:22-68
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:9:5-67
+15-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:9:22-64
+16    <uses-permission android:name="android.permission.FLASHLIGHT" />
+16-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:10:5-69
+16-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:10:22-66
+17    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+17-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:11:5-80
+17-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:11:22-77
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:12:5-79
+18-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:12:22-76
+19
+20    <uses-feature
+20-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:14:5-16:36
+21        android:name="android.hardware.camera.any"
+21-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:15:9-51
+22        android:required="false" />
+22-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:16:9-33
+23    <uses-feature
+23-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:17:5-19:36
+24        android:name="android.hardware.camera.autofocus"
+24-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:18:9-57
+25        android:required="false" />
+25-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:19:9-33
+26    <uses-feature
+26-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:20:5-22:36
+27        android:name="android.hardware.camera.flash"
+27-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:21:9-53
+28        android:required="false" />
+28-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:22:9-33
+29    <uses-feature
+29-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:23:5-25:36
+30        android:name="android.hardware.microphone"
+30-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:24:9-51
+31        android:required="false" />
+31-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:25:9-33
+32    <uses-feature
+32-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:26:5-28:35
+33        android:glEsVersion="0x00020000"
+33-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:27:9-41
+34        android:required="true" />
+34-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:28:9-32
+35
+36    <application
+36-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:30:5-144:19
+37        android:allowBackup="true"
+37-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:31:9-35
+38        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+38-->[androidx.core:core:1.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c527b78844be871c44103f6f45a963fb\core-1.1.0\AndroidManifest.xml:24:18-86
+39        android:debuggable="true"
+40        android:icon="@mipmap/ic_launcher"
+40-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:32:9-43
+41        android:label="@string/app_name"
+41-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:33:9-41
+42        android:roundIcon="@mipmap/ic_launcher_round"
+42-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:34:9-54
+43        android:supportsRtl="true"
+43-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:35:9-35
+44        android:theme="@style/AppTheme" >
+44-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:36:9-40
+45        <activity
+45-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:37:9-39:69
+46            android:name="com.t4.androidclient.ui.login.LoginRegisterActivity"
+46-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:38:13-51
+47            android:label="@string/title_activity_login" />
+47-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:39:13-57
+48        <!-- android:theme="@style/Theme.AppCompat.Light"> -->
+49        <!-- <activity -->
+50        <!-- android:name=".MainActivity" -->
+51        <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+52        <!-- android:screenOrientation="fullSensor" -->
+53        <!-- android:label="@string/camera_example_title"> -->
+54        <!-- <intent-filter> -->
+55        <!-- <action android:name="android.intent.action.MAIN" /> -->
+56        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+57        <!-- </intent-filter> -->
+58        <!-- </activity> -->
+59        <activity
+59-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:51:9-60:20
+60            android:name="com.t4.androidclient.MainScreenActivity"
+60-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:52:13-47
+61            android:label="@string/app_name"
+61-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:53:13-45
+62            android:theme="@style/AppTheme.NoActionBar" >
+62-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:54:13-56
+63            <intent-filter>
+63-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:55:13-59:29
+64                <action android:name="android.intent.action.MAIN" />
+64-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:56:17-69
+64-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:56:25-66
+65
+66                <category android:name="android.intent.category.LAUNCHER" />
+66-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:58:17-77
+66-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:58:27-74
+67            </intent-filter>
+68        </activity>
+69        <activity
+69-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:61:9-71:20
+70            android:name="com.t4.androidclient.activity.CreateLiveActivity"
+70-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:62:13-56
+71            android:configChanges="orientation|keyboardHidden|screenSize"
+71-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:63:13-74
+72            android:label="@string/camera_example_title"
+72-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:64:13-57
+73            android:screenOrientation="fullSensor" >
+73-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:65:13-51
+74            <intent-filter>
+74-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:55:13-59:29
+75                <action android:name="android.intent.action.MAIN" />
+75-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:56:17-69
+75-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:56:25-66
+76
+77                <category android:name="android.intent.category.LAUNCHER" />
+77-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:58:17-77
+77-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:58:27-74
+78            </intent-filter>
+79        </activity>
+80        <activity
+80-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:72:9-75:48
+81            android:name="com.t4.androidclient.external.FacebookActivity"
+81-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:73:13-54
+82            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+82-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:74:13-96
+83            android:label="@string/app_name" /> <!-- <activity android:name=".MainActivity2" -->
+83-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:75:13-45
+84        <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+85        <!-- android:screenOrientation="fullSensor" -->
+86        <!-- android:logo="@drawable/gocoder_logo" -->
+87        <!-- > -->
+88        <!-- &lt;!&ndash;            <intent-filter>&ndash;&gt; -->
+89        <!-- &lt;!&ndash;                <action android:name="android.intent.action.MAIN" />&ndash;&gt; -->
+90        <!-- &lt;!&ndash;                <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt; -->
+91        <!-- &lt;!&ndash;            </intent-filter>&ndash;&gt; -->
+92        <!-- </activity> -->
+93        <activity
+93-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:85:9-89:63
+94            android:name="com.t4.androidclient.CameraActivity"
+94-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:86:13-43
+95            android:configChanges="orientation|keyboardHidden|screenSize"
+95-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:87:13-74
+96            android:label="@string/camera_example_title"
+96-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:88:13-57
+97            android:screenOrientation="fullSensor" />
+97-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:89:13-51
+98        <activity
+98-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:90:9-94:63
+99            android:name="com.t4.androidclient.EventActivity"
+99-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:91:13-42
+100            android:configChanges="orientation|keyboardHidden|screenSize"
+100-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:92:13-74
+101            android:label="@string/event_example_title"
+101-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:93:13-56
+102            android:screenOrientation="fullSensor" />
+102-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:94:13-51
+103        <activity
+103-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:95:9-99:54
+104            android:name="com.t4.androidclient.mp4.MP4BroadcastActivity"
+104-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:96:13-53
+105            android:configChanges="orientation|keyboardHidden|screenSize"
+105-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:97:13-74
+106            android:label="@string/mp4_broadcast_title"
+106-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:98:13-56
+107            android:screenOrientation="fullSensor" />
+107-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:99:13-51
+108        <activity
+108-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:100:9-104:54
+109            android:name="com.t4.androidclient.mp4.MP4CaptureActivity"
+109-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:101:13-51
+110            android:configChanges="orientation|keyboardHidden|screenSize"
+110-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:102:13-74
+111            android:label="@string/mp4_capture_title"
+111-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:103:13-54
+112            android:screenOrientation="fullSensor" />
+112-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:104:13-51
+113        <activity
+113-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:105:9-109:54
+114            android:name="com.t4.androidclient.audio.AudioMeterActivity"
+114-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:106:13-53
+115            android:configChanges="orientation|keyboardHidden|screenSize"
+115-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:107:13-74
+116            android:label="@string/audio_meter_title"
+116-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:108:13-54
+117            android:screenOrientation="fullSensor" />
+117-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:109:13-51
+118        <activity
+118-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:110:9-114:54
+119            android:name="com.t4.androidclient.audio.BluetoothActivity"
+119-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:111:13-52
+120            android:configChanges="orientation|keyboardHidden|screenSize"
+120-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:112:13-74
+121            android:label="@string/audio_bluetooth_title"
+121-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:113:13-58
+122            android:screenOrientation="fullSensor" />
+122-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:114:13-51
+123        <activity
+123-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:115:9-119:54
+124            android:name="com.t4.androidclient.graphics.BitmapOverlayActivity"
+124-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:116:13-59
+125            android:configChanges="orientation|keyboardHidden|screenSize"
+125-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:117:13-74
+126            android:label="@string/bitmap_overlay_title"
+126-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:118:13-57
+127            android:screenOrientation="fullSensor" />
+127-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:119:13-51
+128        <activity
+128-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:120:9-124:54
+129            android:name="com.t4.androidclient.graphics.TextOverlayActivity"
+129-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:121:13-57
+130            android:configChanges="orientation|keyboardHidden|screenSize"
+130-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:122:13-74
+131            android:label="@string/text_overlay_title"
+131-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:123:13-55
+132            android:screenOrientation="fullSensor" />
+132-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:124:13-51
+133        <activity
+133-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:125:9-129:54
+134            android:name="com.t4.androidclient.graphics.OpenGLActivity"
+134-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:126:13-52
+135            android:configChanges="orientation|keyboardHidden|screenSize"
+135-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:127:13-74
+136            android:label="@string/opengl_title"
+136-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:128:13-49
+137            android:screenOrientation="fullSensor" />
+137-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:129:13-51
+138        <activity
+138-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:130:9-134:54
+139            android:name="com.t4.androidclient.ScreenshotActivity"
+139-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:131:13-47
+140            android:configChanges="orientation|keyboardHidden|screenSize"
+140-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:132:13-74
+141            android:label="@string/screenshot_title"
+141-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:133:13-53
+142            android:screenOrientation="fullSensor" />
+142-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:134:13-51
+143        <activity
+143-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:135:9-139:54
+144            android:name="com.t4.androidclient.PlayerActivity"
+144-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:136:13-43
+145            android:configChanges="orientation|keyboardHidden|screenSize"
+145-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:137:13-74
+146            android:label="@string/stream_player_title"
+146-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:138:13-56
+147            android:screenOrientation="fullSensor" />
+147-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:139:13-51
+148
+149        <meta-data
+149-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:141:9-143:55
+150            android:name="com.facebook.sdk.ApplicationId"
+150-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:142:13-58
+151            android:value="@string/facebook_app_id" />
+151-->F:\GitHub Repositories\Livestream-platform-with-android-and-spring\android-client\app\src\main\AndroidManifest.xml:143:13-52
+152
+153        <activity
+153-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:29:9-32:66
+154            android:name="com.facebook.FacebookActivity"
+154-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:30:13-57
+155            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+155-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:31:13-96
+156            android:theme="@style/com_facebook_activity_theme" />
+156-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:32:13-63
+157        <activity android:name="com.facebook.CustomTabMainActivity" />
+157-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:33:9-71
+157-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:33:19-68
+158        <activity android:name="com.facebook.CustomTabActivity" />
+158-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:34:9-67
+158-->[com.facebook.android:facebook-common:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\acaef31c0a8cf9192d5bd9c57727ebd5\jetified-facebook-common-5.11.0\AndroidManifest.xml:34:19-64
+159        <!--
+160         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+161         with the application context. This config is merged in with the host app's manifest,
+162         but there can only be one provider with the same authority activated at any given
+163         point; so if the end user has two or more different apps that use Facebook SDK, only the
+164         first one will be able to use the provider. To work around this problem, we use the
+165         following placeholder in the authority to identify each host application as if it was
+166         a completely different provider.
+167        -->
+168        <provider
+168-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:39:9-42:40
+169            android:name="com.facebook.internal.FacebookInitProvider"
+169-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:40:13-70
+170            android:authorities="com.t4.androidclient.FacebookInitProvider"
+170-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:41:13-72
+171            android:exported="false" />
+171-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:42:13-37
+172
+173        <receiver
+173-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:44:9-50:20
+174            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+174-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:45:13-86
+175            android:exported="false" >
+175-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:46:13-37
+176            <intent-filter>
+176-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:47:13-49:29
+177                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+177-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:48:17-95
+177-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:48:25-92
+178            </intent-filter>
+179        </receiver>
+180        <receiver
+180-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:51:9-58:20
+181            android:name="com.facebook.CampaignTrackingReceiver"
+181-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:52:13-65
+182            android:exported="true"
+182-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:53:13-36
+183            android:permission="android.permission.INSTALL_PACKAGES" >
+183-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:54:13-69
+184            <intent-filter>
+184-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:55:13-57:29
+185                <action android:name="com.android.vending.INSTALL_REFERRER" />
+185-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:56:17-79
+185-->[com.facebook.android:facebook-core:5.11.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\0ee8632e3c244a6a386513d907bca389\jetified-facebook-core-5.11.0\AndroidManifest.xml:56:25-76
+186            </intent-filter>
+187        </receiver>
+188
+189        <provider
+189-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:23:9-27:43
+190            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+190-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:24:13-79
+191            android:authorities="com.t4.androidclient.lifecycle-process"
+191-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:25:13-69
+192            android:exported="false"
+192-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:26:13-37
+193            android:multiprocess="true" />
+193-->[androidx.lifecycle:lifecycle-process:2.1.0] C:\Users\Admin\.gradle\caches\transforms-2\files-2.1\c75b512c68f7bb7a7c5a931aae563be5\lifecycle-process-2.1.0\AndroidManifest.xml:27:13-40
+194    </application>
+195
+196</manifest>

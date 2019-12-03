@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5AF88"
+    android:background="#FFFFFF"
     android:orientation="vertical">
     <!--FA983B -->
     <de.hdodenhof.circleimageview.CircleImageView
@@ -32,16 +32,26 @@
         android:text="davidtuan25@gmail.com"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/btn_logout_facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="100dp"
+        android:background="#216AF3"
+        android:text="Logout"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:textColor="#133895"
-        android:layout_marginTop="5dp"
-        android:clickable="true"
-        android:textSize="22sp"
+        android:layout_height="wrap_content"
         />
+<!--    <com.facebook.login.widget.LoginButton-->
+<!--        android:id="@+id/btn_logout_facebook"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textColor="#133895"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:clickable="true"-->
+<!--        android:textSize="22sp"-->
+<!--        />-->
 
     <TextView
         android:id="@+id/goToAccountManager"

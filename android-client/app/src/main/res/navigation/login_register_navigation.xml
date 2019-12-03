@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_register_navigation"
+
+    app:startDestination="@+id/navigation_login">
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.t4.androidclient.ui.login.LoginFragment"
+        android:label="Login with System Acctount"
+        tools:layout="@layout/fragment_login" />
+    login_register_navigation
+    <fragment
+        android:id="@+id/navigation_social_login"
+        android:name="com.t4.androidclient.ui.login.SocialLoginFragment"
+        android:label="Login With Social Account"
+        tools:layout="@layout/fragment_social_login" />
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.t4.androidclient.ui.login.RegisterFragment"
+        android:label="Register Account"
+        tools:layout="@layout/fragment_register" />
+
+</navigation>
