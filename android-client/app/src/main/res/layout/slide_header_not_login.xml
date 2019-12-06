@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5AF88"
+    android:background="#FFFFFF"
     android:orientation="vertical">
     <!--FA983B -->
     <de.hdodenhof.circleimageview.CircleImageView
@@ -23,21 +23,29 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:gravity="center"
-        android:text="Hãy kết nối tài khoản Facebook của bạn để truy cập các chức năng người dùng"
+        android:text="Login to access User Function"
         android:textSize="26sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
-
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/btn_login_facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="200dp"
+        android:background="#216AF3"
+        android:text="Login or Register"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:textColor="#133895"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
-        android:textSize="26sp"
-       />
+        android:layout_height="wrap_content"
+        />
+
+<!--    <com.facebook.login.widget.LoginButton-->
+<!--        android:id="@+id/btn_login_facebook"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textColor="#133895"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:clickable="true"-->
+<!--        android:textSize="26sp"-->
+<!--       />-->
 
 </LinearLayout>

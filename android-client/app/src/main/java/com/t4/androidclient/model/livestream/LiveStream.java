@@ -6,7 +6,7 @@ public class LiveStream {
     private String title;
     private String thumbnail;
     private List<String> genreList;
-    private FacebookUser facebookUser;
+        private FacebookUser facebookUser;
 
     public LiveStream() {
 

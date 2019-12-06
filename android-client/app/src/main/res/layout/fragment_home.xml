@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+<<<<<<< HEAD
 <!--    <VideoView-->
 <!--        android:id="@+id/clip_ads"-->
 <!--        android:layout_width="match_parent"-->
@@ -14,6 +15,17 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
+=======
+    <VideoView
+        android:id="@+id/clip_ads"
+
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+>>>>>>> Tuan_AppGUI
 
 <!--        tools:ignore="MissingConstraints" />-->
 

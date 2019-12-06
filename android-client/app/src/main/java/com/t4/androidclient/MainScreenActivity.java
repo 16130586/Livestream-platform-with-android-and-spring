@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +24,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -35,8 +32,9 @@ import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
+import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,13 +48,14 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     private LoginButton mBtnFacebook;
     private CallbackManager mCallbackManager;
     private Activity current = this;
+    private Button btn_login ;
+    private Button btn_logout ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         mCallbackManager = CallbackManager.Factory.create();
-
         ///////////// thêm slide menu navigation
         // Kiểm tra session đã đăng nhập thì slide menu khác
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -74,44 +73,63 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             slide_view.getMenu().clear();
             slide_view.inflateHeaderView(R.layout.slide_header);
             slide_view.inflateMenu(R.menu.menu_slide);
-            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
             System.out.println("Đã đăng nhập");
+            //button loginFB khi da dang nhap
+            // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
+//            btn_logout =  slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
+            btn_logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        System.out.println("Xử lý đăng xuất chưa làm");
+                }
+            });
             TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-            profile_fullname.setText("Họ tên : " + accessToken.getUserId());
-
+            profile_fullname.setText("Họ tên : + ten user ở đây ");
         }else {
             slide_view.getMenu().clear();
             slide_view.inflateHeaderView(R.layout.slide_header_not_login);
-            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login_facebook);
             System.out.println("Chưa đăng nhập");
+
+            //button loginFB khi chua dang nhap
+            // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+//cai nay phai connfirm voi tuan lai xem bi thieu j ma thieu loi k tim thay btn_logout            btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+            btn_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("Xử lý đăng nhập chưa làm");
+                    finish();
+                    Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
-
-        mBtnFacebook.setPermissions("user_location", "publish_video" , "user_events" , "manage_pages");
-        mBtnFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                LoginManager.getInstance().logInWithReadPermissions(current , Arrays.asList("user_events" , "manage_pages"));
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, accessToken.getToken());
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, "Chọn gì nào");
-                startActivity(shareIntent);
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException e)
-            {
-
-            }
-        });
+//        Code LoginFB button
+//        mBtnFacebook.setPermissions("user_location", "publish_video" , "user_events" , "manage_pages");
+//        mBtnFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//                LoginManager.getInstance().logInWithReadPermissions(current , Arrays.asList("user_events" , "manage_pages"));
+//                Intent sendIntent = new Intent();
+//                sendIntent.setAction(Intent.ACTION_SEND);
+//                sendIntent.putExtra(Intent.EXTRA_TEXT, accessToken.getToken());
+//                sendIntent.setType("text/plain");
+//                Intent shareIntent = Intent.createChooser(sendIntent, "Chọn gì nào");
+//                startActivity(shareIntent);
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException e)
+//            {
+//
+//            }
+//        });
 
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open,
@@ -153,22 +171,32 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
                     @Override
                     public void onDrawerStateChanged(int newState) {
+                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
                         if (isLoggedIn==true) {
                             slide_view.getMenu().clear();
                             slide_view.removeHeaderView(slide_view.getHeaderView(0));
                             slide_view.inflateHeaderView(R.layout.slide_header);
                             slide_view.inflateMenu(R.menu.menu_slide);
-                            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
-                            System.out.println("Đã đăng nhập");
-                            TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-                            profile_fullname.setText("Họ tên : " + accessToken.getUserId());
+                            // FB button logout khi da dang nhap
+                            // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
 
                         }else {
                             slide_view.getMenu().clear();
                             slide_view.removeHeaderView(slide_view.getHeaderView(0));
                             slide_view.inflateHeaderView(R.layout.slide_header_not_login);
-                            mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login_facebook);
-                            System.out.println("Chưa đăng nhập");
+//       cai nay phai connfirm voi tuan lai xem bi thieu j ma thieu loi k tim thay btn_logout                    btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+                            btn_login.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    System.out.println("Xử lý đăng nhập chưa làm");
+                                    Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                            // FB button logout khi chua dang nhap
+                           // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+
                         }
                     }
                 }
@@ -269,16 +297,15 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-
-        //        // kiểm tra kết quả search
-//        if (requestCode == 0 && resultCode == RESULT_OK) {
-//            ArrayList<String> results = data.getStringArrayListExtra(
-//                    RecognizerIntent.EXTRA_RESULTS);
-//            mSearchView.setFocusable(true);
-//            mSearchView.setSearchText(results.get(0));
-//        }
+                // kiểm tra kết quả search
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            ArrayList<String> results = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            mSearchView.setFocusable(true);
+            mSearchView.setSearchText(results.get(0));
+        }
     }
+
 }
     ///////////// Thêm slide menu navigation
 

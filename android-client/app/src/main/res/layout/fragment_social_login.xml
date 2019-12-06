@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_social_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".ui.login.LoginRegisterActivity">
+
+    <TextView
+        android:id="@+id/tittle_social_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:text="Connect by Social Network"
+        android:textSize="26dp"
+        android:textColor="#F0000000"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/tittle_facebook_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Facebook"
+        android:textSize="24dp"
+        android:textColor="#F0000000"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittle_social_login"
+        tools:ignore="MissingConstraints" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_login_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:textColor="#000000"
+        android:textSize="26sp"
+        android:layout_marginTop="20dp"
+        android:background="#2E4BC2"
+        app:com_facebook_login_text="Continue with Facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittle_facebook_login"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tittle_gmail_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Gmail"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textColor="#F0000000"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login_facebook"
+        tools:ignore="MissingConstraints" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_login_gmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#C91A1A"
+        android:clickable="true"
+        android:textColor="#000000"
+        android:textSize="26sp"
+        app:com_facebook_login_text="Continue with Gmail"
+        android:layout_marginTop="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tittle_gmail_login"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

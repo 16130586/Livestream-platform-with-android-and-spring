@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
 //        clip_ads.requestFocus();
 //        clip_ads.start();
 
+
         // thêm object live stream
         listStream = new ArrayList<>();
         addTenToList();
@@ -111,7 +112,7 @@ public class HomeFragment extends Fragment {
 
         while (n < 10) {
             listStream.add(new StreamViewModel("That ng",
-                    "Harry That Ng", "", getResources().getString(R.string.test_thumbnail)));
+                    "Harry That Ng", "", ""));
             n++;
         }
     }
