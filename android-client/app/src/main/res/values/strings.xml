@@ -236,4 +236,5 @@
     <string name="wz_live_stream_name_default_value">9a54386c</string>
     <string name="wz_video_frame_size_default_value">13</string>
 	<item name="action_copy" type="id" />
+    <string name="test_thumbnail"></string>
 </resources>
