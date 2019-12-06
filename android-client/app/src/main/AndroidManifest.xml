@@ -76,7 +76,7 @@
 <!--        </activity>-->
 
         <activity
-            android:name=".activity.FacebookOptionActivity">
+            android:name=".activity.FacebookOptionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="fullSensor"
             android:label="@string/camera_example_title">
