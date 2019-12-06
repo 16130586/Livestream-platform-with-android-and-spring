@@ -6,7 +6,6 @@ import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ public class StreamController {
     @Autowired
     UserBusiness userBusiness;
 
-    @PostMapping("/create")
+    @PostMapping("/auth/create")
     public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams) {
         ApiResponse apiResponse = new ApiResponse();
         try {
@@ -41,7 +40,7 @@ public class StreamController {
         return apiResponse;
     }
 
-    @PostMapping("/{id}/start")
+    @PostMapping("/auth/{id}/start")
     public ApiResponse start(@PathVariable("id") String id) {
         ApiResponse apiResponse = new ApiResponse();
         try {
@@ -61,7 +60,7 @@ public class StreamController {
         return apiResponse;
     }
 
-    @PostMapping("/{id}/stop")
+    @PostMapping("/auth/{id}/stop")
     public ApiResponse stop(@PathVariable("id") String id) {
         ApiResponse apiResponse = new ApiResponse();
         try {
@@ -81,7 +80,7 @@ public class StreamController {
         return apiResponse;
     }
 
-    @GetMapping("/recommend/{offset}/{pageSize}")
+    @GetMapping("/auth/recommend/{offset}/{pageSize}")
     public ApiResponse getRecommendForUser(@PathVariable Integer offset, @PathVariable Integer pageSize, HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         ApiResponse apiResponse = new ApiResponse();
@@ -140,7 +139,7 @@ public class StreamController {
         return apiResponse;
     }
 
-    @PostMapping("/{streamId}/comment")
+    @PostMapping("/auth/{streamId}/comment")
     public ApiResponse comment(@RequestBody Map<String, String> datas, @PathVariable Integer streamId, HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         ApiResponse apiResponse = new ApiResponse();

@@ -38,16 +38,6 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "success!";
-    }
-
-    @GetMapping("/not-role")
-    public String t() {
-        return "success!";
-    }
-
     @GetMapping("/forgot/{email}")
     public ApiResponse forgotPassword(@PathVariable String email) {
         User user = userBusiness.getUserByGmail(email);

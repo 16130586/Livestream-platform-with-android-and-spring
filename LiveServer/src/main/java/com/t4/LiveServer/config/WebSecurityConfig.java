@@ -40,10 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         // authorize
         http.authorizeRequests()
-                .antMatchers("/login", "/registry", "/forgot/*", "/renewPassword/**").permitAll()
-                .antMatchers("/test").hasRole("SUBSCRIBER")
-                .antMatchers("/not-role").hasAnyRole("USER", "SUBSCRIBER")
-                .anyRequest().hasAnyRole("USER", "SUBSCRIBE")
+                .antMatchers("/streams/auth/**").hasAnyRole("USER", "SUBSCRIBER")
+                .antMatchers("/streams/auth/vip/**").hasRole("SUBSCRIBER")
+                .anyRequest().permitAll()
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
         // add filter for url
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
