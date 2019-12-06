@@ -69,13 +69,13 @@ public class FacebookOptionActivity extends Activity {
         groupView = findViewById(R.id.view_fb_option_group);
         pageView = findViewById(R.id.view_fb_option_page);
 
-        adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, testList);
+        adapter =  new ArrayAdapter<String>(this, R.layout.facebook_option_spinner_item, testList);
         adapter.setDropDownViewResource(R.layout.facebook_option_spinner_item);
 
-        pageAdapter = new ArrayAdapter<Page>(this, android.R.layout.simple_spinner_item, pageList);
+        pageAdapter = new ArrayAdapter<Page>(this, R.layout.facebook_option_spinner_item, pageList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        groupAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_spinner_item, groupList);
+        groupAdapter = new ArrayAdapter<Group>(this, R.layout.facebook_option_spinner_item, groupList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         fbOption = findViewById(R.id.fb_option);
