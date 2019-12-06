@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -31,11 +30,12 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,7 +62,9 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-
+        // Set token
+        setToken();
+        //
         mDrawerLayout = findViewById(R.id.drawer_layout);
         slide_view = findViewById(R.id.slide_view);
 //
@@ -241,7 +243,10 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
     }
 
-
+    public void setToken() {
+        SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(this);
+        Authentication.TOKEN = db.getToken();
+    }
 
     @Override
     public void getSuggestion(List<Suggestion> suggestions) {
