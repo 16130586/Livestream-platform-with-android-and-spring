@@ -48,8 +48,8 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     private LoginButton mBtnFacebook;
     private CallbackManager mCallbackManager;
     private Activity current = this;
-    private Button btn_login ;
-    private Button btn_logout ;
+    private Button btn_login;
+    private Button btn_logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +62,14 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         // Set token
-        setToken();
+//        setToken();
         //
         mDrawerLayout = findViewById(R.id.drawer_layout);
         slide_view = findViewById(R.id.slide_view);
 //
 
 
-        if (isLoggedIn==true) {
+        if (isLoggedIn == true) {
             slide_view.getMenu().clear();
             slide_view.inflateHeaderView(R.layout.slide_header);
             slide_view.inflateMenu(R.menu.menu_slide);
@@ -80,12 +80,12 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             btn_logout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        System.out.println("Xử lý đăng xuất chưa làm");
+                    System.out.println("Xử lý đăng xuất chưa làm");
                 }
             });
             TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
             profile_fullname.setText("Họ tên : + ten user ở đây ");
-        }else {
+        } else {
             slide_view.getMenu().clear();
             slide_view.inflateHeaderView(R.layout.slide_header_not_login);
             System.out.println("Chưa đăng nhập");
@@ -93,16 +93,16 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             //button loginFB khi chua dang nhap
             // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
 //cai nay phai connfirm voi tuan lai xem bi thieu j ma thieu loi k tim thay btn_logout            btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
-            btn_login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Xử lý đăng nhập chưa làm");
-                    finish();
-                    Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
+//            btn_login.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    System.out.println("Xử lý đăng nhập chưa làm");
+//                    finish();
+//                    Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
+//        }
 //        Code LoginFB button
 //        mBtnFacebook.setPermissions("user_location", "publish_video" , "user_events" , "manage_pages");
 //        mBtnFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -132,143 +132,144 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 //        });
 
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-        actionBarDrawerToggle.syncState();
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+            ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open,
+                    R.string.navigation_drawer_close);
+            actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+            actionBarDrawerToggle.syncState();
+            mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        slide_view.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        mDrawerLayout.closeDrawers();
-                        int id = menuItem.getItemId();
-                        if (id == R.id.your_videos) {
-                            System.out.println("Chọn 1");
-                        }
-                        return true;
-                    }
-
-                });
-
-        mDrawerLayout.addDrawerListener(
-                new DrawerLayout.DrawerListener() {
-                    @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
-                        // Respond when the drawer's position changes
-                    }
-
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        System.out.println("Mở menu");
-                    }
-
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                        System.out.println("Đóng menu");
-                    }
-
-                    @Override
-                    public void onDrawerStateChanged(int newState) {
-                        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-                        if (isLoggedIn==true) {
-                            slide_view.getMenu().clear();
-                            slide_view.removeHeaderView(slide_view.getHeaderView(0));
-                            slide_view.inflateHeaderView(R.layout.slide_header);
-                            slide_view.inflateMenu(R.menu.menu_slide);
-                            // FB button logout khi da dang nhap
-                            // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
-
-                        }else {
-                            slide_view.getMenu().clear();
-                            slide_view.removeHeaderView(slide_view.getHeaderView(0));
-                            slide_view.inflateHeaderView(R.layout.slide_header_not_login);
-//       cai nay phai connfirm voi tuan lai xem bi thieu j ma thieu loi k tim thay btn_logout                    btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
-                            btn_login.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    System.out.println("Xử lý đăng nhập chưa làm");
-                                    Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                            // FB button logout khi chua dang nhap
-                           // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
-
-                        }
-                    }
-                }
-        );
-
-
-        /////////// thêm bottom menu navigation
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(navView, navController);
-
-
-        // Click logo về Home
-        app_logo = findViewById(R.id.app_logo);
-        app_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
-            }
-        });
-
-
-        /////////////  thêm search vào
-        mSearchView = findViewById(R.id.floating_search_view);
-        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
-            @Override
-            public void onActionMenuItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.action_voice_rec) {
-                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-
-                    startActivityForResult(intent, 0);
-                }
-                /// mở slide menu bên thanh search
-                else if (item.getItemId() == R.id.open_menu_slide) {
-                    mDrawerLayout = findViewById(R.id.drawer_layout);
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
-
-        // cái này là kiểm tra thay đổi trên search
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, String newQuery) {
-                if (!oldQuery.equals("") && newQuery.equals("")) {
-                    mSearchView.clearSuggestions();
-                } else {
-                    mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            slide_view.setNavigationItemSelectedListener(
+                    new NavigationView.OnNavigationItemSelectedListener() {
                         @Override
-                        public void onSearchTextChanged(String oldQuery, String newQuery) {
-                            if (!oldQuery.equals("") && newQuery.equals("")) {
-                                mSearchView.clearSuggestions();
+                        public boolean onNavigationItemSelected(MenuItem menuItem) {
+                            mDrawerLayout.closeDrawers();
+                            int id = menuItem.getItemId();
+                            if (id == R.id.your_videos) {
+                                System.out.println("Chọn 1");
+                            }
+                            return true;
+                        }
+
+                    });
+
+            mDrawerLayout.addDrawerListener(
+                    new DrawerLayout.DrawerListener() {
+                        @Override
+                        public void onDrawerSlide(View drawerView, float slideOffset) {
+                            // Respond when the drawer's position changes
+                        }
+
+                        @Override
+                        public void onDrawerOpened(View drawerView) {
+                            System.out.println("Mở menu");
+                        }
+
+                        @Override
+                        public void onDrawerClosed(View drawerView) {
+                            System.out.println("Đóng menu");
+                        }
+
+                        @Override
+                        public void onDrawerStateChanged(int newState) {
+                            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                            boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+                            if (isLoggedIn == true) {
+                                slide_view.getMenu().clear();
+                                slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                                slide_view.inflateHeaderView(R.layout.slide_header);
+                                slide_view.inflateMenu(R.menu.menu_slide);
+                                // FB button logout khi da dang nhap
+                                // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_logout_facebook);
+
                             } else {
-                                mSearchView.showProgress();
-                                if (a != null) {
-                                    a.cancel(true);
-                                }
-                                a = (asyn) new asyn(makeSuggestion).execute("http://suggestqueries.google.com/complete/search?output=firefox&hl=vi&q=" + newQuery);
+                                slide_view.getMenu().clear();
+                                slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                                slide_view.inflateHeaderView(R.layout.slide_header_not_login);
+//       cai nay phai connfirm voi tuan lai xem bi thieu j ma thieu loi k tim thay btn_logout                    btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+                                btn_login.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        System.out.println("Xử lý đăng nhập chưa làm");
+                                        Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                                // FB button logout khi chua dang nhap
+                                // mBtnFacebook = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
 
                             }
                         }
-                    });
+                    }
+            );
 
+
+            /////////// thêm bottom menu navigation
+            BottomNavigationView navView = findViewById(R.id.nav_view);
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            NavigationUI.setupWithNavController(navView, navController);
+
+
+            // Click logo về Home
+            app_logo = findViewById(R.id.app_logo);
+            app_logo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
                 }
-            }
-        });
+            });
 
+
+            /////////////  thêm search vào
+            mSearchView = findViewById(R.id.floating_search_view);
+            mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+                @Override
+                public void onActionMenuItemSelected(MenuItem item) {
+                    if (item.getItemId() == R.id.action_voice_rec) {
+                        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+
+                        startActivityForResult(intent, 0);
+                    }
+                    /// mở slide menu bên thanh search
+                    else if (item.getItemId() == R.id.open_menu_slide) {
+                        mDrawerLayout = findViewById(R.id.drawer_layout);
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                }
+            });
+
+            // cái này là kiểm tra thay đổi trên search
+            mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+                @Override
+                public void onSearchTextChanged(String oldQuery, String newQuery) {
+                    if (!oldQuery.equals("") && newQuery.equals("")) {
+                        mSearchView.clearSuggestions();
+                    } else {
+                        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+                            @Override
+                            public void onSearchTextChanged(String oldQuery, String newQuery) {
+                                if (!oldQuery.equals("") && newQuery.equals("")) {
+                                    mSearchView.clearSuggestions();
+                                } else {
+                                    mSearchView.showProgress();
+                                    if (a != null) {
+                                        a.cancel(true);
+                                    }
+                                    a = (asyn) new asyn(makeSuggestion).execute("http://suggestqueries.google.com/complete/search?output=firefox&hl=vi&q=" + newQuery);
+
+                                }
+                            }
+                        });
+
+                    }
+                }
+            });
+
+        }
     }
 
     public void setToken() {
@@ -297,7 +298,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-                // kiểm tra kết quả search
+        // kiểm tra kết quả search
         if (requestCode == 0 && resultCode == RESULT_OK) {
             ArrayList<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
@@ -307,7 +308,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     }
 
 }
-    ///////////// Thêm slide menu navigation
+///////////// Thêm slide menu navigation
 
 
 
