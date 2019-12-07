@@ -6,12 +6,12 @@ public class Otp {
 
     public static String generateOTP() {
         // Using numeric values
-        String numbers = "0123456789";
+        String numbers = "0123456789qwertyuiopasdfghjklzxcvbnm";
 
         Random random = new Random();
 
         String otp = "";
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 55; i++) {
             otp += numbers.charAt(random.nextInt(numbers.length()));
         }
         return otp;

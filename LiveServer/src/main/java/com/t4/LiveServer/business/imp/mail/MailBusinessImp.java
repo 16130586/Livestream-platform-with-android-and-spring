@@ -65,7 +65,7 @@ public class MailBusinessImp implements MailBusiness {
                 "<table cellpadding=\"10\" cellspacing=\"0\" border=\"0\" style=\"width:100%;border-collapse:collapse\">\n" +
                 "\t<tbody><tr><td style=\"border-collapse:collapse;vertical-align:top\">\n" +
                 "\t\t<p style=\"font-size:16px;color:#555;line-height:26px;font-weight:300;margin:0 40px\">\n" +
-                "\t\t\t<a href=\"http://localhost:8080/renewPassword/" + userId + "/" + otp +"\" class=\"notranslate\" style=\"color:#0000ff;font-weight:400;text-decoration:underline\" target=\"_blank\">Reset your password</a>\n" +
+                "\t\t\t<a href=\"http://localhost:8080/user/renewPassword/" + userId + "/" + otp +"\" class=\"notranslate\" style=\"color:#0000ff;font-weight:400;text-decoration:underline\" target=\"_blank\">Reset your password</a>\n" +
                 "\t\t</p>\n" +
                 "    </td></tr></tbody>\n" +
                 "</table>\n" +
@@ -75,7 +75,7 @@ public class MailBusinessImp implements MailBusiness {
                 "\t\t<p id=\"m_4904713513055239605description\" style=\"font-size:16px;color:#555;line-height:26px;font-weight:300;margin:0 40px\">\n" +
                 "\t\t    <br>\n" +
                 "\t        Or, copy and paste the following URL into your browser: <br>\n" +
-                "\t\t    <span class=\"notranslate\"><a href=\"http://localhost:8080/renewPassword/" + userId + "/" + otp +"\" target=\"_blank\" >http://localhost:8080/renewPassword/" + userId + "/" + otp +"</a></span>\n" +
+                "\t\t    <span class=\"notranslate\"><a href=\"http://localhost:8080/user/renewPassword/" + userId + "/" + otp +"\" target=\"_blank\" >http://localhost:8080/user/renewPassword/" + userId + "/" + otp +"</a></span>\n" +
                 "\t\t</p>\n" +
                 "\t</td></tr></tbody>\n" +
                 "</table>\n" +

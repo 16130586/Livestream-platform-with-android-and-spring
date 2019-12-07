@@ -13,6 +13,8 @@
 <div style="margin-top: 100px">
 <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px">
 <div style="width: 400px; padding: 60px 0; margin: auto">
+<c:if test="${empty isSuccess}">
+<c:if test="${isCorrectInfo}">
 <h1 style="line-height: 1.66;
     margin: 0;
     padding: 0;
@@ -23,9 +25,7 @@
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 40px;">NEW PASSWORD</h1>
-<c:if test="${empty isSuccess}">
-    <c:if test="${isCorrectInfo}">
-    <form action="/renewPassword/${userId}" method="post" onsubmit="return checkPassword()">
+    <form action="/user/renewPassword/${userId}" method="post" onsubmit="return checkPassword()">
         <div style="overflow: hidden;margin-bottom: 20px;">
             <input style="width: 100%;
                             border: 1px solid #ebebeb;
@@ -60,11 +60,29 @@
     </form>
     </c:if>
     <c:if test="${!isCorrectInfo}">
-    <h3>Invalid link, please try again!</h3>
+    <h1 style="line-height: 1.66;
+    margin: 0;
+    padding: 0;
+    font-weight: 900;
+    color: #222;
+    font-family: 'Montserrat';
+    font-size: 31px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 40px;">incorrect link, please try again!</h1>
     </c:if>
 </c:if>
 <c:if test="${isSuccess}">
-    <h3>Re new password success!</h3>
+    <h1 style="line-height: 1.66;
+    margin: 0;
+    padding: 0;
+    font-weight: 900;
+    color: #222;
+    font-family: 'Montserrat';
+    font-size: 31px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 40px;">change password success!</h1>
 </c:if>
 </div>
 </div>

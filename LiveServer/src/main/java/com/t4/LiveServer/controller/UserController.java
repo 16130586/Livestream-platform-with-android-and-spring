@@ -9,11 +9,13 @@ import com.t4.LiveServer.validation.form.RegistryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class UserController {
     public ApiResponse login(@RequestBody Map<String, String> datas) {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
-        response.message="Login success!";
+        response.message = "Login success!";
         response.data = userBusiness.login(datas.get("username"), datas.get("password"));
         return response;
     }
@@ -34,7 +36,7 @@ public class UserController {
     public ApiResponse registry(@Valid @RequestBody RegistryForm registryForm) {
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
-        response.message="Register success!";
+        response.message = "Register success!";
         response.data = userBusiness.registry(registryForm);
         return response;
     }
@@ -60,5 +62,15 @@ public class UserController {
             response.message = "User not found! wrong mail";
         }
         return response;
+    }
+
+    @GetMapping("/auth/info")
+    public ApiResponse getInfo(HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get user info!";
+        apiResponse.data = userBusiness.getUserById(user.getUserId());
+        return apiResponse;
     }
 }
