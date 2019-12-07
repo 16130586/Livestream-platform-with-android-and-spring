@@ -5,3 +5,4 @@ LiveServer/.idea/misc.xml
 LiveServer/.idea/vcs.xml
 LiveServer/.idea/modules.xml
 android-client/app/build*
+Node/ys-comment/node_modules/*

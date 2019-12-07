@@ -1,0 +1,75 @@
+title Stop Live Stream
+
+activate User
+User -> Server: stop a live stream
+deactivate User
+
+activate Server
+Server -> Wowza: send stop
+deactivate Server
+activate Wowza
+Wowza ->Server: stop status
+activate Server
+deactivate Wowza
+
+Server->Wowza: query status
+deactivate Server
+activate Wowza
+Wowza->Server: send status
+deactivate Wowza
+
+activate Server
+Server-> DB: update status
+activate DB
+Server->User: update livestream stopped
+deactivate Server
+
+activate User
+User->User: update
+deactivate User
+
+DB <-> MessageQ: update status
+activate MessageQ
+
+MessageQ -> GetCommentService: started event
+activate GetCommentService
+
+GetCommentService->GetCommentService:start service
+GetCommentService<->ExternalComment: get comment
+
+activate ExternalComment
+
+GetCommentService->MessageQ: destroy event
+deactivate ExternalComment
+deactivate GetCommentService
+
+MessageQ->RealTimeService: destroy event
+activate RealTimeService
+RealTimeService->RealTimeService: destroy event
+deactivate DB
+deactivate MessageQ
+
+RealTimeService->User:Push to user
+activate User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

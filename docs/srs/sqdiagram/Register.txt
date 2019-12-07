@@ -1,0 +1,9 @@
+title Register
+
+activate User
+User -> Server: register
+deactivate User
+activate Server
+Server ->Server: validate form
+Server ->User: login success
+deactivate Server
