@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="FACEBOOK OPTION"/>
+
+	<Toolbar
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/metal_black">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:scaleType="fitCenter"
+			android:textSize="20dp"
+			android:text="Forward Facebook Option"
+			android:textColor="@color/white"/>
+	</Toolbar>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="15dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginBottom="10dp"
+			android:weightSum="1">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="0.3"
+				android:textSize="20dp"
+				android:textColor="@color/metal_black"
+				android:text="Publicity"/>
+
+			<Spinner
+				android:id="@+id/fb_option"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="0.7" />
+		</LinearLayout>
+
+
+		<LinearLayout
+			android:id="@+id/view_fb_option_page"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:weightSum="1"
+			android:visibility="gone">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="0.3"
+				android:textSize="20dp"
+				android:textColor="@color/metal_black"
+				android:text="Page"/>
+
+			<Spinner
+				android:id="@+id/fb_option_f_page"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="0.7" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/view_fb_option_group"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:weightSum="1"
+			android:visibility="gone">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="0.3"
+				android:textSize="20dp"
+				android:textColor="@color/metal_black"
+				android:text="Group"/>
+
+			<Spinner
+				android:id="@+id/fb_option_f_group"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="0.7" />
+
+		</LinearLayout>
+
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_marginTop="50dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center">
+
+		<Button
+			android:id="@+id/btn_fb_option_save"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/metal_black"
+			android:textColor="@color/white"
+			android:text="Save"/>
+	</LinearLayout>
+
+
+</LinearLayout>

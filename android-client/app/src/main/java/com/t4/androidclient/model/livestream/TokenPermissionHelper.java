@@ -45,10 +45,11 @@ public class TokenPermissionHelper {
     public boolean checkTokenPermissions(List<TokenPermission> tokenPermissionList) {
         for (int i = 0; i < tokenPermissionList.size(); i++) {
             TokenPermission tokenPermission = tokenPermissionList.get(i);
+            System.out.println(tokenPermission.toString());
             if (this.permissions.contains(tokenPermission.getPermission()) && "granted".equals(tokenPermission.getStatus())){
                 continue;
             } else {
-                return false;
+                return true;
             }
         }
         return true;
