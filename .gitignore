@@ -6,3 +6,7 @@ LiveServer/.idea/vcs.xml
 LiveServer/.idea/modules.xml
 android-client/app/build*
 Node/ys-comment/node_modules/*
+ui-prototype/
+LiveServer/.gradle/
+LiveServer/build/
+source-web/
