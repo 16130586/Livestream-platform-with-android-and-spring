@@ -1,0 +1,9 @@
+title Logout
+
+activate User
+User -> Android Client: Click logout
+deactivate User
+activate Android Client
+Android Client ->Android Client: clear access token
+Android Client ->User: logout success
+deactivate Android Client

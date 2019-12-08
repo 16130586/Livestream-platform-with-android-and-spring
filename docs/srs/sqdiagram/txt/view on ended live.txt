@@ -1,0 +1,23 @@
+title User view on an ended live stream
+
+activate User
+User->User: click on and ended live stream
+User->User: change to view ended live stream
+
+group #2f2e7b loop #white [while on process]
+User<-->Wowza Stream Server: pull video
+activate Wowza Stream Server
+space 
+deactivate Wowza Stream Server
+
+User<-->Server: pull comments
+activate Server
+space 
+deactivate Server
+
+User->User: display user video and comment
+end
+
+
+
+
