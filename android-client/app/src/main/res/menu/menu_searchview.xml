@@ -7,6 +7,12 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_keyboard_voice_black_24dp"/>
 
+    <item android:id="@+id/create_live_stream"
+        android:title="Create Live Stream"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_menu_camera"/>
+
     <item android:id="@+id/open_menu_slide"
         android:title="Slide Menu"
         android:orderInCategory="1"
