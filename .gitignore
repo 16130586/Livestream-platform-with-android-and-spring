@@ -10,3 +10,4 @@ ui-prototype/
 LiveServer/.gradle/
 LiveServer/build/
 source-web/
+.gradle/
