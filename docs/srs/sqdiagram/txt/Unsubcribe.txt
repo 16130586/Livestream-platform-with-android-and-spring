@@ -1,0 +1,37 @@
+title Un-subcribe
+
+activate User
+User->User: click on other user page
+User->User: navigate to subcribed user page
+User->User: click on 'un-subcribe'
+
+User->Server: saving subcription status
+deactivate User
+activate Server
+Server-->User: un-subcribe success
+deactivate Server
+
+activate User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
