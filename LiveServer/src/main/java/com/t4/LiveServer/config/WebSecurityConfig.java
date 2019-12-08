@@ -2,6 +2,8 @@ package com.t4.LiveServer.config;
 
 
 import com.t4.LiveServer.jwt.JwtAuthenticationFilter;
+import com.t4.LiveServer.middleware.AccessDeniedHandleException;
+import com.t4.LiveServer.middleware.AuthenticationEntryPointHandleException;
 import com.t4.LiveServer.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/streams/auth/**", "/user/auth/**").hasAnyRole("USER", "SUBSCRIBER")
                 .antMatchers("/streams/auth/vip/**").hasRole("SUBSCRIBER")
                 .anyRequest().permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .and()
+                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandleException()).authenticationEntryPoint(new AuthenticationEntryPointHandleException());
         // add filter for url
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
