@@ -25,7 +25,7 @@ public class User {
     @JsonIgnoreProperties(value = {"streams", "subscribers", "favouriteType", "notifications", "favouriteSaved"})
     private List<User> subscribers;
     private List<PaySubscription> paySubscriptions;
-    @JsonIgnoreProperties("owner")
+    @JsonIgnoreProperties(value = {"owner", "comments"})
     private List<Stream> streams;
 
     @Id

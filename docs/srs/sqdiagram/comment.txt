@@ -1,0 +1,28 @@
+actor User
+participant Server
+database Database
+participant MQCoponent
+participant RealtimeCoponent
+participant Viewer
+
+activate User
+User-->Server:send comment
+activate Server
+Server-->Database:save to db
+activate Database
+Database->Database:save
+Server-->User:comment
+deactivate Server
+User->User:display
+deactivate User
+MQCoponent-->Database:request reply event
+deactivate Database
+activate MQCoponent
+MQCoponent-->RealtimeCoponent: reply event
+deactivate MQCoponent
+activate RealtimeCoponent
+RealtimeCoponent-->Viewer:send
+deactivate RealtimeCoponent
+activate Viewer
+Viewer->Viewer:display
+deactivate Viewer
