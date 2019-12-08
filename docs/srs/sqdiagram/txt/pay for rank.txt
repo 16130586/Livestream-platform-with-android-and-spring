@@ -1,0 +1,42 @@
+title Pay for rating
+
+activate Premium User
+Premium User->Premium User: click creating live stream
+
+Premium User->Premium User: click on 'raise my rank'
+
+Premium User->Premium User: display payment activity
+
+Premium User->Server: request ranking
+activate Server
+Server->Server: query ranking
+deactivate Server
+
+group #2f2e7b if #white [User paid]
+Premium User->Server: raise rank of this live stream
+activate Server
+Server->Server: raise rank
+deactivate Server
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

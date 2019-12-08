@@ -1,7 +1,7 @@
 title Start Live Stream
 
 activate User
-User -> Server: Start a live stream
+User -> Server: start a live stream
 deactivate User
 
 activate Server
@@ -19,13 +19,13 @@ Wowza->Server: send status
 deactivate Wowza
 
 activate Server
-Server-> DB: Update status
+Server-> DB: update status
 activate DB
-Server->User: Update livestream started
+Server->User: update livestream started
 deactivate Server
 
 activate User
-User->User: Update
+User->User: update
 deactivate User
 
 DB <-> MessageQ: update status
@@ -49,8 +49,12 @@ RealTimeService->RealTimeService: getting reply event
 deactivate DB
 deactivate MessageQ
 
-RealTimeService->User:Push to user
+RealTimeService->User:push to user
 activate User
+
+
+
+
 
 
 

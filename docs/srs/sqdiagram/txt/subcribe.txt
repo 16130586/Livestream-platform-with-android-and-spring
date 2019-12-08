@@ -1,0 +1,37 @@
+title Subcribe
+
+activate User
+User->User: click on other user page
+User->User: navigate to individual user page
+User->User: click on 'subcribe'
+
+User->Server: saving subcription status
+deactivate User
+activate Server
+Server-->User: subcribe success
+deactivate Server
+
+activate User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

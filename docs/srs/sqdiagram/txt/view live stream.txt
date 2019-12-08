@@ -1,0 +1,18 @@
+title View live stream
+
+activate User
+User->User: click on the live stream
+User->User: change activity to view live stream
+
+User->Real Time Component: connect
+activate Real Time Component
+User->Real Time Component: listen for event
+deactivate Real Time Component
+
+group #2f2e7b loop #white [while user on process]
+User<-->Wowza Stream Server: get stream video
+activate Wowza Stream Server
+end
+
+User->Wowza Stream Server: Close streaming
+deactivate Wowza Stream Server

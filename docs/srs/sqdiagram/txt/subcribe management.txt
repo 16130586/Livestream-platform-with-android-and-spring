@@ -1,0 +1,33 @@
+title Subcribe management
+
+activate User
+User->User: click on subcribe management
+User->User: navigate to subcribe management activity
+
+User<-->Server: get subcribe information
+activate Server
+space 
+deactivate Server
+
+User->User: display
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

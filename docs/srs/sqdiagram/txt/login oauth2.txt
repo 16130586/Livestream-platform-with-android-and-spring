@@ -1,0 +1,24 @@
+title Login
+
+activate User
+User -> Android Client: click login button
+deactivate User
+
+activate Android Client
+Android Client ->User: request authorization
+deactivate Android Client
+activate User
+User ->Android Client: authorization granted
+deactivate User
+activate Android Client
+Android Client -> Server: authorization grant
+deactivate Android Client
+activate Server
+Server ->Android Client: access token
+deactivate Server
+activate Android Client
+Android Client ->Android Client: cache access token
+
+Android Client ->User: login success
+deactivate Android Client
+ 
