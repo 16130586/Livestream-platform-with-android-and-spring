@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.MenuItem;
@@ -29,7 +30,9 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.t4.androidclient.activity.CreateLiveActivity;
+import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
@@ -38,6 +41,7 @@ import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import okhttp3.Request;
 
 
 public class MainScreenActivity extends AppCompatActivity implements MakeSuggestion {
@@ -62,9 +66,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         // Kiểm tra session đã đăng nhập thì slide menu khác
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-        // Set token
-//        setToken();
 
         ///////////// thêm slide menu navigation
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -251,6 +252,32 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                 }
             }
         });
+
+        // Set token
+        setToken();
+        //==============================================================================
+        // Validate token & get user info if token valid.
+        //================================================================================
+        if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
+            // TODO handle in case null token
+            System.out.println("=========================================================================================");
+            System.out.println("null token");
+            System.out.println("=========================================================================================");
+        } else {
+            InfoUser infoUser = new InfoUser(new AsyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    // TODO check response
+                    // have 3 case : response.statusCode = 200, response.statusCode = 401, response.statusCode = 403
+                    // if statusCode != 200, delete old token in db
+                    System.out.println("=========================================================================================");
+                    System.out.println(output);
+                    System.out.println("=========================================================================================");
+                }
+            });
+            infoUser.execute(Authentication.TOKEN);
+        }
+
     }
 
     public void setToken() {
@@ -286,6 +313,33 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             mSearchView.setFocusable(true);
             mSearchView.setSearchText(results.get(0));
         }
+    }
+
+    // interface response AsyncResponse
+    public interface AsyncResponse {
+        void processFinish(String output);
+    }
+
+// =======================================================================
+// ============ DO GET INFO USER ==================================
+// AsyncTask to get the genre list
+    private class InfoUser extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+
+        public InfoUser(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... token) {
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO, token[0]);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+        asyncResponse.processFinish(result);
+    }
     }
 
 }
