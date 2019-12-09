@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `nick_name` varchar(255) DEFAULT NULL,
-  `avatar` blob,
+  `avatar` varchar(255) DEFAULT NULL,
   `gmail` varchar(255) DEFAULT NULL,
   `forgot_token` varchar(255) DEFAULT NULL,
   `subscribe_total` int(11) DEFAULT NULL,
