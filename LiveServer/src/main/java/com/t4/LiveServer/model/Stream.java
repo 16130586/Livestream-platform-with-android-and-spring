@@ -20,6 +20,7 @@ public class Stream {
     private List<StreamType> streamType;
     @JsonIgnoreProperties(value = {"streams", "notifications", "favouriteType", "favouriteSaved"})
     private User owner;
+    private String thumbnail;
     private Integer totalView;
     private Date startTime;
     private Date endTime;
@@ -190,6 +191,15 @@ public class Stream {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Column(name = "thumbnail")
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     @OneToMany(fetch = FetchType.LAZY)

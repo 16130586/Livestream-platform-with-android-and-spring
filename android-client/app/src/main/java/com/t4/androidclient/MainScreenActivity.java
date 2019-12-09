@@ -23,9 +23,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -34,6 +32,8 @@ import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
+import com.t4.androidclient.model.livestream.User;
+import com.t4.androidclient.model.livestream.UserHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
@@ -50,6 +50,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     ImageView app_logo;
     MakeSuggestion makeSuggestion = this;
     NavigationView slide_view;
+    User user;
     private asyn a = null;
     private LoginButton mBtnFacebook;
     private CallbackManager mCallbackManager;
@@ -62,14 +63,17 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         mCallbackManager = CallbackManager.Factory.create();
-
-        // Kiểm tra session đã đăng nhập thì slide menu khác
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
         ///////////// thêm slide menu navigation
         mDrawerLayout = findViewById(R.id.drawer_layout);
         slide_view = findViewById(R.id.slide_view);
+
+        /**
+         =======================================================================================================================================
+         LOGIN FACEBOOK
+         =======================================================================================================================================
+         // Kiểm tra session đã đăng nhập thì slide menu khác
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         // Vì chưa đổng bộ Account nên tạm thời trạng thái đăng nhập là getToken của Facebook , khi có sẽ thay đổi
         if (isLoggedIn == true) {
@@ -108,7 +112,42 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                 }
             });
         }
+         =======================================================================================================================================
+         END LOGIN FACEBOOK
+         =======================================================================================================================================
+         */
 
+        /**
+         =======================================================================================================================================
+         LOGIN
+         =======================================================================================================================================
+         */
+        // get token from sqlite & add to contraints
+        setToken();
+        //==============================================================================
+        // Validate token & get user info if token valid.
+        //================================================================================
+        if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
+            // TODO handle in case null token
+            System.out.println("=========================================================================================");
+            System.out.println("null token");
+            doProcessNotLogin();
+            System.out.println("=========================================================================================");
+        } else {
+            InfoUser infoUser = new InfoUser(new AsyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    user = UserHelper.parseUserJson(output);
+                    doProcessLoggedin();
+                }
+            });
+            infoUser.execute(Authentication.TOKEN);
+        }
+        /**
+         =======================================================================================================================================
+         END LOGIN
+         =======================================================================================================================================
+         */
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -253,35 +292,11 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             }
         });
 
-        // Set token
-        setToken();
-        //==============================================================================
-        // Validate token & get user info if token valid.
-        //================================================================================
-        if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
-            // TODO handle in case null token
-            System.out.println("=========================================================================================");
-            System.out.println("null token");
-            System.out.println("=========================================================================================");
-        } else {
-            InfoUser infoUser = new InfoUser(new AsyncResponse() {
-                @Override
-                public void processFinish(String output) {
-                    // TODO check response
-                    // have 3 case : response.statusCode = 200, response.statusCode = 401, response.statusCode = 403
-                    // if statusCode != 200, delete old token in db
-                    System.out.println("=========================================================================================");
-                    System.out.println(output);
-                    System.out.println("=========================================================================================");
-                }
-            });
-            infoUser.execute(Authentication.TOKEN);
-        }
-
     }
 
     public void setToken() {
         SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(this);
+//        db.saveToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc2QiLCJpYXQiOjE1NzU4NjE0OTQsImV4cCI6MTU3NTk0Nzg5NH0.OHBcqgcQX3EwNZUR0cbHmtTLljE_3wIB5E3fdjoVS14");
         Authentication.TOKEN = db.getToken();
     }
 
@@ -339,9 +354,51 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         @Override
         protected void onPostExecute(String result) {
         asyncResponse.processFinish(result);
-    }
+        }
     }
 
+    public void doProcessNotLogin() {
+        slide_view.getMenu().clear();
+        slide_view.inflateHeaderView(R.layout.slide_header_not_login);
+
+        //  Thêm button login vào slide khi chua dang nhap
+        btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void doProcessLoggedin() {
+        slide_view.getMenu().clear();
+        slide_view.inflateHeaderView(R.layout.slide_header);
+        slide_view.inflateMenu(R.menu.menu_slide);
+        //  Thêm button logout vào slide khi da dang nhap
+        btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                logout();
+            }
+        });
+        TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
+        profile_fullname.setText(user.getNickname());
+        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
+        profile_email.setText(user.getGmail());
+        if (user.getAvatar() != null && !user.getGmail().isEmpty()) {
+            // TODO show avatar
+        }
+    }
+
+    public void logout() {
+        new SqliteAuthenticationHelper(MainScreenActivity.this).deleteToken();
+        MainScreenActivity.this.user = null;
+        doProcessNotLogin();
+    }
 }
 ///////////// Thêm slide menu navigation
 
