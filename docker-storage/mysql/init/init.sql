@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `stream` (
   `stream_id` int(11) NOT NULL AUTO_INCREMENT,
   `wowza_id` varchar(255) DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
   `total_view` int(11) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
