@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Phạm Quang Tuấn"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView
@@ -29,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="davidtuan25@gmail.com"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
@@ -38,6 +36,7 @@
         android:layout_width="100dp"
         android:background="#216AF3"
         android:text="Logout"
+        android:textColor="#fff"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"

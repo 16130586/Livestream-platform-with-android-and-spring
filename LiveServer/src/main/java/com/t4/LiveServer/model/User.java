@@ -15,7 +15,7 @@ public class User {
     private String userName;
     private String password;
     private String nickName;
-    private byte[] avatar;
+    private String avatar;
     private String gmail;
     private String forgotToken;
     private Integer subscribeTotal;
@@ -25,7 +25,7 @@ public class User {
     @JsonIgnoreProperties(value = {"streams", "subscribers", "favouriteType", "notifications", "favouriteSaved"})
     private List<User> subscribers;
     private List<PaySubscription> paySubscriptions;
-    @JsonIgnoreProperties("owner")
+    @JsonIgnoreProperties(value = {"owner", "comments"})
     private List<Stream> streams;
 
     @Id
@@ -66,11 +66,11 @@ public class User {
     }
 
     @Column(name = "avatar")
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

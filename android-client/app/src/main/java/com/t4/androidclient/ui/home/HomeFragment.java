@@ -1,16 +1,9 @@
 package com.t4.androidclient.ui.home;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.VideoView;
 
@@ -22,14 +15,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import  com.t4.androidclient.R;
 import com.t4.androidclient.model.livestream.LiveStream;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 import com.t4.androidclient.ulti.adapter.StreamRecyclerAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import viewModel.StreamViewModel;
 
@@ -55,7 +46,6 @@ public class HomeFragment extends Fragment {
 //        clip_ads.setVideoURI(videoUrl);
 //        clip_ads.requestFocus();
 //        clip_ads.start();
-
 
         // thêm object live stream
         listStream = new ArrayList<>();

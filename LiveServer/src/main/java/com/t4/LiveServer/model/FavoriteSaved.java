@@ -10,6 +10,7 @@ import java.util.Date;
 public class FavoriteSaved {
 
     private Integer id;
+    @JsonIgnoreProperties(value = {"comments", "owner"} )
     private Stream stream;
     private Date savedTime;
     private Integer status;
@@ -25,7 +26,6 @@ public class FavoriteSaved {
     }
 
     @ManyToOne
-    @JsonIgnoreProperties("owner")
     @JoinColumn(name = "stream_id")
     public Stream getStream() {
         return stream;

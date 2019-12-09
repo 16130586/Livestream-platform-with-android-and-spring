@@ -8,11 +8,11 @@
     <!--FA983B -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_fire"
+        android:src="@drawable/ic_logo"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp" />
 
@@ -22,19 +22,22 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Login to access User Function"
-        android:textSize="26sp"
+        android:text="Sign in now to livestream and interact on livestreams."
+        android:textSize="16sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:background="#216AF3"
-        android:text="Login or Register"
-        android:layout_marginTop="10dp"
+        android:text="SIGN IN"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
         />
 
 <!--    <com.facebook.login.widget.LoginButton-->
