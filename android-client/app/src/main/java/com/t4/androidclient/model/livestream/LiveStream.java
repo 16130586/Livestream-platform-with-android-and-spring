@@ -1,13 +1,25 @@
 package com.t4.androidclient.model.livestream;
 
+import java.util.Date;
 import java.util.List;
 
 public class LiveStream {
     private String title;
     private String thumbnail;
     private List<String> genreList;
-        private FacebookUser facebookUser;
-
+    private FacebookUser facebookUser;
+    private Integer totalView;
+    private Date startTime;
+    private Date endTime;
+    private Integer status;
+    private String forwards;
+    private String forwardsUrl;
+    private String storedUrl;
+    private List<Comment> comments;
+    private String primaryServerURL;
+    private int hostPort;
+    private String application;
+    private String streamName;
     public LiveStream() {
 
     }
@@ -55,5 +67,101 @@ public class LiveStream {
 
     public void setFacebookUser(FacebookUser facebookUser) {
         this.facebookUser = facebookUser;
+    }
+
+    public Integer getTotalView() {
+        return totalView;
+    }
+
+    public void setTotalView(Integer totalView) {
+        this.totalView = totalView;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getForwards() {
+        return forwards;
+    }
+
+    public void setForwards(String forwards) {
+        this.forwards = forwards;
+    }
+
+    public String getForwardsUrl() {
+        return forwardsUrl;
+    }
+
+    public void setForwardsUrl(String forwardsUrl) {
+        this.forwardsUrl = forwardsUrl;
+    }
+
+    public String getStoredUrl() {
+        return storedUrl;
+    }
+
+    public void setStoredUrl(String storedUrl) {
+        this.storedUrl = storedUrl;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getPrimaryServerURL() {
+        return primaryServerURL;
+    }
+
+    public void setPrimaryServerURL(String primaryServerURL) {
+        this.primaryServerURL = primaryServerURL;
+    }
+
+    public int getHostPort() {
+        return hostPort;
+    }
+
+    public void setHostPort(int hostPort) {
+        this.hostPort = hostPort;
+    }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public String getStreamName() {
+        return streamName;
+    }
+
+    public void setStreamName(String streamName) {
+        this.streamName = streamName;
     }
 }

@@ -8,11 +8,7 @@ import java.util.List;
 
 public class GenreHelper {
 
-    public GenreHelper() {
-
-    }
-
-    public List<String> parseGenreJson(String jsonString) {
+    public static List<String> parseGenreJson(String jsonString) {
         ArrayList<String> genreList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
