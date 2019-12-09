@@ -115,4 +115,14 @@ public class UserController {
         return response;
 
     }
+
+    @GetMapping("/auth/notification")
+    public ApiResponse getNotification(HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get user's notification!";
+        apiResponse.data = userBusiness.getNotification(user.getUserId());
+        return apiResponse;
+    }
 }

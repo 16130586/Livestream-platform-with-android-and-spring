@@ -2,6 +2,7 @@ package com.t4.LiveServer.business.imp;
 
 import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.jwt.JwtProvider;
+import com.t4.LiveServer.model.Notification;
 import com.t4.LiveServer.model.User;
 import com.t4.LiveServer.model.security.CustomUserDetails;
 import com.t4.LiveServer.repository.UserRepository;
@@ -13,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserBusinessImp implements UserBusiness {
@@ -68,6 +71,11 @@ public class UserBusinessImp implements UserBusiness {
     @Override
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public List<Notification> getNotification(int userId) {
+        return userRepository.findNotificationById(userId);
     }
 
 }
