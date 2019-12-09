@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,6 +14,8 @@ import okhttp3.Response;
 
 public class HttpClient {
     private static final OkHttpClient httpClient = new OkHttpClient();
+    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+
 
     public static Headers createAuthenticationHeader(String token) {
         Map<String, String> values = new HashMap<>();
@@ -31,13 +34,16 @@ public class HttpClient {
 
     public static Request buildPostRequest(String url, Map<String, String> values, String token) {
         Headers headers = createAuthenticationHeader(token);
-        MultipartBody.Builder builder = new MultipartBody.Builder();
-        builder.setType(MultipartBody.FORM);
-        for (Map.Entry<String, String> entry : values.entrySet()) {
-            builder.addFormDataPart(entry.getKey(), entry.getValue());
-        }
-        RequestBody requestBody = builder.build();
-        return new Request.Builder().headers(headers).url(url).post(requestBody).build();
+        String jsonStringData = JsonHelper.serialize(values);
+        Request request = new Request.Builder().headers(headers).url(url).post(RequestBody.create(jsonStringData, MEDIA_TYPE_JSON)).build();
+        return request;
+    }
+
+    public static Request buildPostRequest(String url, Map<String, String> values) {
+        String jsonStringData = JsonHelper.serialize(values);
+        System.out.println(jsonStringData);
+        Request request = new Request.Builder().url(url).post(RequestBody.create(jsonStringData, MEDIA_TYPE_JSON)).build();
+        return request;
     }
 
     public static String execute(Request request) {
