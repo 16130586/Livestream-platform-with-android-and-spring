@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="10dp"
+	android:weightSum="10"
+	>
+
+	<LinearLayout
+		android:layout_width="0px"
+		android:layout_weight="1.5"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="10dp"
+		>
+
+		<de.hdodenhof.circleimageview.CircleImageView
+			android:id="@+id/inbox_avatar"
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			/>
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/inbox_link"
+		android:orientation="vertical"
+		android:layout_width="0px"
+		android:layout_weight="7"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:id="@+id/inbox_message"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/metal_black_light"
+			/>
+
+		<TextView
+			android:id="@+id/inbox_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="0px"
+		android:layout_weight="1.5"
+		android:layout_height="wrap_content"
+		android:paddingTop="10dp"
+		>
+
+		<ImageButton
+			android:id="@+id/inbox_delete"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:src="@drawable/letter_x"
+			android:text="X"
+			android:background="@null"
+			/>
+	</LinearLayout>
+
+</LinearLayout>
