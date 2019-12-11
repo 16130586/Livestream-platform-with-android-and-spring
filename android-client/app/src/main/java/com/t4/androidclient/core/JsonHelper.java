@@ -1,4 +1,4 @@
-package com.t4.androidclient.httpclient;
+package com.t4.androidclient.core;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.cfg.ConfigFeature;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class JsonHelper {
     public JsonHelper() {
@@ -29,6 +30,10 @@ public class JsonHelper {
         } catch (IOException var4) {
             return null;
         }
+    }
+    public static <E> E deserialize(Map objMap, Class<E> targetClass) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(objMap, targetClass);
     }
     public static <E> E deserialize(DeserializationFeature configRoot , String json, Class<E> targetClass) {
         ObjectMapper mapper = new ObjectMapper();

@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `stream` (
   `primary_server_url` text,
   `host_port` int(11),
   `application` text,
-  `stream_name` text,  	
+  `stream_name` text,
+  `title` text  	
   PRIMARY KEY (`stream_id`),
   KEY `owner_id` (`owner_id`),
   CONSTRAINT `stream_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`user_id`)

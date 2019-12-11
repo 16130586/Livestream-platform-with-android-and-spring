@@ -30,10 +30,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.t4.androidclient.activity.CreateLiveActivity;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.core.ApiResponse;
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.model.livestream.User;
-import com.t4.androidclient.model.livestream.UserHelper;
+import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
@@ -41,6 +43,8 @@ import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import okhttp3.Request;
 
 
@@ -72,46 +76,44 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
          LOGIN FACEBOOK
          =======================================================================================================================================
          // Kiểm tra session đã đăng nhập thì slide menu khác
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+         AccessToken accessToken = AccessToken.getCurrentAccessToken();
+         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-        // Vì chưa đổng bộ Account nên tạm thời trạng thái đăng nhập là getToken của Facebook , khi có sẽ thay đổi
-        if (isLoggedIn == true) {
-            slide_view.getMenu().clear();
-            slide_view.inflateHeaderView(R.layout.slide_header);
-            slide_view.inflateMenu(R.menu.menu_slide);
-            System.out.println("Đã đăng nhập");
-            //  Thêm button logout vào slide khi da dang nhap
-            btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
-            btn_logout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Vì chưa đồng bộ tài khoản Facebook và Local nên đăng xuất tạm thời gọi đến hàm Logout của Facebook");
-                    LoginManager.getInstance().logOut();
-                    finish();
-                    overridePendingTransition(0, 0);
-                    startActivity(getIntent());
-                    overridePendingTransition(0, 0);
-                }
-            });
-            TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-            profile_fullname.setText("ID đã đăng nhập : " + accessToken.getUserId());
-        } else {
-            slide_view.getMenu().clear();
-            slide_view.inflateHeaderView(R.layout.slide_header_not_login);
-            System.out.println("Chưa đăng nhập");
-
-            //  Thêm button login vào slide khi chua dang nhap
-            btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
-            btn_login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("Gọi đến SocialLoginFragment để login nhiều method khác nhau");
-                    Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
-                    startActivity(intent);
-                }
-            });
+         // Vì chưa đổng bộ Account nên tạm thời trạng thái đăng nhập là getToken của Facebook , khi có sẽ thay đổi
+         if (isLoggedIn == true) {
+         slide_view.getMenu().clear();
+         slide_view.inflateHeaderView(R.layout.slide_header);
+         slide_view.inflateMenu(R.menu.menu_slide);
+         System.out.println("Đã đăng nhập");
+         //  Thêm button logout vào slide khi da dang nhap
+         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
+         btn_logout.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View view) {
+        System.out.println("Vì chưa đồng bộ tài khoản Facebook và Local nên đăng xuất tạm thời gọi đến hàm Logout của Facebook");
+        LoginManager.getInstance().logOut();
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
         }
+        });
+         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
+         profile_fullname.setText("ID đã đăng nhập : " + accessToken.getUserId());
+         } else {
+         slide_view.getMenu().clear();
+         slide_view.inflateHeaderView(R.layout.slide_header_not_login);
+         System.out.println("Chưa đăng nhập");
+
+         //  Thêm button login vào slide khi chua dang nhap
+         btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
+         btn_login.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View view) {
+        System.out.println("Gọi đến SocialLoginFragment để login nhiều method khác nhau");
+        Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
+        startActivity(intent);
+        }
+        });
+         }
          =======================================================================================================================================
          END LOGIN FACEBOOK
          =======================================================================================================================================
@@ -137,8 +139,12 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             InfoUser infoUser = new InfoUser(new AsyncResponse() {
                 @Override
                 public void processFinish(String output) {
-                    user = UserHelper.parseUserJson(output);
-                    doProcessLoggedin();
+                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                    if (response != null && response.statusCode == 200) {
+                        Map<String, Object> rawData = (Map<String, Object>) response.data;
+                        user = UserHelper.parseUserJson(rawData);
+                        doProcessLoggedin();
+                    }
                 }
             });
             infoUser.execute(Authentication.TOKEN);
@@ -335,7 +341,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         void processFinish(String output);
     }
 
-// =======================================================================
+    // =======================================================================
 // ============ DO GET INFO USER ==================================
 // AsyncTask to get the genre list
     private class InfoUser extends AsyncTask<String, Integer, String> {
@@ -353,7 +359,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
         @Override
         protected void onPostExecute(String result) {
-        asyncResponse.processFinish(result);
+            asyncResponse.processFinish(result);
         }
     }
 

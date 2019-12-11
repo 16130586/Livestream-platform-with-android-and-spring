@@ -1,7 +1,6 @@
 package com.t4.androidclient.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,10 +26,11 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CreateLiveGenreAdapter;
+import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.model.livestream.FacebookUser;
 import com.t4.androidclient.model.livestream.LiveStream;
 import com.t4.androidclient.model.livestream.TokenPermission;
-import com.t4.androidclient.model.livestream.TokenPermissionHelper;
+import com.t4.androidclient.model.helper.TokenPermissionHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -267,10 +267,6 @@ public class CreateLiveActivity extends Activity {
         checkTokenPermission.execute(accessToken);
     }
 
-    // interface AsyncResponse
-    public interface AsyncResponse {
-        void processFinish(String output);
-    }
 
     // AsyncTask to get the genre list
     private class GetGenreList extends AsyncTask<String, Integer, String> {

@@ -114,8 +114,8 @@
         <fragment
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="361dp"
-            android:layout_height="515dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="#673AB7"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/nav_view"

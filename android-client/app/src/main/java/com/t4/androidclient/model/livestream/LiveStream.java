@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 public class LiveStream {
+    private User owner;
+    private Integer streamId;
     private String title;
     private String thumbnail;
     private List<String> genreList;
@@ -20,10 +22,26 @@ public class LiveStream {
     private int hostPort;
     private String application;
     private String streamName;
+
     public LiveStream() {
 
     }
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Integer getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(Integer streamId) {
+        this.streamId = streamId;
+    }
 
     public String toString() {
         if (facebookUser == null) {

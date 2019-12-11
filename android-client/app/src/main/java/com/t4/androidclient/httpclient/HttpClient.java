@@ -1,23 +1,23 @@
 package com.t4.androidclient.httpclient;
 
+import com.t4.androidclient.core.JsonHelper;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 public class HttpClient {
     private static final OkHttpClient httpClient = new OkHttpClient();
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
 
-    public static Headers createAuthenticationHeader(String token) {
+    private static Headers createAuthenticationHeader(String token) {
         Map<String, String> values = new HashMap<>();
         values.put("Authorization", "Bearer " + token);
         return Headers.of(values);

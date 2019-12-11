@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.config.FacebookConfig;
-import com.t4.androidclient.model.livestream.FacebookOptionHelper;
+import com.t4.androidclient.model.helper.FacebookOptionHelper;
 import com.t4.androidclient.model.livestream.group.Group;
 import com.t4.androidclient.model.livestream.page.Page;
 

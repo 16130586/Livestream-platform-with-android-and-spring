@@ -22,15 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class StreamBusinessImp implements StreamBusiness {
     private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
@@ -98,6 +96,7 @@ public class StreamBusinessImp implements StreamBusiness {
             e.printStackTrace();
         }
         Stream rs = new Stream(liveWowza);
+        rs.setTitle(entryParams.name);
         rs = streamRepository.saveAndFlush(rs);
         return rs;
     }
@@ -132,7 +131,7 @@ public class StreamBusinessImp implements StreamBusiness {
         if (requested == null)
             return null;
         WowzaStream wowzaClosed = wowzaStreamBusiness.start(requested.getWowzaId());
-        if(wowzaClosed == null || !"starting".equals(wowzaClosed.state))
+        if (wowzaClosed == null || !"starting".equals(wowzaClosed.state))
             return null;
         try {
             String fullyUrl = WowzaStream.URL_LIVE_STREAM + "/" + requested.getWowzaId() + "/state";
@@ -167,6 +166,7 @@ public class StreamBusinessImp implements StreamBusiness {
         return requested;
     }
 
+
     private WowzaStream getReplacementLive(CreatingStreamEntryParams entry) {
         List<WowzaStream> existedStreams = wowzaStreamBusiness.fetchAll();
         Optional<WowzaStream> replaceStream = existedStreams
@@ -188,8 +188,21 @@ public class StreamBusinessImp implements StreamBusiness {
         for (StreamType streamType : user.getFavouriteType()) {
             streamTypeString.add(streamType.getTypeName());
         }
-        Pageable pageable = new PageRequest(offset,pageSize);
+        Pageable pageable = new PageRequest(offset, pageSize);
         return streamRepository.findAllByStreamTypeInAndStatus(streamTypeString, StreamStatus.REAL_TIME, streamTypeString.size(), pageable);
+    }
+
+    @Override
+    public List<Stream> getRecommendForCookieUser(int page, int pageSize) {
+
+        try {
+            Pageable pageable = new PageRequest(page, pageSize, Sort.by("startTime").ascending());
+            return streamRepository.findAll(pageable).getContent();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+
     }
 
     @Override
@@ -210,7 +223,7 @@ public class StreamBusinessImp implements StreamBusiness {
 
     @Override
     public List<Stream> getStreamsByNameAndType(String streamName, List<String> streamTypes, int offset, int pageSize) {
-        System.out.println("stream name: "+ streamName);
+        System.out.println("stream name: " + streamName);
         Pageable pageable = new PageRequest(offset, pageSize);
         if (streamName != null && !streamName.isEmpty())
             return streamRepository.findByStreamNameAndStreamType(streamName, streamTypes, streamTypes.size(), pageable);

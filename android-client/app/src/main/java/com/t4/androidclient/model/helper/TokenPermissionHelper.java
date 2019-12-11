@@ -1,6 +1,8 @@
-package com.t4.androidclient.model.livestream;
+package com.t4.androidclient.model.helper;
 
 import android.media.session.MediaSession;
+
+import com.t4.androidclient.model.livestream.TokenPermission;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

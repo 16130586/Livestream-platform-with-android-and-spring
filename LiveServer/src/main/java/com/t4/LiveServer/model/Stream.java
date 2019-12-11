@@ -33,6 +33,15 @@ public class Stream {
     private int hostPort;
     private String application;
     private String streamName;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Stream() {
     }

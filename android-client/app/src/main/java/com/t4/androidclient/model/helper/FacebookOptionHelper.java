@@ -1,4 +1,4 @@
-package com.t4.androidclient.model.livestream;
+package com.t4.androidclient.model.helper;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

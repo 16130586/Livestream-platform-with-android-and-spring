@@ -92,6 +92,15 @@ public class StreamController {
         return apiResponse;
     }
 
+    @GetMapping("/recommend/{offset}/{pageSize}")
+    public ApiResponse getRecommendForCookieUser(@PathVariable Integer offset, @PathVariable Integer pageSize) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get recommend live stream!";
+        apiResponse.data = streamBusiness.getRecommendForCookieUser(offset, pageSize);
+        return apiResponse;
+    }
+
     @GetMapping("/genre")
     public ApiResponse getAllGenre() {
         ApiResponse apiResponse = new ApiResponse();

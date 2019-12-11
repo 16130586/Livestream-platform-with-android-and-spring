@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import  com.t4.androidclient.R;
 import com.t4.androidclient.activity.CreateLiveActivity;
 import com.t4.androidclient.adapter.InboxAdapter;
+import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.model.inbox.Inbox;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 
@@ -88,11 +89,6 @@ public class InboxFragment extends Fragment {
             listInbox.add(0,new Inbox(null, "New video from the young bede super gay" + i++, "Harry That Ng"));
             n++;
         }
-    }
-
-    // interface AsyncResponse
-    public interface AsyncResponse {
-        void processFinish(String output);
     }
 
     private class GetListInbox extends AsyncTask<String, Integer, String> {
