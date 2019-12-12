@@ -94,7 +94,7 @@ public class User {
 
     @Column(name = "subscribe_total")
     public Integer getSubscribeTotal() {
-        return subscribeTotal;
+        return subscribeTotal != null ? subscribeTotal : 0;
     }
 
     public void setSubscribeTotal(Integer subscribeTotal) {

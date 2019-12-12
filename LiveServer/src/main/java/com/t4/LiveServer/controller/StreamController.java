@@ -164,7 +164,6 @@ public class StreamController {
         comment.setCommentSource(CommentSource.INTERNAL);
         comment.setCreateTime(new Date());
         apiResponse.data = streamBusiness.saveComment(comment);
-
         return apiResponse;
     }
 }

@@ -19,7 +19,9 @@ public class LiveStreamHelper {
             ret.setStatus(streamStatus);
 
             if (d.has("owner")) {
-                ret.setOwner(UserHelper.parseUserJson(d.getJSONObject("owner")));
+                User owner = UserHelper.parseUserJson(d.getJSONObject("owner"));
+                if(owner != null)
+                    ret.setOwner(owner);
             }
             // con thieu start date
             if (streamStatus < 0) {
