@@ -139,12 +139,16 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             InfoUser infoUser = new InfoUser(new AsyncResponse() {
                 @Override
                 public void processFinish(String output) {
-                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
-                    if (response != null && response.statusCode == 200) {
-                        Map<String, Object> rawData = (Map<String, Object>) response.data;
-                        user = UserHelper.parseUserJson(rawData);
-                        doProcessLoggedin();
+                    if (output != null && !output.isEmpty()) {
+                        ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                        if (response != null && response.statusCode == 200) {
+                            Map<String, Object> rawData = (Map<String, Object>) response.data;
+                            user = UserHelper.parseUserJson(rawData);
+                            doProcessLoggedin();
+                            return;
+                        }
                     }
+                    doProcessNotLogin();
                 }
             });
             infoUser.execute(Authentication.TOKEN);
