@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_stream_thumbail_image"
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/background_channel" />
+
+    <TextView
+        android:id="@+id/item_stream_title"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/item_stream_thumbail_image"
+        android:text="Faker has Pentakill in his match at LCK "/>
+
+    <TextView
+        android:id="@+id/item_stream_publish_time"
+        android:layout_below="@id/item_stream_title"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/item_stream_thumbail_image"
+        android:textSize="16sp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="15 giờ trước"/>
+
+    <TextView
+        android:id="@+id/item_stream_views"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/item_stream_title"
+        android:layout_toRightOf="@id/item_stream_publish_time"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="44 N lượt xem"/>
+
+</RelativeLayout>

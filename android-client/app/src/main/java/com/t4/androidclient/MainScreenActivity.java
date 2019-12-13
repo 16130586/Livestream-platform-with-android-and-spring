@@ -37,6 +37,7 @@ import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
+import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
 import java.util.ArrayList;
@@ -150,6 +151,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                             System.out.println("Đóng menu");
                         }
 
+<<<<<<< Updated upstream
                         @Override
                         public void onDrawerStateChanged(int newState) {
 //                            AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -183,6 +185,11 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 //                                });
 //                           }
                         }
+=======
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+>>>>>>> Stashed changes
                     }
             );
 
@@ -203,6 +210,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                     startActivity(getIntent());
                     overridePendingTransition(0, 0);
                 }
+<<<<<<< Updated upstream
             });
 
 
@@ -227,6 +235,45 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         startActivity(createLive);
                     }
 
+=======
+        );
+
+
+        /////////// thêm bottom menu navigation
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(navView, navController);
+
+
+        // Click logo về Home
+        app_logo = findViewById(R.id.app_logo);
+        app_logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
+            }
+        });
+
+
+        /////////////  thêm search vào
+        mSearchView = findViewById(R.id.floating_search_view);
+        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+            @Override
+            public void onActionMenuItemSelected(MenuItem item) {
+                /// mở slide menu bên thanh search
+                if (item.getItemId() == R.id.open_menu_slide) {
+                    mDrawerLayout = findViewById(R.id.drawer_layout);
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                } else if (item.getItemId() == R.id.create_live_stream) {
+                    Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
+                    startActivity(createLive);
+                }else if (item.getItemId() == R.id.test_function) { // test profile funtion
+                   Intent createLive = new Intent(MainScreenActivity.this, ChannelActivity.class);
+                    startActivity(createLive);
+>>>>>>> Stashed changes
                 }
             });
 

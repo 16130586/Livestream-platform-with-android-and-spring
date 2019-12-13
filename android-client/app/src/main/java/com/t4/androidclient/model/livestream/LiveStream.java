@@ -8,6 +8,13 @@ public class LiveStream {
     private List<String> genreList;
         private FacebookUser facebookUser;
 
+    //Tuan test show item channel ra
+    public LiveStream(String title,Date endTime,Integer totalView) {
+        this.title = title;
+        this.endTime = endTime;
+        this.totalView = totalView;
+    }
+
     public LiveStream() {
 
     }
