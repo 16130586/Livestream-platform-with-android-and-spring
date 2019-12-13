@@ -16,12 +16,21 @@ public class StreamViewModel {
     public String ownerId;
     public String onwerName;
     public String ownerAvatar;
-
-    public StreamViewModel (String title, String onwerName, String ownerAvatar, String thumbnailView) {
+    public int status;
+    public StreamViewModel (String title, String onwerName, String ownerAvatar, String thumbnailView, int status) {
         this.title = title;
         this.onwerName = onwerName;
         this.ownerAvatar = ownerAvatar;
         this.thumbnailView = thumbnailView;
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getStreamId() {

@@ -110,6 +110,16 @@ public class WowzaStream {
     public String ipAddress;
     @JsonProperty("state")
     public String state;
+    @JsonProperty("player_video_poster_image")
+    public String posterImage;
+
+    public String getPosterImage() {
+        return posterImage;
+    }
+
+    public void setPosterImage(String posterImage) {
+        this.posterImage = posterImage;
+    }
 
     public String getIpAddress() {
         return ipAddress;

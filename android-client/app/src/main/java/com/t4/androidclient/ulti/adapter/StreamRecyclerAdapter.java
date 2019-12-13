@@ -1,6 +1,7 @@
 package com.t4.androidclient.ulti.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -9,23 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
+import com.t4.androidclient.core.JsonHelper;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import viewModel.StreamViewModel;
 
-
 public class StreamRecyclerAdapter extends
         RecyclerView.Adapter<StreamRecyclerAdapter.ViewHolder> {
     private List<StreamViewModel> listStream;
+    private final int STATUS_ENDED = -1;
+    private final int STATUS_ON_LIVE = 1;
     private Context context;
+
     public StreamRecyclerAdapter(List<StreamViewModel> listStream, Context context) {
         this.listStream = listStream;
         this.context = context;
@@ -37,10 +41,7 @@ public class StreamRecyclerAdapter extends
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.item_stream, parent, false);
-
-        // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
         return viewHolder;
     }
@@ -49,7 +50,6 @@ public class StreamRecyclerAdapter extends
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         StreamViewModel streamModel = listStream.get(position);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] imageBytes;
         imageBytes = Base64.decode(streamModel.getThumbnailView(), Base64.URL_SAFE);
         Bitmap thumbnailImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
@@ -57,7 +57,6 @@ public class StreamRecyclerAdapter extends
         imageBytes = Base64.decode(streamModel.getOwnerAvatar(), Base64.DEFAULT);
         Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
-        // Set item views based on your views and data model
 
         ImageView thumbnailView = holder.thumbnailView;
         if (thumbnailImage != null && thumbnailImage.getByteCount() > 0)
@@ -74,15 +73,54 @@ public class StreamRecyclerAdapter extends
 
         TextView titleView = holder.titleView;
         titleView.setText(streamModel.getTitle());
+
+        thumbnailView.setOnClickListener(e -> {
+            Toast.makeText(context, "Click on video thumbnail " + position + " !", Toast.LENGTH_SHORT).show();
+            navigateToWatchingActivity(listStream.get(position));
+        });
+        ownerAvatarView.setOnClickListener(e -> {
+            Toast.makeText(context, "Click on owner avatar " + position + " !", Toast.LENGTH_SHORT).show();
+            Class nextActivity = null;
+            if (nextActivity != null) {
+                Intent t = new Intent(context, nextActivity);
+                t.putExtra("DATA", JsonHelper.serialize(listStream.get(position)));
+                context.startActivity(t);
+            }
+        });
+        titleView.setOnClickListener(e -> {
+            Toast.makeText(context, "Click on title " + position + " !", Toast.LENGTH_SHORT).show();
+            navigateToWatchingActivity(listStream.get(position));
+        });
+    }
+
+    private void navigateToWatchingActivity(StreamViewModel modelClicked) {
+        if (modelClicked == null) {
+            Toast.makeText(context, "Something is crashing !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ;
+        Class nextActivity = null;
+        switch (modelClicked.status) {
+            case STATUS_ENDED:
+                nextActivity = null;
+                Toast.makeText(context, "Navigate to see video!", Toast.LENGTH_SHORT).show();
+                break;
+            case STATUS_ON_LIVE:
+                nextActivity = null;
+                Toast.makeText(context, "Navigate to see live stream!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        if (nextActivity != null) {
+            Intent t = new Intent(context, nextActivity);
+            t.putExtra("DATA", JsonHelper.serialize(modelClicked));
+            context.startActivity(t);
+        }
     }
 
     @Override
     public int getItemCount() {
         return listStream.size();
     }
-
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;
         public CircleImageView avatarView;
@@ -90,7 +128,6 @@ public class StreamRecyclerAdapter extends
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             thumbnailView = (ImageView) itemView.findViewById(R.id.item_stream_thumbnail);
             avatarView = (CircleImageView) itemView.findViewById(R.id.item_stream_avatar);
             titleView = (TextView) itemView.findViewById(R.id.item_stream_title);

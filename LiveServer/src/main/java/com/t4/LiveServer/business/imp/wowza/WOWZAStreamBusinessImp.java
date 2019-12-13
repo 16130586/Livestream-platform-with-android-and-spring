@@ -25,8 +25,11 @@ public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
     public WowzaStream create(CreatingStreamEntryParams entryParams) {
         WowzaStream wowzaStream = new WowzaStream(1280, 720, "pay_as_you_go", "asia_pacific_singapore",
                 "other_rtmp", entryParams.name, "transcoded");
+
         wowzaStream.isRecording = entryParams.isStored > 0;
         wowzaStream.hostedPageTitle = entryParams.name;
+        if(entryParams.thumbnail != null && entryParams.thumbnail.length() > 0)
+            wowzaStream.posterImage = entryParams.thumbnail;
         String jsonData = JsonHelper.serialize(wowzaStream);
         jsonData = "{\"live_stream\":" + jsonData + "}";
         HttpEntity<String> requestBody = new HttpEntity<>(jsonData, wowzaStream.getWowzaConfigHeaders());

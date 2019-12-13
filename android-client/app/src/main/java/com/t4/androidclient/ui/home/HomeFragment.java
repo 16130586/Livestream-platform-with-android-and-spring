@@ -102,9 +102,11 @@ public class HomeFragment extends Fragment {
                         for (Map<String, Object> obj : streams) {
                             LiveStream s = LiveStreamHelper.parse(obj);
                             if (s == null) continue;
-                            listStream.add(new StreamViewModel(s.getTitle(),
-                                    s.getOwner() != null ? s.getOwner().username : "Incorrect mock data",
-                                    s.getOwner() != null ? s.getOwner().avatar : "", s.getThumbnail() != null ? s.getThumbnail() : ""));
+                            listStream.add(new StreamViewModel(s.getTitle()
+                                    , (s.getOwner() != null ? s.getOwner().username : "Incorrect mock data")
+                                    , (s.getOwner() != null ? s.getOwner().avatar : "")
+                                    , (s.getThumbnail() != null ? s.getThumbnail() : "")
+                                    , s.getStatus()) );
                         }
                         if (streams != null && streams.size() > 0)
                             adapter.notifyItemRangeChanged(offset > 0 ? (offset * pageSize - 1) : 0, streams.size());
