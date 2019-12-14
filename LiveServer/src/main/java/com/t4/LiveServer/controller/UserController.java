@@ -125,4 +125,26 @@ public class UserController {
         apiResponse.data = userBusiness.getNotification(user.getUserId());
         return apiResponse;
     }
+
+    @PostMapping("/auth/notification/delete")
+    public ApiResponse deleteNotification(@RequestBody Map<String, String> data) {
+        Integer id = Integer.parseInt(data.get("id"));
+        System.out.println("======================== " + id + "===========================");
+        try {
+            userBusiness.deleteNotification(id);
+
+            ApiResponse apiResponse = new ApiResponse();
+            apiResponse.statusCode = 200;
+            apiResponse.message = "delete user's notification!";
+            return apiResponse;
+
+        } catch (Exception e) {
+            System.out.print(e);
+            ApiResponse apiResponse = new ApiResponse();
+            apiResponse.statusCode = 500;
+            apiResponse.message = "delete user's notification failed!";
+            return apiResponse;
+        }
+
+    }
 }

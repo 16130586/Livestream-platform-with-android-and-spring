@@ -3,8 +3,10 @@ package com.t4.LiveServer.business.imp;
 import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.jwt.JwtProvider;
 import com.t4.LiveServer.model.Notification;
+import com.t4.LiveServer.model.NotificationStatus;
 import com.t4.LiveServer.model.User;
 import com.t4.LiveServer.model.security.CustomUserDetails;
+import com.t4.LiveServer.repository.NotificationRepository;
 import com.t4.LiveServer.repository.UserRepository;
 import com.t4.LiveServer.validation.form.RegistryForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserBusinessImp implements UserBusiness {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
@@ -75,7 +80,21 @@ public class UserBusinessImp implements UserBusiness {
 
     @Override
     public List<Notification> getNotification(int userId) {
-        return userRepository.findNotificationById(userId);
+        List<Notification> subResult = userRepository.findNotificationById(userId);
+        List<Notification> result = new ArrayList<>();
+        for (Notification notify: subResult) {
+            if (notify.getStatus() != NotificationStatus.DELETE)
+                result.add(notify);
+        }
+        return result;
     }
+
+    @Override
+    public void deleteNotification(Integer id) {
+        Notification notification = notificationRepository.findById(id).get();
+        notification.setStatus(NotificationStatus.DELETE);
+        notificationRepository.save(notification);
+    }
+
 
 }

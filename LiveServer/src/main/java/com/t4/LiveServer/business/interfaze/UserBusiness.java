@@ -14,4 +14,5 @@ public interface UserBusiness {
     User getUserByGmail(String gmail);
     void saveUser(User user);
     List<Notification> getNotification(int userId);
+    void deleteNotification(Integer id);
 }
