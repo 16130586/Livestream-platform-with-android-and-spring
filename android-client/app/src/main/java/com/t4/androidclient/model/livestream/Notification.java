@@ -1,9 +1,22 @@
 package com.t4.androidclient.model.livestream;
 
 public class Notification {
+    private long id;
     private String message;
     private LiveStream stream;
     private Integer status;
+
+    public Notification() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getMessage() {
         return message;

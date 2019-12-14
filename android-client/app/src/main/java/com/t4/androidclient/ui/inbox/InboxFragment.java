@@ -11,11 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import  com.t4.androidclient.R;
-import com.t4.androidclient.activity.CreateLiveActivity;
-import com.t4.androidclient.adapter.InboxAdapter;
+import com.t4.androidclient.R;
+import com.t4.androidclient.adapter.NotificationAdapter;
 import com.t4.androidclient.core.AsyncResponse;
-import com.t4.androidclient.model.inbox.Inbox;
+import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
+import com.t4.androidclient.model.helper.NotificationHelper;
+import com.t4.androidclient.model.livestream.Notification;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 
 import java.io.IOException;
@@ -29,9 +30,9 @@ import okhttp3.Response;
 public class InboxFragment extends Fragment {
     private View root;
     private InboxViewModel inboxViewModel;
-    private InboxAdapter inboxAdapter;
+    private NotificationAdapter notificationAdapter;
     private RecyclerView recyclerView;
-    private List<Inbox> listInbox;
+    private List<Notification> listNotification;
 
 
     int i = 0;
@@ -46,9 +47,9 @@ public class InboxFragment extends Fragment {
         getListInbox();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        inboxAdapter = new InboxAdapter(listInbox, getContext());
+        notificationAdapter = new NotificationAdapter(listNotification, getContext());
         recyclerView = (RecyclerView) root.findViewById(R.id.list_inbox);
-        recyclerView.setAdapter(inboxAdapter);
+        recyclerView.setAdapter(notificationAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -62,23 +63,35 @@ public class InboxFragment extends Fragment {
         recyclerView.addOnScrollListener(scrollListener);
 
         addTenToTop();
-        inboxAdapter.notifyDataSetChanged();
+        notificationAdapter.notifyDataSetChanged();
     }
 
     public void loadNextDataFromApi(int offset) {
         addTenToList();
-        inboxAdapter.notifyDataSetChanged();
+        notificationAdapter.notifyDataSetChanged();
     }
 
     public void getListInbox() {
-        listInbox = new ArrayList<>();
+        listNotification = new ArrayList<>();
         addTenToList();
+        GetListInbox get = new GetListInbox(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                NotificationHelper helper = new NotificationHelper();
+                List<Notification> listNotificationServer = helper.parseNotification(output);
+                System.out.println(listNotificationServer .get(0).getMessage());
+                System.out.println(listNotificationServer .get(0).getStream().getStreamId());
+                System.out.println(output);
+                listNotification.addAll(listNotificationServer);
+                notificationAdapter.notifyDataSetChanged();
+            }
+        });
+        get.execute("");
     }
 
     public void addTenToList() {
         int n = 0;
         while(n < 10) {
-            listInbox.add(new Inbox(null, "New video from" + i++, "pewdiepie"));
             n++;
         }
     }
@@ -86,7 +99,6 @@ public class InboxFragment extends Fragment {
     public void addTenToTop() {
         int n = 0;
         while(n < 10) {
-            listInbox.add(0,new Inbox(null, "New video from the young bede super gay" + i++, "Harry That Ng"));
             n++;
         }
     }
@@ -100,18 +112,23 @@ public class InboxFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            String url = "link to server to get the inbox";
+            SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
+            String url = "http://192.168.1.4:8080/user/auth/notification";
+            String authorization = "Bearer " + db.getToken();
 
             System.out.println("=============================================================");
             System.out.println("The inbox url: " + url);
+            System.out.println("The inbox token: " + db.getToken());
             System.out.println("=============================================================");
 
             OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(url).build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization", authorization)
+                    .build();
 
             try (Response response = client.newCall(request).execute()) {
                 String rs = response.body().string();
-
                 return rs;
             } catch (IOException e) {
                 e.printStackTrace();
