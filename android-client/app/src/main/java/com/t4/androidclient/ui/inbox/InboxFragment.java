@@ -112,8 +112,8 @@ public class InboxFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
             String url = "http://192.168.1.4:8080/user/auth/notification";
+            SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
             String authorization = "Bearer " + db.getToken();
 
             System.out.println("=============================================================");

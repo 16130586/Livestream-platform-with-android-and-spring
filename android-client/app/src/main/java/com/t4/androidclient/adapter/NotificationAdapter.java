@@ -16,12 +16,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
+import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.model.inbox.Inbox;
 import com.t4.androidclient.model.livestream.Notification;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
     private List<Notification> listNotification;
@@ -77,7 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteInbox(position);
+                deleteInbox(position, notification.getId());
             }
         });
 
@@ -99,15 +109,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return listNotification.size();
     }
 
-    public void deleteInbox(int position) {
+    public void deleteInbox(int position, long id) {
         listNotification.remove(position);
         DeleteInbox deleteInbox = new DeleteInbox(new AsyncResponse() {
             @Override
             public void processFinish(String output) {
+                System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222");
+                System.out.println(output);
+                System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222");
+
                 notifyDataSetChanged();
             }
         });
-        deleteInbox.execute("");
+        System.out.println("================================== the ID = " + id );
+        deleteInbox.execute(Long.toString(id));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -143,25 +158,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
 
         @Override
-        protected String doInBackground(String... strings) {
-//            String url = "link to server to get the inbox";
-////
-////            System.out.println("=============================================================");
-////            System.out.println("The delete url: " + url);
-////            System.out.println("=============================================================");
-////
-////            OkHttpClient client = new OkHttpClient();
-////            Request request = new Request.Builder().url(url).build();
-////
-////            try (Response response = client.newCall(request).execute()) {
-////                String rs = response.body().string();
-////
-////                return rs;
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////                return "false";
-////            }
-            return "";
+        protected String doInBackground(String... input) {
+            SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(context);
+            Map<String, String> keyValues = new HashMap<>();
+            keyValues.put("id", input[0]);
+            Request request = HttpClient.buildPostRequest(Api.URL_DELETE_NOTIFICATION, keyValues, db.getToken());
+            return HttpClient.execute(request);
         }
 
         @Override
