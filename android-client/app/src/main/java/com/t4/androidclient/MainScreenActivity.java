@@ -31,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.t4.androidclient.activity.CreateLiveActivity;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
@@ -390,7 +391,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
-        buySubscription.setText(Html.fromHtml("<a href=\""+Api.API_HOST_IP+"/user/subscription/"+user.getId()+"\"> Upgrade To Premium Account</a>"));
+        buySubscription.setText(Html.fromHtml("<a href=\""+ Host.API_HOST_IP+"/user/subscription/"+user.getId()+"\"> Upgrade To Premium Account</a>"));
         buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override

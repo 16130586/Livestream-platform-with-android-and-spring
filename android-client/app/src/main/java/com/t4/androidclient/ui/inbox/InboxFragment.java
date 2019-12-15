@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.NotificationAdapter;
+import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.model.helper.NotificationHelper;
 import com.t4.androidclient.model.livestream.Notification;
@@ -77,13 +80,15 @@ public class InboxFragment extends Fragment {
         GetListInbox get = new GetListInbox(new AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                NotificationHelper helper = new NotificationHelper();
-                List<Notification> listNotificationServer = helper.parseNotification(output);
-                System.out.println(listNotificationServer .get(0).getMessage());
-                System.out.println(listNotificationServer .get(0).getStream().getStreamId());
-                System.out.println(output);
-                listNotification.addAll(listNotificationServer);
-                notificationAdapter.notifyDataSetChanged();
+                if (output != null && !output.isEmpty()) {
+                    NotificationHelper helper = new NotificationHelper();
+                    List<Notification> listNotificationServer = helper.parseNotification(output);
+                    System.out.println(listNotificationServer.get(0).getMessage());
+                    System.out.println(listNotificationServer.get(0).getStream().getStreamId());
+                    System.out.println(output);
+                    listNotification.addAll(listNotificationServer);
+                    notificationAdapter.notifyDataSetChanged();
+                }
             }
         });
         get.execute("");
@@ -112,28 +117,16 @@ public class InboxFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            String url = "http://192.168.1.4:8080/user/auth/notification";
             SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
-            String authorization = "Bearer " + db.getToken();
+            String token = db.getToken();
 
             System.out.println("=============================================================");
-            System.out.println("The inbox url: " + url);
+            System.out.println("The inbox url: " + Api.URL_GET_NOTIFICATION);
             System.out.println("The inbox token: " + db.getToken());
             System.out.println("=============================================================");
 
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(url)
-                    .addHeader("Authorization", authorization)
-                    .build();
-
-            try (Response response = client.newCall(request).execute()) {
-                String rs = response.body().string();
-                return rs;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "false";
-            }
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_NOTIFICATION, token);
+            return HttpClient.execute(request);
         }
 
         @Override
