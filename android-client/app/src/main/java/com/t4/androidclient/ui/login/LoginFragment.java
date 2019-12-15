@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
                 .get(LoginViewModel.class);
         View root = inflater.inflate(R.layout.fragment_login, container, false);
 
-        final EditText usernameEditText = root.findViewById(R.id.username);
+                final EditText usernameEditText = root.findViewById(R.id.username);
         final EditText passwordEditText = root.findViewById(R.id.password);
         final Button loginButton = root.findViewById(R.id.login);
         final ProgressBar loadingProgressBar = root.findViewById(R.id.loading);

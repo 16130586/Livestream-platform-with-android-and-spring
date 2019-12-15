@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/channel_navigation"
+
+    app:startDestination="@+id/channel_about">
+
+    <fragment
+        android:id="@+id/channel_about"
+        android:name="com.t4.androidclient.ui.channel.AboutFragment"
+        android:label="Channel About"
+        tools:layout="@layout/fragment_channel_about" />
+
+    <fragment
+        android:id="@+id/channel_all_streams"
+        android:name="com.t4.androidclient.ui.channel.AllStreamsFragment"
+        android:label="Channel All Streams"
+        tools:layout="@layout/fragment_all_streams" />
+
+    <fragment
+        android:id="@+id/channel_type_streams"
+        android:name="com.t4.androidclient.ui.channel.TypeStreamsFragment"
+        android:label="Channel Type Streams"
+        tools:layout="@layout/fragment_type_streams" />
+</navigation>

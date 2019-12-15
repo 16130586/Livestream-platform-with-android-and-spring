@@ -41,6 +41,7 @@ import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
+import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
 import java.util.ArrayList;
@@ -73,59 +74,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         mDrawerLayout = findViewById(R.id.drawer_layout);
         slide_view = findViewById(R.id.slide_view);
 
-        /**
-         =======================================================================================================================================
-         LOGIN FACEBOOK
-         =======================================================================================================================================
-         // Kiểm tra session đã đăng nhập thì slide menu khác
-         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-         // Vì chưa đổng bộ Account nên tạm thời trạng thái đăng nhập là getToken của Facebook , khi có sẽ thay đổi
-         if (isLoggedIn == true) {
-         slide_view.getMenu().clear();
-         slide_view.inflateHeaderView(R.layout.slide_header);
-         slide_view.inflateMenu(R.menu.menu_slide);
-         System.out.println("Đã đăng nhập");
-         //  Thêm button logout vào slide khi da dang nhap
-         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
-         btn_logout.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-        System.out.println("Vì chưa đồng bộ tài khoản Facebook và Local nên đăng xuất tạm thời gọi đến hàm Logout của Facebook");
-        LoginManager.getInstance().logOut();
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent());
-        overridePendingTransition(0, 0);
-        }
-        });
-         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-         profile_fullname.setText("ID đã đăng nhập : " + accessToken.getUserId());
-         } else {
-         slide_view.getMenu().clear();
-         slide_view.inflateHeaderView(R.layout.slide_header_not_login);
-         System.out.println("Chưa đăng nhập");
-
-         //  Thêm button login vào slide khi chua dang nhap
-         btn_login = slide_view.getHeaderView(0).findViewById(R.id.btn_login);
-         btn_login.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-        System.out.println("Gọi đến SocialLoginFragment để login nhiều method khác nhau");
-        Intent intent = new Intent(MainScreenActivity.this, LoginRegisterActivity.class);
-        startActivity(intent);
-        }
-        });
-         }
-         =======================================================================================================================================
-         END LOGIN FACEBOOK
-         =======================================================================================================================================
-         */
-
-        /**
-         =======================================================================================================================================
-         LOGIN
-         =======================================================================================================================================
-         */
         // get token from sqlite & add to contraints
         setToken();
         //==============================================================================
@@ -198,6 +146,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         System.out.println("Đóng menu");
                     }
 
+
                     @Override
                     public void onDrawerStateChanged(int newState) {
 //                            AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -231,8 +180,33 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 //                                });
 //                           }
                     }
+
+
+                });
+
+        /////////////  thêm search vào
+        mSearchView = findViewById(R.id.floating_search_view);
+        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+            @Override
+            public void onActionMenuItemSelected(MenuItem item) {
+//                if (item.getItemId() == R.id.action_voice_rec) {
+//                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+//                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+//                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+//                    startActivityForResult(intent, 0);
+//                }
+                /// mở slide menu bên thanh search
+                //else
+                    if (item.getItemId() == R.id.open_menu_slide) {
+                    mDrawerLayout = findViewById(R.id.drawer_layout);
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                } else if (item.getItemId() == R.id.create_live_stream) {
+                    Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
+                    startActivity(createLive);
                 }
-        );
+
+            }
+        });
 
 
         /////////// thêm bottom menu navigation
@@ -259,21 +233,27 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.action_voice_rec) {
-                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    startActivityForResult(intent, 0);
-                }
+
+//                if (item.getItemId() == R.id.action_voice_rec) {
+//                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+//                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+//                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+//                    startActivityForResult(intent, 0);
+//                }
                 /// mở slide menu bên thanh search
-                else if (item.getItemId() == R.id.open_menu_slide) {
+                //else
+                 if (item.getItemId() == R.id.open_menu_slide) {
                     mDrawerLayout = findViewById(R.id.drawer_layout);
                     mDrawerLayout.openDrawer(GravityCompat.START);
                 } else if (item.getItemId() == R.id.create_live_stream) {
                     Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
                     startActivity(createLive);
                 }
-
+//                 else if (item.getItemId() == R.id.test_function) { // test profile funtion
+//                    Intent createLive = new Intent(MainScreenActivity.this, ChannelActivity.class);
+//                    startActivity(createLive);
+//
+//                }
             }
         });
 
@@ -391,7 +371,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
-        buySubscription.setText(Html.fromHtml("<a href=\""+ Host.API_HOST_IP+"/user/subscription/"+user.getId()+"\"> Upgrade To Premium Account</a>"));
+        buySubscription.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + user.getId() + "\"> Upgrade To Premium Account</a>"));
         buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -401,7 +381,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             }
         });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-        profile_fullname.setText("Hi "+ user.getNickname() + ",");
+        profile_fullname.setText("Hi " + user.getNickname() + ",");
 //        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
 //        profile_email.setText("Your email: " + user.getGmail());
         if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {
@@ -415,6 +395,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         doProcessNotLogin();
     }
 }
+
 ///////////// Thêm slide menu navigation
 
 
