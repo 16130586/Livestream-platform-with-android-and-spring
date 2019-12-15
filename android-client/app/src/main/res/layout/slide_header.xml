@@ -20,27 +20,18 @@
         android:id="@+id/profile_fullname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="20sp"
+        android:layout_marginLeft="15sp"
+        android:layout_marginBottom="20dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-    <TextView
-        android:id="@+id/profile_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+<!--    <TextView-->
+<!--        android:id="@+id/profile_email"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_marginLeft="15sp"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>-->
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="100dp"
-        android:background="#216AF3"
-        android:text="Logout"
-        android:textColor="#fff"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        />
 <!--    <com.facebook.login.widget.LoginButton-->
 <!--        android:id="@+id/btn_logout_facebook"-->
 <!--        android:layout_width="wrap_content"-->
@@ -56,26 +47,47 @@
         android:id="@+id/goToAccountManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="#133895"
+        android:textColor="#333"
         android:layout_marginTop="15dp"
         android:clickable="true"
         android:text="Profile Manager"
-        android:textSize="24sp"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView
         android:id="@+id/goToChangePassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:clickable="true"
-        android:textColor="#133895"
+        android:textColor="#333"
         android:text="Change password"
-        android:textSize="24sp"
-        android:layout_marginBottom="25dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
+    <TextView
+        android:id="@+id/buySubscription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#333"
+        android:textSize="18sp"
+        android:layout_marginLeft="15sp"
+        android:layout_marginBottom="20dp"
+        />
 
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="100dp"
+        android:text="Logout"
+        android:textColor="#333"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15sp"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content"
+        />
 
 
 </LinearLayout>

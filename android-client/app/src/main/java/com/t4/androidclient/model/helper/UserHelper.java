@@ -40,6 +40,7 @@ public class UserHelper {
     public static User parseUserJson(JSONObject jsonObject) {
         User user = new User();
         try {
+            user.setId(jsonObject.getInt("userId"));
             user.setUsername(jsonObject.getString("userName"));
             user.setNickname(jsonObject.getString("nickName"));
             user.setAvatar(jsonObject.getString("avatar"));

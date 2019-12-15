@@ -136,7 +136,6 @@ public class LoginFragment extends Fragment {
                 Login login = new Login(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
-                        System.out.println(output);
                         try {
                             JSONObject data = new JSONObject(output);
                             if (data.getInt("statusCode") == 200) {
@@ -151,7 +150,7 @@ public class LoginFragment extends Fragment {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        loadingProgressBar.setVisibility(View.VISIBLE);
+                        loadingProgressBar.setVisibility(View.GONE);
                     }
                 });
                 String[] values = new String[4];

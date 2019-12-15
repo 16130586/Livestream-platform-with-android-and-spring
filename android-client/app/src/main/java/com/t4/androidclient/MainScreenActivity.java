@@ -7,6 +7,7 @@ import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -388,6 +389,9 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         slide_view.inflateMenu(R.menu.menu_slide);
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
+        TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
+        buySubscription.setText(Html.fromHtml("<a href=\""+Api.API_HOST_IP+"/user/subscription/"+user.getId()+"\"> Upgrade To Premium Account</a>"));
+        buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -396,10 +400,10 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             }
         });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-        profile_fullname.setText(user.getNickname());
-        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
-        profile_email.setText(user.getGmail());
-        if (user.getAvatar() != null && !user.getGmail().isEmpty()) {
+        profile_fullname.setText("Hi "+ user.getNickname() + ",");
+//        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
+//        profile_email.setText("Your email: " + user.getGmail());
+        if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {
             // TODO show avatar
         }
     }

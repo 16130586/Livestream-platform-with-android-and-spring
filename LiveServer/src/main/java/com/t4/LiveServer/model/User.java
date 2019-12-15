@@ -175,4 +175,8 @@ public class User {
             return false;
         return (endTime.compareTo(new Date()) >= 0);
     }
+
+    public void addPaySubscription(PaySubscription paySubscription) {
+        paySubscriptions.add(paySubscription);
+    }
 }

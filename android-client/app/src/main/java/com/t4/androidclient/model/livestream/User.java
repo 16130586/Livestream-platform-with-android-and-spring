@@ -3,6 +3,7 @@ package com.t4.androidclient.model.livestream;
 import java.util.List;
 
 public class User {
+    public Integer id;
     public String username;
     public String nickname;
     public String gmail;
@@ -13,6 +14,14 @@ public class User {
     public List<FavouriteSaved> favouriteSaveds;
     public List<Subscription> subscriptions;
     public List<LiveStream> streams;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
