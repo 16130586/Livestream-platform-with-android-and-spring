@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+     android:layout_width="match_parent">
+
+    <item
+        android:id="@+id/channel_about"
+        android:title="About Channel"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/channel_all_streams"
+        android:title="All Streams"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/channel_type_streams"
+        android:title="Type Streams"
+        app:showAsAction="always" />
+
+
+
+</menu>

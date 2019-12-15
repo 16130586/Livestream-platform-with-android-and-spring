@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.core.JsonHelper;
+import com.t4.androidclient.ui.channel.ChannelActivity;
 
+import java.nio.channels.Channel;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -80,10 +82,10 @@ public class StreamRecyclerAdapter extends
         });
         ownerAvatarView.setOnClickListener(e -> {
             Toast.makeText(context, "Click on owner avatar " + position + " !", Toast.LENGTH_SHORT).show();
-            Class nextActivity = null;
+            Class nextActivity = ChannelActivity.class;
             if (nextActivity != null) {
                 Intent t = new Intent(context, nextActivity);
-                t.putExtra("DATA", JsonHelper.serialize(listStream.get(position)));
+                t.putExtra("DATA", listStream.get(position).ownerId);
                 context.startActivity(t);
             }
         });

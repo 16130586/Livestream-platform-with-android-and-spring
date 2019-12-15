@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <ImageView
+        android:id="@+id/background_channel"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/background_channel"
+        tools:ignore="MissingConstraints" />
+
+
+
+
+
+        <TextView
+            android:id="@+id/channel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/channel_image"
+            android:text="Type Stream List"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_type"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="16.0dp"
+        tools:ignore="MissingConstraints">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>
