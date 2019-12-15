@@ -6,4 +6,8 @@ public class UserModelView {
     public String password;
     public String nickName;
     public String avatar;
+
+    public UserModelView() {
+
+    }
 }

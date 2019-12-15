@@ -13,10 +13,12 @@ public class StreamViewModel {
     public String streamName;
     public String title;
     public String thumbnailView;
-    public String ownerId;
+    public int ownerId;
     public String onwerName;
     public String ownerAvatar;
     public int status;
+    public StreamViewModel(){}
+
     public StreamViewModel (String title, String onwerName, String ownerAvatar, String thumbnailView, int status) {
         this.title = title;
         this.onwerName = onwerName;
@@ -113,11 +115,11 @@ public class StreamViewModel {
         this.title = title;
     }
 
-    public String getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
 

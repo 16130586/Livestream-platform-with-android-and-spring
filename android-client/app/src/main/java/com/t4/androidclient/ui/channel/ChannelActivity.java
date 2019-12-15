@@ -18,6 +18,7 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
@@ -25,17 +26,24 @@ import com.t4.androidclient.searching.asyn;
 import java.util.ArrayList;
 import java.util.List;
 
+import viewModel.StreamViewModel;
+import viewModel.UserModelView;
+
 
 public class ChannelActivity extends AppCompatActivity implements MakeSuggestion {
     FloatingSearchView mSearchView;
     ImageView app_logo;
     MakeSuggestion makeSuggestion = this;
     private asyn a = null;
+    private UserModelView owner;
+    private int ownerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
+
+        bindNavigateData(getIntent());
 
         /////////// thêm bottom menu navigation
         BottomNavigationView navView = findViewById(R.id.menu_channel_view);
@@ -95,6 +103,10 @@ public class ChannelActivity extends AppCompatActivity implements MakeSuggestion
 
     }
 
+    private void bindNavigateData(Intent previousNavigationData) {
+        this.ownerId = previousNavigationData.getIntExtra("DATA", -1);
+    }
+
 
     @Override
     public void getSuggestion(List<Suggestion> suggestions) {
@@ -113,10 +125,5 @@ public class ChannelActivity extends AppCompatActivity implements MakeSuggestion
             mSearchView.setFocusable(true);
             mSearchView.setSearchText(results.get(0));
         }
-    }
-
-    // interface response AsyncResponse
-    public interface AsyncResponse {
-        void processFinish(String output);
     }
 }
