@@ -1,9 +1,25 @@
 package com.t4.androidclient.model.livestream;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class Notification {
+    @JsonAlias({"notificationId"})
+    private long id;
     private String message;
     private LiveStream stream;
     private Integer status;
+
+    public Notification() {
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getMessage() {
         return message;

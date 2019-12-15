@@ -1,14 +1,9 @@
 package com.t4.androidclient.model.inbox;
 
 public class Inbox {
-
     private String avatar;
     private String message;
     private String name;
-
-    public Inbox() {
-
-    }
 
     public Inbox(String avatar, String message, String name) {
         this.avatar = avatar;
@@ -36,7 +31,7 @@ public class Inbox {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOwner(String owner) {
+        this.name = owner;
     }
 }

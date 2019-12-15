@@ -15,4 +15,5 @@ public interface UserBusiness {
     void saveUser(User user);
     List<Notification> getNotification(int userId);
     boolean upgradePremium(int userId, int subscriptionId, int number, double amount);
+    void deleteNotification(Integer id);
 }
