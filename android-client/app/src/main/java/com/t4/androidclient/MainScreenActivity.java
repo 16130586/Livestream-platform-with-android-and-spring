@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -239,7 +240,19 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         BottomNavigationView navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
-
+        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if (Authentication.ISLOGIN)
+                    return NavigationUI.onNavDestinationSelected(menuItem, navController);
+                else if (menuItem.getItemId() == R.id.navigation_inbox || menuItem.getItemId() == R.id.navigation_subscription){
+                    mDrawerLayout = findViewById(R.id.drawer_layout);
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    return false;
+                }
+                return NavigationUI.onNavDestinationSelected(menuItem, navController);
+            }
+        });
 
         // Click logo về Home
         app_logo = findViewById(R.id.app_logo);
@@ -270,8 +283,13 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                     mDrawerLayout = findViewById(R.id.drawer_layout);
                     mDrawerLayout.openDrawer(GravityCompat.START);
                 } else if (item.getItemId() == R.id.create_live_stream) {
-                    Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
-                    startActivity(createLive);
+                    if (Authentication.ISLOGIN) {
+                        Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
+                        startActivity(createLive);
+                    } else {
+                        mDrawerLayout = findViewById(R.id.drawer_layout);
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
                 }
 
             }
@@ -370,6 +388,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     }
 
     public void doProcessNotLogin() {
+        Authentication.ISLOGIN = false;
         slide_view.getMenu().clear();
         slide_view.inflateHeaderView(R.layout.slide_header_not_login);
 
@@ -385,6 +404,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     }
 
     public void doProcessLoggedin() {
+        Authentication.ISLOGIN = true;
         slide_view.getMenu().clear();
         slide_view.inflateHeaderView(R.layout.slide_header);
         slide_view.inflateMenu(R.menu.menu_slide);
@@ -396,6 +416,8 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainScreenActivity.this, MainScreenActivity.class);
+                startActivity(intent);
                 slide_view.removeHeaderView(slide_view.getHeaderView(0));
                 logout();
             }

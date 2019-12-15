@@ -11,7 +11,7 @@
         android:title="Create Live Stream"
         android:orderInCategory="1"
         app:showAsAction="always"
-        android:icon="@drawable/ic_menu_camera"/>
+        android:icon="@drawable/ic_live_tv"/>
 
     <item android:id="@+id/open_menu_slide"
         android:title="Slide Menu"
