@@ -80,7 +80,17 @@ public class UserController {
         apiResponse.data = userBusiness.getUserById(user.getUserId());
         return apiResponse;
     }
-
+	
+    //Tuan update ham getInfoID cho moi channel
+	@GetMapping("/auth/info/{id}")
+	public ApiResponse getInfo(@PathVariable(name = "id") int id) {
+		ApiResponse apiResponse = new ApiResponse();
+		apiResponse.statusCode = 200;
+		apiResponse.message = "get user "+ id +" info!";
+		apiResponse.data = userBusiness.getUserById(id);
+		return apiResponse;
+	}
+	
     @GetMapping("/{id}/streams/{offset}/{limit}")
     public ApiResponse getStreams(@PathVariable(name = "id") int id
             , @PathVariable(name = "offset") int offset
