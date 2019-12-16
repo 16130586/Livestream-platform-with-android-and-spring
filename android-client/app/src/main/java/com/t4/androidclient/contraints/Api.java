@@ -7,5 +7,7 @@ public class Api {
     public static final String URL_GET_RECOMMEND_COOKIE_USER = Host.API_HOST_IP + "/streams/recommend";
     public static final String URL_DELETE_NOTIFICATION = Host.API_HOST_IP + "/user/auth/notification/delete";
     public static final String URL_GET_NOTIFICATION = Host.API_HOST_IP + "/user/auth/notification";
+    public static final String URL_CREATE_LIVES_TREAM = Host.API_HOST_IP + "/streams/auth/create";
+
 
 }

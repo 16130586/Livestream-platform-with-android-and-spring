@@ -49,15 +49,34 @@ public class StreamBusinessImp implements StreamBusiness {
 
     @Override
     public Stream create(CreatingStreamEntryParams entryParams) {
-
         WowzaStream liveWowza = null;
+        User user = userBusiness.getUserById(entryParams.userId);
         try {
-            liveWowza = wowzaStreamBusiness.create(entryParams);
-            if (liveWowza == null) {
-                liveWowza = getReplacementLive(entryParams);
+            if (user.getWowzaId() != null && !user.getWowzaId().isEmpty()) {
+                wowzaStreamBusiness.stop(user.getWowzaId());
+                liveWowza = wowzaStreamBusiness.fetchOne(user.getWowzaId());
+            } else {
+                liveWowza = wowzaStreamBusiness.create(entryParams);
+                if (liveWowza != null) {
+                    user.setWowzaId(liveWowza.id);
+                    userBusiness.saveUser(user);
+                }
+                if (liveWowza == null) {
+                    liveWowza = getReplacementLive(entryParams);
+                    System.out.println("Wowza is out of trial!");
+                    if (liveWowza == null) {
+                        System.out.println("Cannot get replacement");
+                        return null;
+                    }
+                }
             }
-            if (liveWowza == null)
-                return null;
+        // trong dtb, user chua co wowza stream id, chinh lai cai model, update sql init, sql import
+        // khi user yeu cau tao 1 stream tren app cua minh
+        // thi m se lay len cai wowza stream cua thang user do
+        // neu chua co -> tao moi
+        // neu co roi -> stop cai stream do thong qua wowza business
+        // stop xong
+        // update cai wowza cu thanh wowza voi thong tin tu entryParams
             List<StreamTarget> forwardTargets = new ArrayList<>();
             if (entryParams.forwards != null) {
                 for (StreamingForward fw : entryParams.forwards) {
@@ -95,8 +114,10 @@ public class StreamBusinessImp implements StreamBusiness {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        List<StreamType> streamTypes = streamTypeRepository.findByTypeNameIn(entryParams.genreList);
         Stream rs = new Stream(liveWowza);
         rs.setTitle(entryParams.name);
+        rs.setStreamType(streamTypes);
         rs = streamRepository.saveAndFlush(rs);
         return rs;
     }
@@ -175,6 +196,7 @@ public class StreamBusinessImp implements StreamBusiness {
         if (replaceStream.isPresent()) {
             WowzaStream op = wowzaStreamBusiness.fetchOne(replaceStream.get().id);
             op.name = entry.name;
+//            op.posterImage = entry.thumbnail;
             wowzaStreamBusiness.update(op);
             return op;
         }

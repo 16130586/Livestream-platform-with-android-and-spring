@@ -16,7 +16,6 @@ import com.t4.androidclient.R;
 import com.t4.androidclient.model.CompareDate;
 import com.t4.androidclient.model.livestream.LiveStream;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
         }
 
         TextView streamTitleView = holder.streamTitle;
-        streamTitleView.setText(stream.getTitle());
+        streamTitleView.setText(stream.getName());
 
         TextView streamPublishTimeView = holder.streamPublishTime;
         Date endTimeDate = stream.getEndTime();
