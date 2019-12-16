@@ -9,6 +9,7 @@ USE `livestream`;
 
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `wowza_id` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `nick_name` varchar(255) DEFAULT NULL,

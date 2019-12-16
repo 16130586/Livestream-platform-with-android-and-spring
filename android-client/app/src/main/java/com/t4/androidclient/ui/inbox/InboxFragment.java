@@ -83,9 +83,6 @@ public class InboxFragment extends Fragment {
                 if (output != null && !output.isEmpty()) {
                     NotificationHelper helper = new NotificationHelper();
                     List<Notification> listNotificationServer = helper.parseNotification(output);
-                    System.out.println(listNotificationServer.get(0).getMessage());
-                    System.out.println(listNotificationServer.get(0).getStream().getStreamId());
-                    System.out.println(output);
                     listNotification.addAll(listNotificationServer);
                     notificationAdapter.notifyDataSetChanged();
                 }

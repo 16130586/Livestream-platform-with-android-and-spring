@@ -12,6 +12,7 @@ import java.util.List;
 public class User {
 
     private Integer userId;
+    private String wowzaId;
     private String userName;
     private String password;
     private String nickName;
@@ -36,6 +37,15 @@ public class User {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    @Column(name = "wowza_id")
+    public String getWowzaId() {
+        return wowzaId;
+    }
+
+    public void setWowzaId(String wowzaId) {
+        this.wowzaId = wowzaId;
     }
 
     @Column(name = "username")
