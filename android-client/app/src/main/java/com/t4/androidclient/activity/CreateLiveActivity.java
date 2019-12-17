@@ -26,8 +26,12 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CreateLiveGenreAdapter;
+import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.model.livestream.FacebookUser;
+import com.t4.androidclient.model.livestream.GenreHelper;
 import com.t4.androidclient.model.livestream.LiveStream;
 import com.t4.androidclient.model.livestream.TokenPermission;
 import com.t4.androidclient.model.helper.TokenPermissionHelper;
@@ -126,12 +130,6 @@ public class CreateLiveActivity extends Activity {
         textTitle = findViewById(R.id.text_create_live_title);
         tokenPermissionChecker = findViewById(R.id.create_live_token_checker);
 
-
-        gridView = (GridView)findViewById(R.id.grid_create_live_genre);
-        genreAdapter = new CreateLiveGenreAdapter(this, genreList);
-        gridView.setAdapter((ListAdapter) genreAdapter);
-
-
         //button save
         btnSave = findViewById(R.id.btn_create_live_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -190,33 +188,20 @@ public class CreateLiveActivity extends Activity {
     }
 
     private void getGenreListFromServer() {
-//        // server
-//        String url = "localhost:8080/genre/";
-//        GetGenreList getGenreList = new GetGenreList(new AsyncResponse() {
-//            @Override
-//            public void processFinish(String output) {
-//                GenreHelper helper = new GenreHelper();
-//                List<String> genreListServer = helper.parseGenreJson(output);
-//                genreList = genreListServer;
-//            }
-//        });
+        // server
+        GetGenreList getGenreList = new GetGenreList(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                GenreHelper helper = new GenreHelper();
+                List<String> genreListServer = helper.parseGenreJson(output);
+                CreateLiveActivity.this.genreList = genreListServer;
+                gridView = (GridView)findViewById(R.id.grid_create_live_genre);
+                genreAdapter = new CreateLiveGenreAdapter(CreateLiveActivity.this, genreList);
+                gridView.setAdapter((ListAdapter) genreAdapter);
+            }
+        });
+        getGenreList.execute();
 
-        // temp - remove later
-        ArrayList<String> genreList = new ArrayList<>();
-        genreList.add("Fun");
-        genreList.add("Game");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        genreList.add("Entertainment");
-        this.genreList = genreList;
     }
 
     public void onCheckboxClicked(View view) {
@@ -232,7 +217,7 @@ public class CreateLiveActivity extends Activity {
     }
 
     public void saveLiveStream() {
-        liveStream.setTitle(textTitle.getText().toString());
+        liveStream.setName(textTitle.getText().toString());
         liveStream.setGenreList(this.genreListByUser);
 
         if (tokenPermissionChecker.getText() == null ) {
@@ -245,7 +230,14 @@ public class CreateLiveActivity extends Activity {
     }
 
     public void sendLiveStreamToServer() {
-
+        CreateLiveStream createLiveStream = new CreateLiveStream(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                // TODO handle output stream & display
+                System.out.println(output);
+            }
+        });
+        createLiveStream.execute();
     }
 
     public void checkAccesToken(String accessToken) {
@@ -278,17 +270,13 @@ public class CreateLiveActivity extends Activity {
 
         @Override
         protected String doInBackground(String... urls) {
-            String url = urls[0];
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(url).build();
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_ALL_GENRE);
+            return HttpClient.execute(request);
+        }
 
-            try (Response response = client.newCall(request).execute()) {
-                String rs = response.body().string();
-                return rs;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
         }
     }
 
@@ -321,6 +309,29 @@ public class CreateLiveActivity extends Activity {
                 e.printStackTrace();
                 return "false";
             }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+
+    }
+
+    // send live stream to server
+    private class CreateLiveStream extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+
+
+        // constructor
+        public CreateLiveStream(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... data) {
+            Request request = HttpClient.buildPostRequest(Api.URL_CREATE_LIVES_TREAM, liveStream, Authentication.TOKEN);
+            return HttpClient.execute(request);
         }
 
         @Override

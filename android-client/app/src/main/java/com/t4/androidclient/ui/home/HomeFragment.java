@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Request;
+import viewModel.StreamViewModel;
 
 
 public class HomeFragment extends Fragment {
@@ -94,7 +95,7 @@ public class HomeFragment extends Fragment {
                         for (Map<String, Object> obj : streams) {
                             LiveStream s = LiveStreamHelper.parse(obj);
                             if (s == null) continue;
-                            viewModel.StreamViewModel smv = new viewModel.StreamViewModel(s.getTitle()
+                            StreamViewModel smv = new StreamViewModel(s.getName()
                                     , (s.getOwner() != null ? s.getOwner().username : "Incorrect mock data")
                                     , (s.getOwner() != null ? s.getOwner().avatar : "")
                                     , (s.getThumbnail() != null ? s.getThumbnail() : "")

@@ -112,6 +112,16 @@ public class WowzaStream {
     public String state;
     @JsonProperty("player_video_poster_image")
     public String posterImage;
+    @JsonProperty("player_video_poster_image_url")
+    public String posterImageUrl;
+
+    public String getPosterImageUrl() {
+        return posterImageUrl;
+    }
+
+    public void setPosterImageUrl(String posterImageUrl) {
+        this.posterImageUrl = posterImageUrl;
+    }
 
     public String getPosterImage() {
         return posterImage;

@@ -6,7 +6,7 @@ import java.util.List;
 public class LiveStream {
     private User owner;
     private Integer streamId;
-    private String title;
+    private String name;
     private String thumbnail;
     private List<String> genreList;
     private FacebookUser facebookUser;
@@ -23,9 +23,8 @@ public class LiveStream {
     private String application;
     private String streamName;
 
-    //Tuan test show item channel ra
-    public LiveStream(String title, Date endTime, Integer totalView) {
-        this.title = title;
+    public LiveStream(String name, Date endTime, Integer totalView) {
+        this.name = name;
         this.endTime = endTime;
         this.totalView = totalView;
     }
@@ -52,22 +51,22 @@ public class LiveStream {
 
     public String toString() {
         if (facebookUser == null) {
-            return this.title + ", "
+            return this.name + ", "
                     + this.thumbnail +", "
                     + this.genreList.toString();
         }
-        return this.title + ", "
+        return this.name + ", "
                 + this.thumbnail +", "
                 + this.genreList.toString() + ", "
                 + this.facebookUser.toString();
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getThumbnail() {

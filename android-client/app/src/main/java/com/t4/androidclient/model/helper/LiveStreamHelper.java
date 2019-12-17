@@ -14,7 +14,7 @@ public class LiveStreamHelper {
             JSONObject d = new JSONObject(rawData);
             int streamStatus = d.getInt("status");
             ret.setStreamId(d.getInt("streamId"));
-            ret.setTitle(d.getString("title"));
+            ret.setName(d.getString("title"));
             ret.setThumbnail(d.getString("thumbnail"));
             ret.setStatus(streamStatus);
 

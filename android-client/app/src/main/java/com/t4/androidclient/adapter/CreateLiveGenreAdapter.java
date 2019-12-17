@@ -25,6 +25,8 @@ public class CreateLiveGenreAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (genreList == null || genreList.isEmpty())
+            return 0;
         return this.genreList.size();
     }
 

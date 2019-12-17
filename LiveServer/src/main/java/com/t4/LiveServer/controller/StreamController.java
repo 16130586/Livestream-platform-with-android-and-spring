@@ -27,7 +27,9 @@ public class StreamController {
     UserBusiness userBusiness;
 
     @PostMapping("/auth/create")
-    public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams) {
+    public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        entryParams.userId = user.getUserId();
         ApiResponse apiResponse = new ApiResponse();
         try {
             Object rs = streamBusiness.create(entryParams);
