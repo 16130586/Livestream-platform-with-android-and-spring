@@ -16,4 +16,5 @@ public interface UserBusiness {
     List<Notification> getNotification(int userId);
     boolean upgradePremium(int userId, int subscriptionId, int number, double amount);
     void deleteNotification(Integer id);
+    List<User> getSubscription(User user, int offset, int limit);
 }
