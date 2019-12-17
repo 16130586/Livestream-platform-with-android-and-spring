@@ -13,117 +13,115 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.ChannelStreamAdapter;
+import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.contraints.Host;
+import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.core.JsonHelper;
+import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.model.helper.LiveStreamHelper;
 import com.t4.androidclient.model.livestream.LiveStream;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
+import viewModel.StreamViewModel;
 
 public class AllStreamsFragment extends Fragment {
     private View root;
     private ChannelStreamAdapter channelStreamAdapter;
     private RecyclerView recyclerView;
-    private List<LiveStream> listStream;
-
-
+    private List<StreamViewModel> listStreamView;
+    private int ownerID;
     int i = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_all_streams, container, false);
+        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
         setUp();
         return root;
     }
 
     public void setUp() {
-        getListStream();
-
+        listStreamView = new LinkedList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        channelStreamAdapter = new ChannelStreamAdapter(listStream, getContext());
+        channelStreamAdapter = new ChannelStreamAdapter(listStreamView, getContext());
         recyclerView = (RecyclerView) root.findViewById(R.id.list_all_streams);
         recyclerView.setAdapter(channelStreamAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        loadUserStreamsFrom(1);
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
+                loadUserStreamsFrom(page);
             }
         };
         recyclerView.addOnScrollListener(scrollListener);
-
-        addTenToTop();
         channelStreamAdapter.notifyDataSetChanged();
     }
 
-    public void loadNextDataFromApi(int offset) {
-        addTenToList();
-        channelStreamAdapter.notifyDataSetChanged();
+
+    public void loadUserStreamsFrom(int offset) {
+        int pageSize = 6;
+        GetListStream getListStream = new GetListStream(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                if (output == null) return;
+                try {
+                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                    if (response != null && response.statusCode == 200) {
+                        List<Map<String, Object>> streams = (List<Map<String, Object>>) response.data;
+                        for (Map<String, Object> obj : streams) {
+                            LiveStream liveStream = LiveStreamHelper.parse(obj);
+                            if (liveStream.getOwner().getId() == ownerID) {
+                                StreamViewModel streamView = new StreamViewModel(liveStream.getStreamId()
+                                        , liveStream.getTitle()
+                                        , (liveStream.getEndTime() != null ? liveStream.getEndTime() : new Date(1573837200)) //16/11/2019
+                                        , (liveStream.getTotalView() != null ? liveStream.getTotalView() : 69069)
+                                        , (liveStream.getThumbnail() != null ? liveStream.getThumbnail() : ""));
+                                listStreamView.add(streamView);
+                            } else if (liveStream == null) {
+                                continue;
+                            }
+                        }
+                        if (streams != null && streams.size() > 0)
+                            channelStreamAdapter.notifyItemRangeChanged(offset > 0 ? (offset * pageSize - 1) : 0, streams.size());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } });
+        String[] values = new String[6];
+        values[0] = "userID";
+        values[1] = String.valueOf(ownerID);
+        values[2] = "offset";
+        values[3] = ""+offset ;
+        values[4] = "limit";
+        values[5] = ""+pageSize ;
+        getListStream.execute(values);
     }
+            private class GetListStream extends AsyncTask<String, Integer, String> {
+                public AsyncResponse asyncResponse;
 
-    public void getListStream() {
-        listStream = new ArrayList<>();
-        addTenToList();
-    }
+                public GetListStream(AsyncResponse asyncResponse) {
+                    this.asyncResponse = asyncResponse;
+                }
 
-    public void addTenToList() {
+                @Override
+                protected String doInBackground(String... token) {
+                    Request request = HttpClient.buildGetRequest(Host.API_HOST_IP+"/user/"+token[1]+"/streams/"+token[3]+"/"+token[5]);
+                    return HttpClient.execute(request);
+                }
 
-        int n = 0;
-        while(n < 10) {
-            listStream.add(new LiveStream("Faker has Pentakill in his match at LCK",new Date(1544686121),696969));
-            //13/12/2018 - date
-            n++;
-        }
-    }
-
-    public void addTenToTop() {
-        int n = 0;
-        while(n < 10) {
-            //10/12/2018 - date
-            listStream.add(0,new LiveStream("New stream - Faker has Pentakill in his match at VCS",new Date(1575962921),696969));
-            n++;
-        }
-    }
-
-    private class GetListStream extends AsyncTask<String, Integer, String> {
-        public AsyncResponse asyncResponse = null;
-
-        public GetListStream(AsyncResponse asyncResponse) {
-            this.asyncResponse = asyncResponse;
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String url = "link to server to get the inbox";
-
-            System.out.println("=============================================================");
-            System.out.println("The inbox url: " + url);
-            System.out.println("=============================================================");
-
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(url).build();
-
-            try (Response response = client.newCall(request).execute()) {
-                String rs = response.body().string();
-
-                return rs;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "false";
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    if (asyncResponse != null)
+                        asyncResponse.processFinish(s);
+                }
             }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            asyncResponse.processFinish(result);
-        }
-    }
 }

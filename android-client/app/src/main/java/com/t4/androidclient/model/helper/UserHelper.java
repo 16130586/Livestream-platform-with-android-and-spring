@@ -39,7 +39,8 @@ public class UserHelper {
     }
     public static User parseUserJson(JSONObject jsonObject) {
         User user = new User();
-        try {
+        try { // nó thiếu properties nào đó thôi, dđọc exception là biết thiếu cái gì, tự custom ra 1 hàm mới
+            // m dùng postman, request lên server, nó trả về kết quả là json, r dựa vào đó build 1 cái method khác
             user.setId(jsonObject.getInt("userId"));
             user.setUsername(jsonObject.getString("userName"));
             user.setNickname(jsonObject.getString("nickName"));

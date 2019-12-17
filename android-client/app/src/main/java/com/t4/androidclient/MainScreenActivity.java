@@ -267,12 +267,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         mDrawerLayout.openDrawer(GravityCompat.START);
                     }
                 }
-                 // Tuan test channel
-                 else if (item.getItemId() == R.id.test_function) { // test profile funtion
-                    Intent createLive = new Intent(MainScreenActivity.this, ChannelActivity.class);
-                    startActivity(createLive);
-
-                }
             }
         });
 

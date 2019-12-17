@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -28,18 +27,11 @@ import com.t4.androidclient.model.livestream.LiveStream;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 import com.t4.androidclient.ulti.adapter.StreamRecyclerAdapter;
 
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
-import viewModel.StreamViewModel;
 
 
 public class HomeFragment extends Fragment {
@@ -47,7 +39,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private VideoView clip_ads;
     private RecyclerView recyclerView;
-    private List<StreamViewModel> listStream = new LinkedList<>();
+    private List<viewModel.StreamViewModel> listStream = new LinkedList<>();
     private StreamRecyclerAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -102,7 +94,7 @@ public class HomeFragment extends Fragment {
                         for (Map<String, Object> obj : streams) {
                             LiveStream s = LiveStreamHelper.parse(obj);
                             if (s == null) continue;
-                            StreamViewModel smv = new StreamViewModel(s.getTitle()
+                            viewModel.StreamViewModel smv = new viewModel.StreamViewModel(s.getTitle()
                                     , (s.getOwner() != null ? s.getOwner().username : "Incorrect mock data")
                                     , (s.getOwner() != null ? s.getOwner().avatar : "")
                                     , (s.getThumbnail() != null ? s.getThumbnail() : "")

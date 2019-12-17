@@ -107,7 +107,6 @@ public class StreamController {
         apiResponse.statusCode = 200;
         apiResponse.message = "get all genre of stream";
         apiResponse.data = streamBusiness.getAllGenre();
-
         return apiResponse;
     }
 

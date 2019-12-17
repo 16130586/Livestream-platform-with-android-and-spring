@@ -1,4 +1,6 @@
-package com.t4.androidclient.model.livestream;
+package com.t4.androidclient.model.helper;
+
+import com.t4.androidclient.model.livestream.Genre;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -86,6 +86,7 @@ public class StreamRecyclerAdapter extends
             if (nextActivity != null) {
                 Intent t = new Intent(context, nextActivity);
                 t.putExtra("DATA", listStream.get(position).ownerId);
+                System.out.println(listStream.get(position).ownerId+"AAAAAAsss");
                 context.startActivity(t);
             }
         });

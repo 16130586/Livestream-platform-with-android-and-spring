@@ -32,7 +32,7 @@ public class HttpClient {
         return new Request.Builder().url(url).get().build();
     }
 
-    public static Request buildPostRequest(String url, Map<String, String> values, String token) {
+    public static Request buildPostRequest(String url, Object values, String token) {
         Headers headers = createAuthenticationHeader(token);
         String jsonStringData = JsonHelper.serialize(values);
         Request request = new Request.Builder().headers(headers).url(url).post(RequestBody.create(jsonStringData, MEDIA_TYPE_JSON)).build();

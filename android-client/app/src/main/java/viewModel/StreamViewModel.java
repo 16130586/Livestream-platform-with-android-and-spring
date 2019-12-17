@@ -27,6 +27,14 @@ public class StreamViewModel {
         this.status = status;
     }
 
+    public StreamViewModel (int streamId,String title, Date endTime, int totalView, String thumbnailView) {
+        this.streamId = streamId;
+        this.title = title;
+        this.endTime = endTime;
+        this.totalView = totalView;
+        this.thumbnailView = thumbnailView;
+    }
+
     public int getStatus() {
         return status;
     }
