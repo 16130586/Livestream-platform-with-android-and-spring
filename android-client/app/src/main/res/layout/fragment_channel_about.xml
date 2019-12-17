@@ -140,7 +140,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/channel_type"
             android:textSize="20sp"
-            android:text="Chúng tôi là SKT T1 thành lập từ những năm 190090909090990190090909090990"/>
+            android:text="Chúng tôi thành lập từ những năm 69"/>
 
 
     </RelativeLayout>

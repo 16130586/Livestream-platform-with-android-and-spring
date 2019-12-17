@@ -26,10 +26,10 @@ public class TypeStreamsFragment extends Fragment {
         return root;
     }
 
-    private class getTypeStreams extends AsyncTask<String, Integer, String> {
+    private class About extends AsyncTask<String, Integer, String> {
         public AsyncResponse asyncResponse = null;
 
-        public getTypeStreams(AsyncResponse asyncResponse) {
+        public About(AsyncResponse asyncResponse) {
             this.asyncResponse = asyncResponse;
         }
 

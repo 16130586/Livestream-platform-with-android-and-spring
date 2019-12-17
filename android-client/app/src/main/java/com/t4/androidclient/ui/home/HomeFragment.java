@@ -33,6 +33,7 @@ import java.util.Map;
 
 import okhttp3.Request;
 import viewModel.StreamViewModel;
+import viewModel.UserModelView;
 
 
 public class HomeFragment extends Fragment {
@@ -101,6 +102,8 @@ public class HomeFragment extends Fragment {
                                     , (s.getThumbnail() != null ? s.getThumbnail() : "")
                                     , s.getStatus());
                             smv.ownerId = s.getOwner().getId();
+                            smv.owner = new UserModelView();
+                            smv.owner.setNickName(s.getOwner().getNickname());
                             listStream.add(smv);
                         }
                         if (streams != null && streams.size() > 0)

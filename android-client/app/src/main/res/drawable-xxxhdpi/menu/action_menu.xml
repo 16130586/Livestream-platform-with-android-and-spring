@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/action_copy"
-        android:title="@string/action_copy"
+        android:streamName="@string/action_copy"
         android:src="@drawable/ic_copy"/>
 
 </menu>

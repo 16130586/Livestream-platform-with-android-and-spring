@@ -37,7 +37,6 @@ public class AllStreamsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<StreamViewModel> listStreamView;
     private int ownerID;
-    int i = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_all_streams, container, false);
@@ -54,14 +53,7 @@ public class AllStreamsFragment extends Fragment {
         recyclerView.setAdapter(channelStreamAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         loadUserStreamsFrom(1);
-        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadUserStreamsFrom(page);
-            }
-        };
-        recyclerView.addOnScrollListener(scrollListener);
-        channelStreamAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -79,7 +71,7 @@ public class AllStreamsFragment extends Fragment {
                             LiveStream liveStream = LiveStreamHelper.parse(obj);
                             if (liveStream.getOwner().getId() == ownerID) {
                                 StreamViewModel streamView = new StreamViewModel(liveStream.getStreamId()
-                                        , liveStream.getTitle()
+                                        , liveStream.getName()
                                         , (liveStream.getEndTime() != null ? liveStream.getEndTime() : new Date(1573837200)) //16/11/2019
                                         , (liveStream.getTotalView() != null ? liveStream.getTotalView() : 69069)
                                         , (liveStream.getThumbnail() != null ? liveStream.getThumbnail() : ""));

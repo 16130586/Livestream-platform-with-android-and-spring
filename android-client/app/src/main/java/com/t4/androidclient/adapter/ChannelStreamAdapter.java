@@ -62,8 +62,8 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
             thumnailImgView.setImageDrawable(context.getDrawable(R.drawable.background_channel));
         }
 
-        TextView streamTitleView = holder.streamTitle;
-        streamTitleView.setText(streamViewModel.getTitle());
+        TextView streamNameView = holder.streamName;
+        streamNameView.setText(streamViewModel.getStreamName());
 
         TextView streamPublishTimeView = holder.streamPublishTime;
         Date endTimeDate = streamViewModel.getEndTime();
@@ -96,7 +96,7 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumnailImage;
-        public TextView streamTitle;
+        public TextView streamName;
         public TextView streamPublishTime;
         public TextView streamViews;
 
@@ -104,7 +104,7 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
             super(itemView);
 
             thumnailImage = (ImageView) itemView.findViewById(R.id.item_stream_thumbail_image);
-            streamTitle = (TextView) itemView.findViewById(R.id.item_stream_title);
+            streamName = (TextView) itemView.findViewById(R.id.item_stream_name);
             streamPublishTime = (TextView) itemView.findViewById(R.id.item_stream_publish_time);
             streamViews = (TextView) itemView.findViewById(R.id.item_stream_views);
 
