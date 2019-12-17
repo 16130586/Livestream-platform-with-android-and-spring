@@ -129,7 +129,6 @@ public class UserController {
     @PostMapping("/auth/notification/delete")
     public ApiResponse deleteNotification(@RequestBody Map<String, String> data) {
         Integer id = Integer.parseInt(data.get("id"));
-        System.out.println("======================== " + id + "===========================");
         try {
             userBusiness.deleteNotification(id);
 
@@ -146,5 +145,21 @@ public class UserController {
             return apiResponse;
         }
 
+    }
+
+    @GetMapping("/auth/subscription/{userId}/{offset}/{limit}")
+    public ApiResponse getSubcription(HttpServletRequest request,
+                                      @PathVariable("userId") int userId,
+                                      @PathVariable(name = "offset") int offset,
+                                      @PathVariable(name = "limit") int limit) {
+
+        User user = (User) request.getAttribute("user");
+        user = userBusiness.getUserById(userId);
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get user info!";
+        apiResponse.data = userBusiness.getSubscription(user, offset, limit);
+        return apiResponse;
     }
 }

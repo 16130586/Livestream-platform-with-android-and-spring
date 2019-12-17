@@ -1,10 +1,15 @@
 package com.t4.androidclient.model.livestream;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import java.util.List;
 
 public class User {
+    @JsonAlias({"userId", "id"})
     public Integer id;
+    @JsonAlias({"userName", "username"})
     public String username;
+    @JsonAlias({"nickname", "nickName"})
     public String nickname;
     public String gmail;
     public String avatar;
@@ -14,6 +19,10 @@ public class User {
     public List<FavouriteSaved> favouriteSaveds;
     public List<Subscription> subscriptions;
     public List<LiveStream> streams;
+
+    public User() {
+
+    }
 
     public Integer getId() {
         return id;

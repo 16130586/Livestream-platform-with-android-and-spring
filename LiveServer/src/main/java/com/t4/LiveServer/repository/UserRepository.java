@@ -17,4 +17,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByGmail(String gmail);
     @Query("select u.notifications from User u where u.userId = :userId")
     List<Notification> findNotificationById(@Param("userId") int userId);
+    List<User> findBySubscribersContaining(User user);
 }

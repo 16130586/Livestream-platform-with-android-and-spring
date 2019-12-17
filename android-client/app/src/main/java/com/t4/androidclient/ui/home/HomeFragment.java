@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         // default loading for recommended
-        loadNextDataFromApi(0);
+//        loadNextDataFromApi(0);
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
             }
         };
         recyclerView.addOnScrollListener(scrollListener);
-
+        scrollListener.onLoadMore(0 , 0 , recyclerView);
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
