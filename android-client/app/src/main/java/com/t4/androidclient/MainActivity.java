@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
 //                request = GraphRequest.newPostRequest(
 //                        accessToken,
 //                        "/" + accessToken.getUserId() + "/live_videos",
-//                        new JSONObject("{\"title\":\"Today's Live Video\",\"description\":\"This is the live video for today.\"}"),
+//                        new JSONObject("{\"streamName\":\"Today's Live Video\",\"description\":\"This is the live video for today.\"}"),
 //                        new GraphRequest.Callback() {
 //                            @Override
 //                            public void onCompleted(GraphResponse response) {

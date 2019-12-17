@@ -30,7 +30,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody Map<String, String> datas) {
+    public ApiResponse login(@RequestBody Map<String, String> datas) { 
         ApiResponse response = new ApiResponse();
         response.statusCode = 200;
         response.message = "Login success!";
@@ -80,7 +80,17 @@ public class UserController {
         apiResponse.data = userBusiness.getUserById(user.getUserId());
         return apiResponse;
     }
-
+	
+    //Tuan update ham getInfoID cho moi channel đứng mẹ r :V vl, chịu
+	@GetMapping("/info/{id}")
+	public ApiResponse getInfoID(@PathVariable(name = "id") int id) {
+		ApiResponse apiResponse = new ApiResponse();
+		apiResponse.statusCode = 200;
+		apiResponse.message = "get user "+ id +" info!";
+		apiResponse.data = userBusiness.getUserById(id);
+		return apiResponse;
+	}
+	
     @GetMapping("/{id}/streams/{offset}/{limit}")
     public ApiResponse getStreams(@PathVariable(name = "id") int id
             , @PathVariable(name = "offset") int offset
@@ -113,7 +123,6 @@ public class UserController {
         response.message = "Success!";
         response.data = requestedData;
         return response;
-
     }
 
     @GetMapping("/auth/notification")

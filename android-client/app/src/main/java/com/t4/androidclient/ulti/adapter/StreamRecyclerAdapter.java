@@ -19,7 +19,6 @@ import com.t4.androidclient.R;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.channel.ChannelActivity;
 
-import java.nio.channels.Channel;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -74,7 +73,7 @@ public class StreamRecyclerAdapter extends
         }
 
         TextView titleView = holder.titleView;
-        titleView.setText(streamModel.getTitle());
+        titleView.setText(streamModel.getStreamName());
 
         thumbnailView.setOnClickListener(e -> {
             Toast.makeText(context, "Click on video thumbnail " + position + " !", Toast.LENGTH_SHORT).show();
@@ -86,11 +85,12 @@ public class StreamRecyclerAdapter extends
             if (nextActivity != null) {
                 Intent t = new Intent(context, nextActivity);
                 t.putExtra("DATA", listStream.get(position).ownerId);
+                t.putExtra("DATA2", listStream.get(position).getOwner().getNickName());
                 context.startActivity(t);
             }
         });
         titleView.setOnClickListener(e -> {
-            Toast.makeText(context, "Click on title " + position + " !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Click on streamName " + position + " !", Toast.LENGTH_SHORT).show();
             navigateToWatchingActivity(listStream.get(position));
         });
     }
@@ -132,7 +132,7 @@ public class StreamRecyclerAdapter extends
             super(itemView);
             thumbnailView = (ImageView) itemView.findViewById(R.id.item_stream_thumbnail);
             avatarView = (CircleImageView) itemView.findViewById(R.id.item_stream_avatar);
-            titleView = (TextView) itemView.findViewById(R.id.item_stream_title);
+            titleView = (TextView) itemView.findViewById(R.id.item_stream_name);
         }
     }
 }

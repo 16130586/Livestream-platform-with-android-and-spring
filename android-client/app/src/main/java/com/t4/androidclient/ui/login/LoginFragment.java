@@ -196,7 +196,7 @@ public class LoginFragment extends Fragment {
             Map<String, String> keyValues = new HashMap<>();
             keyValues.put(token[0], token[1]);
             keyValues.put(token[2], token[3]);
-            Request request = HttpClient.buildPostRequest(Api.URL_LOGIN, keyValues);
+            Request request = HttpClient.buildPostRequest(Api.URL_LOGIN,keyValues);
             return HttpClient.execute(request);
         }
 

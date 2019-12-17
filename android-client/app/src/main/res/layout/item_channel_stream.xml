@@ -14,7 +14,7 @@
         android:src="@drawable/background_channel" />
 
     <TextView
-        android:id="@+id/item_stream_title"
+        android:id="@+id/item_stream_name"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:layout_margin="5dp"
@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/item_stream_publish_time"
-        android:layout_below="@id/item_stream_title"
+        android:layout_below="@id/item_stream_name"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="2dp"
         android:layout_toRightOf="@id/item_stream_thumbail_image"
@@ -39,7 +39,7 @@
         android:id="@+id/item_stream_views"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="2dp"
-        android:layout_below="@id/item_stream_title"
+        android:layout_below="@id/item_stream_name"
         android:layout_toRightOf="@id/item_stream_publish_time"
         android:textSize="16sp"
         android:layout_width="wrap_content"

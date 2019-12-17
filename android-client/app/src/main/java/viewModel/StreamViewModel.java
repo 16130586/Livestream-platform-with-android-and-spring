@@ -11,7 +11,6 @@ public class StreamViewModel {
     public int hostPort;
     public String application;
     public String streamName;
-    public String title;
     public String thumbnailView;
     public int ownerId;
     public String onwerName;
@@ -19,12 +18,20 @@ public class StreamViewModel {
     public int status;
     public StreamViewModel(){}
 
-    public StreamViewModel (String title, String onwerName, String ownerAvatar, String thumbnailView, int status) {
-        this.title = title;
+    public StreamViewModel (String streamName, String onwerName, String ownerAvatar, String thumbnailView, int status) {
+        this.streamName = streamName;
         this.onwerName = onwerName;
         this.ownerAvatar = ownerAvatar;
         this.thumbnailView = thumbnailView;
         this.status = status;
+    }
+
+    public StreamViewModel (int streamId,String title, Date endTime, int totalView, String thumbnailView) {
+        this.streamId = streamId;
+        this.streamName = title;
+        this.endTime = endTime;
+        this.totalView = totalView;
+        this.thumbnailView = thumbnailView;
     }
 
     public int getStatus() {
@@ -99,20 +106,14 @@ public class StreamViewModel {
         this.application = application;
     }
 
+
+
     public String getStreamName() {
         return streamName;
     }
 
     public void setStreamName(String streamName) {
         this.streamName = streamName;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getOwnerId() {

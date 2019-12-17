@@ -14,9 +14,4 @@
         app:showAsAction="always"
         android:icon="@drawable/ic_user"/>
 
-<!--    <item android:id="@+id/test_function"-->
-<!--        android:title="Test Function"-->
-<!--        android:orderInCategory="1"-->
-<!--        app:showAsAction="always"-->
-<!--        android:icon="@drawable/ic_menu_manage"/>-->
 </menu>

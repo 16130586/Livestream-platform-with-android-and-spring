@@ -23,7 +23,6 @@ public class LiveStream {
     private String application;
     private String streamName;
 
-    //Tuan test show item channel ra
     public LiveStream(String name, Date endTime, Integer totalView) {
         this.name = name;
         this.endTime = endTime;

@@ -2,7 +2,6 @@ package com.t4.androidclient.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.model.CompareDate;
-import com.t4.androidclient.model.livestream.LiveStream;
 
 import java.util.Date;
 import java.util.List;
 
+import viewModel.StreamViewModel;
+
 
 public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdapter.ViewHolder>{
-    private List<LiveStream> listStream;
+    private List<StreamViewModel> listStreamView;
     private Context context;
 
     byte[] imageBytes;
     Bitmap thumnailImage;
 
-    public ChannelStreamAdapter(List<LiveStream> listStream, Context context) {
-        this.listStream = listStream;
+    public ChannelStreamAdapter(List<StreamViewModel> listStreamView, Context context) {
+        this.listStreamView = listStreamView;
         this.context = context;
     }
 
@@ -48,11 +48,10 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        LiveStream stream = listStream.get(position);
+        StreamViewModel streamViewModel = listStreamView.get(position);
 
-        if (stream.getThumbnail() != null) {
+        if (streamViewModel.getThumbnailView() != null) {
             //get thumnail link - lay image thumnail tu do
-
             // imageBytes = Base64.decode(stream.getAvatar(), Base64.URL_SAFE);
             //thumnailImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
         }
@@ -63,15 +62,14 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
             thumnailImgView.setImageDrawable(context.getDrawable(R.drawable.background_channel));
         }
 
-        TextView streamTitleView = holder.streamTitle;
-        streamTitleView.setText(stream.getName());
+        TextView streamNameView = holder.streamName;
+        streamNameView.setText(streamViewModel.getStreamName());
 
         TextView streamPublishTimeView = holder.streamPublishTime;
-        Date endTimeDate = stream.getEndTime();
+        Date endTimeDate = streamViewModel.getEndTime();
 
         CompareDate compareDate = new CompareDate();
         long diffDayNumber = compareDate.compareDateToCurrent(endTimeDate);
-        System.out.println(diffDayNumber);
         if(diffDayNumber > 364 ){
             long yearNumber = diffDayNumber/365;
             streamPublishTimeView.setText(yearNumber+" năm trước");
@@ -86,22 +84,19 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
         }
 
         TextView streamViewsView = holder.streamViews;
-        streamViewsView.setText(stream.getTotalView().toString()+" lượt xem");
-
-
-
+        streamViewsView.setText(streamViewModel.getTotalView()/1000+"N lượt xem");
 
     }
 
     @Override
     public int getItemCount() {
-        return listStream.size();
+        return listStreamView.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumnailImage;
-        public TextView streamTitle;
+        public TextView streamName;
         public TextView streamPublishTime;
         public TextView streamViews;
 
@@ -109,7 +104,7 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
             super(itemView);
 
             thumnailImage = (ImageView) itemView.findViewById(R.id.item_stream_thumbail_image);
-            streamTitle = (TextView) itemView.findViewById(R.id.item_stream_title);
+            streamName = (TextView) itemView.findViewById(R.id.item_stream_name);
             streamPublishTime = (TextView) itemView.findViewById(R.id.item_stream_publish_time);
             streamViews = (TextView) itemView.findViewById(R.id.item_stream_views);
 
@@ -121,38 +116,4 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
         void processFinish(String output);
     }
 
-    private class DeleteInbox extends AsyncTask<String, Integer, String> {
-        public AsyncResponse asyncResponse = null;
-
-        public DeleteInbox(AsyncResponse asyncResponse) {
-            this.asyncResponse = asyncResponse;
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-//            String url = "link to server to get the inbox";
-////
-////            System.out.println("=============================================================");
-////            System.out.println("The delete url: " + url);
-////            System.out.println("=============================================================");
-////
-////            OkHttpClient client = new OkHttpClient();
-////            Request request = new Request.Builder().url(url).build();
-////
-////            try (Response response = client.newCall(request).execute()) {
-////                String rs = response.body().string();
-////
-////                return rs;
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////                return "false";
-////            }
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            asyncResponse.processFinish(result);
-        }
-    }
 }

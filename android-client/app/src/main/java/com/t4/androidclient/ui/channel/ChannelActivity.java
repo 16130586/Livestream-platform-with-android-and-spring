@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -35,21 +36,20 @@ public class ChannelActivity extends AppCompatActivity implements MakeSuggestion
     ImageView app_logo;
     MakeSuggestion makeSuggestion = this;
     private asyn a = null;
-    private UserModelView owner;
     private int ownerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
-
         bindNavigateData(getIntent());
+        mSearchView  = findViewById(R.id.floating_search_view);
+        mSearchView.setSearchHint("Channel "+getIntent().getStringExtra("DATA2"));
 
         /////////// thêm bottom menu navigation
         BottomNavigationView navView = findViewById(R.id.menu_channel_view);
         NavController navController = Navigation.findNavController(this, R.id.channel_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
-
 
         // Click back về Home
         app_logo = findViewById(R.id.back_logo);
