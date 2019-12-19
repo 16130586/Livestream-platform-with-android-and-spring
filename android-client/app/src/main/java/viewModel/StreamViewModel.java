@@ -1,68 +1,78 @@
 package viewModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.t4.androidclient.model.livestream.StreamType;
+import com.t4.androidclient.model.livestream.User;
+
 import java.util.Date;
+import java.util.List;
 
 public class StreamViewModel {
-    public int streamId;
-    public UserModelView owner;
-    public int totalView;
-    public Date startTime,endTime;
-    public String primaryServerURL;
-    public int hostPort;
-    public String application;
-    public String streamName;
-    public String thumbnailView;
-    public int ownerId;
-    public String onwerName;
-    public String ownerAvatar;
-    public int status;
+    private Integer streamId;
+    private String wowzaId;
+    private List<StreamType> streamType;
+    private User owner;
+    private String thumbnail;
+    private Integer totalView;
+    private Date startTime;
+    private Date endTime;
+    private Integer status;
+    private String forwards;
+    private String forwardsUrl;
+    private String storedUrl;
+    private String primaryServerURL;
+    private int hostPort;
+    private String application;
+    private String streamName;
+    private String title;
+    private String hlsPlayBackUrl;
     public StreamViewModel(){}
 
-    public StreamViewModel (String streamName, String onwerName, String ownerAvatar, String thumbnailView, int status) {
-        this.streamName = streamName;
-        this.onwerName = onwerName;
-        this.ownerAvatar = ownerAvatar;
-        this.thumbnailView = thumbnailView;
-        this.status = status;
-    }
-
-    public StreamViewModel (int streamId,String title, Date endTime, int totalView, String thumbnailView) {
-        this.streamId = streamId;
-        this.streamName = title;
-        this.endTime = endTime;
-        this.totalView = totalView;
-        this.thumbnailView = thumbnailView;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getStreamId() {
+    public Integer getStreamId() {
         return streamId;
     }
 
-    public void setStreamId(int streamId) {
+    public void setStreamId(Integer streamId) {
         this.streamId = streamId;
     }
 
-    public UserModelView getOwner() {
+    public String getWowzaId() {
+        return wowzaId;
+    }
+
+    public void setWowzaId(String wowzaId) {
+        this.wowzaId = wowzaId;
+    }
+
+    public List<StreamType> getStreamType() {
+        return streamType;
+    }
+
+    public void setStreamType(List<StreamType> streamType) {
+        this.streamType = streamType;
+    }
+
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(UserModelView owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
-    public int getTotalView() {
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Integer getTotalView() {
         return totalView;
     }
 
-    public void setTotalView(int totalView) {
+    public void setTotalView(Integer totalView) {
         this.totalView = totalView;
     }
 
@@ -80,6 +90,38 @@ public class StreamViewModel {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getForwards() {
+        return forwards;
+    }
+
+    public void setForwards(String forwards) {
+        this.forwards = forwards;
+    }
+
+    public String getForwardsUrl() {
+        return forwardsUrl;
+    }
+
+    public void setForwardsUrl(String forwardsUrl) {
+        this.forwardsUrl = forwardsUrl;
+    }
+
+    public String getStoredUrl() {
+        return storedUrl;
+    }
+
+    public void setStoredUrl(String storedUrl) {
+        this.storedUrl = storedUrl;
     }
 
     public String getPrimaryServerURL() {
@@ -106,8 +148,6 @@ public class StreamViewModel {
         this.application = application;
     }
 
-
-
     public String getStreamName() {
         return streamName;
     }
@@ -116,35 +156,19 @@ public class StreamViewModel {
         this.streamName = streamName;
     }
 
-    public int getOwnerId() {
-        return ownerId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getOnwerName() {
-        return onwerName;
+    public String getHlsPlayBackUrl() {
+        return hlsPlayBackUrl;
     }
 
-    public void setOnwerName(String onwerName) {
-        this.onwerName = onwerName;
-    }
-
-    public String getOwnerAvatar() {
-        return ownerAvatar;
-    }
-
-    public void setOwnerAvatar(String ownerAvatar) {
-        this.ownerAvatar = ownerAvatar;
-    }
-
-    public String getThumbnailView() {
-        return thumbnailView;
-    }
-
-    public void setThumbnailView(String thumbnailView) {
-        this.thumbnailView = thumbnailView;
+    public void setHlsPlayBackUrl(String hlsPlayBackUrl) {
+        this.hlsPlayBackUrl = hlsPlayBackUrl;
     }
 }

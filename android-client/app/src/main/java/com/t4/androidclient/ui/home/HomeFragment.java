@@ -94,22 +94,12 @@ public class HomeFragment extends Fragment {
                     if (response != null && response.statusCode == 200) {
                         List<Map<String, Object>> streams = (List<Map<String, Object>>) response.data;
                         for (Map<String, Object> obj : streams) {
-                            LiveStream s = LiveStreamHelper.parse(obj);
-                            if (s == null) continue;
-                            StreamViewModel smv = new StreamViewModel(s.getName()
-                                    , (s.getOwner() != null ? s.getOwner().username : "Incorrect mock data")
-                                    , (s.getOwner() != null ? s.getOwner().avatar : "")
-                                    , (s.getThumbnail() != null ? s.getThumbnail() : "")
-                                    , s.getStatus());
-                            smv.ownerId = s.getOwner().getId();
-                            smv.owner = new UserModelView();
-                            smv.owner.setNickName(s.getOwner().getNickname());
+                            StreamViewModel smv = JsonHelper.deserialize(obj , StreamViewModel.class);
+                            if (smv == null) continue;
                             listStream.add(smv);
                         }
                         if (streams != null && streams.size() > 0)
                             adapter.notifyItemRangeChanged(offset > 0 ? (offset * pageSize - 1) : 0, streams.size());
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
