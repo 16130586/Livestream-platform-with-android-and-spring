@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
+    <item android:id="@+id/search_advance"
+        android:title="Create Live Stream"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_filter"/>
+
     <item android:id="@+id/create_live_stream"
         android:title="Create Live Stream"
         android:orderInCategory="1"

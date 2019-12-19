@@ -25,6 +25,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +35,7 @@ import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
+import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
@@ -42,7 +44,6 @@ import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
-import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                     doProcessNotLogin();
                 }
             });
-            infoUser.execute(Authentication.TOKEN);
+            infoUser.execute();
         }
         /**
          =======================================================================================================================================
@@ -184,31 +185,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
 
                 });
-
-        /////////////  thêm search vào
-        mSearchView = findViewById(R.id.floating_search_view);
-        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
-            @Override
-            public void onActionMenuItemSelected(MenuItem item) {
-//                if (item.getItemId() == R.id.action_voice_rec) {
-//                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-//                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-//                            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-//                    startActivityForResult(intent, 0);
-//                }
-                /// mở slide menu bên thanh search
-                //else
-                    if (item.getItemId() == R.id.open_menu_slide) {
-                    mDrawerLayout = findViewById(R.id.drawer_layout);
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                } else if (item.getItemId() == R.id.create_live_stream) {
-                    Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
-                    startActivity(createLive);
-                }
-
-            }
-        });
-
 
         /////////// thêm bottom menu navigation
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -292,8 +268,18 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                             }
                         }
                     });
-
                 }
+            }
+        });
+
+        // on search action
+        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
             }
         });
 
@@ -335,12 +321,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         }
     }
 
-    // interface response AsyncResponse
-    public interface AsyncResponse {
-        void processFinish(String output);
-    }
-
-    // =======================================================================
+// =======================================================================
 // ============ DO GET INFO USER ==================================
 // AsyncTask to get the genre list
     private class InfoUser extends AsyncTask<String, Integer, String> {
@@ -351,8 +332,8 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         }
 
         @Override
-        protected String doInBackground(String... token) {
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO, token[0]);
+        protected String doInBackground(String... data) {
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO, Authentication.TOKEN);
             return HttpClient.execute(request);
         }
 
