@@ -1,5 +1,6 @@
 package com.t4.LiveServer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 
@@ -40,6 +41,7 @@ public class User {
     }
 
     @Column(name = "wowza_id")
+    @JsonIgnore
     public String getWowzaId() {
         return wowzaId;
     }
@@ -58,6 +60,7 @@ public class User {
     }
 
     @Column(name = "password")
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -94,6 +97,7 @@ public class User {
     }
 
     @Column(name = "forgot_token")
+    @JsonIgnore
     public String getForgotToken() {
         return forgotToken;
     }
@@ -123,6 +127,7 @@ public class User {
     @JoinTable(name = "notification_user",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "notify_id"))
+    @JsonIgnore
     public List<Notification> getNotifications() {
         return notifications;
     }
@@ -149,6 +154,7 @@ public class User {
     @JoinTable(name = "subscriber",
             joinColumns = @JoinColumn(name = "publisher_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
+    @JsonIgnore
     public List<User> getSubscribers() {
         return subscribers;
     }
@@ -159,6 +165,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     public List<PaySubscription> getPaySubscriptions() {
         return paySubscriptions;
     }
@@ -169,6 +176,7 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "owner_id")
+    @JsonIgnore
     public List<Stream> getStreams() {
         return streams;
     }

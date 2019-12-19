@@ -116,6 +116,8 @@ public class StreamBusinessImp implements StreamBusiness {
         }
         List<StreamType> streamTypes = streamTypeRepository.findByTypeNameIn(entryParams.genreList);
         Stream rs = new Stream(liveWowza);
+        rs.setStreamName(entryParams.name);
+        rs.setOwner(user);
         rs.setTitle(entryParams.name);
         rs.setStreamType(streamTypes);
         rs = streamRepository.saveAndFlush(rs);
