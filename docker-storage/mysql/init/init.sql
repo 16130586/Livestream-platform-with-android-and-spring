@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `stream` (
   `host_port` int(11),
   `application` text,
   `stream_name` text,
-  `title` text,  	
+  `title` text, 
+  `hls_play_back_url` text,  
   PRIMARY KEY (`stream_id`),
   KEY `owner_id` (`owner_id`),
   CONSTRAINT `stream_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`user_id`)
