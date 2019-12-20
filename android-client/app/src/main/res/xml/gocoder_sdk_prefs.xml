@@ -18,7 +18,7 @@
             android:singleLine="true"
             android:summary="@string/wz_live_host_address_summary"
             android:title="@string/wz_live_host_address_title"
-            android:defaultValue="@string/wz_live_host_address_default"/>
+            />
 
         <com.t4.androidclient.config.AutoCompletePreference
             android:autoText="false"
@@ -31,18 +31,9 @@
             android:summary="@string/wz_live_port_number_summary"
             android:title="@string/wz_live_port_number_title"/>
 
-<!--
-        <CheckBoxPreference
-            android:defaultValue="@string/wz_live_use_ssl_default_value"
-            android:key="wz_live_use_ssl"
-            android:summary="@string/wz_live_use_ssl_summary"
-            android:title="@string/wz_live_use_ssl_title"
-            />
--->
 
         <com.t4.androidclient.config.AutoCompletePreference
             android:autoText="false"
-            android:defaultValue="@string/wz_live_app_name_default_value"
             android:dialogTitle="@string/wz_live_app_name_dialog_title"
             android:key="wz_live_app_name"
             android:selectAllOnFocus="true"
@@ -52,7 +43,6 @@
 
         <com.t4.androidclient.config.AutoCompletePreference
             android:autoText="false"
-            android:defaultValue="@string/wz_live_stream_name_default_value"
             android:dialogTitle="@string/wz_live_stream_name_dialog_title"
             android:key="wz_live_stream_name"
             android:selectAllOnFocus="true"

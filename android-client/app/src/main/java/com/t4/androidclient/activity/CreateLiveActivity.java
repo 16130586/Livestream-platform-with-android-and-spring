@@ -251,6 +251,7 @@ public class CreateLiveActivity extends Activity {
                     Toast.makeText(getBaseContext(), "Navigate to livestream", Toast.LENGTH_SHORT).show();
                     StreamViewModel svm = JsonHelper.deserialize((Map)response.data , StreamViewModel.class);
                     Intent t = new Intent(getBaseContext(), CameraActivity.class);
+                    t.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     t.putExtra("DATA", JsonHelper.serialize(svm));
                     getBaseContext().startActivity(t);
                 }

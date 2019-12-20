@@ -47,21 +47,14 @@ public class CameraActivity extends CameraActivityBase   {
 
     // Gestures are used to toggle the focus modes
     protected GestureDetectorCompat mAutoFocusDetector = null;
-    private StreamViewModel svm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        bindNavigateData(getIntent());
-        WOWZBroadcastConfig config = getBroadcastConfig();
-        if(config != null){
-            config.setApplicationName(svm.getApplication());
-            config.setStreamName(svm.getStreamName());
-            config.setPortNumber(svm.getHostPort());
-            String url = svm.getPrimaryServerURL();
-            config.setHostAddress(url.substring(url.indexOf("://") + 3 , url.lastIndexOf("/")));
-        }
+
+
         mRequiredPermissions = new String[] {
                 Manifest.permission.CAMERA,
                 Manifest.permission.RECORD_AUDIO
@@ -198,9 +191,6 @@ public class CameraActivity extends CameraActivityBase   {
         }
 
         return disableControls;
-    }
-    private void bindNavigateData(Intent previousNavigationData) {
-        this.svm = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA"), StreamViewModel.class);
     }
 
 }
