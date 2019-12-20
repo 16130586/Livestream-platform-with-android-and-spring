@@ -58,7 +58,7 @@ public class StreamRecyclerAdapter extends
         imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
         Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
-
+        
         Glide.with(context).load(streamModel.getThumbnail() == null ? "" : streamModel.getThumbnail())
                     .placeholder(R.drawable.place_holder).centerCrop().into(holder.thumbnailView);
         ImageView ownerAvatarView = holder.avatarView;
@@ -88,6 +88,9 @@ public class StreamRecyclerAdapter extends
             Toast.makeText(context, "Click on streamName " + position + " !", Toast.LENGTH_SHORT).show();
             navigateToWatchingActivity(listStream.get(position));
         });
+
+        TextView timeView = holder.timeView;
+        timeView.setText(streamModel.getDateStatus());
     }
 
     private void navigateToWatchingActivity(StreamViewModel modelClicked) {
@@ -122,13 +125,14 @@ public class StreamRecyclerAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;
         public CircleImageView avatarView;
-        public TextView titleView;
+        public TextView titleView, timeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             thumbnailView = (ImageView) itemView.findViewById(R.id.item_stream_thumbnail);
             avatarView = (CircleImageView) itemView.findViewById(R.id.item_stream_avatar);
             titleView = (TextView) itemView.findViewById(R.id.item_stream_name);
+            timeView = (TextView) itemView.findViewById(R.id.item_stream_time_status);
         }
     }
 }
