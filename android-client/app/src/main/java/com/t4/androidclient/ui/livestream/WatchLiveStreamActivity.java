@@ -7,11 +7,15 @@ import com.bumptech.glide.Glide;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.core.JsonHelper;
 
+import java.text.SimpleDateFormat;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import tcking.github.com.giraffeplayer2.GiraffePlayer;
 import tcking.github.com.giraffeplayer2.Option;
 import tcking.github.com.giraffeplayer2.PlayerListener;
@@ -23,12 +27,16 @@ import viewModel.StreamViewModel;
 
 public class WatchLiveStreamActivity extends AppCompatActivity {
     StreamViewModel streamViewModel;
+    TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
+    CircleImageView ownerAvatarView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_live_stream);
 
         bindNavigateData(getIntent());
+        setUp();
 
         PlayerManager.getInstance().getDefaultVideoInfo().addOption(Option.create(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "multiple_requests", 1L));
         final VideoView videoView = findViewById(R.id.video_view);
@@ -115,11 +123,38 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             }
         });
+
+
+
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
         videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
     }
     private void bindNavigateData(Intent previousNavigationData) {
         this.streamViewModel = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA") , StreamViewModel.class);
+    }
+
+    public void setUp() {
+        tagView = findViewById(R.id.stream_watch_tag);
+        tagView.setText(streamViewModel.getTag());
+
+        titleView = findViewById(R.id.stream_watch_tittle);
+        titleView.setText(streamViewModel.getTitle());
+
+        viewsView = findViewById(R.id.stream_watch_views);
+        viewsView.setText(streamViewModel.getTotalView() + " views");
+
+        ownerNameView = findViewById(R.id.stream_watch_owner_name);
+        ownerNameView.setText(streamViewModel.getOwner().getNickname());
+
+        ownerSubscribersView = findViewById(R.id.stream_watch_owner_subscribers);
+        ownerSubscribersView.setText(streamViewModel.getOwner().getSubscribeTotal() + " subscribers");
+
+        timeView = findViewById(R.id.stream_watch_time);
+        timeView.setText(streamViewModel.getDateStartString() + " | " + streamViewModel.getDateStatus());
+
+        ownerAvatarView = findViewById(R.id.stream_watch_owner_avatar);
+        Glide.with(ownerAvatarView.getContext()).load(streamViewModel.getOwner().getAvatar())
+                .centerCrop().into(ownerAvatarView);
     }
 }

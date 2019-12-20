@@ -1,11 +1,14 @@
 package viewModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.t4.androidclient.model.livestream.StreamType;
 import com.t4.androidclient.model.livestream.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class StreamViewModel {
     private Integer streamId;
@@ -27,6 +30,48 @@ public class StreamViewModel {
     private String title;
     private String hlsPlayBackUrl;
     public StreamViewModel(){}
+
+    @JsonIgnore
+    public String getTag() {
+        String tag = "";
+        for (int i = 0; i < streamType.size(); i++) {
+            tag += "#" + streamType.get(i).getTypeName() + " ";
+        }
+        return tag;
+    }
+
+    @JsonIgnore
+    public String getDateStartString() {
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(this.startTime);
+        return date;
+    }
+
+    @JsonIgnore
+    public String getDateStatus() {
+        Date dateNow = new Date();
+        long diff = Math.abs(startTime.getTime() - dateNow.getTime());
+        System.out.println(" =========== " + startTime.toString() + " ========== " + dateNow.toString());
+
+        int days = (int) (diff / (1000*60*60*24));
+        System.out.println(this.title + " ====================================================== Days " + days);
+        if (days == 1) return "Live " + days + " day ago";
+        if (days > 1) return "Live " + days + " days ago";
+
+        int hours = (int) (diff / (1000*60*60));
+        System.out.println(this.title + " ====================================================== Days " + hours);
+        if (hours == 1) return "Live " + hours + " hour ago";
+        if (hours > 1) return "Live " + hours + " hours ago";
+
+        int minutes = (int) (diff / (1000*60));
+        System.out.println(this.title + " ====================================================== Days " + minutes);
+        if (minutes == 1) return "Live " + minutes + " minute ago";
+        if (minutes > 1) return "Live " + minutes + " minutes ago";
+
+        return "Live NOW";
+    }
 
     public Integer getStreamId() {
         return streamId;

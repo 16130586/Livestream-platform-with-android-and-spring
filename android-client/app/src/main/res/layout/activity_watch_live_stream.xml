@@ -18,27 +18,40 @@
         android:padding="@dimen/pd_size_medium">
 
         <TextView
+            android:id="@+id/stream_watch_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#imagedragon #cover #guitar"
             android:textColor="@color/com_facebook_blue"
             android:textSize="@dimen/text_size_small"/>
 
         <TextView
+            android:id="@+id/stream_watch_tittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demons - Image Dragons - Fingerstyle Guitar Cover"
             android:textSize="@dimen/text_size_medium"
             android:textColor="@color/black"
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/stream_watch_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_small"
+            android:textSize="@dimen/text_size_super_small"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/stream_watch_views"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_small"
             android:textSize="@dimen/text_size_super_small"
             android:fontFamily="sans-serif"
             android:text="1.8M views"/>
+
+
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
@@ -64,7 +77,7 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/owner_avatar"
+                android:id="@+id/stream_watch_owner_avatar"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="4dp"
@@ -75,14 +88,14 @@
 
 
             <LinearLayout
-                android:layout_toEndOf="@+id/owner_avatar"
+                android:layout_toEndOf="@+id/stream_watch_owner_avatar"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/owner_name"
+                    android:id="@+id/stream_watch_owner_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_small"
@@ -90,7 +103,7 @@
                     android:textStyle="bold"
                     android:text="Thích Cover"/>
                 <TextView
-                    android:id="@+id/owner_subscribers"
+                    android:id="@+id/stream_watch_owner_subscribers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_super_small"
