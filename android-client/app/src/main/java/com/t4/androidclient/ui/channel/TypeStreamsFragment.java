@@ -51,7 +51,7 @@ public class TypeStreamsFragment extends Fragment {
                         listStreamType = streamTypeHelper.parseGenreJson(output);
                         for(StreamType type : listStreamType){
                             StreamTypeViewModel typeView =  new StreamTypeViewModel();
-                                typeView.setId(type.getId());
+                                typeView.setId(type.getTypeId());
                                 typeView.setTypeName(type.getTypeName());
                                 typeView.setNumberOfType(type.getNumberOfType());
                                 listStreamAndTypeView.add(typeView);

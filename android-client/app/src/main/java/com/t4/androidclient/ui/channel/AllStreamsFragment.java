@@ -65,12 +65,17 @@ public class AllStreamsFragment extends Fragment {
                     if (response != null && response.statusCode == 200) {
                         List<Map<String, Object>> streams = (List<Map<String, Object>>) response.data;
                         for (Map<String, Object> obj : streams) {
-                            StreamViewModel streamView = JsonHelper.deserialize(obj , StreamViewModel.class);
-                            if(streamView == null ){
-                                continue;
-                            }
-                            if (streamView.getOwner().getId() == ownerID) {
+                            LiveStream liveStream = LiveStreamHelper.parse(obj);
+                            if (liveStream.getOwner().getId() == ownerID) {
+                                StreamViewModel streamView = new StreamViewModel();
+                                streamView.setStreamId(liveStream.getStreamId());
+                                streamView.setStreamName(liveStream.getName());
+                                streamView.setEndTime(liveStream.getEndTime() != null ? liveStream.getEndTime() : new Date(1573837200)); //16/11/2019
+                                streamView.setTotalView(liveStream.getTotalView() != null ? liveStream.getTotalView() : 69069);
+                                streamView.setThumbnail(liveStream.getThumbnail() != null ? liveStream.getThumbnail() : "");
                                 listStreamView.add(streamView);
+                            } else if (liveStream == null) {
+                                continue;
                             }
                         }
                         if (streams != null && streams.size() > 0)

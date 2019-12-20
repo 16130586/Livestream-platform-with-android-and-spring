@@ -383,7 +383,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             }
         });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
-        profile_fullname.setText("Hi " + user.getNickname() + ",");
+        profile_fullname.setText("Hi " + user.getNickname() );
 //        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
 //        profile_email.setText("Your email: " + user.getGmail());
         if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {

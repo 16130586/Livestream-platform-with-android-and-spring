@@ -1,5 +1,6 @@
 package com.t4.androidclient.ui.channel;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,28 +8,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.model.helper.StreamTypeHelper;
 import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.model.livestream.StreamType;
 import com.t4.androidclient.model.livestream.User;
+import com.t4.androidclient.ui.login.LoginRegisterActivity;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Request;
 
 public class AboutFragment extends Fragment {
-    User userInfo = null ; // moi dau t set null, xong parse thi t gán nó thánh thằng mới, rồi xuống render
+    User getUser = null ;
+    User currentUser = null ;
+
     TextView channelName;
     TextView channelSubNumber;
     Button subscribleButton;
@@ -38,6 +50,7 @@ public class AboutFragment extends Fragment {
     int ownerID;
     List<StreamType> typeList = new ArrayList<StreamType>();
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,9 +59,119 @@ public class AboutFragment extends Fragment {
         channelSubNumber = root.findViewById(R.id.channel_sub_number);
         channelTypes = root.findViewById(R.id.channel_type);
         description = root.findViewById(R.id.description);
+        subscribleButton = root.findViewById(R.id.btn_subscrible);
         ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
 
-        AboutFragment.About about = new AboutFragment.About(new AsyncResponse() {
+        SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
+        Authentication.TOKEN = db.getToken();
+        //Check login status
+        if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
+            subscribleButton.setText("Subscribe");
+            subscribleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "Please login to subscrible channel !",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), LoginRegisterActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else{
+            // Check status subscribe with channel owner , place before to call below
+            CheckSubscribeTask checkSubscribeTask = new CheckSubscribeTask(new AsyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                    if (response != null && response.statusCode == 200) {
+                        boolean result = (boolean) response.data;
+                        if(result==true){ // True - Can subscrible
+                            subscribleButton.setText("Subscribe");
+                            subscribleButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    SubscribeTask subscribeTask = new SubscribeTask(new AsyncResponse() {
+                                        @Override
+                                        public void processFinish(String output) {
+                                            ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                                            if (response != null && response.statusCode == 200) {
+                                                boolean result = (boolean) response.data;
+                                                if(result==true){
+                                                    Toast.makeText(getContext(), "Subscribe channel successfully !",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    // Reload current fragment
+                                                    getActivity().finish();
+                                                    getActivity().overridePendingTransition(0, 0);
+                                                    startActivity(getActivity().getIntent());
+                                                    getActivity().overridePendingTransition(0, 0);
+                                                }
+                                            }
+                                        }});
+                                    String[] subData = new String[2];
+                                    subData[0]=currentUser.getId()+"";
+                                    subData[1]=ownerID+"";
+                                    subscribeTask.execute(subData);
+                                }
+                            });
+                        }else{ // False - Can't subscrible
+                            subscribleButton.setText("Un Subscribe");
+                            subscribleButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    UnSubscribeTask unSubscribeTask = new UnSubscribeTask(new AsyncResponse() {
+                                        @Override
+                                        public void processFinish(String output) {
+                                            ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                                            if (response != null && response.statusCode == 200) {
+                                                boolean result = (boolean) response.data;
+                                                if(result==true){
+                                                    Toast.makeText(getContext(), "Un Subscribe channel successfully !",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    // Reload current fragment
+                                                    getActivity().finish();
+                                                    getActivity().overridePendingTransition(0, 0);
+                                                    startActivity(getActivity().getIntent());
+                                                    getActivity().overridePendingTransition(0, 0);
+                                                }
+                                            }
+                                        }});
+                                    String[] subData = new String[2];
+                                    subData[0]=currentUser.getId()+"";
+                                    subData[1]=ownerID+"";
+                                    unSubscribeTask.execute(subData);
+                                }
+                            });
+                        }
+                    }
+                }});
+
+            // If login already then check status subscrible
+            // Get current user info to do task
+            CurrentInfo currentInfo = new CurrentInfo(new AsyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    if (output != null && !output.isEmpty()) {
+                        ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                        if (response != null && response.statusCode == 200) {
+                            Map<String, Object> rawData = (Map<String, Object>) response.data;
+                            currentUser = UserHelper.parseUserJson(rawData);
+
+                        }
+                    }
+                    // Get currentUser successfully , do check Status Subscribe
+                    String[] subData = new String[2];
+                    subData[0]=currentUser.getId()+"";
+                    subData[1]=ownerID+"";
+                    checkSubscribeTask.execute(subData); //Call above method
+                }
+
+            });
+            currentInfo.execute();
+        }
+
+
+
+
+        ChannelInfo channelInfo = new ChannelInfo(new AsyncResponse() {
             @Override
             public void processFinish(String output) {
                 try {
@@ -57,12 +180,10 @@ public class AboutFragment extends Fragment {
                     if (data.getInt("statusCode") == 200) {
                         String userString = data.getString("data");
                         JSONObject userJSON = new JSONObject(userString);
-                        userInfo = userHelper.parseUserJson(userJSON);
-                        System.out.println("True Response");
-                        
+                        getUser = userHelper.parseUserJson(userJSON);
                         // Render UImà
-                        channelName.setText(userInfo.getNickname());
-                        channelSubNumber.setText(userInfo.getSubscribeTotal()+" người theo dõi");
+                        channelName.setText(getUser.getNickname());
+                        channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
                             @Override
                             public void processFinish(String output) {
@@ -96,16 +217,14 @@ public class AboutFragment extends Fragment {
         String[] values = new String[2];
         values[0] = "userID";
         values[1] = String.valueOf(ownerID); // Lay ID cua thang channel khi click vao
-        about.execute(values);
-
-
+        channelInfo.execute(values);
         return root;
     }
     // ============ DO GET INFO USER  ==================================
-    private class About extends AsyncTask<String, Integer, String> {
+    private class ChannelInfo extends AsyncTask<String, Integer, String> {
         public AsyncResponse asyncResponse = null;
 
-        public About(AsyncResponse asyncResponse) {
+        public ChannelInfo(AsyncResponse asyncResponse) {
             this.asyncResponse = asyncResponse;
         }
 
@@ -135,6 +254,82 @@ public class AboutFragment extends Fragment {
             return HttpClient.execute(request);
         }
 
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class CurrentInfo extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+
+        public CurrentInfo(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... data) {
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class CheckSubscribeTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+        public CheckSubscribeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String,String> dataMap = new HashMap<>();
+            dataMap.put("subscriberID",data[0]);
+            dataMap.put("publisherID",data[1]);
+            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_CHECK_SUBSCRIBE,dataMap);
+            return HttpClient.execute(request);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class SubscribeTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+        public SubscribeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String,String> dataMap = new HashMap<>();
+            dataMap.put("subscriberID",data[0]);
+            dataMap.put("publisherID",data[1]);
+            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_SUBSCRIBE,dataMap);
+            return HttpClient.execute(request);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class UnSubscribeTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+        public UnSubscribeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String,String> dataMap = new HashMap<>();
+            dataMap.put("subscriberID",data[0]);
+            dataMap.put("publisherID",data[1]);
+            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_UNSUBSCRIBE,dataMap);
+            return HttpClient.execute(request);
+        }
         @Override
         protected void onPostExecute(String result) {
             asyncResponse.processFinish(result);

@@ -31,6 +31,8 @@ public class StreamViewModel {
     private String hlsPlayBackUrl;
     public StreamViewModel(){}
 
+
+
     @JsonIgnore
     public String getTag() {
         String tag = "";

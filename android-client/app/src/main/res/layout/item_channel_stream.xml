@@ -16,10 +16,10 @@
     <TextView
         android:id="@+id/item_stream_name"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
+        android:layout_height="70dp"
         android:layout_margin="5dp"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="center_vertical"
         android:layout_toRightOf="@id/item_stream_thumbail_image"
         android:text="Faker has Pentakill in his match at LCK "/>
@@ -30,8 +30,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="2dp"
         android:layout_toRightOf="@id/item_stream_thumbail_image"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:layout_width="100dp"
+        android:fontFamily="sans-serif"
         android:layout_height="wrap_content"
         android:text="15 giờ trước"/>
 
@@ -41,7 +42,8 @@
         android:layout_marginTop="2dp"
         android:layout_below="@id/item_stream_name"
         android:layout_toRightOf="@id/item_stream_publish_time"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="44 N lượt xem"/>

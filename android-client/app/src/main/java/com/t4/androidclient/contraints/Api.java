@@ -12,5 +12,8 @@ public class Api {
     public static final String URL_CREATE_LIVES_TREAM = Host.API_HOST_IP + "/streams/auth/create";
     public static final String URL_SEARCH_STREAM = Host.API_HOST_IP + "/streams/find";
     public static final String URL_GET_SUBSCRIPTION_COOKIE_USER = Host.API_HOST_IP + "/streams/find";
+    public static final String URL_CHANNEL_SUBSCRIBE = Host.API_HOST_IP + "/channel/subscribe";
+    public static final String URL_CHANNEL_UNSUBSCRIBE = Host.API_HOST_IP + "/channel/unsubscribe";
+    public static final String URL_CHANNEL_CHECK_SUBSCRIBE = Host.API_HOST_IP + "/channel/checksubscribe";
 
 }

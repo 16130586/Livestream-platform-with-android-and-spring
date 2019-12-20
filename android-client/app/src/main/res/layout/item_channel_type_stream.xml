@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textColor="#000000"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="center_vertical"
         android:layout_toRightOf="@id/item_type_thumbail_image"
         android:text="List stream of Adult type "/>
@@ -30,7 +30,8 @@
         android:layout_marginLeft="5dp"
         android:layout_below="@id/item_type_name"
         android:layout_toRightOf="@id/item_type_thumbail_image"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="69 video"/>
@@ -59,12 +60,12 @@
         android:gravity="center"
         android:text="1 N"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/item_type_number_icon"
-        android:layout_width="56dp"
-        android:layout_height="41dp"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
         android:layout_alignStart="@+id/item_type_number_background"
         android:layout_alignEnd="@+id/item_type_number_background"
         android:layout_alignBottom="@+id/item_type_number_background"

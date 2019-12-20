@@ -20,6 +20,7 @@
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         android:layout_marginTop="80dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +31,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
+        android:textSize="16sp"
+
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
@@ -44,6 +47,8 @@
         android:layout_height="wrap_content"
         android:hint="Password Again"
         android:imeActionLabel="@string/action_sign_in_short"
+        android:textSize="16sp"
+
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
@@ -62,8 +67,9 @@
         android:layout_marginEnd="48dp"
         android:enabled="false"
         android:text="Sign Up"
+        android:textSize="14sp"
         android:textColor="@color/black"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

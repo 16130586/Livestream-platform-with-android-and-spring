@@ -21,39 +21,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:text="Fullname here"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="15sp"
-        android:layout_marginBottom="20dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-<!--    <TextView-->
-<!--        android:id="@+id/profile_email"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="18sp"-->
-<!--        android:layout_marginLeft="15sp"-->
-<!--        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>-->
-
-<!--    <com.facebook.login.widget.LoginButton-->
-<!--        android:id="@+id/btn_logout_facebook"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:textColor="#133895"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:clickable="true"-->
-<!--        android:textSize="22sp"-->
-<!--        />-->
 
     <TextView
         android:id="@+id/goToAccountManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#333"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         android:text="Profile Manager"
         android:textSize="18sp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView
         android:id="@+id/goToChangePassword"
@@ -65,17 +50,19 @@
         android:textSize="18sp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/buySubscription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:textColor="#333"
         android:textSize="18sp"
+        android:text="Buy Subscription"
         android:layout_marginLeft="15sp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="15sp"
         />
 
     <Button
@@ -83,7 +70,7 @@
         android:layout_width="100dp"
         android:text="Logout"
         android:textColor="#333"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15sp"
         android:layout_marginBottom="15dp"
         android:layout_height="wrap_content"
