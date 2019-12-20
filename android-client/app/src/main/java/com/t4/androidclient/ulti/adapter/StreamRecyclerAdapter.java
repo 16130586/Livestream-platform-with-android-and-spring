@@ -59,8 +59,7 @@ public class StreamRecyclerAdapter extends
         Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
 
-        if (streamModel.getThumbnail() != null && streamModel.getThumbnail().length() > 0)
-            Glide.with(context).load(streamModel.getThumbnail())
+        Glide.with(context).load(streamModel.getThumbnail() == null ? "" : streamModel.getThumbnail())
                     .placeholder(R.drawable.place_holder).centerCrop().into(holder.thumbnailView);
         ImageView ownerAvatarView = holder.avatarView;
 
@@ -69,7 +68,7 @@ public class StreamRecyclerAdapter extends
                 .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
 
         TextView titleView = holder.titleView;
-        titleView.setText(streamModel.getStreamName());
+        titleView.setText(streamModel.getTitle());
 
         holder.thumbnailView.setOnClickListener(e -> {
             Toast.makeText(context, "Click on video thumbnail " + position + " !", Toast.LENGTH_SHORT).show();

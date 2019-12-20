@@ -45,6 +45,7 @@ import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
+import com.t4.androidclient.ui.search.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -280,6 +281,9 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
             @Override
             public void onSearchAction(String currentQuery) {
+                Intent intent = new Intent(MainScreenActivity.this, SearchActivity.class);
+                intent.putExtra("keywords", currentQuery);
+                startActivity(intent);
             }
         });
 
