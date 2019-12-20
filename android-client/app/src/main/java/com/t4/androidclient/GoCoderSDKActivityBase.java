@@ -112,7 +112,6 @@ public abstract class GoCoderSDKActivityBase extends Activity
 
             // Create an instance for the broadcast configuration
             mWZBroadcastConfig = new WOWZBroadcastConfig(WOWZMediaConfig.FRAME_SIZE_1280x720);
-
             // Create a broadcaster instance
             mWZBroadcast = new WOWZBroadcast();
             mWZBroadcast.setLogLevel(WOWZLog.LOG_LEVEL_DEBUG);

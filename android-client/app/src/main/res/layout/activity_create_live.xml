@@ -126,43 +126,11 @@
                 android:background="@null"
                 android:src="@drawable/logo_social_discord"/>
         </LinearLayout>
-
-<!--        <LinearLayout-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btn_create_live_facebook"-->
-<!--                android:layout_marginRight="25dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@null"-->
-<!--                android:src="@drawable/logo_social_facebook"/>-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btn_create_live_youtube"-->
-<!--                android:layout_marginRight="25dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@null"-->
-<!--                android:src="@drawable/logo_social_youtube"/>-->
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btn_create_live_discord"-->
-<!--                android:layout_marginRight="25dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@null"-->
-<!--                android:src="@drawable/logo_social_discord"/>-->
-
-<!--            </LinearLayout>-->
-
         <LinearLayout
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center">
 
             <Button
@@ -171,7 +139,16 @@
                 android:layout_height="wrap_content"
                 android:background="@color/metal_black"
                 android:textColor="@color/white"
-                android:text="Save"/>
+                android:text="Continue"/>
+            <com.github.ybq.android.spinkit.SpinKitView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btn_spin_kit"
+                style="@style/SpinKitView.Large.Wave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/com_facebook_blue"
+                android:visibility="gone"/>
         </LinearLayout>
 
 

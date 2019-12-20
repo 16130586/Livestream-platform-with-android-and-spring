@@ -65,10 +65,11 @@ public class Stream {
         setWowzaId(liveWowza.id);
         setStatus(-1);
         setPrimaryServerURL(liveWowza.sourceConnectionInformation.primaryServer);
-        setApplication(primaryServerURL.substring(primaryServerURL.lastIndexOf("/")));
+        setApplication(primaryServerURL.substring(primaryServerURL.lastIndexOf("/") + 1));
         setHostPort(liveWowza.sourceConnectionInformation.hostPort);
         setHlsPlayBackUrl(liveWowza.playerHlsPlaybackUrl);
         setThumbnail(liveWowza.posterImageUrl);
+        setStreamName(liveWowza.sourceConnectionInformation.streamName);
     }
 
     @Column(name = "primary_server_url")

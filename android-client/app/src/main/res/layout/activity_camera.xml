@@ -94,7 +94,8 @@
             android:background="#000000ff"
             android:padding="10dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
 
         <com.t4.androidclient.ui.TimerView
             android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
             android:textStyle="bold"
             android:typeface="monospace"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:visibility="gone"/>
+            />
 
         <LinearLayout
             android:orientation="vertical"

@@ -16,16 +16,27 @@
 package com.t4.androidclient;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.core.view.GestureDetectorCompat;
 
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.AutoFocusListener;
 import com.t4.androidclient.ui.MultiStateButton;
 import com.t4.androidclient.ui.TimerView;
+import com.wowza.gocoder.sdk.api.broadcast.WOWZBroadcastConfig;
 import com.wowza.gocoder.sdk.api.devices.WOWZCamera;
+
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.stream.Stream;
+
+import retrofit2.http.Url;
+import viewModel.StreamViewModel;
 
 public class CameraActivity extends CameraActivityBase   {
 
@@ -36,12 +47,21 @@ public class CameraActivity extends CameraActivityBase   {
 
     // Gestures are used to toggle the focus modes
     protected GestureDetectorCompat mAutoFocusDetector = null;
-
+    private StreamViewModel svm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        bindNavigateData(getIntent());
+        WOWZBroadcastConfig config = getBroadcastConfig();
+        if(config != null){
+            config.setApplicationName(svm.getApplication());
+            config.setStreamName(svm.getStreamName());
+            config.setPortNumber(svm.getHostPort());
+            String url = svm.getPrimaryServerURL();
+            config.setHostAddress(url.substring(url.indexOf("://") + 3 , url.lastIndexOf("/")));
+        }
         mRequiredPermissions = new String[] {
                 Manifest.permission.CAMERA,
                 Manifest.permission.RECORD_AUDIO
@@ -179,4 +199,8 @@ public class CameraActivity extends CameraActivityBase   {
 
         return disableControls;
     }
+    private void bindNavigateData(Intent previousNavigationData) {
+        this.svm = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA"), StreamViewModel.class);
+    }
+
 }
