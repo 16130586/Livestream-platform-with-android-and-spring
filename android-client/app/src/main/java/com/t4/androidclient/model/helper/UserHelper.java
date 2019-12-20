@@ -1,9 +1,14 @@
 package com.t4.androidclient.model.helper;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.t4.androidclient.model.livestream.User;
+import com.t4.androidclient.model.livestream.UserList;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class UserHelper {
@@ -51,5 +56,17 @@ public class UserHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<User> parseUserJson(String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try {
+            UserList userList = objectMapper.readValue(json, UserList.class);
+            return userList.getUserList();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

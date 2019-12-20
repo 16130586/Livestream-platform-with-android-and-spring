@@ -1,5 +1,6 @@
 package com.t4.androidclient.ui.subscription;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import  com.t4.androidclient.R;
-<<<<<<< Updated upstream
-=======
+
 import com.t4.androidclient.adapter.SubscriptionAdapter;
+import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
@@ -29,17 +32,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import okhttp3.Request;
-import viewModel.StreamViewModel;
->>>>>>> Stashed changes
 
 public class SubscriptionFragment extends Fragment {
 
     private SubscriptionViewModel subscriptionViewModel;
+    private RecyclerView recyclerView;
+    private List<User> userList = new LinkedList<>();
+    private SubscriptionAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        subscriptionViewModel =
-                ViewModelProviders.of(this).get(SubscriptionViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        subscriptionViewModel = ViewModelProviders.of(this).get(SubscriptionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_subscription, container, false);
         final TextView textView = root.findViewById(R.id.text_subscription);
         subscriptionViewModel.getText().observe(this, new Observer<String>() {
@@ -48,16 +51,31 @@ public class SubscriptionFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        userList = new LinkedList<>();
+        linearLayoutManager = new LinearLayoutManager(this.getContext());
+        adapter = new SubscriptionAdapter(userList, getContext());
+
+        recyclerView = (RecyclerView) root.findViewById(R.id.list_subscription);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
+        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadNextDataFromApi(page , totalItemsCount);
+            }
+        };
+        recyclerView.addOnScrollListener(scrollListener);
+        scrollListener.onLoadMore(0 , userList.size() , recyclerView);
         return root;
     }
-<<<<<<< Updated upstream
-=======
 
     public void loadNextDataFromApi(int offset , int totalItemsCount) {
         System.out.println(offset + " -- " +  totalItemsCount);
         int pageSize = 7;
-        // String requestNextResourceURL = Api.URL_GET_SUBSCRIPTION_COOKIE_USER + "/2/" + (offset + 1) + "/" + pageSize;
-         String requestNextResourceURL = "";
+        String requestNextResourceURL = Api.URL_GET_SUBSCRIPTION_COOKIE_USER + "/2/" + (offset + 1) + "/" + pageSize;
         System.out.println("==== url " + requestNextResourceURL);
         GetSubscription task = new GetSubscription(new AsyncResponse() {
             @Override
@@ -104,5 +122,4 @@ public class SubscriptionFragment extends Fragment {
                 asyncResponse.processFinish(s);
         }
     }
->>>>>>> Stashed changes
 }

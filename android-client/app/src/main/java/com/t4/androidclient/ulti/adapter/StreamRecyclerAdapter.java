@@ -15,9 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.channel.ChannelActivity;
+import com.t4.androidclient.ui.livestream.WatchLiveStreamActivity;
 
 import java.util.List;
 
@@ -52,30 +54,23 @@ public class StreamRecyclerAdapter extends
         // Get the data model based on position
         StreamViewModel streamModel = listStream.get(position);
         byte[] imageBytes;
-        imageBytes = Base64.decode(streamModel.getThumbnailView(), Base64.URL_SAFE);
-        Bitmap thumbnailImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
-        imageBytes = Base64.decode(streamModel.getOwnerAvatar(), Base64.DEFAULT);
+        imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
         Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
-
-        ImageView thumbnailView = holder.thumbnailView;
-        if (thumbnailImage != null && thumbnailImage.getByteCount() > 0)
-            thumbnailView.setImageBitmap(thumbnailImage);
-        else {
-            thumbnailView.setImageDrawable(context.getDrawable(R.drawable.place_holder));
-        }
+        
+        Glide.with(context).load(streamModel.getThumbnail() == null ? "" : streamModel.getThumbnail())
+                    .placeholder(R.drawable.place_holder).centerCrop().into(holder.thumbnailView);
         ImageView ownerAvatarView = holder.avatarView;
-        if (ownerAvatarImage != null && ownerAvatarImage.getByteCount() > 0)
-            ownerAvatarView.setImageBitmap(ownerAvatarImage);
-        else {
-            ownerAvatarView.setImageDrawable(context.getDrawable(R.drawable.place_holder));
-        }
+
+
+        Glide.with(context).load(ownerAvatarImage)
+                .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
 
         TextView titleView = holder.titleView;
-        titleView.setText(streamModel.getStreamName());
+        titleView.setText(streamModel.getTitle());
 
-        thumbnailView.setOnClickListener(e -> {
+        holder.thumbnailView.setOnClickListener(e -> {
             Toast.makeText(context, "Click on video thumbnail " + position + " !", Toast.LENGTH_SHORT).show();
             navigateToWatchingActivity(listStream.get(position));
         });
@@ -84,8 +79,8 @@ public class StreamRecyclerAdapter extends
             Class nextActivity = ChannelActivity.class;
             if (nextActivity != null) {
                 Intent t = new Intent(context, nextActivity);
-                t.putExtra("DATA", listStream.get(position).ownerId);
-                t.putExtra("DATA2", listStream.get(position).getOwner().getNickName());
+                t.putExtra("DATA", listStream.get(position).getOwner().getId());
+                t.putExtra("DATA2", listStream.get(position).getOwner().getUsername());
                 context.startActivity(t);
             }
         });
@@ -93,6 +88,9 @@ public class StreamRecyclerAdapter extends
             Toast.makeText(context, "Click on streamName " + position + " !", Toast.LENGTH_SHORT).show();
             navigateToWatchingActivity(listStream.get(position));
         });
+
+        TextView timeView = holder.timeView;
+        timeView.setText(streamModel.getDateStatus());
     }
 
     private void navigateToWatchingActivity(StreamViewModel modelClicked) {
@@ -102,13 +100,13 @@ public class StreamRecyclerAdapter extends
         }
         ;
         Class nextActivity = null;
-        switch (modelClicked.status) {
+        switch (modelClicked.getStatus()) {
             case STATUS_ENDED:
                 nextActivity = null;
                 Toast.makeText(context, "Navigate to see video!", Toast.LENGTH_SHORT).show();
                 break;
             case STATUS_ON_LIVE:
-                nextActivity = null;
+                nextActivity = WatchLiveStreamActivity.class;
                 Toast.makeText(context, "Navigate to see live stream!", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -123,16 +121,18 @@ public class StreamRecyclerAdapter extends
     public int getItemCount() {
         return listStream.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;
         public CircleImageView avatarView;
-        public TextView titleView;
+        public TextView titleView, timeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             thumbnailView = (ImageView) itemView.findViewById(R.id.item_stream_thumbnail);
             avatarView = (CircleImageView) itemView.findViewById(R.id.item_stream_avatar);
             titleView = (TextView) itemView.findViewById(R.id.item_stream_name);
+            timeView = (TextView) itemView.findViewById(R.id.item_stream_time_status);
         }
     }
 }

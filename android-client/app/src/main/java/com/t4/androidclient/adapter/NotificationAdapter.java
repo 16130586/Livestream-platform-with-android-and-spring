@@ -114,14 +114,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         DeleteInbox deleteInbox = new DeleteInbox(new AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222");
-                System.out.println(output);
-                System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222");
-
                 notifyDataSetChanged();
             }
         });
-        System.out.println("================================== the ID = " + id );
         deleteInbox.execute(Long.toString(id));
     }
 

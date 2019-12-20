@@ -1,7 +1,7 @@
 package com.t4.androidclient.model.livestream;
 
 public class StreamType {
-    private int id;
+    private int typeId;
     private String typeName;
     private int numberOfType;
 
@@ -11,17 +11,17 @@ public class StreamType {
 
     }
 
-    public StreamType(int id, String typeName) {
-        this.id = id;
+    public StreamType(int typeId, String typeName) {
+        this.typeId = typeId;
         this.typeName = typeName;
     }
 
-    public int getId() {
-        return id;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public String getTypeName() {

@@ -1,5 +1,6 @@
 package com.t4.LiveServer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.t4.LiveServer.model.wowza.WowzaStream;
 import lombok.Data;
@@ -11,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "stream")
-@NoArgsConstructor
 @Data
 public class Stream {
 
@@ -34,6 +34,16 @@ public class Stream {
     private String application;
     private String streamName;
     private String title;
+    private String hlsPlayBackUrl;
+
+    public String getHlsPlayBackUrl() {
+        return hlsPlayBackUrl;
+    }
+
+    public void setHlsPlayBackUrl(String hlsPlayBackUrl) {
+        this.hlsPlayBackUrl = hlsPlayBackUrl;
+    }
+
 
     public String getTitle() {
         return title;
@@ -55,8 +65,10 @@ public class Stream {
         setWowzaId(liveWowza.id);
         setStatus(-1);
         setPrimaryServerURL(liveWowza.sourceConnectionInformation.primaryServer);
+        setApplication(primaryServerURL.substring(primaryServerURL.lastIndexOf("/") + 1));
         setHostPort(liveWowza.sourceConnectionInformation.hostPort);
-        setApplication(liveWowza.sourceConnectionInformation.application);
+        setHlsPlayBackUrl(liveWowza.playerHlsPlaybackUrl);
+        setThumbnail(liveWowza.posterImageUrl);
         setStreamName(liveWowza.sourceConnectionInformation.streamName);
     }
 
@@ -107,6 +119,7 @@ public class Stream {
     }
 
     @Column(name = "wowza_id")
+    @JsonIgnore
     public String getWowzaId() {
         return wowzaId;
     }
@@ -213,6 +226,7 @@ public class Stream {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "stream_id")
+    @JsonIgnore
     public List<Comment> getComments() {
         return comments;
     }

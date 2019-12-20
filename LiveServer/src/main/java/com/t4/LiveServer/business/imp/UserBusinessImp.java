@@ -128,5 +128,29 @@ public class UserBusinessImp implements UserBusiness {
         notificationRepository.save(notification);
     }
 
+    @Override
+    public List<User> getSubscription(User user, int offset, int limit) {
+        if (offset <= 0)
+            offset = 0;
+        if (limit <= 0)
+            limit = 5;
+
+        List<User> userList = userRepository.findBySubscribersContaining(user);
+        List<User> result = new ArrayList<>();
+
+        int startLength = offset - 1;
+        if (startLength > userList.size()) {
+            result = null;
+        } else {
+            for (int i = startLength, picked = 0; i < userList.size(); i++, picked++) {
+                if (picked < limit) {
+                    result.add(userList.get(i));
+                }
+            }
+        }
+
+        return result;
+    }
+
 
 }

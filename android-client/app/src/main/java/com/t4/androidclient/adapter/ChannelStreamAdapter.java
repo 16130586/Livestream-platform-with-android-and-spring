@@ -50,7 +50,7 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StreamViewModel streamViewModel = listStreamView.get(position);
 
-        if (streamViewModel.getThumbnailView() != null) {
+        if (streamViewModel.getThumbnail() != null) {
             //get thumnail link - lay image thumnail tu do
             // imageBytes = Base64.decode(stream.getAvatar(), Base64.URL_SAFE);
             //thumnailImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);

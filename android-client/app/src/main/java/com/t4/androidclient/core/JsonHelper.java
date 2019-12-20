@@ -31,13 +31,19 @@ public class JsonHelper {
             return null;
         }
     }
+
     public static <E> E deserialize(Map objMap, Class<E> targetClass) {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(objMap, targetClass);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.convertValue(objMap, targetClass);
+        } catch (Exception e) {
+            return null;
+        }
     }
-    public static <E> E deserialize(DeserializationFeature configRoot , String json, Class<E> targetClass) {
+
+    public static <E> E deserialize(DeserializationFeature configRoot, String json, Class<E> targetClass) {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(configRoot , true);
+        mapper.configure(configRoot, true);
         try {
             return mapper.readValue(json, targetClass);
         } catch (IOException var4) {
@@ -49,7 +55,7 @@ public class JsonHelper {
         Object[] var1 = inputArray;
         int var2 = inputArray.length;
 
-        for(int var3 = 0; var3 < var2; ++var3) {
+        for (int var3 = 0; var3 < var2; ++var3) {
             Object element = var1[var3];
             System.out.printf("%s ", element.toString());
         }

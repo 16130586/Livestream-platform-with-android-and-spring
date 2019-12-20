@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.search.SearchActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foregroundGravity="center"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <com.arlib.floatingsearchview.FloatingSearchView
+                android:id="@+id/floating_search_view"
+                android:layout_width="400dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/back_logo"
+                app:floatingSearch_actionMenuOverflowColor="#FF006F"
+                app:floatingSearch_backgroundColor="@null"
+                app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                app:floatingSearch_dimBackground="false"
+                app:floatingSearch_hintTextColor="#000000"
+                app:floatingSearch_leftActionColor="#000000"
+                app:floatingSearch_leftActionMode="showSearch"
+                app:floatingSearch_searchBarMarginLeft="10dp"
+                app:floatingSearch_searchBarMarginRight="10dp"
+                app:floatingSearch_searchBarMarginTop="10dp"
+                app:floatingSearch_searchHint="Channel Faker SKT T1"
+                app:floatingSearch_showSearchKey="true"
+                app:floatingSearch_suggestionRightIconColor="#000000"
+                app:floatingSearch_suggestionsListAnimDuration="250"
+                app:floatingSearch_viewSearchInputTextColor="#000000"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="56dp"
+                tools:layout_editor_absoluteY="133dp"></com.arlib.floatingsearchview.FloatingSearchView>
+
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_stream"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        tools:ignore="MissingConstraints"
+        android:clipToPadding="false"
+        android:paddingBottom="64dp"
+        android:paddingTop="70dp">
+    </androidx.recyclerview.widget.RecyclerView>
+</androidx.constraintlayout.widget.ConstraintLayout>

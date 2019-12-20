@@ -10,5 +10,7 @@ public class Api {
     public static final String URL_GET_NOTIFICATION = Host.API_HOST_IP + "/user/auth/notification";
     public static final String URL_GET_STREAM_TYPES_BY_ID = Host.API_HOST_IP + "/streamtype/listByUserID";
     public static final String URL_CREATE_LIVES_TREAM = Host.API_HOST_IP + "/streams/auth/create";
+    public static final String URL_SEARCH_STREAM = Host.API_HOST_IP + "/streams/find";
+    public static final String URL_GET_SUBSCRIPTION_COOKIE_USER = Host.API_HOST_IP + "/streams/find";
 
 }
