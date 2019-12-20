@@ -1,7 +1,9 @@
 package com.t4.LiveServer.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,7 +12,8 @@ import javax.persistence.Table;
 public class StreamType {
 
     private Integer typeId;
-    private String typeName;
+	private String typeName;
+	private int numberOfType=0;
 
     @Id
     public Integer getTypeId() {
@@ -29,4 +32,12 @@ public class StreamType {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+	
+	@Transient
+	public int getNumberOfType() {
+		return numberOfType;
+	}
+	public void setNumberOfType(int numberOfType) {
+		this.numberOfType = numberOfType;
+	}
 }

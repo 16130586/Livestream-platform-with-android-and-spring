@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -19,7 +18,6 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
-import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
@@ -28,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import viewModel.StreamViewModel;
-import viewModel.UserModelView;
 
 
 public class ChannelActivity extends AppCompatActivity implements MakeSuggestion {

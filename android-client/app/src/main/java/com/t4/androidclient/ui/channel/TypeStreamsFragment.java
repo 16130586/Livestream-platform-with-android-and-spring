@@ -8,42 +8,73 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
+import com.t4.androidclient.adapter.ChannelStreamAdapter;
+import com.t4.androidclient.adapter.ChannelTypeAdapter;
 import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.model.helper.StreamTypeHelper;
+import com.t4.androidclient.model.livestream.StreamType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Request;
+import viewModel.StreamTypeViewModel;
+import viewModel.StreamViewModel;
 
 public class TypeStreamsFragment extends Fragment {
-
+    int ownerID;
+    private ChannelTypeAdapter channelTypeAdapter;
+    private RecyclerView recyclerView;
+    private List<StreamTypeViewModel> listStreamAndTypeView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_type_streams, container, false);
+        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
+        listStreamAndTypeView = new ArrayList<>();
+
+        TypeStreamsFragment.StreamTypes streamTypes = new TypeStreamsFragment.StreamTypes(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                try {
+                        List<StreamType> listStreamType = new ArrayList<StreamType>();
+                        StreamTypeHelper streamTypeHelper = new StreamTypeHelper();
+                        listStreamType = streamTypeHelper.parseGenreJson(output);
+                        for(StreamType type : listStreamType){
+                            StreamTypeViewModel typeView =  new StreamTypeViewModel();
+                                typeView.setId(type.getId());
+                                typeView.setTypeName(type.getTypeName());
+                                typeView.setNumberOfType(type.getNumberOfType());
+                                listStreamAndTypeView.add(typeView);
+                        }
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    channelTypeAdapter = new ChannelTypeAdapter(listStreamAndTypeView, getContext());
+                    recyclerView = (RecyclerView) root.findViewById(R.id.list_type_stream);
+                    recyclerView.setAdapter(channelTypeAdapter);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                }
+                catch (Exception o) {
+                    o.printStackTrace();
+                }
+            }});
+
+        String[] values = new String[2];
+        values[0] = "userID";
+        values[1] = String.valueOf(ownerID);
+        streamTypes.execute(values);
+
         return root;
     }
 
-    private class About extends AsyncTask<String, Integer, String> {
-        public AsyncResponse asyncResponse = null;
-
-        public About(AsyncResponse asyncResponse) {
-            this.asyncResponse = asyncResponse;
-        }
-
-        @Override
-        protected String doInBackground(String... token) {
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO_BY_ID+"/"+token[1]);
-            return HttpClient.execute(request);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            asyncResponse.processFinish(result);
-        }
-    }
 
     // ============ DO GET STREAM TYPE OF USER  ==================================
     private class StreamTypes extends AsyncTask<String, Integer, String> {
@@ -55,7 +86,7 @@ public class TypeStreamsFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... token) {
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_STREAMTYPES_BY_ID+"/"+token[1]);
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_STREAM_TYPES_BY_ID+"/"+token[1]);
             return HttpClient.execute(request);
         }
 

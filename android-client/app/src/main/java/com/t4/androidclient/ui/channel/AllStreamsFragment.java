@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.ChannelStreamAdapter;
-import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
@@ -21,7 +20,6 @@ import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.model.helper.LiveStreamHelper;
 import com.t4.androidclient.model.livestream.LiveStream;
-import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -53,7 +51,6 @@ public class AllStreamsFragment extends Fragment {
         recyclerView.setAdapter(channelStreamAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         loadUserStreamsFrom(1);
-
     }
 
 

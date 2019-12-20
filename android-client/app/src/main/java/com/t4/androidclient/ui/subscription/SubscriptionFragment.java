@@ -13,6 +13,24 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import  com.t4.androidclient.R;
+<<<<<<< Updated upstream
+=======
+import com.t4.androidclient.adapter.SubscriptionAdapter;
+import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.core.ApiResponse;
+import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.core.JsonHelper;
+import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.model.helper.UserHelper;
+import com.t4.androidclient.model.livestream.User;
+import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import okhttp3.Request;
+import viewModel.StreamViewModel;
+>>>>>>> Stashed changes
 
 public class SubscriptionFragment extends Fragment {
 
@@ -32,4 +50,59 @@ public class SubscriptionFragment extends Fragment {
         });
         return root;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void loadNextDataFromApi(int offset , int totalItemsCount) {
+        System.out.println(offset + " -- " +  totalItemsCount);
+        int pageSize = 7;
+        // String requestNextResourceURL = Api.URL_GET_SUBSCRIPTION_COOKIE_USER + "/2/" + (offset + 1) + "/" + pageSize;
+         String requestNextResourceURL = "";
+        System.out.println("==== url " + requestNextResourceURL);
+        GetSubscription task = new GetSubscription(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                if (output == null) return;
+                try {
+                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                    if (response != null && response.statusCode == 200) {
+                        System.out.println(output);
+                        List<User> userLists = UserHelper.parseUserJson(output);
+                        userList.addAll(userLists);
+                        if (userList != null && userList.size() > 0)
+                            adapter.notifyItemRangeChanged(offset > 0 ? (offset * pageSize - 1) : 0, userList.size());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        task.execute(requestNextResourceURL);
+    }
+
+    private class GetSubscription extends AsyncTask<String, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public GetSubscription(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            if (urls.length <= 0)
+                return null;
+            String url = urls[0];
+            Request request = HttpClient.buildGetRequest(url, Authentication.TOKEN);
+            String body = HttpClient.execute(request);
+            return body;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (asyncResponse != null)
+                asyncResponse.processFinish(s);
+        }
+    }
+>>>>>>> Stashed changes
 }

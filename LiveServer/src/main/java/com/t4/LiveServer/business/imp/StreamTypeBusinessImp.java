@@ -21,6 +21,7 @@ public class StreamTypeBusinessImp implements StreamTypeBusiness {
 	public List<StreamType> listStreamTypeByUserID(int userID){
 		return streamTypeRepository.getListTypeByUserID(userID);
 	}
+
 	
 	
 }

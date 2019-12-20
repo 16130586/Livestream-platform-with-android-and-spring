@@ -131,7 +131,7 @@ public class AboutFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... token) {
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_STREAMTYPES_BY_ID+"/"+token[1]);
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_STREAM_TYPES_BY_ID+"/"+token[1]);
             return HttpClient.execute(request);
         }
 

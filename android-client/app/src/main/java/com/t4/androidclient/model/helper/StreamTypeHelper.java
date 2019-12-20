@@ -20,7 +20,9 @@ public class StreamTypeHelper {
                     JSONObject jsonType = data.getJSONObject(i);
                     int id = jsonType.getInt("typeId");
                     String typeName = jsonType.getString("typeName");
+                    int numberOfType = jsonType.getInt("numberOfType");
                     StreamType type = new StreamType(id, typeName);
+                    type.setNumberOfType(numberOfType);
                     typeList.add(type);
                     }
                     return typeList;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_type_thumbail_image"
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/background_channel" />
+
+    <TextView
+        android:id="@+id/item_type_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/item_type_thumbail_image"
+        android:text="List stream of Adult type "/>
+
+    <TextView
+        android:id="@+id/item_type_number_stream"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/item_type_name"
+        android:layout_toRightOf="@id/item_type_thumbail_image"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="69 video"/>
+
+    <ImageView
+        android:id="@+id/item_type_number_background"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/item_type_thumbail_image"
+        android:layout_alignEnd="@+id/item_type_thumbail_image"
+        android:layout_alignBottom="@+id/item_type_thumbail_image"
+        android:layout_marginLeft="50dp"
+        android:layout_marginEnd="1dp"
+        android:background="#A9000000"/>
+
+
+    <TextView
+        android:id="@+id/item_type_number_stream_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/item_type_number_icon"
+        android:layout_alignStart="@+id/item_type_number_background"
+        android:layout_alignTop="@+id/item_type_number_background"
+        android:layout_alignEnd="@+id/item_type_number_background"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="1 N"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/item_type_number_icon"
+        android:layout_width="56dp"
+        android:layout_height="41dp"
+        android:layout_alignStart="@+id/item_type_number_background"
+        android:layout_alignEnd="@+id/item_type_number_background"
+        android:layout_alignBottom="@+id/item_type_number_background"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        app:srcCompat="@drawable/ic_playlist_play_black_24dp" />
+</RelativeLayout>
