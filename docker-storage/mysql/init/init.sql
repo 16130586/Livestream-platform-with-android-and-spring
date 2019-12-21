@@ -13,10 +13,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `nick_name` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
+  `description` nvarchar(255) DEFAULT NULL,
   `gmail` varchar(255) DEFAULT NULL,
   `forgot_token` varchar(255) DEFAULT NULL,
   `subscribe_total` int(11) DEFAULT NULL,
+  `avatar` text DEFAULT NULL,
+  `background` text DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 );
 
@@ -45,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `stream` (
 
 CREATE TABLE IF NOT EXISTS `types` (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `type_name` varchar(255) DEFAULT NULL,
+  `type_name` nvarchar(255) DEFAULT NULL,
   PRIMARY KEY (`type_id`)
 );
 
@@ -81,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `favourite_saved` (
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stream_id` int(11) DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
+  `message` nvarchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `created_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -118,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `subscriber` (
 
 CREATE TABLE IF NOT EXISTS `subscription` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` nvarchar(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   `unit_price` double DEFAULT NULL,
   PRIMARY KEY (`id`)

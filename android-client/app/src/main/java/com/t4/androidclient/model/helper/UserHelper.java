@@ -48,9 +48,11 @@ public class UserHelper {
             user.setId(jsonObject.getInt("userId"));
             user.setUsername(jsonObject.getString("userName"));
             user.setNickname(jsonObject.getString("nickName"));
-            user.setAvatar(jsonObject.getString("avatar"));
+            user.setDescription(jsonObject.getString("description"));
             user.setGmail(jsonObject.getString("gmail"));
             user.setSubscribeTotal(jsonObject.getInt("subscribeTotal"));
+            user.setAvatar(jsonObject.getString("avatar"));
+            user.setBackground(jsonObject.getString("background"));
             return user;
         } catch (Exception e) {
             e.printStackTrace();

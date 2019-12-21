@@ -86,11 +86,17 @@ public class ChannelTypeAdapter extends RecyclerView.Adapter<ChannelTypeAdapter.
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             thumnailImage = (ImageView) itemView.findViewById(R.id.item_type_thumbail_image);
             typeName = (TextView) itemView.findViewById(R.id.item_type_name);
             numberOfType = (TextView) itemView.findViewById(R.id.item_type_number_stream);
             numberOfTypeText = (TextView) itemView.findViewById(R.id.item_type_number_stream_text);
+            // Handle item click and set the selection
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 

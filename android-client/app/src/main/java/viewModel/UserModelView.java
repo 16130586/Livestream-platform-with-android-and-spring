@@ -7,6 +7,7 @@ public class UserModelView {
     public String nickName;
     public String avatar;
 
+
     public UserModelView() {
 
     }

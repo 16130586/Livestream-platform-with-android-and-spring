@@ -1,4 +1,4 @@
-package com.t4.androidclient.ui.channel;
+package com.t4.androidclient.ui.mychannel;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
@@ -96,7 +95,7 @@ public class AboutFragment extends Fragment {
                                             if (response != null && response.statusCode == 200) {
                                                 boolean result = (boolean) response.data;
                                                 if(result==true){
-                                                    Toast.makeText(getActivity(), "Subscribe channel successfully !",
+                                                    Toast.makeText(getContext(), "Subscribe channel successfully !",
                                                             Toast.LENGTH_SHORT).show();
                                                     // Reload current fragment
                                                     getActivity().finish();
@@ -124,7 +123,7 @@ public class AboutFragment extends Fragment {
                                             if (response != null && response.statusCode == 200) {
                                                 boolean result = (boolean) response.data;
                                                 if(result==true){
-                                                    Toast.makeText(getActivity(), "Un Subscribe channel successfully !",
+                                                    Toast.makeText(getContext(), "Un Subscribe channel successfully !",
                                                             Toast.LENGTH_SHORT).show();
                                                     // Reload current fragment
                                                     getActivity().finish();
@@ -184,7 +183,6 @@ public class AboutFragment extends Fragment {
                         // Render UImà
                         channelName.setText(getUser.getNickname());
                         channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
-                        description.setText(getUser.getDescription());
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
                             @Override
                             public void processFinish(String output) {

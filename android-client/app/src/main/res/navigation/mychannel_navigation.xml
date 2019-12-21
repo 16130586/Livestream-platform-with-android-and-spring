@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mychannel_navigation"
+
+    app:startDestination="@+id/fragment_mychannel_about">
+
+    <fragment
+        android:id="@+id/fragment_mychannel_about"
+        android:name="com.t4.androidclient.ui.mychannel.AboutFragment"
+        android:label="About My Channel"
+        tools:layout="@layout/fragment_channel_about" />
+
+    <fragment
+        android:id="@+id/fragment_mychannel_all_streams"
+        android:name="com.t4.androidclient.ui.mychannel.AllStreamsFragment"
+        android:label="My All Streams"
+        tools:layout="@layout/fragment_all_streams" />
+
+    <fragment
+        android:id="@+id/fragment_mychannel_watched_streams"
+        android:name="com.t4.androidclient.ui.mychannel.TypeStreamsFragment"
+        android:label="My Watched Streams"
+        tools:layout="@layout/fragment_type_streams" />
+
+    <fragment
+        android:id="@+id/fragment_mychannel_subscribed_channels"
+        android:name="com.t4.androidclient.ui.mychannel.TypeStreamsFragment"
+        android:label="My Watched Streams"
+        tools:layout="@layout/fragment_all_streams" />
+</navigation>

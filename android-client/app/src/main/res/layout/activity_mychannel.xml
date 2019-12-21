@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mychannel.MyChannelActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mychannel_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/mychannel_back_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:foregroundGravity="center"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <com.arlib.floatingsearchview.FloatingSearchView
+                android:id="@+id/mychannel_floating_search_view"
+                android:layout_width="400dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/back_logo"
+                app:floatingSearch_actionMenuOverflowColor="#FF006F"
+                app:floatingSearch_backgroundColor="@null"
+                app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                app:floatingSearch_dimBackground="false"
+                app:floatingSearch_hintTextColor="#000000"
+                app:floatingSearch_leftActionColor="#000000"
+                app:floatingSearch_leftActionMode="showSearch"
+                app:floatingSearch_searchBarMarginLeft="10dp"
+                app:floatingSearch_searchBarMarginRight="10dp"
+                app:floatingSearch_searchBarMarginTop="10dp"
+                app:floatingSearch_searchHint="Faker SKT T1"
+                app:floatingSearch_showSearchKey="true"
+                app:floatingSearch_suggestionRightIconColor="#000000"
+                app:floatingSearch_suggestionsListAnimDuration="250"
+                app:floatingSearch_viewSearchInputTextColor="#000000"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="56dp"
+                tools:layout_editor_absoluteY="133dp"></com.arlib.floatingsearchview.FloatingSearchView>
+
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu_mychannel_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:itemIconTint="@color/menu_colors"
+        app:itemTextColor="@color/menu_colors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mychannel_app_bar_layout"
+        app:menu="@menu/menu_mychannel"
+        tools:ignore="MissingConstraints" />
+
+
+    <fragment
+        android:id="@+id/mychannel_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#673AB7"
+        app:defaultNavHost="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menu_mychannel_view"
+        app:navGraph="@navigation/mychannel_navigation"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

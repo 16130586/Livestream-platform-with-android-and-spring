@@ -45,6 +45,7 @@ import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
+import com.t4.androidclient.ui.mychannel.MyChannelActivity;
 import com.t4.androidclient.ui.search.SearchActivity;
 
 import java.util.ArrayList;
@@ -124,8 +125,12 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         mDrawerLayout.closeDrawers();
                         int id = menuItem.getItemId();
-                        if (id == R.id.your_videos) {
-                            System.out.println("Chọn 1");
+                        if (id == R.id.your_streams) {
+                            System.out.println("Chọn vào fragment your streams");
+                        }
+                        else if (id == R.id.your_channel) {
+                            Intent intent = new Intent(MainScreenActivity.this, MyChannelActivity.class);
+                            startActivity(intent);
                         }
                         return true;
                     }

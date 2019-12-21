@@ -12,8 +12,11 @@ public class User {
     @JsonAlias({"nickname", "nickName"})
     public String nickname;
     public String gmail;
-    public String avatar;
+    public String description;
     public Integer subscribeTotal;
+    public String avatar;
+    public String background;
+
     public List<Notification> notifications;
     public List<Genre> favouriteType;
     public List<FavouriteSaved> favouriteSaveds;
@@ -62,6 +65,22 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     public Integer getSubscribeTotal() {

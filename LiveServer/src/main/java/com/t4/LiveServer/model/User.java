@@ -17,11 +17,14 @@ public class User {
     private String userName;
     private String password;
     private String nickName;
-    private String avatar;
+	private String description;
     private String gmail;
     private String forgotToken;
     private Integer subscribeTotal;
-    private List<Notification> notifications;
+	private String avatar;
+	private String background;
+	
+	private List<Notification> notifications;
     private List<StreamType> favouriteType;
     private List<FavoriteSaved> favouriteSaved;
     @JsonIgnoreProperties(value = {"streams", "subscribers", "favouriteType", "notifications", "favouriteSaved"})
@@ -77,16 +80,16 @@ public class User {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
-
-    @Column(name = "avatar")
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
+	
+	@Column(name ="description")
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
     @Column(name = "gmail")
     public String getGmail() {
         return gmail;
@@ -114,7 +117,25 @@ public class User {
     public void setSubscribeTotal(Integer subscribeTotal) {
         this.subscribeTotal = subscribeTotal;
     }
-
+    
+	@Column(name = "avatar")
+	public String getAvatar() {
+		return avatar;
+	}
+	
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	
+	@Column(name = "background")
+	public String getBackground() {
+		return background;
+	}
+	public void setBackground(String background) {
+		this.background = background;
+	}
+	
+	
     @ManyToMany
     @JoinTable(name = "user_favourite",
             joinColumns = @JoinColumn(name = "user_id"),
