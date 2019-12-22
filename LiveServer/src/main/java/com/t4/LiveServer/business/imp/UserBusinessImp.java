@@ -63,6 +63,7 @@ public class UserBusinessImp implements UserBusiness {
         user.setPassword(new BCryptPasswordEncoder().encode(registryForm.getPassword())); // encode password
         user.setGmail(registryForm.getGmail());
         user.setNickName(registryForm.getNickName());
+        user.setAvatar(registryForm.getAvatar());
         userRepository.save(user);
         return user;
     }

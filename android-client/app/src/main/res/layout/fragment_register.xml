@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.login.LoginRegisterActivity">
 
 
@@ -16,58 +14,86 @@
         android:id="@+id/register_username"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
+        android:hint="User Name"
+        android:inputType="text"
         android:selectAllOnFocus="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/register_gmail"
+        android:layout_width="331dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/register_username" />
 
     <EditText
         android:id="@+id/register_password"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
         android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_username" />
+        app:layout_constraintTop_toBottomOf="@+id/register_gmail" />
 
     <EditText
-        android:id="@+id/register_password_again"
+        android:id="@+id/register_nickname"
         android:layout_width="331dp"
         android:layout_height="wrap_content"
-        android:hint="Password Again"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
+        android:hint="Nick Name"
+        android:inputType="text"
         android:selectAllOnFocus="true"
-        android:layout_marginTop="20dp"
-
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_password" />
+        app:layout_constraintTop_toTopOf="@id/register_password" />
+
+    <ImageView
+        android:id="@+id/image_register_avatar"
+        android:layout_marginTop="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/register_nickname"/>
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/register_choose_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:textSize="13dp"
+        android:text="Choose avatar"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/image_register_avatar"/>
+
+    <Button
+        android:id="@+id/btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
-        android:enabled="false"
         android:text="Sign Up"
         android:textColor="@color/black"
         android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_password_again" />
+        app:layout_constraintTop_toBottomOf="@+id/register_choose_avatar" />
 
     <ProgressBar
         android:id="@+id/register_loading"
@@ -80,8 +106,8 @@
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="@+id/register_password"
+        app:layout_constraintStart_toStartOf="@+id/register_password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 

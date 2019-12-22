@@ -119,11 +119,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
+                return loginButton.callOnClick();
             }
         });
 
