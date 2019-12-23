@@ -5,6 +5,7 @@ import com.t4.androidclient.core.JsonHelper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -13,9 +14,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 public class HttpClient {
-    private static final OkHttpClient httpClient = new OkHttpClient();
+    private static final OkHttpClient httpClient = new OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(3, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build();
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-
 
     private static Headers createAuthenticationHeader(String token) {
         Map<String, String> values = new HashMap<>();

@@ -31,4 +31,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	// mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
 }

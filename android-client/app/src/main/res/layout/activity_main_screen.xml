@@ -124,6 +124,17 @@
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:navGraph="@navigation/mobile_navigation"
             tools:ignore="MissingConstraints" />
+        <ProgressBar
+            android:id="@+id/main_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment"
+            app:layout_constraintStart_toStartOf="@+id/nav_host_fragment"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -137,6 +148,5 @@
         android:layout_marginTop="90dp"
         android:fitsSystemWindows="true" >
     </com.google.android.material.navigation.NavigationView>
-
 </androidx.drawerlayout.widget.DrawerLayout>
 

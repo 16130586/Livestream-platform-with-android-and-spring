@@ -1,10 +1,7 @@
 package com.t4.androidclient.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
-import com.t4.androidclient.model.inbox.Inbox;
 import com.t4.androidclient.model.livestream.Notification;
 
 import java.util.HashMap;
@@ -27,19 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
     private List<Notification> listNotification;
     private Context context;
     private LinearLayout container;
-
-    byte[] imageBytes;
-    Bitmap avatarImage;
 
     public NotificationAdapter(List<Notification> listNotification, Context context) {
         this.listNotification = listNotification;
@@ -66,15 +56,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         container = holder.container;
 
         if (notification.getStream().getThumbnail() != null) {
-            imageBytes = Base64.decode(notification.getStream().getThumbnail(), Base64.URL_SAFE);
-            avatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        }
-
-        CircleImageView avatarView = holder.avatarView;
-        if (avatarImage != null && avatarImage.getByteCount() > 0) {
-            avatarView.setImageBitmap(avatarImage);
-        } else {
-            avatarView.setImageDrawable(context.getDrawable(R.drawable.place_holder));
+            Glide.with(context).load(notification.getStream().getThumbnail())
+                    .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
         }
 
         TextView messageView = holder.messageView;

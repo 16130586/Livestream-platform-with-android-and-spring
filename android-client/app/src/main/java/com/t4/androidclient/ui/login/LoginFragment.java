@@ -119,11 +119,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
+                return loginButton.callOnClick();
             }
         });
 
@@ -131,6 +127,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
 //                loginViewModel.login(usernameEditText.getText().toString(),
 //                        passwordEditText.getText().toString());
                 Login login = new Login(new AsyncResponse() {
@@ -143,14 +140,14 @@ public class LoginFragment extends Fragment {
                                 new SqliteAuthenticationHelper(getContext()).saveToken(token);
                                 Intent intent = new Intent(getContext(), MainScreenActivity.class);
                                 startActivity(intent);
-                                System.out.println("true response");
                             } else {
-                                // TODO handle if wrong username || password
+                                Toast.makeText(getActivity(), "Wrong Username or Password!", Toast.LENGTH_LONG).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         loadingProgressBar.setVisibility(View.GONE);
+                        loginButton.setEnabled(true);
                     }
                 });
                 String[] values = new String[4];

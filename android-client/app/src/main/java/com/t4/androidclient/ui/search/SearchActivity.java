@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,8 +20,6 @@ import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
-import com.t4.androidclient.searching.asyn;
-import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 import com.t4.androidclient.ulti.adapter.StreamRecyclerAdapter;
 
@@ -40,11 +38,13 @@ public class SearchActivity extends Activity {
     private StreamRecyclerAdapter adapter;
     private String keywords ;
     private String primaryUrl = Api.URL_SEARCH_STREAM;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        progressBar = findViewById(R.id.search_loading);
         keywords = getIntent().getStringExtra("keywords");
         if (keywords != null && !keywords.isEmpty())
             primaryUrl += keywords + "/";
@@ -100,6 +100,7 @@ public class SearchActivity extends Activity {
         });
     }
     public void loadNextDataFromApi(int offset) {
+        progressBar.setVisibility(View.VISIBLE);
         int pageSize = 7;
         String requestNextResourceURL = primaryUrl + offset + "/" + pageSize;
         SearchStream task = new SearchStream(new AsyncResponse() {
@@ -121,6 +122,7 @@ public class SearchActivity extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                progressBar.setVisibility(View.GONE);
             }
         });
         task.execute(requestNextResourceURL);

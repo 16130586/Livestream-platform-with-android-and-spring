@@ -8,13 +8,15 @@ import javax.validation.constraints.Size;
 
 public class RegistryForm {
     @NotExistedUsername
-    @NotBlank
+    @Size(max = 20, min = 6)
     private String userName;
-    @Size(max = 12, min = 6)
+    @Size(max = 20, min = 6)
     private String password;
     @Pattern(regexp = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$", message = "email invalid!")
     private String gmail;
+    @Size(min = 1, max = 20)
     private String nickName;
+    private String avatar;
 
     public String getUserName() {
         return userName;
@@ -46,5 +48,13 @@ public class RegistryForm {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
