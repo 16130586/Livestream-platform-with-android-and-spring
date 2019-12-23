@@ -54,7 +54,7 @@
                 app:floatingSearch_searchBarMarginLeft="10dp"
                 app:floatingSearch_searchBarMarginRight="10dp"
                 app:floatingSearch_searchBarMarginTop="10dp"
-                app:floatingSearch_searchHint="Channel Faker SKT T1"
+                app:floatingSearch_searchHint="Search..."
                 app:floatingSearch_showSearchKey="true"
                 app:floatingSearch_suggestionRightIconColor="#000000"
                 app:floatingSearch_suggestionsListAnimDuration="250"

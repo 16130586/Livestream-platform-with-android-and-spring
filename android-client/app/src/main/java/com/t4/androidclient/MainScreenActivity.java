@@ -380,24 +380,23 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         slide_view.inflateHeaderView(R.layout.slide_header);
         slide_view.inflateMenu(R.menu.menu_slide);
         CircleImageView profileImage = slide_view.findViewById(R.id.profile_image);
+        TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
+//        if (user.getSubscription() != null) {
+//            TextView iconVIP = slide_view.findViewById(R.id.icon_vip);
+//            iconVIP.setVisibility(View.VISIBLE);
+//            buySubscription.setText("Your subscription will expires on " + user.subscription.getEndTime());
+//            buySubscription.setTextSize(14);
+//        } else {
+            buySubscription.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + user.getId() + "\"> Upgrade To Premium Account</a>"));
+            buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
+//        }
+
         if (user.avatar != null && !user.avatar.isEmpty())
             Glide.with(this).load(user.avatar.startsWith("http") ? user.avatar : Host.API_HOST_IP + user.avatar) // plays as url
                     .placeholder(R.drawable.ic_fire).centerCrop().into(profileImage);
 
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
-        TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
-        buySubscription.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + user.getId() + "\"> Upgrade To Premium Account</a>"));
-        buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainScreenActivity.this, MainScreenActivity.class);
-                startActivity(intent);
-                slide_view.removeHeaderView(slide_view.getHeaderView(0));
-                logout();
-            }
-        });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
         profile_fullname.setText("Hi " + user.getNickname() + ",");
 //        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);

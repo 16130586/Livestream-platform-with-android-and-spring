@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
@@ -46,10 +47,11 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         progressBar = findViewById(R.id.search_loading);
         keywords = getIntent().getStringExtra("keywords");
-        if (keywords != null && !keywords.isEmpty())
-            primaryUrl += keywords + "/";
         mSearchView  = findViewById(R.id.floating_search_view);
-        mSearchView.setSearchHint(keywords);
+        if (keywords != null && !keywords.isEmpty()) {
+            mSearchView.setSearchText(keywords);
+            keywords += "/";
+        }
 
         // Click back về Home
         app_logo = findViewById(R.id.back_logo);
@@ -81,28 +83,24 @@ public class SearchActivity extends Activity {
         recyclerView.addOnScrollListener(scrollListener);
         scrollListener.onLoadMore(0 , 0 , recyclerView);
 
-        // cái này là kiểm tra thay đổi trên search
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
-            public void onSearchTextChanged(String oldQuery, String newQuery) {
-                if (!oldQuery.equals("") && newQuery.equals("")) {
-                    mSearchView.clearSuggestions();
-                } else {
-                    mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-                        @Override
-                        public void onSearchTextChanged(String oldQuery, String newQuery) {
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+            }
 
-                        }
-                    });
-
-                }
+            @Override
+            public void onSearchAction(String currentQuery) {
+                adapter.clear();
+                keywords = (currentQuery != null && !currentQuery.isEmpty()) ? currentQuery + "/" : "";
+                scrollListener.resetState();
+                scrollListener.onLoadMore(0 , 0 , recyclerView);
             }
         });
     }
     public void loadNextDataFromApi(int offset) {
         progressBar.setVisibility(View.VISIBLE);
         int pageSize = 7;
-        String requestNextResourceURL = primaryUrl + offset + "/" + pageSize;
+        String requestNextResourceURL = primaryUrl + ((keywords != null && !keywords.isEmpty()) ? keywords : "") + offset + "/" + pageSize;
         SearchStream task = new SearchStream(new AsyncResponse() {
             @Override
             public void processFinish(String output) {

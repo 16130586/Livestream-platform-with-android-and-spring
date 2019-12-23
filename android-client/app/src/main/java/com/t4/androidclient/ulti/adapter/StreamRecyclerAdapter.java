@@ -140,4 +140,8 @@ public class StreamRecyclerAdapter extends
             timeView = (TextView) itemView.findViewById(R.id.item_stream_time_status);
         }
     }
+
+    public void clear() {
+        listStream.clear();
+    }
 }
