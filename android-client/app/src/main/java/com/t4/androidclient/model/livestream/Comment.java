@@ -3,11 +3,29 @@ package com.t4.androidclient.model.livestream;
 import java.util.Date;
 
 public class Comment {
+    private String ownerName;
     private String message;
     private Date createTime;
     private Integer streamStatus;
     private Integer commentSource;
     private Integer videoTime;
+
+    public Comment() {
+
+    }
+
+    public Comment(String ownerName, String message) {
+        this.ownerName = ownerName;
+        this.message = message;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public String getMessage() {
         return message;

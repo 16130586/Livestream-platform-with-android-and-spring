@@ -39,6 +39,7 @@
             android:name=".ui.livestream.WatchLiveStreamActivity"
             android:label="@string/title_activity_watch_live_stream"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.channel.ChannelActivity" />
         <activity

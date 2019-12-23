@@ -1,21 +1,42 @@
 package com.t4.androidclient.ui.livestream;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.t4.androidclient.MainActivity;
+import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
+import com.t4.androidclient.adapter.CommentAdapter;
+import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
+import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.model.livestream.Comment;
 
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Request;
 import tcking.github.com.giraffeplayer2.GiraffePlayer;
 import tcking.github.com.giraffeplayer2.Option;
 import tcking.github.com.giraffeplayer2.PlayerListener;
@@ -25,10 +46,29 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
 import tcking.github.com.giraffeplayer2.VideoView;
 import viewModel.StreamViewModel;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import com.github.nkzawa.emitter.Emitter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class WatchLiveStreamActivity extends AppCompatActivity {
-    StreamViewModel streamViewModel;
-    TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
-    CircleImageView ownerAvatarView;
+    private StreamViewModel streamViewModel;
+    private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
+    private CircleImageView ownerAvatarView;
+    private EditText commentInput;
+    private ImageButton commentSendButton;
+    private LinearLayoutManager linearLayoutManager;
+    private CommentAdapter adapter;
+    private RecyclerView recyclerView;
+    private List<Comment> commentList;
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket("http://192.168.1.4:3000");
+        } catch (URISyntaxException e) {}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +175,16 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     }
 
     public void setUp() {
+        commentList = new ArrayList<>();
+        addTen();
+
+        linearLayoutManager = new LinearLayoutManager(this);
+        adapter = new CommentAdapter(commentList, this);
+
+        recyclerView = (RecyclerView) findViewById(R.id.list_comment);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         tagView = findViewById(R.id.stream_watch_tag);
         tagView.setText(streamViewModel.getTag());
 
@@ -156,5 +206,101 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         ownerAvatarView = findViewById(R.id.stream_watch_owner_avatar);
         Glide.with(ownerAvatarView.getContext()).load(streamViewModel.getOwner().getAvatar())
                 .centerCrop().into(ownerAvatarView);
+
+        commentInput = findViewById(R.id.stream_watch_comment);
+        commentSendButton = findViewById(R.id.stream_watch_comment_button);
+        commentSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Comment comment = new Comment();
+                comment.setOwnerName(MainScreenActivity.user.nickname);
+                comment.setMessage(commentInput.getText().toString());
+
+                commentInput.setText("");
+                mSocket.emit("client-send-comment", JsonHelper.serialize(comment));
+                PushCommentTask pushCommentTask = new PushCommentTask(new AsyncResponse() {
+                    @Override
+                    public void processFinish(String output) {
+                        System.out.println(output);
+                    }
+                });
+                pushCommentTask.execute(comment);
+            }
+        });
+
+        mSocket.on("server-send-comment", onNewComment);
+        mSocket.connect();
+
+        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()) );
     }
+
+    public void addTen() {
+        int n = 0;
+        while(n < 5){
+            commentList.add(new Comment("jack", "messssss"));
+            n++;
+        }
+    }
+
+    private Emitter.Listener onNewComment = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    System.out.println(data.toString());
+                    String ownerName;
+                    String message;
+                    try {
+                        ownerName = data.getString("ownerName");
+                        message = data.getString("message");
+                        System.out.println(ownerName + " ====== " + message);
+                    } catch (JSONException e) {
+                        return;
+                    }
+
+                    // add the message to view
+                    addMessage(ownerName, message);
+                }
+            });
+        }
+    };
+
+    private class PushCommentTask extends AsyncTask<Comment, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public PushCommentTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(Comment... comments) {
+            String url =Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/comment";
+            Map<String, String> keyValues = new HashMap<>();
+            Comment comment = comments[0];
+            keyValues.put("message", comment.getMessage());
+            keyValues.put("streamStatus", streamViewModel.getStatus().toString());
+            keyValues.put("videoTime", "200");
+            Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    public Activity getActivity() {
+        return this;
+    }
+
+    public void addMessage(String username, String message) {
+        commentList.add(new Comment(username, message));
+        adapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(commentList.size() - 1);
+    }
+
+
 }

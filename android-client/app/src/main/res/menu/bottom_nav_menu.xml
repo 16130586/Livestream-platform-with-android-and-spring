@@ -16,6 +16,7 @@
         android:id="@+id/navigation_subscription"
         android:icon="@drawable/ic_viewers"
         android:title="@string/title_subscription" />
+
     <item
         android:id="@+id/navigation_inbox"
         android:icon="@drawable/ic_notifications_black_24dp"
