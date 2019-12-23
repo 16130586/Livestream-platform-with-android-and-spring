@@ -97,16 +97,17 @@ function kafkaMessageBroker(msg) {
 	console.log(msg);
 	switch(msg.data.eventType) {
 		case 'CREATE':
-			onCreate(msg.data.id);
+			onCreate(msg.data.stream_id);
 			break;
 		case 'DELETE':
-			onDelete(msg.data.id);
+			onDelete(msg.data.stream_id);
 			break;
 		case 'REPLY':
 			onReply(msg);
 			break;
 		default:
 			console.log('error kafka event', msg);
+			sockets[0].emit('server-send-comment', msg.data);
 			break;
 	}
 }
@@ -197,15 +198,27 @@ function initSocket(socket) {
 	// handle from client
     socket.on('client-send-data', function(data){
 		console.log(data);
-		socket.emit('server-send-data', data);
+		console.log("here");
+		var del = {
+			username: "john",
+			message: "doe"
+		}
+		console.log(del);
+		socket.emit('jojo', del);
     });
-
+	
+	socket.on('client-send-comment', function(comment){
+		console.log('comment here');
+		console.log(JSON.parse(comment));
+		socket.emit('server-send-comment', JSON.parse(comment));
+	});
 	// socket will send its own id back -> add to sockets, create a process
 	// this is just a example, later the sockerCounter replace by data.id
 	socket.on('client-send-id', function(data){
+		console.log("a client connect to stream id " + data);
 		sockets.push({
 			socket: socket,
-			socketId: data.id
+			socketId: parseInt(data)
 		});
 		socket.emit('server-send-data', data);
 	});
@@ -213,6 +226,7 @@ function initSocket(socket) {
 	socket.on('error', function(error){
 		console.log(error);
 	})
+	sockets.push(socket, 0);
 }
 
 function removeDisconnectedSockets() {
@@ -236,6 +250,12 @@ function listSockets() {
 						.concat('	');
 	});
 	console.log(socketsString);
+}
+
+function listSockets2() {
+	for (var i = 0; i < sockets.length; i++) {
+		console.log(sockets[i]);
+	}
 }
 
 function getSocketById(id) {
@@ -315,7 +335,7 @@ function finishOnReply(data){
 	if (socket == null) {
 		handleSocketError(data);
 	} else {
-		socket.emit('broker-send-reply', data);
+		socket.emit('server-send-comment', data.msg);
 	}
 	
 }

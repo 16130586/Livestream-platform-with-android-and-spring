@@ -9,10 +9,10 @@ module.exports = {
     },
     server: {
         port: 3000,
-        socketCheckTime: 10000
+        socketCheckTime: 100000
     },
     producer: {
         kafka_topic: 'M_EVENT',
-        kafka_server: 'localhost:2181',
+        kafka_server: '192.168.1.4:2181',
     }
 };

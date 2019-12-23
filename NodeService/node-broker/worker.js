@@ -70,11 +70,13 @@ function onDelete(){
 // -----------------------------------------------------------------------------
 function onReply(msg) {
 	setCheckCount(config.checkCount);
+	// refactor the payload
+	msg.data.ownerName = msg.data.owner_name;
 	process.send({
 		event: 'onReply',
 		data: {
 			id: workerID,
-			msg: msg
+			msg: msg.data
 		}
 	});
 }
