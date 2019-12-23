@@ -47,8 +47,8 @@ public class StreamController {
     public ApiResponse start(@PathVariable("id") String id) {
         ApiResponse apiResponse = new ApiResponse();
         try {
-            Object rs = streamBusiness.start(id);
-            if (rs != null) {
+            Stream rs = streamBusiness.start(id);
+            if (rs != null && rs.getStatus() > 0) {
                 apiResponse.statusCode = 200;
                 apiResponse.message = "Ok";
                 apiResponse.data = rs;

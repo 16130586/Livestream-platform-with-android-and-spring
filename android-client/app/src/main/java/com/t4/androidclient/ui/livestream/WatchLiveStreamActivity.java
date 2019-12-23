@@ -128,7 +128,8 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
-        videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
+        if(streamViewModel.getHlsPlayBackUrl() != null)
+            videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
     }
     private void bindNavigateData(Intent previousNavigationData) {
         this.streamViewModel = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA") , StreamViewModel.class);

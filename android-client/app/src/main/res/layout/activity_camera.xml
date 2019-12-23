@@ -83,7 +83,22 @@
             android:cropToPadding="false"
             android:background="#000000ff"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/btn_spin_kit"
+            style="@style/SpinKitView.Large.Wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/com_facebook_blue"
+            android:cropToPadding="false"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@id/ic_broadcast"
+            android:visibility="visible"/>
 
         <com.t4.androidclient.ui.MultiStateButton
             android:layout_width="wrap_content"
