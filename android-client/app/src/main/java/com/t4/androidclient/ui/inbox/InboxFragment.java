@@ -11,24 +11,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.NotificationAdapter;
 import com.t4.androidclient.contraints.Api;
-import com.t4.androidclient.contraints.Host;
+import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.httpclient.HttpClient;
-import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.model.helper.NotificationHelper;
 import com.t4.androidclient.model.livestream.Notification;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class InboxFragment extends Fragment {
     private View root;
@@ -83,12 +80,16 @@ public class InboxFragment extends Fragment {
                 if (output != null && !output.isEmpty()) {
                     NotificationHelper helper = new NotificationHelper();
                     List<Notification> listNotificationServer = helper.parseNotification(output);
-                    listNotification.addAll(listNotificationServer);
-                    notificationAdapter.notifyDataSetChanged();
+                    if (listNotificationServer != null && listNotificationServer.size() > 0) {
+                        listNotification.addAll(listNotificationServer);
+                        notificationAdapter.notifyDataSetChanged();
+                    }
                 }
+                ((MainScreenActivity) getActivity()).progressBar.setVisibility(View.GONE);
             }
         });
         get.execute("");
+        ((MainScreenActivity) getActivity()).progressBar.setVisibility(View.VISIBLE);
     }
 
     public void addTenToList() {
@@ -114,15 +115,12 @@ public class InboxFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
-            String token = db.getToken();
-
             System.out.println("=============================================================");
             System.out.println("The inbox url: " + Api.URL_GET_NOTIFICATION);
-            System.out.println("The inbox token: " + db.getToken());
+            System.out.println("The inbox token: " + Authentication.TOKEN);
             System.out.println("=============================================================");
 
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_NOTIFICATION, token);
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_NOTIFICATION, Authentication.TOKEN);
             return HttpClient.execute(request);
         }
 

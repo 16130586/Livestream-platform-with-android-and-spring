@@ -8,16 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,8 +27,6 @@ import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -80,6 +75,8 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                btnRegis.setEnabled(false);
+                btnGallery.setEnabled(false);
                 keyValues.put(REGISTER_KEY_USERNAME, username.getText().toString());
                 keyValues.put(REGISTER_KEY_PASSWORD, password.getText().toString());
                 keyValues.put(REGISTER_KEY_EMAIL, email.getText().toString());
@@ -87,14 +84,17 @@ public class RegisterFragment extends Fragment {
                 Register register = new Register(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
-                        ApiResponse apiResponse = JsonHelper.deserialize(output, ApiResponse.class);
-                        System.out.println(apiResponse.data);
-                        loadingProgressBar.setVisibility(View.GONE);
-                        if (apiResponse.statusCode == 200)
-                            Toast.makeText(getActivity(), "Registry Successful!", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(getActivity(), apiResponse.data.toString(), Toast.LENGTH_LONG).show();
+                        if (output != null && !output.isEmpty()) {
+                            ApiResponse apiResponse = JsonHelper.deserialize(output, ApiResponse.class);
+                            btnRegis.setEnabled(true);
+                            btnGallery.setEnabled(true);
+                            loadingProgressBar.setVisibility(View.GONE);
+                            if (apiResponse.statusCode == 200)
+                                Toast.makeText(getActivity(), "Registry Successful!", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(getActivity(), apiResponse.data.toString(), Toast.LENGTH_LONG).show();
 
+                        }
                     }
                 });
 

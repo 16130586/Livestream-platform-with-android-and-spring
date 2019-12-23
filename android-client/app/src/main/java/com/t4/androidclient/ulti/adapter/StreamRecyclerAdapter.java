@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.livestream.WatchLiveStreamActivity;
@@ -53,10 +54,10 @@ public class StreamRecyclerAdapter extends
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         StreamViewModel streamModel = listStream.get(position);
-        byte[] imageBytes;
+//        byte[] imageBytes;
 
-        imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
-        Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//        imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
+//        Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
         
         Glide.with(context).load(streamModel.getThumbnail() == null ? "" : streamModel.getThumbnail())
@@ -64,8 +65,12 @@ public class StreamRecyclerAdapter extends
         ImageView ownerAvatarView = holder.avatarView;
 
 
-        Glide.with(context).load(ownerAvatarImage)
-                .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
+//        Glide.with(context).load(ownerAvatarImage)
+//                .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
+        String avatarURL = streamModel.getOwner().avatar;
+        if (avatarURL != null && !avatarURL.isEmpty())
+            Glide.with(context).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(holder.avatarView);
 
         TextView titleView = holder.titleView;
         titleView.setText(streamModel.getTitle());

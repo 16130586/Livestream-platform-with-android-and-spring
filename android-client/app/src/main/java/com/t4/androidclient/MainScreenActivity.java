@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.bumptech.glide.Glide;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Request;
 
 
@@ -61,6 +64,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     MakeSuggestion makeSuggestion = this;
     NavigationView slide_view;
     User user;
+    public ProgressBar progressBar;
     private asyn a = null;
     private LoginButton mBtnFacebook;
     private CallbackManager mCallbackManager;
@@ -73,6 +77,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         mCallbackManager = CallbackManager.Factory.create();
+        progressBar = findViewById(R.id.main_loading);
         ///////////// thêm slide menu navigation
         mDrawerLayout = findViewById(R.id.drawer_layout);
         slide_view = findViewById(R.id.slide_view);
@@ -82,6 +87,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         //==============================================================================
         // Validate token & get user info if token valid.
         //================================================================================
+        progressBar.setVisibility(View.VISIBLE);
         if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
             // TODO handle in case null token
             System.out.println("=========================================================================================");
@@ -102,6 +108,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         }
                     }
                     doProcessNotLogin();
+                    progressBar.setVisibility(View.GONE);
                 }
             });
             infoUser.execute();
@@ -122,11 +129,13 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        progressBar.setVisibility(View.VISIBLE);
                         mDrawerLayout.closeDrawers();
                         int id = menuItem.getItemId();
                         if (id == R.id.your_videos) {
                             System.out.println("Chọn 1");
                         }
+                        progressBar.setVisibility(View.GONE);
                         return true;
                     }
 
@@ -281,9 +290,11 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
             @Override
             public void onSearchAction(String currentQuery) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(MainScreenActivity.this, SearchActivity.class);
                 intent.putExtra("keywords", currentQuery);
                 startActivity(intent);
+                progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -368,6 +379,11 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         slide_view.getMenu().clear();
         slide_view.inflateHeaderView(R.layout.slide_header);
         slide_view.inflateMenu(R.menu.menu_slide);
+        CircleImageView profileImage = slide_view.findViewById(R.id.profile_image);
+        if (user.avatar != null && !user.avatar.isEmpty())
+            Glide.with(this).load(user.avatar.startsWith("http") ? user.avatar : Host.API_HOST_IP + user.avatar) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(profileImage);
+
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
