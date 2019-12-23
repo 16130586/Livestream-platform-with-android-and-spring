@@ -241,7 +241,7 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public List<Stream> getStreamsByName(String streamName, int offset, int pageSize) {
         Pageable pageable = new PageRequest(offset, pageSize);
-        return streamRepository.findByStreamNameContaining(streamName, pageable);
+        return streamRepository.findByTitleContaining(streamName, pageable);
     }
 
     @Override

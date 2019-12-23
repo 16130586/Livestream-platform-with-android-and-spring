@@ -1,6 +1,7 @@
 package com.t4.LiveServer.business.imp;
 
 import com.t4.LiveServer.business.interfaze.UserBusiness;
+import com.t4.LiveServer.business.interfaze.file.FileBusiness;
 import com.t4.LiveServer.jwt.JwtProvider;
 import com.t4.LiveServer.model.Notification;
 import com.t4.LiveServer.model.PaySubscription;
@@ -12,6 +13,7 @@ import com.t4.LiveServer.repository.SubscriptionRepository;
 import com.t4.LiveServer.model.NotificationStatus;
 import com.t4.LiveServer.repository.NotificationRepository;
 import com.t4.LiveServer.repository.UserRepository;
+import com.t4.LiveServer.util.StringUtils;
 import com.t4.LiveServer.validation.form.RegistryForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,11 @@ public class UserBusinessImp implements UserBusiness {
     SubscriptionRepository subscriptionRepository;
     @Autowired
     PaySubscriptionRepository paySubscriptionRepository;
+    @Autowired
+    FileBusiness fileBusiness;
+
+    private static final String ABSOLUTE_PATH_IMAGE_STORAGE = (new File("src/main/resources/image")).getAbsolutePath() + "\\";
+    private static final String DEFAULT_AVATAR_PATH = "/images/ava_default.jpg";
 
     @Override
     public String login(String username, String password) {
@@ -58,12 +66,18 @@ public class UserBusinessImp implements UserBusiness {
 
     @Override
     public User registry(RegistryForm registryForm) {
+        String fileName = StringUtils.randomString() + ".jpg";
+        String path = ABSOLUTE_PATH_IMAGE_STORAGE + fileName;
         User user = new User();
         user.setUserName(registryForm.getUserName());
         user.setPassword(new BCryptPasswordEncoder().encode(registryForm.getPassword())); // encode password
         user.setGmail(registryForm.getGmail());
         user.setNickName(registryForm.getNickName());
-        user.setAvatar(registryForm.getAvatar());
+        if (registryForm.getAvatar() != null && !registryForm.getAvatar().isEmpty())
+            if (fileBusiness.base64ToImage(registryForm.getAvatar(), path))
+                user.setAvatar("/images/" + fileName);
+            else
+                user.setAvatar(DEFAULT_AVATAR_PATH);
         userRepository.save(user);
         return user;
     }
