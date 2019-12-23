@@ -244,7 +244,10 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                  if (item.getItemId() == R.id.open_menu_slide) {
                     mDrawerLayout = findViewById(R.id.drawer_layout);
                     mDrawerLayout.openDrawer(GravityCompat.START);
-                } else if (item.getItemId() == R.id.create_live_stream) {
+                 } else if (item.getItemId() == R.id.search_advance) {
+                     Intent intentSearch = new Intent(MainScreenActivity.this, SearchActivity.class);
+                     startActivity(intentSearch);
+                 } else if (item.getItemId() == R.id.create_live_stream) {
                     if (Authentication.ISLOGIN) {
                         Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
                         startActivity(createLive);
@@ -252,32 +255,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         mDrawerLayout = findViewById(R.id.drawer_layout);
                         mDrawerLayout.openDrawer(GravityCompat.START);
                     }
-                }
-            }
-        });
-
-        // cái này là kiểm tra thay đổi trên search
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, String newQuery) {
-                if (!oldQuery.equals("") && newQuery.equals("")) {
-                    mSearchView.clearSuggestions();
-                } else {
-                    mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-                        @Override
-                        public void onSearchTextChanged(String oldQuery, String newQuery) {
-                            if (!oldQuery.equals("") && newQuery.equals("")) {
-                                mSearchView.clearSuggestions();
-                            } else {
-                                mSearchView.showProgress();
-                                if (a != null) {
-                                    a.cancel(true);
-                                }
-                                a = (asyn) new asyn(makeSuggestion).execute("http://suggestqueries.google.com/complete/search?output=firefox&hl=vi&q=" + newQuery);
-
-                            }
-                        }
-                    });
                 }
             }
         });
@@ -378,8 +355,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         Authentication.ISLOGIN = true;
         slide_view.getMenu().clear();
         slide_view.inflateHeaderView(R.layout.slide_header);
-        slide_view.inflateMenu(R.menu.menu_slide);
-        CircleImageView profileImage = slide_view.findViewById(R.id.profile_image);
+        CircleImageView profileImage = slide_view.getHeaderView(0).findViewById(R.id.profile_image);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
 //        if (user.getSubscription() != null) {
 //            TextView iconVIP = slide_view.findViewById(R.id.icon_vip);

@@ -54,6 +54,7 @@ public class StreamRecyclerAdapter extends
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         StreamViewModel streamModel = listStream.get(position);
+
 //        byte[] imageBytes;
 
 //        imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
@@ -95,7 +96,14 @@ public class StreamRecyclerAdapter extends
         });
 
         TextView timeView = holder.timeView;
-        timeView.setText(streamModel.getDateStatus());
+        String txtInfo = streamModel.getOwner().nickname + " - " + streamModel.getTotalView() + " views - " + streamModel.getDateStatus();
+        timeView.setText(txtInfo);
+        TextView txtLiveNOW = holder.liveNOW;
+        if ("Live NOW".equals(streamModel.getDateStatus()))
+            txtLiveNOW.setVisibility(View.VISIBLE);
+        else
+            txtLiveNOW.setVisibility(View.GONE);
+
     }
 
     private void navigateToWatchingActivity(StreamViewModel modelClicked) {
@@ -130,7 +138,7 @@ public class StreamRecyclerAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;
         public CircleImageView avatarView;
-        public TextView titleView, timeView;
+        public TextView titleView, timeView, liveNOW;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -138,6 +146,7 @@ public class StreamRecyclerAdapter extends
             avatarView = (CircleImageView) itemView.findViewById(R.id.item_stream_avatar);
             titleView = (TextView) itemView.findViewById(R.id.item_stream_name);
             timeView = (TextView) itemView.findViewById(R.id.item_stream_time_status);
+            liveNOW = (TextView) itemView.findViewById(R.id.text_live_now);
         }
     }
 

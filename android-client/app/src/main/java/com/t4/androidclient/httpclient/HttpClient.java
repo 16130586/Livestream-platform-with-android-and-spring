@@ -43,7 +43,7 @@ public class HttpClient {
         return request;
     }
 
-    public static Request buildPostRequest(String url, Map<String, String> values) {
+    public static Request buildPostRequest(String url, Object values) {
         String jsonStringData = JsonHelper.serialize(values);
         System.out.println(jsonStringData);
         Request request = new Request.Builder().url(url).post(RequestBody.create(jsonStringData, MEDIA_TYPE_JSON)).build();
