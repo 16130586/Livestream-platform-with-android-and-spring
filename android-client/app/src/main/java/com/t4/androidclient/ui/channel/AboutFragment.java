@@ -60,7 +60,7 @@ public class AboutFragment extends Fragment {
         channelTypes = root.findViewById(R.id.channel_type);
         description = root.findViewById(R.id.description);
         subscribleButton = root.findViewById(R.id.btn_subscrible);
-        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
+        ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
 
         SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
         Authentication.TOKEN = db.getToken();

@@ -38,7 +38,7 @@ public class AllStreamsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_all_streams, container, false);
-        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
+        ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
         setUp();
         return root;
     }
@@ -64,22 +64,24 @@ public class AllStreamsFragment extends Fragment {
                     ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
                     if (response != null && response.statusCode == 200) {
                         List<Map<String, Object>> streams = (List<Map<String, Object>>) response.data;
-                        for (Map<String, Object> obj : streams) {
-                            LiveStream liveStream = LiveStreamHelper.parse(obj);
-                            if (liveStream.getOwner().getId() == ownerID) {
-                                StreamViewModel streamView = new StreamViewModel();
-                                streamView.setStreamId(liveStream.getStreamId());
-                                streamView.setStreamName(liveStream.getName());
-                                streamView.setEndTime(liveStream.getEndTime() != null ? liveStream.getEndTime() : new Date(1573837200)); //16/11/2019
-                                streamView.setTotalView(liveStream.getTotalView() != null ? liveStream.getTotalView() : 69069);
-                                streamView.setThumbnail(liveStream.getThumbnail() != null ? liveStream.getThumbnail() : "");
-                                listStreamView.add(streamView);
-                            } else if (liveStream == null) {
-                                continue;
+                        if (streams != null && streams.size() > 0) {
+                            for (Map<String, Object> obj : streams) {
+                                LiveStream liveStream = LiveStreamHelper.parse(obj);
+                                if (liveStream != null) {
+                                    StreamViewModel streamView = new StreamViewModel();
+                                    streamView.setStreamId(liveStream.getStreamId());
+                                    streamView.setStreamName(liveStream.getName());
+                                    streamView.setEndTime(liveStream.getEndTime() != null ? liveStream.getEndTime() : new Date(1573837200)); //16/11/2019
+                                    streamView.setTotalView(liveStream.getTotalView() != null ? liveStream.getTotalView() : 69069);
+                                    streamView.setThumbnail(liveStream.getThumbnail() != null ? liveStream.getThumbnail() : "");
+                                    listStreamView.add(streamView);
+                                } else  {
+                                    continue;
+                                }
                             }
+                            loadUserStreamsFrom(offset+pageSize); ;
+                            channelStreamAdapter.notifyDataSetChanged();
                         }
-                        if (streams != null && streams.size() > 0)
-                            channelStreamAdapter.notifyItemRangeChanged(offset > 0 ? (offset * pageSize - 1) : 0, streams.size());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

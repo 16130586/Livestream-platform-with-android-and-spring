@@ -21,7 +21,7 @@ public class SubscribeController {
 		ApiResponse response = new ApiResponse();
 		response.statusCode = 200;
 		response.message = "Subscribe success!";
-		response.data = subscribeBusiness.	doSubscribe(Integer.parseInt(userIDs.get("subscriberID")),Integer.parseInt(userIDs.get("publisherID")));
+		response.data = subscribeBusiness.doSubscribe(Integer.parseInt(userIDs.get("subscriberID")),Integer.parseInt(userIDs.get("publisherID")));
 		return response;
 	}
 	

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_subscribed_channel_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/ic_fire"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="#6B323D" />
+
+
+    <TextView
+        android:id="@+id/item_subscribed_channel_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/item_subscribed_channel_image"
+        android:layout_toRightOf="@id/item_subscribed_channel_image"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/item_subscribed_channel_subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_subscribed_channel_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/item_subscribed_channel_image"
+        android:layout_toRightOf="@id/item_subscribed_channel_image"
+        android:fontFamily="sans-serif"
+        android:text=""
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/item_subscribed_channel_btn_subscrible"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/item_subscribed_channel_subtotal"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/item_subscribed_channel_image"
+        android:layout_toRightOf="@id/item_subscribed_channel_image"
+        android:background="@null"
+        android:text="Unsubscribe"
+        android:textColor="#737373"
+        android:textSize="14sp" />
+
+    <ImageButton
+        android:id="@+id/item_subscribed_channel_btn_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@null"
+        android:layout_below="@+id/item_subscribed_channel_subtotal"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/item_subscribed_channel_btn_subscrible"
+        android:src="@drawable/ic_notifications_black_24dp" />
+</RelativeLayout>

@@ -241,4 +241,6 @@ public class Stream {
         Stream s = (Stream) obj;
         return this.getStreamId() == s.getStreamId();
     }
+    
+    
 }

@@ -171,4 +171,45 @@ public class UserController {
         apiResponse.data = userBusiness.getSubscription(user, offset, limit);
         return apiResponse;
     }
+	
+	@PostMapping("/about/update")
+	public ApiResponse updateAboutController(@RequestBody Map<String, String> data) {
+		int userID = Integer.valueOf(data.get("userID"));
+		String newName = data.get("newName");
+		String newDescription = data.get("newDescription");
+		ApiResponse apiResponse = new ApiResponse();
+		apiResponse.statusCode = 200;
+		apiResponse.message = "update user info!";
+		apiResponse.data = userBusiness.updateAbout(userID, newName, newDescription);
+		return apiResponse;
+	}
+	
+	@GetMapping("/listSubscribedByUserID/{userID}/{offset}/{limit}")
+	public ApiResponse listSubscribedByUserID(@PathVariable(name = "userID") int userID
+	 , @PathVariable(name = "offset") int offset
+	 , @PathVariable(name = "limit") int limit) {
+		if (offset <= 0)
+			offset = 0;
+		if (limit <= 0)
+			limit = 5;
+		ApiResponse response = new ApiResponse();
+		response.statusCode = 200;
+		response.message = "get subscribed channels by ID of user";
+		List<User> requestedData = new ArrayList<>(limit);
+		List<User> currentData = userBusiness.getSubscribedChannelByUserID(userID,offset,limit);
+		int startLength = offset-1 ;
+		if (startLength > currentData.size()) {
+			requestedData = null;
+		} else {
+			for (int i = startLength, picked = 0; i < currentData.size(); i++, picked++) {
+				if (picked < limit) {
+					requestedData.add(currentData.get(i));
+				}
+			}
+		}
+		response.statusCode = 200;
+		response.message = "Success!";
+		response.data = requestedData;
+		return response;
+	}
 }

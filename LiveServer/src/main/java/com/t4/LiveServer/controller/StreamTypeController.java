@@ -3,6 +3,7 @@ package com.t4.LiveServer.controller;
 import com.t4.LiveServer.business.interfaze.StreamTypeBusiness;
 import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.core.ApiResponse;
+import com.t4.LiveServer.model.Stream;
 import com.t4.LiveServer.model.StreamType;
 import com.t4.LiveServer.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,8 @@ public class StreamTypeController {
 		//apiResponse.data = streamTypeBusiness.listStreamAndTypeByUserID(userId);
 		return apiResponse;
 	}
+	
+
 }
 
 

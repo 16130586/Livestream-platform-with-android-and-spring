@@ -20,4 +20,6 @@ public interface StreamBusiness {
     List<Stream> getStreamsByName(String streamName, int offset, int pageSize);
     List<Stream> getStreamsByNameAndType(String streamName, List<String> streamTypes, int offset, int pageSize);
     Comment saveComment(Comment comment);
+	List<Stream> listStreamByTypeOfUser(int userID,int typeID);
+	List<Stream>  getWatchedStreamsByUserID(int userID);
 }

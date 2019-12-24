@@ -6,10 +6,19 @@ public class UserModelView {
     public String password;
     public String nickName;
     public String avatar;
+    public int subscriberTotal;
 
 
     public UserModelView() {
 
+    }
+
+    public int getSubscriberTotal() {
+        return subscriberTotal;
+    }
+
+    public void setSubscriberTotal(int subscriberTotal) {
+        this.subscriberTotal = subscriberTotal;
     }
 
     public Integer getUserId() {

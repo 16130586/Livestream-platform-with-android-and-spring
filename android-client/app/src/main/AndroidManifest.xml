@@ -41,6 +41,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.channel.ChannelActivity" />
+        <activity android:name=".ui.channel.ChannelStreamsOfTypeActivity" />
         <activity android:name=".ui.mychannel.MyChannelActivity" />
         <activity
             android:name=".ui.login.LoginRegisterActivity"

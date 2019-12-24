@@ -11,8 +11,11 @@
         android:id="@+id/list_all_streams"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:dividerHeight="16.0dp"
-        tools:ignore="MissingConstraints">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constrainedHeight="true"
+        tools:ignore="MissingConstraints"></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

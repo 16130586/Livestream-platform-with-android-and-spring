@@ -39,7 +39,7 @@ public class TypeStreamsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_type_streams, container, false);
-        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
+        ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
         listStreamAndTypeView = new ArrayList<>();
 
         TypeStreamsFragment.StreamTypes streamTypes = new TypeStreamsFragment.StreamTypes(new AsyncResponse() {
@@ -57,10 +57,15 @@ public class TypeStreamsFragment extends Fragment {
                                 listStreamAndTypeView.add(typeView);
                         }
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                    channelTypeAdapter = new ChannelTypeAdapter(listStreamAndTypeView, getContext());
+                        //Save ID / Channel Name into new Activity through Adapter
+                    ArrayList<String> dataList = new ArrayList<>();
+                    dataList.add(ownerID+""); // ID
+                    dataList.add(getActivity().getIntent().getStringExtra("channel_name")); // NAME
+                    channelTypeAdapter = new ChannelTypeAdapter(listStreamAndTypeView, getContext(),dataList);
                     recyclerView = (RecyclerView) root.findViewById(R.id.list_type_stream);
                     recyclerView.setAdapter(channelTypeAdapter);
                     recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setClickable(true);
                 }
                 catch (Exception o) {
                     o.printStackTrace();
@@ -71,7 +76,6 @@ public class TypeStreamsFragment extends Fragment {
         values[0] = "userID";
         values[1] = String.valueOf(ownerID);
         streamTypes.execute(values);
-
         return root;
     }
 

@@ -1,6 +1,7 @@
 package com.t4.androidclient.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
+import com.t4.androidclient.ui.channel.ChannelStreamsOfTypeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import viewModel.StreamTypeViewModel;
@@ -21,13 +24,14 @@ import viewModel.StreamTypeViewModel;
 public class ChannelTypeAdapter extends RecyclerView.Adapter<ChannelTypeAdapter.ViewHolder>{
     private List<StreamTypeViewModel> listTypeView;
     private Context context;
-
+    private ArrayList<String> dataList;
     byte[] imageBytes;
     Bitmap thumnailImage;
 
-    public ChannelTypeAdapter(List<StreamTypeViewModel> listTypeView, Context context) {
+    public ChannelTypeAdapter(List<StreamTypeViewModel> listTypeView, Context context, ArrayList<String> dataList) {
         this.listTypeView = listTypeView;
         this.context = context;
+        this.dataList = dataList;
     }
 
     @NonNull
@@ -90,11 +94,22 @@ public class ChannelTypeAdapter extends RecyclerView.Adapter<ChannelTypeAdapter.
             typeName = (TextView) itemView.findViewById(R.id.item_type_name);
             numberOfType = (TextView) itemView.findViewById(R.id.item_type_number_stream);
             numberOfTypeText = (TextView) itemView.findViewById(R.id.item_type_number_stream_text);
+
             // Handle item click and set the selection
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    int typeID = listTypeView.get(getAdapterPosition()).getId();
+                    int numberOfType= listTypeView.get(getAdapterPosition()).getNumberOfType();
+                    String typeName= listTypeView.get(getAdapterPosition()).getTypeName();
+                    System.out.println(typeID+" asd s "+numberOfType);
+                    Intent intent=new Intent(context, ChannelStreamsOfTypeActivity.class);
+                    intent.putExtra("type_id",typeID);
+                    intent.putExtra("owner_id",Integer.valueOf(dataList.get(0)));
+                    intent.putExtra("channel_name",dataList.get(1));
+                    intent.putExtra("type_name",typeName);
+                    intent.putExtra("stream_number",numberOfType);
+                    context.startActivity(intent);
                 }
             });
         }

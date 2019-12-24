@@ -1,6 +1,7 @@
 package com.t4.LiveServer.business.imp;
 
 import com.t4.LiveServer.business.interfaze.StreamTypeBusiness;
+import com.t4.LiveServer.model.Stream;
 import com.t4.LiveServer.model.StreamType;
 import com.t4.LiveServer.repository.StreamRepository;
 import com.t4.LiveServer.repository.StreamTypeRepository;
@@ -21,7 +22,7 @@ public class StreamTypeBusinessImp implements StreamTypeBusiness {
 	public List<StreamType> listStreamTypeByUserID(int userID){
 		return streamTypeRepository.getListTypeByUserID(userID);
 	}
-
 	
+
 	
 }

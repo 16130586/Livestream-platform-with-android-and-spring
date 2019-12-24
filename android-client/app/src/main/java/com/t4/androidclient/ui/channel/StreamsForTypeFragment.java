@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.ChannelStreamAdapter;
+import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
@@ -29,7 +30,7 @@ import java.util.Map;
 import okhttp3.Request;
 import viewModel.StreamViewModel;
 
-public class TypeAllStreamsFragment extends Fragment {
+public class StreamsForTypeFragment extends Fragment {
     private View root;
     private ChannelStreamAdapter channelStreamAdapter;
     private RecyclerView recyclerView;
@@ -38,7 +39,7 @@ public class TypeAllStreamsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_all_streams, container, false);
-        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
+        ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
         setUp();
         return root;
     }
@@ -103,7 +104,7 @@ public class TypeAllStreamsFragment extends Fragment {
 
                 @Override
                 protected String doInBackground(String... token) {
-                    Request request = HttpClient.buildGetRequest(Host.API_HOST_IP+"/user/"+token[1]+"/streams/"+token[3]+"/"+token[5]);
+                    Request request = HttpClient.buildGetRequest(Api.URL_CHANNEL_GET_STREAMS_BY_TYPE+"/"+token[3]+"/"+token[5]);
                     return HttpClient.execute(request);
                 }
 

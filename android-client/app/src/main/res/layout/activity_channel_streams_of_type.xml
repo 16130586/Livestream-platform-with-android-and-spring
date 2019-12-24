@@ -9,7 +9,7 @@
 
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/channel_streams_of_type_appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
@@ -20,11 +20,11 @@
         tools:ignore="MissingConstraints">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/back_to_types_logo"
+                android:id="@+id/channel_streams_of_type_back_to_types_logo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentStart="true"
@@ -38,13 +38,15 @@
                 tools:layout_editor_absoluteY="16dp" />
 
             <com.arlib.floatingsearchview.FloatingSearchView
-                android:id="@+id/floating_search_view"
-                android:layout_width="400dp"
-                android:layout_height="60dp"
+                android:id="@+id/channel_streams_of_type_floating_search_view"
+                android:layout_width="369dp"
+                android:layout_height="54dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/back_logo"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/channel_streams_of_type_back_to_types_logo"
                 app:floatingSearch_actionMenuOverflowColor="#FF006F"
                 app:floatingSearch_backgroundColor="@null"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"
@@ -63,19 +65,18 @@
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="56dp"
                 tools:layout_editor_absoluteY="133dp"></com.arlib.floatingsearchview.FloatingSearchView>
-
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:id="@+id/change_about"
-        android:layout_width="275dp"
-        android:layout_height="0dp"
-        android:background="#49A7A3A3"
+        android:id="@+id/channel_streams_of_type_about"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#23A7A3A3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="75dp">
+        app:layout_constraintTop_toBottomOf="@+id/channel_streams_of_type_appBarLayout"
+        tools:ignore="MissingConstraints">
 
 
         <TextView
@@ -83,7 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="true"
             android:text="Fullname"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -101,15 +103,40 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_type_all_streams"
-        android:layout_width="283dp"
-        android:layout_height="47dp"
-        android:dividerHeight="16.0dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="203dp"></androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:id="@+id/stream_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:text="6 streams"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/channel_streams_of_type_about"
+        tools:ignore="MissingConstraints" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_all_streams_of_type"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:dividerHeight="16.0dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stream_number"
+        tools:ignore="MissingConstraints"></androidx.recyclerview.widget.RecyclerView>
+
+<!--    <TextView-->
+<!--        android:id="@+id/end_screen"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:text=""-->
+<!--        android:textSize="2sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

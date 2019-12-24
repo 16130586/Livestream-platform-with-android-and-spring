@@ -257,4 +257,14 @@ public class StreamBusinessImp implements StreamBusiness {
     public Comment saveComment(Comment comment) {
         return commentRepository.save(comment);
     }
+	
+	@Override
+	public List<Stream> listStreamByTypeOfUser(int userID, int typeID){
+		return streamRepository.repoListStreamByTypeOfUser(userID,typeID);
+	}
+	
+	@Override
+	public List<Stream> getWatchedStreamsByUserID(int userID){
+		return streamRepository.repoGetWatchedStreamsByUserID(userID);
+	}
 }

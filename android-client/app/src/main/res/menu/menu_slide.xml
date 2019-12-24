@@ -14,7 +14,10 @@
         android:id="@+id/your_watched_streams"
         android:title="Your Watched Streams"
         app:showAsAction="always" />
-
+    <item
+        android:id="@+id/your_subscribed_channels"
+        android:title="Your Subscribed Channels"
+        app:showAsAction="always" />
     <item
         android:id="@+id/your_channel"
         android:title="Your Channel"

@@ -41,7 +41,7 @@ public class ChannelActivity extends AppCompatActivity implements MakeSuggestion
         setContentView(R.layout.activity_channel);
         bindNavigateData(getIntent());
         mSearchView  = findViewById(R.id.floating_search_view);
-        mSearchView.setSearchHint("Channel "+getIntent().getStringExtra("DATA2"));
+        mSearchView.setSearchHint("Channel "+getIntent().getStringExtra("channel_name"));
 
         /////////// thêm bottom menu navigation
         BottomNavigationView navView = findViewById(R.id.menu_channel_view);
@@ -101,7 +101,7 @@ public class ChannelActivity extends AppCompatActivity implements MakeSuggestion
     }
 
     private void bindNavigateData(Intent previousNavigationData) {
-        this.ownerId = previousNavigationData.getIntExtra("DATA", -1);
+        this.ownerId = previousNavigationData.getIntExtra("owner_id", -1);
     }
 
 

@@ -119,23 +119,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         actionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        slide_view.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        mDrawerLayout.closeDrawers();
-                        int id = menuItem.getItemId();
-                        if (id == R.id.your_streams) {
-                            System.out.println("Chọn vào fragment your streams");
-                        }
-                        else if (id == R.id.your_channel) {
-                            Intent intent = new Intent(MainScreenActivity.this, MyChannelActivity.class);
-                            startActivity(intent);
-                        }
-                        return true;
-                    }
-
-                });
 
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
@@ -209,6 +192,54 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                 return NavigationUI.onNavDestinationSelected(menuItem, navController);
             }
         });
+
+        slide_view.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        mDrawerLayout.closeDrawers();
+                        int id = menuItem.getItemId();
+                        if (id == R.id.your_streams) {
+                            if (Authentication.ISLOGIN) {
+                                Intent intent = new Intent(MainScreenActivity.this, MyChannelActivity.class);
+                                intent.putExtra("owner_id",user.getId());
+                                intent.putExtra("channel_name",user.getNickname());
+                                intent.putExtra("fragment_des","your_streams");
+                                startActivity(intent);
+                            }
+                        }
+                        else if (id == R.id.your_channel) {
+                            if (Authentication.ISLOGIN) {
+                                Intent intent = new Intent(MainScreenActivity.this, MyChannelActivity.class);
+                                intent.putExtra("owner_id",user.getId());
+                                intent.putExtra("channel_name",user.getNickname());
+                                intent.putExtra("fragment_des","your_channel");
+                                startActivity(intent);
+                            }
+                        }
+                        else if (id == R.id.your_watched_streams) {
+                            if (Authentication.ISLOGIN) {
+                                Intent intent = new Intent(MainScreenActivity.this, MyChannelActivity.class);
+                                intent.putExtra("owner_id",user.getId());
+                                intent.putExtra("channel_name",user.getNickname());
+                                intent.putExtra("fragment_des","your_watched_streams");
+                                startActivity(intent);
+                            }
+                        }
+                        else if (id == R.id.your_subscribed_channels) {
+                            if (Authentication.ISLOGIN) {
+                                Intent intent = new Intent(MainScreenActivity.this, MyChannelActivity.class);
+                                intent.putExtra("owner_id",user.getId());
+                                intent.putExtra("channel_name",user.getNickname());
+                                intent.putExtra("fragment_des","your_subscribed_channels");
+                                startActivity(intent);
+                            }
+                        }
+                        return true;
+                    }
+
+                });
+
 
         // Click logo về Home
         app_logo = findViewById(R.id.app_logo);

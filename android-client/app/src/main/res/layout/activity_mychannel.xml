@@ -12,70 +12,84 @@
         android:id="@+id/mychannel_app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#A5232020"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/mychannel_back_logo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="5dp"
-                android:clickable="true"
-                android:foregroundGravity="center"
-                android:src="@drawable/ic_arrow_back_black_24dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
+<!--            <ImageView-->
+<!--                android:id="@+id/mychannel_back_logo"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:background="@null"-->
+<!--                android:clickable="true"-->
+<!--                android:foregroundGravity="center"-->
+<!--                android:src="@drawable/ic_arrow_back_white_24dp"-->
+<!--                tools:layout_editor_absoluteX="16dp"-->
+<!--                tools:layout_editor_absoluteY="16dp" />-->
 
             <com.arlib.floatingsearchview.FloatingSearchView
                 android:id="@+id/mychannel_floating_search_view"
-                android:layout_width="400dp"
-                android:layout_height="60dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:elevation="0dp"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentRight="false"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/back_logo"
+                android:layout_toEndOf="@+id/mychannel_back_logo"
+                android:minHeight="40dp"
+                android:outlineProvider="none"
+                android:overScrollMode="never"
+                android:scrollbarSize="4dp"
                 app:floatingSearch_actionMenuOverflowColor="#FF006F"
-                app:floatingSearch_backgroundColor="@null"
+                app:floatingSearch_backgroundColor="#00454141"
+                app:floatingSearch_clearBtnColor="#00454141"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"
                 app:floatingSearch_dimBackground="false"
-                app:floatingSearch_hintTextColor="#000000"
-                app:floatingSearch_leftActionColor="#000000"
+                app:floatingSearch_hintTextColor="#FFFFFF"
+                app:floatingSearch_leftActionColor="#FFFFFF"
                 app:floatingSearch_leftActionMode="showSearch"
                 app:floatingSearch_searchBarMarginLeft="10dp"
                 app:floatingSearch_searchBarMarginRight="10dp"
-                app:floatingSearch_searchBarMarginTop="10dp"
-                app:floatingSearch_searchHint="Faker SKT T1"
+                app:floatingSearch_searchBarMarginTop="0dp"
+                app:floatingSearch_searchHint="Channel"
                 app:floatingSearch_showSearchKey="true"
-                app:floatingSearch_suggestionRightIconColor="#000000"
+                app:floatingSearch_suggestionRightIconColor="#FFFFFF"
                 app:floatingSearch_suggestionsListAnimDuration="250"
-                app:floatingSearch_viewSearchInputTextColor="#000000"
+                app:floatingSearch_viewSearchInputTextColor="#FFFFFF"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="56dp"
-                tools:layout_editor_absoluteY="133dp"></com.arlib.floatingsearchview.FloatingSearchView>
+                tools:layout_editor_absoluteY="133dp">
 
-        </RelativeLayout>
+            </com.arlib.floatingsearchview.FloatingSearchView>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-
+<!--   app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+          1EF75050-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu_mychannel_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#A5232020"
+        android:padding="0dp"
         app:itemIconTint="@color/menu_colors"
-        app:itemTextColor="@color/menu_colors"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextColor="@color/menu_mychannel_colors"
         app:layout_constraintEnd_toEndOf="parent"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mychannel_app_bar_layout"
         app:menu="@menu/menu_mychannel"
@@ -85,10 +99,11 @@
     <fragment
         android:id="@+id/mychannel_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#673AB7"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menu_mychannel_view"

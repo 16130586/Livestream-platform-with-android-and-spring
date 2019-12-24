@@ -5,21 +5,22 @@
      android:layout_width="match_parent">
 
     <item
-        android:id="@+id/mychannel_about"
-        android:title="About Channel"
+        android:id="@+id/fragment_mychannel_about"
+        android:title="ABOUT"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/mychannel_all_streams"
-        android:title="Created Streams"
+        android:id="@+id/fragment_mychannel_all_streams"
+        android:title="STREAMS"
         app:showAsAction="always" />
     <item
-        android:id="@+id/mychannel_watched_streams"
-        android:title="Watched Streams"
+        android:id="@+id/fragment_mychannel_watched_streams"
+        android:title="WATCHED"
         app:showAsAction="always" />
+
     <item
-        android:id="@+id/mychannel_subscribed_channels"
-        android:title="Subscribed Channels"
+        android:id="@+id/fragment_mychannel_subscribed_channels"
+        android:title="SUBSCRIBED"
         app:showAsAction="always" />
 
 

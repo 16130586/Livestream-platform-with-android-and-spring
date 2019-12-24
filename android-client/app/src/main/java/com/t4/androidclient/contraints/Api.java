@@ -15,5 +15,9 @@ public class Api {
     public static final String URL_CHANNEL_SUBSCRIBE = Host.API_HOST_IP + "/channel/subscribe";
     public static final String URL_CHANNEL_UNSUBSCRIBE = Host.API_HOST_IP + "/channel/unsubscribe";
     public static final String URL_CHANNEL_CHECK_SUBSCRIBE = Host.API_HOST_IP + "/channel/checksubscribe";
+    public static final String URL_CHANNEL_GET_STREAMS_BY_TYPE = Host.API_HOST_IP + "/streams/listByUserType";
+    public static final String URL_UPDATE_ABOUT = Host.API_HOST_IP + "/user/about/update";
+    public static final String URL_GET_WATCHED_STREAMS = Host.API_HOST_IP + "/streams/listWatchedByUserID";
+    public static final String URL_GET_SUBSCRIBED_CHANNELS = Host.API_HOST_IP + "/user/listSubscribedByUserID";
 
 }

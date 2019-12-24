@@ -22,4 +22,6 @@ public interface StreamTypeRepository extends JpaRepository<StreamType, Integer>
 	  "where u.user_id = :userID  " )
 	List<StreamType> getListTypeByUserID(@Param("userID") int userID);
 	
+
+	
 }

@@ -118,7 +118,6 @@ public class StreamController {
         apiResponse.statusCode = 200;
         apiResponse.message = "get stream by name";
         apiResponse.data = streamBusiness.getStreamsByName(streamName, offset, pageSize);
-
         return apiResponse;
     }
 
@@ -167,4 +166,62 @@ public class StreamController {
         apiResponse.data = streamBusiness.saveComment(comment);
         return apiResponse;
     }
+	
+	@GetMapping("/listByUserType/{userID}/{typeID}/{offset}/{limit}")
+	public ApiResponse getStreamsByTypeOfUser(@PathVariable(name = "userID") int userID,@PathVariable(name = "typeID") int typeID
+	 , @PathVariable(name = "offset") int offset
+	 , @PathVariable(name = "limit") int limit) {
+		if (offset <= 0)
+			offset = 0;
+		if (limit <= 0)
+			limit = 5;
+		ApiResponse response = new ApiResponse();
+		response.statusCode = 200;
+		response.message = "get streams by type of user";
+		List<Stream> requestedData = new ArrayList<>(limit);
+		List<Stream> currentData = streamBusiness.listStreamByTypeOfUser(userID,typeID);
+		int startLength = offset-1 ;
+		if (startLength > currentData.size()) {
+			requestedData = null;
+		} else {
+			for (int i = startLength, picked = 0; i < currentData.size(); i++, picked++) {
+				if (picked < limit) {
+					requestedData.add(currentData.get(i));
+				}
+			}
+		}
+		response.statusCode = 200;
+		response.message = "Success!";
+		response.data = requestedData;
+		return response;
+	}
+	
+	@GetMapping("/listWatchedByUserID/{userID}/{offset}/{limit}")
+	public ApiResponse listWatchedStreamsByUserID(@PathVariable(name = "userID") int userID
+	 , @PathVariable(name = "offset") int offset
+	 , @PathVariable(name = "limit") int limit) {
+		if (offset <= 0)
+			offset = 0;
+		if (limit <= 0)
+			limit = 5;
+		ApiResponse response = new ApiResponse();
+		response.statusCode = 200;
+		response.message = "get watched streams by ID of user";
+		List<Stream> requestedData = new ArrayList<>(limit);
+		List<Stream> currentData = streamBusiness.getWatchedStreamsByUserID(userID);
+		int startLength = offset-1 ;
+		if (startLength > currentData.size()) {
+			requestedData = null;
+		} else {
+			for (int i = startLength, picked = 0; i < currentData.size(); i++, picked++) {
+				if (picked < limit) {
+					requestedData.add(currentData.get(i));
+				}
+			}
+		}
+		response.statusCode = 200;
+		response.message = "Success!";
+		response.data = requestedData;
+		return response;
+	}
 }

@@ -1,12 +1,18 @@
 package com.t4.androidclient.ui.mychannel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
@@ -38,137 +45,81 @@ import okhttp3.Request;
 
 public class AboutFragment extends Fragment {
     User getUser = null ;
-    User currentUser = null ;
-
-    TextView channelName;
+    EditText channelName;
     TextView channelSubNumber;
-    Button subscribleButton;
-    Button blockButton;
+    ImageButton changeAboutButton;
+    ImageButton changeImageButton;
     TextView channelTypes;
-    TextView description;
+    EditText description;
     int ownerID;
     List<StreamType> typeList = new ArrayList<StreamType>();
-
+    boolean editStatus = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_channel_about, container, false);
+        View root = inflater.inflate(R.layout.fragment_mychannel_about, container, false);
         channelName = root.findViewById(R.id.channel_name);
         channelSubNumber = root.findViewById(R.id.channel_sub_number);
         channelTypes = root.findViewById(R.id.channel_type);
         description = root.findViewById(R.id.description);
-        subscribleButton = root.findViewById(R.id.btn_subscrible);
-        ownerID = getActivity().getIntent().getIntExtra("DATA",-1);
+        changeAboutButton = root.findViewById(R.id.btn_change_about);
+        changeImageButton = root.findViewById(R.id.btn_change_image);
+        ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
 
-        SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
-        Authentication.TOKEN = db.getToken();
-        //Check login status
-        if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
-            subscribleButton.setText("Subscribe");
-            subscribleButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getActivity(), "Please login to subscrible channel !",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), LoginRegisterActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }else{
-            // Check status subscribe with channel owner , place before to call below
-            CheckSubscribeTask checkSubscribeTask = new CheckSubscribeTask(new AsyncResponse() {
-                @Override
-                public void processFinish(String output) {
-                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
-                    if (response != null && response.statusCode == 200) {
-                        boolean result = (boolean) response.data;
-                        if(result==true){ // True - Can subscrible
-                            subscribleButton.setText("Subscribe");
-                            subscribleButton.setOnClickListener(new View.OnClickListener() {
+        changeAboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editStatus==false){
+                    channelName.setEnabled(true);
+                    description.setEnabled(true);
+                    changeAboutButton.setImageResource(R.drawable.ic_done_black_24dp);
+                    editStatus=true;
+                }else{
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                    alertDialogBuilder.setMessage("Are you sure to change the information ?");
+                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            AboutFragment.SaveChanges saveChangesTask = new AboutFragment.SaveChanges(new AsyncResponse() {
                                 @Override
-                                public void onClick(View view) {
-                                    SubscribeTask subscribeTask = new SubscribeTask(new AsyncResponse() {
-                                        @Override
-                                        public void processFinish(String output) {
-                                            ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
-                                            if (response != null && response.statusCode == 200) {
-                                                boolean result = (boolean) response.data;
-                                                if(result==true){
-                                                    Toast.makeText(getContext(), "Subscribe channel successfully !",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    // Reload current fragment
-                                                    getActivity().finish();
-                                                    getActivity().overridePendingTransition(0, 0);
-                                                    startActivity(getActivity().getIntent());
-                                                    getActivity().overridePendingTransition(0, 0);
-                                                }
-                                            }
-                                        }});
-                                    String[] subData = new String[2];
-                                    subData[0]=currentUser.getId()+"";
-                                    subData[1]=ownerID+"";
-                                    subscribeTask.execute(subData);
-                                }
-                            });
-                        }else{ // False - Can't subscrible
-                            subscribleButton.setText("Un Subscribe");
-                            subscribleButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    UnSubscribeTask unSubscribeTask = new UnSubscribeTask(new AsyncResponse() {
-                                        @Override
-                                        public void processFinish(String output) {
-                                            ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
-                                            if (response != null && response.statusCode == 200) {
-                                                boolean result = (boolean) response.data;
-                                                if(result==true){
-                                                    Toast.makeText(getContext(), "Un Subscribe channel successfully !",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    // Reload current fragment
-                                                    getActivity().finish();
-                                                    getActivity().overridePendingTransition(0, 0);
-                                                    startActivity(getActivity().getIntent());
-                                                    getActivity().overridePendingTransition(0, 0);
-                                                }
-                                            }
-                                        }});
-                                    String[] subData = new String[2];
-                                    subData[0]=currentUser.getId()+"";
-                                    subData[1]=ownerID+"";
-                                    unSubscribeTask.execute(subData);
-                                }
-                            });
+                                public void processFinish(String output) {
+                                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                                    if (response != null && response.statusCode == 200) {
+                                        boolean result = (boolean) response.data;
+                                        if(result==true){
+                                            channelName.setEnabled(false);
+                                            description.setEnabled(false);
+                                            editStatus = false;
+                                            changeAboutButton.setImageResource(R.drawable.ic_settings_black_24dp);
+                                            Toast.makeText(getActivity(),"Saving changes successfully",Toast.LENGTH_LONG).show();
+                                        }else{
+                                            Toast.makeText(getActivity(),"Saving changes failed",Toast.LENGTH_LONG).show();
+                                        }
+                                    }else{
+                                        Toast.makeText(getActivity(),"Saving changes failed",Toast.LENGTH_LONG).show();
+                                    }
+                                }});
+                            String[] subData = new String[3];
+                            subData[0]=ownerID+"";
+                            subData[1]=channelName.getText()+"";
+                            subData[2]=description.getText()+"";
+                            saveChangesTask.execute(subData);
                         }
-                    }
-                }});
+                    });
 
-            // If login already then check status subscrible
-            // Get current user info to do task
-            CurrentInfo currentInfo = new CurrentInfo(new AsyncResponse() {
-                @Override
-                public void processFinish(String output) {
-                    if (output != null && !output.isEmpty()) {
-                        ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
-                        if (response != null && response.statusCode == 200) {
-                            Map<String, Object> rawData = (Map<String, Object>) response.data;
-                            currentUser = UserHelper.parseUserJson(rawData);
-
+                    alertDialogBuilder.setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(),"Continue to edit information",Toast.LENGTH_LONG).show();
                         }
-                    }
-                    // Get currentUser successfully , do check Status Subscribe
-                    String[] subData = new String[2];
-                    subData[0]=currentUser.getId()+"";
-                    subData[1]=ownerID+"";
-                    checkSubscribeTask.execute(subData); //Call above method
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
 
-            });
-            currentInfo.execute();
-        }
-
-
-
+            }
+        });
 
         ChannelInfo channelInfo = new ChannelInfo(new AsyncResponse() {
             @Override
@@ -183,6 +134,7 @@ public class AboutFragment extends Fragment {
                         // Render UImà
                         channelName.setText(getUser.getNickname());
                         channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
+                        description.setText(getUser.getDescription());
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
                             @Override
                             public void processFinish(String output) {
@@ -213,12 +165,14 @@ public class AboutFragment extends Fragment {
                 }
         }
         });
-        String[] values = new String[2];
-        values[0] = "userID";
-        values[1] = String.valueOf(ownerID); // Lay ID cua thang channel khi click vao
+        String[] values = new String[1];
+        values[0] = String.valueOf(ownerID); // Lay ID cua thang channel khi click vao
         channelInfo.execute(values);
         return root;
     }
+
+
+
     // ============ DO GET INFO USER  ==================================
     private class ChannelInfo extends AsyncTask<String, Integer, String> {
         public AsyncResponse asyncResponse = null;
@@ -229,7 +183,7 @@ public class AboutFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... token) {
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO_BY_ID+"/"+token[1]);
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO_BY_ID+"/"+token[0]);
             return HttpClient.execute(request);
         }
 
@@ -259,76 +213,22 @@ public class AboutFragment extends Fragment {
         }
     }
 
-    private class CurrentInfo extends AsyncTask<String, Integer, String> {
+    private class SaveChanges extends AsyncTask<String, Integer, String> {
         public AsyncResponse asyncResponse = null;
 
-        public CurrentInfo(AsyncResponse asyncResponse) {
+        public SaveChanges(AsyncResponse asyncResponse) {
             this.asyncResponse = asyncResponse;
         }
 
         @Override
-        protected String doInBackground(String... data) {
-            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO, Authentication.TOKEN);
-            return HttpClient.execute(request);
-        }
+        protected String doInBackground(String... token) {
+            Map<String, String> keyValues = new HashMap<>();
+            keyValues.put("userID", token[0]);
+            keyValues.put("newName", token[1]);
+            keyValues.put("newDescription", token[2]);
+            Request request = HttpClient.buildPostRequest(Api.URL_UPDATE_ABOUT,keyValues);
+            return HttpClient.execute(request);        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            asyncResponse.processFinish(result);
-        }
-    }
-
-    private class CheckSubscribeTask extends AsyncTask<String, Integer, String> {
-        public AsyncResponse asyncResponse = null;
-        public CheckSubscribeTask(AsyncResponse asyncResponse) {
-            this.asyncResponse = asyncResponse;
-        }
-        @Override
-        protected String doInBackground(String... data) {
-            Map<String,String> dataMap = new HashMap<>();
-            dataMap.put("subscriberID",data[0]);
-            dataMap.put("publisherID",data[1]);
-            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_CHECK_SUBSCRIBE,dataMap);
-            return HttpClient.execute(request);
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            asyncResponse.processFinish(result);
-        }
-    }
-
-    private class SubscribeTask extends AsyncTask<String, Integer, String> {
-        public AsyncResponse asyncResponse = null;
-        public SubscribeTask(AsyncResponse asyncResponse) {
-            this.asyncResponse = asyncResponse;
-        }
-        @Override
-        protected String doInBackground(String... data) {
-            Map<String,String> dataMap = new HashMap<>();
-            dataMap.put("subscriberID",data[0]);
-            dataMap.put("publisherID",data[1]);
-            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_SUBSCRIBE,dataMap);
-            return HttpClient.execute(request);
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            asyncResponse.processFinish(result);
-        }
-    }
-
-    private class UnSubscribeTask extends AsyncTask<String, Integer, String> {
-        public AsyncResponse asyncResponse = null;
-        public UnSubscribeTask(AsyncResponse asyncResponse) {
-            this.asyncResponse = asyncResponse;
-        }
-        @Override
-        protected String doInBackground(String... data) {
-            Map<String,String> dataMap = new HashMap<>();
-            dataMap.put("subscriberID",data[0]);
-            dataMap.put("publisherID",data[1]);
-            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_UNSUBSCRIBE,dataMap);
-            return HttpClient.execute(request);
-        }
         @Override
         protected void onPostExecute(String result) {
             asyncResponse.processFinish(result);

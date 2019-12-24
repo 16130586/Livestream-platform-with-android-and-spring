@@ -28,6 +28,17 @@ public interface StreamRepository extends JpaRepository<Stream, Integer> {
                     "on s.stream_id = st.stream_id inner join types as t on t.type_id = st.type_id " +
                     "where t.type_name in :streamTypes group by s.stream_id having count(s.stream_id) = :countType")
     List<Stream> findByStreamType(@Param("streamTypes") List<String> streamTypes, @Param("countType") Integer countType, Pageable pageable);
-
-
+	
+	@Query(nativeQuery = true,
+	 value = "SELECT s.* FROM stream as s inner join stream_type as st " +
+	  "on s.stream_id = st.stream_id inner join types as t on t.type_id = st.type_id inner join user as u on u.user_id = s.owner_id " +
+	  "where u.user_id = :userID and st.type_id = :typeID " )
+	List<Stream> repoListStreamByTypeOfUser(@Param("userID") int userID,@Param("typeID") int typeID);
+	
+	@Query(nativeQuery = true,
+	 value = "SELECT s.* FROM stream as s inner join favourite_saved as fs " +
+		  "on s.stream_id = fs.stream_id " +
+	  "where fs.user_id = :userID " )
+	List<Stream> repoGetWatchedStreamsByUserID(@Param("userID") int userID);
+	
 }

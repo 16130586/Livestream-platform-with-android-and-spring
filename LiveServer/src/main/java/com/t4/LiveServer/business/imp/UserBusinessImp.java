@@ -148,9 +148,40 @@ public class UserBusinessImp implements UserBusiness {
                 }
             }
         }
-
         return result;
     }
-
-
+    
+	@Override
+	public boolean  updateAbout(Integer userID,String newName,String newDescription){
+		int checkResult = userRepository.repoUpdateAbout(userID, newName, newDescription);
+		if(checkResult>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
+	@Override
+	public List<User> getSubscribedChannelByUserID(int userID, int offset, int limit) {
+		if (offset <= 0)
+			offset = 0;
+		if (limit <= 0)
+			limit = 5;
+		
+		List<User> userList = userRepository.repoGetSubscribedChannelByUserID(userID);
+		List<User> result = new ArrayList<>();
+		
+		int startLength = offset - 1;
+		if (startLength > userList.size()) {
+			result = null;
+		} else {
+			for (int i = startLength, picked = 0; i < userList.size(); i++, picked++) {
+				if (picked < limit) {
+					result.add(userList.get(i));
+				}
+			}
+		}
+		return result;
+	}
 }

@@ -22,77 +22,76 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#49A7A3A3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/channel_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center"
-            app:civ_circle_background_color="#6B323D"
             android:src="@drawable/ic_fire"
             app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp" />
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="#834D0212" />
 
 
-
-        <TextView
+        <EditText
             android:id="@+id/channel_name"
+            android:enabled="false"
+            android:textColor="@color/edit_text_selector"
+            android:inputType="text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_toRightOf="@id/channel_image"
-            android:text="Fullname"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/channel_image"
+            android:textSize="16sp"
+            android:text="Không có người đăng ký"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/channel_sub_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_toRightOf="@id/channel_image"
             android:layout_below="@id/channel_name"
-            android:textSize="16sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@+id/channel_image"
             android:fontFamily="sans-serif"
-            android:text="Không có người đăng ký"/>
+            android:gravity="center_vertical"
+            android:text="Không có người đăng ký"
+            android:textSize="14sp" />
 
         <ImageButton
             android:id="@+id/btn_change_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/channel_sub_number"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="-40dp"
-            android:layout_toRightOf="@id/channel_image"
-            android:background="#00FFFFFF"
-            android:src="@drawable/ic_collections_black_24dp"
-            android:text="Subscribe"
-            android:textSize="12sp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toStartOf="@+id/btn_change_about"
+            android:src="@drawable/ic_collections_black_24dp" />
 
         <ImageButton
             android:id="@+id/btn_change_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/channel_sub_number"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="280dp"
-            android:layout_marginTop="-40dp"
-            android:layout_toRightOf="@id/channel_image"
-            android:background="#00FFFFFF"
-            android:src="@drawable/ic_settings_black_24dp"
-            android:text="Subscribe"
-            android:textSize="12sp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_settings_black_24dp" />
+
     </RelativeLayout>
 
 
@@ -113,38 +112,48 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="Giới thiệu kênh"
-            android:textStyle="bold"
+            android:drawableTint="#2B2B2B"
             android:fontFamily="sans-serif"
-            android:textSize="18sp" />
+            android:textColor="#000000"
+
+            android:text="About Channel"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/title_channel_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:textColor="#000000"
+
             android:layout_below="@id/about_title"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             android:fontFamily="sans-serif"
-            android:text="Chủ đề Stream : "/>
+            android:text="Types of Stream :"/>
 
         <TextView
             android:id="@+id/channel_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:textColor="#000000"
             android:layout_below="@id/title_channel_type"
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textAllCaps="true"
             android:fontFamily="sans-serif"
             android:text=""/>
+        <!--            #18FB082E-->
 
-        <TextView
+        <EditText
             android:id="@+id/description"
+            android:textColor="@color/edit_text_selector"
+            android:enabled="false"
+            android:inputType="textMultiLine"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
@@ -155,6 +164,5 @@
             android:fontFamily="sans-serif"
             android:text="Desctiption here"/>
     </RelativeLayout>
-
 
 </LinearLayout>

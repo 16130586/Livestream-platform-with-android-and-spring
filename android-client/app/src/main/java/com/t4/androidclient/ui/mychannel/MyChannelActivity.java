@@ -8,7 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
@@ -19,6 +23,7 @@ import com.t4.androidclient.R;
 import com.t4.androidclient.searching.MakeSuggestion;
 import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
+import com.t4.androidclient.ui.channel.ChannelActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,31 +34,56 @@ public class MyChannelActivity extends AppCompatActivity implements MakeSuggesti
     ImageView app_logo;
     MakeSuggestion makeSuggestion = this;
     private asyn a = null;
+    int ownerId ;
+    String channelName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mychannel);
         mSearchView  = findViewById(R.id.mychannel_floating_search_view);
-        mSearchView.setSearchHint("Channel "+getIntent().getStringExtra("DATA2"));
 
         /////////// thêm bottom menu navigation
+        String fragment_des = getIntent().getStringExtra("fragment_des");
+        System.out.println(fragment_des);
+
         BottomNavigationView navView = findViewById(R.id.menu_mychannel_view);
         NavController navController = Navigation.findNavController(this, R.id.mychannel_host_fragment);
+        NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.mychannel_navigation);
         NavigationUI.setupWithNavController(navView, navController);
 
+
+        if(fragment_des!=null){
+           if(fragment_des.equals("your_streams")){
+
+        }
+           else if(fragment_des=="your_watched_streams"){
+               navGraph.setStartDestination(R.id.fragment_mychannel_watched_streams);
+           }
+           else if(fragment_des=="your_subscribed_channels"){
+               navGraph.setStartDestination(R.id.fragment_mychannel_subscribed_channels);
+           }
+           else if(fragment_des=="your_channel"){
+               navGraph.setStartDestination(R.id.fragment_mychannel_about);
+           }
+           navController.setGraph(navGraph);
+       }
+
+        bindNavigateData(getIntent());
+        mSearchView.setSearchHint("Your channel : "+ channelName);
+
         // Click back về Home
-        app_logo = findViewById(R.id.mychannel_back_logo);
-        app_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(0, 0);
-                Intent backHome = new Intent(MyChannelActivity.this, MainScreenActivity.class);
-                startActivity(backHome);
-                overridePendingTransition(0, 0);
-            }
-        });
+//        app_logo = findViewById(R.id.mychannel_back_logo);
+//        app_logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                overridePendingTransition(0, 0);
+//                Intent backHome = new Intent(MyChannelActivity.this, MainScreenActivity.class);
+//                startActivity(backHome);
+//                overridePendingTransition(0, 0);
+//            }
+//        });
 
 
         /////////////  thêm search vào
@@ -113,5 +143,9 @@ public class MyChannelActivity extends AppCompatActivity implements MakeSuggesti
             mSearchView.setFocusable(true);
             mSearchView.setSearchText(results.get(0));
         }
+    }
+    private void bindNavigateData(Intent previousNavigationData) {
+        this.ownerId = previousNavigationData.getIntExtra("owner_id", -1);
+        this.channelName=previousNavigationData.getStringExtra("channel_name");
     }
 }

@@ -17,4 +17,7 @@ public interface UserBusiness {
     boolean upgradePremium(int userId, int subscriptionId, int number, double amount);
     void deleteNotification(Integer id);
     List<User> getSubscription(User user, int offset, int limit);
+	boolean  updateAbout(Integer userID,String newName,String newDescription);
+	List<User> getSubscribedChannelByUserID(int userID, int offset, int limit);
+	
 }

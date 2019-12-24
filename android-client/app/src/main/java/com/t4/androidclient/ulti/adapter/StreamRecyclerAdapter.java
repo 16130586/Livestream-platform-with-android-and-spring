@@ -79,8 +79,8 @@ public class StreamRecyclerAdapter extends
             Class nextActivity = ChannelActivity.class;
             if (nextActivity != null) {
                 Intent t = new Intent(context, nextActivity);
-                t.putExtra("DATA", listStream.get(position).getOwner().getId());
-                t.putExtra("DATA2", listStream.get(position).getOwner().getUsername());
+                t.putExtra("owner_id", listStream.get(position).getOwner().getId());
+                t.putExtra("channel_name", listStream.get(position).getOwner().getUsername());
                 context.startActivity(t);
             }
         });
@@ -112,7 +112,7 @@ public class StreamRecyclerAdapter extends
         }
         if (nextActivity != null) {
             Intent t = new Intent(context, nextActivity);
-            t.putExtra("DATA", JsonHelper.serialize(modelClicked));
+            t.putExtra("owner_id", JsonHelper.serialize(modelClicked));
             context.startActivity(t);
         }
     }
