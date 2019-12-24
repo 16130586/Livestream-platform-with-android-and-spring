@@ -6,7 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchActivity">
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -18,6 +21,11 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/search_layout"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -47,6 +55,8 @@
                 app:floatingSearch_actionMenuOverflowColor="#FF006F"
                 app:floatingSearch_backgroundColor="@null"
                 app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                app:floatingSearch_menu="@menu/search_menu"
+                app:floatingSearch_menuItemIconColor="@color/black"
                 app:floatingSearch_dimBackground="false"
                 app:floatingSearch_hintTextColor="#000000"
                 app:floatingSearch_leftActionColor="#000000"
@@ -54,7 +64,7 @@
                 app:floatingSearch_searchBarMarginLeft="10dp"
                 app:floatingSearch_searchBarMarginRight="10dp"
                 app:floatingSearch_searchBarMarginTop="10dp"
-                app:floatingSearch_searchHint="Channel Faker SKT T1"
+                app:floatingSearch_searchHint="Search..."
                 app:floatingSearch_showSearchKey="true"
                 app:floatingSearch_suggestionRightIconColor="#000000"
                 app:floatingSearch_suggestionsListAnimDuration="250"
@@ -62,17 +72,35 @@
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="56dp"
                 tools:layout_editor_absoluteY="133dp"></com.arlib.floatingsearchview.FloatingSearchView>
-
         </RelativeLayout>
+        <GridView
+            android:id="@+id/search_advance_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3" >
+        </GridView>
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_stream"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         tools:ignore="MissingConstraints"
         android:clipToPadding="false"
-        android:paddingBottom="64dp"
-        android:paddingTop="70dp">
+        android:paddingBottom="30dp"
+        android:paddingTop="10dp">
     </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/search_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

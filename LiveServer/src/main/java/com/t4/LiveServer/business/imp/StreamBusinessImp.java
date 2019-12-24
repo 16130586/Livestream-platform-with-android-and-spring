@@ -148,7 +148,7 @@ public class StreamBusinessImp implements StreamBusiness {
 
 
     @Override
-    public Object start(String id) {
+    public Stream start(String id) {
         Stream requested = streamRepository.findById(Integer.parseInt(id)).get();
         if (requested == null)
             return null;
@@ -158,7 +158,7 @@ public class StreamBusinessImp implements StreamBusiness {
         try {
             String fullyUrl = WowzaStream.URL_LIVE_STREAM + "/" + requested.getWowzaId() + "/state";
             while (true) {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
                 ResponseEntity<String> result = restTemplate.exchange(fullyUrl,
                         HttpMethod.GET, new HttpEntity(WowzaStream.getWowzaConfigHeaders()), String.class);
                 WowzaStream stream = JsonHelper.deserialize(DeserializationFeature.UNWRAP_ROOT_VALUE,
@@ -241,7 +241,7 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public List<Stream> getStreamsByName(String streamName, int offset, int pageSize) {
         Pageable pageable = new PageRequest(offset, pageSize);
-        return streamRepository.findByStreamNameContaining(streamName, pageable);
+        return streamRepository.findByTitleContaining(streamName, pageable);
     }
 
     @Override

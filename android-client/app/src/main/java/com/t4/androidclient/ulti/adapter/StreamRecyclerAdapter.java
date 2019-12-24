@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.livestream.WatchLiveStreamActivity;
@@ -53,10 +54,11 @@ public class StreamRecyclerAdapter extends
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         StreamViewModel streamModel = listStream.get(position);
-        byte[] imageBytes;
 
-        imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
-        Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//        byte[] imageBytes;
+
+//        imageBytes = Base64.decode(streamModel.getOwner().avatar == null ? "" : streamModel.getOwner().avatar, Base64.DEFAULT);
+//        Bitmap ownerAvatarImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
         
         Glide.with(context).load(streamModel.getThumbnail() == null ? "" : streamModel.getThumbnail())
@@ -64,8 +66,12 @@ public class StreamRecyclerAdapter extends
         ImageView ownerAvatarView = holder.avatarView;
 
 
-        Glide.with(context).load(ownerAvatarImage)
-                .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
+//        Glide.with(context).load(ownerAvatarImage)
+//                .placeholder(R.drawable.place_holder).centerCrop().into(holder.avatarView);
+        String avatarURL = streamModel.getOwner().avatar;
+        if (avatarURL != null && !avatarURL.isEmpty())
+            Glide.with(context).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(holder.avatarView);
 
         TextView titleView = holder.titleView;
         titleView.setText(streamModel.getTitle());
@@ -90,7 +96,14 @@ public class StreamRecyclerAdapter extends
         });
 
         TextView timeView = holder.timeView;
-        timeView.setText(streamModel.getDateStatus());
+        String txtInfo = streamModel.getOwner().nickname + " - " + streamModel.getTotalView() + " views - " + streamModel.getDateStatus();
+        timeView.setText(txtInfo);
+        TextView txtLiveNOW = holder.liveNOW;
+        if ("Live NOW".equals(streamModel.getDateStatus()))
+            txtLiveNOW.setVisibility(View.VISIBLE);
+        else
+            txtLiveNOW.setVisibility(View.GONE);
+
     }
 
     private void navigateToWatchingActivity(StreamViewModel modelClicked) {
@@ -125,7 +138,7 @@ public class StreamRecyclerAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;
         public CircleImageView avatarView;
-        public TextView titleView, timeView;
+        public TextView titleView, timeView, liveNOW;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -133,6 +146,11 @@ public class StreamRecyclerAdapter extends
             avatarView = (CircleImageView) itemView.findViewById(R.id.item_stream_avatar);
             titleView = (TextView) itemView.findViewById(R.id.item_stream_name);
             timeView = (TextView) itemView.findViewById(R.id.item_stream_time_status);
+            liveNOW = (TextView) itemView.findViewById(R.id.text_live_now);
         }
+    }
+
+    public void clear() {
+        listStream.clear();
     }
 }

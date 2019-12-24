@@ -1,4 +1,4 @@
-package com.t4.androidclient;
+﻿package com.t4.androidclient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.bumptech.glide.Glide;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -52,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Request;
 
 
@@ -62,6 +65,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     MakeSuggestion makeSuggestion = this;
     NavigationView slide_view;
     User user;
+    public ProgressBar progressBar;
     private asyn a = null;
     private LoginButton mBtnFacebook;
     private CallbackManager mCallbackManager;
@@ -74,6 +78,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         mCallbackManager = CallbackManager.Factory.create();
+        progressBar = findViewById(R.id.main_loading);
         ///////////// thêm slide menu navigation
         mDrawerLayout = findViewById(R.id.drawer_layout);
         slide_view = findViewById(R.id.slide_view);
@@ -83,6 +88,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         //==============================================================================
         // Validate token & get user info if token valid.
         //================================================================================
+        progressBar.setVisibility(View.VISIBLE);
         if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
             // TODO handle in case null token
             System.out.println("=========================================================================================");
@@ -103,6 +109,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         }
                     }
                     doProcessNotLogin();
+                    progressBar.setVisibility(View.GONE);
                 }
             });
             infoUser.execute();
@@ -118,6 +125,23 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+
+        slide_view.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        mDrawerLayout.closeDrawers();
+                        int id = menuItem.getItemId();
+                        if (id == R.id.your_videos) {
+                            System.out.println("Chọn 1");
+                        }
+                        progressBar.setVisibility(View.GONE);
+                        return true;
+                    }
+
+                });
 
 
         mDrawerLayout.addDrawerListener(
@@ -271,7 +295,10 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                  if (item.getItemId() == R.id.open_menu_slide) {
                     mDrawerLayout = findViewById(R.id.drawer_layout);
                     mDrawerLayout.openDrawer(GravityCompat.START);
-                } else if (item.getItemId() == R.id.create_live_stream) {
+                 } else if (item.getItemId() == R.id.search_advance) {
+                     Intent intentSearch = new Intent(MainScreenActivity.this, SearchActivity.class);
+                     startActivity(intentSearch);
+                 } else if (item.getItemId() == R.id.create_live_stream) {
                     if (Authentication.ISLOGIN) {
                         Intent createLive = new Intent(MainScreenActivity.this, CreateLiveActivity.class);
                         startActivity(createLive);
@@ -279,32 +306,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         mDrawerLayout = findViewById(R.id.drawer_layout);
                         mDrawerLayout.openDrawer(GravityCompat.START);
                     }
-                }
-            }
-        });
-
-        // cái này là kiểm tra thay đổi trên search
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, String newQuery) {
-                if (!oldQuery.equals("") && newQuery.equals("")) {
-                    mSearchView.clearSuggestions();
-                } else {
-                    mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-                        @Override
-                        public void onSearchTextChanged(String oldQuery, String newQuery) {
-                            if (!oldQuery.equals("") && newQuery.equals("")) {
-                                mSearchView.clearSuggestions();
-                            } else {
-                                mSearchView.showProgress();
-                                if (a != null) {
-                                    a.cancel(true);
-                                }
-                                a = (asyn) new asyn(makeSuggestion).execute("http://suggestqueries.google.com/complete/search?output=firefox&hl=vi&q=" + newQuery);
-
-                            }
-                        }
-                    });
                 }
             }
         });
@@ -317,9 +318,11 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
             @Override
             public void onSearchAction(String currentQuery) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(MainScreenActivity.this, SearchActivity.class);
                 intent.putExtra("keywords", currentQuery);
                 startActivity(intent);
+                progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -403,21 +406,24 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         Authentication.ISLOGIN = true;
         slide_view.getMenu().clear();
         slide_view.inflateHeaderView(R.layout.slide_header);
-        slide_view.inflateMenu(R.menu.menu_slide);
+        CircleImageView profileImage = slide_view.getHeaderView(0).findViewById(R.id.profile_image);
+        TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
+//        if (user.getSubscription() != null) {
+//            TextView iconVIP = slide_view.findViewById(R.id.icon_vip);
+//            iconVIP.setVisibility(View.VISIBLE);
+//            buySubscription.setText("Your subscription will expires on " + user.subscription.getEndTime());
+//            buySubscription.setTextSize(14);
+//        } else {
+            buySubscription.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + user.getId() + "\"> Upgrade To Premium Account</a>"));
+            buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
+//        }
+
+        if (user.avatar != null && !user.avatar.isEmpty())
+            Glide.with(this).load(user.avatar.startsWith("http") ? user.avatar : Host.API_HOST_IP + user.avatar) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(profileImage);
+
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
-        TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
-        buySubscription.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + user.getId() + "\"> Upgrade To Premium Account</a>"));
-        buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainScreenActivity.this, MainScreenActivity.class);
-                startActivity(intent);
-                slide_view.removeHeaderView(slide_view.getHeaderView(0));
-                logout();
-            }
-        });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
         profile_fullname.setText("Hi " + user.getNickname() );
 //        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);

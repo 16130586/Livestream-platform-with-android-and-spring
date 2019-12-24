@@ -20,7 +20,7 @@ public class User {
     public List<Notification> notifications;
     public List<Genre> favouriteType;
     public List<FavouriteSaved> favouriteSaveds;
-    public List<Subscription> subscriptions;
+    public Subscription subscription;
     public List<LiveStream> streams;
 
     public User() {
@@ -115,12 +115,12 @@ public class User {
         this.favouriteSaveds = favouriteSaveds;
     }
 
-    public List<Subscription> getSubscriptions() {
-        return subscriptions;
+    public Subscription getSubscription() {
+        return subscription;
     }
 
-    public void setSubscriptions(List<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
+    public void setSubscriptions(Subscription subscription) {
+        this.subscription = subscription;
     }
 
     public List<LiveStream> getStreams() {
@@ -130,4 +130,5 @@ public class User {
     public void setStreams(List<LiveStream> streams) {
         this.streams = streams;
     }
+
 }

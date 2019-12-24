@@ -8,14 +8,20 @@
     <!--FA983B -->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="25dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_fire"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp" />
-
+    <ImageView
+        android:id="@+id/icon_vip"
+        android:layout_width="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_turned_in"
+        android:layout_height="30dp"
+        android:gravity="center"/>
     <TextView
         android:id="@+id/profile_fullname"
         android:layout_width="match_parent"
@@ -61,6 +67,7 @@
         android:textColor="#333"
         android:textSize="18sp"
         android:text="Buy Subscription"
+        android:textSize="16sp"
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         />

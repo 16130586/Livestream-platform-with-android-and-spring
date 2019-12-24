@@ -32,13 +32,15 @@
 			android:id="@+id/inbox_message"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="@color/metal_black_light"
+			android:textSize="@dimen/text_size_medium"
+			android:textColor="@color/metal_black"
 			/>
 
 		<TextView
 			android:id="@+id/inbox_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_size_small"
 			/>
 
 	</LinearLayout>

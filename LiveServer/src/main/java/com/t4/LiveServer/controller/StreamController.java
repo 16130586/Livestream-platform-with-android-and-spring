@@ -47,8 +47,8 @@ public class StreamController {
     public ApiResponse start(@PathVariable("id") String id) {
         ApiResponse apiResponse = new ApiResponse();
         try {
-            Object rs = streamBusiness.start(id);
-            if (rs != null) {
+            Stream rs = streamBusiness.start(id);
+            if (rs != null && rs.getStatus() > 0) {
                 apiResponse.statusCode = 200;
                 apiResponse.message = "Ok";
                 apiResponse.data = rs;
@@ -121,28 +121,28 @@ public class StreamController {
         return apiResponse;
     }
 
-    @GetMapping("/findAdvance/{streamName}/{offset}/{pageSize}")
-    public ApiResponse getStreamsByNameAndType(@PathVariable String streamName, @RequestBody Map<String, String> datas, @PathVariable Integer offset, @PathVariable Integer pageSize) {
+    @PostMapping("/findAdvance/{streamName}/{offset}/{pageSize}")
+    public ApiResponse getStreamsByNameAndType(@PathVariable String streamName, @RequestBody List<String> datas, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get stream by name and type";
         List<String> streamTypes = new ArrayList<>();
-        for (Map.Entry<String, String> entry : datas.entrySet()) {
-            streamTypes.add(entry.getValue());
+        for (String data : datas) {
+            streamTypes.add(data);
         }
         apiResponse.data = streamBusiness.getStreamsByNameAndType(streamName, streamTypes, offset, pageSize);
 
         return apiResponse;
     }
 
-    @GetMapping("/findAdvance/{offset}/{pageSize}")
-    public ApiResponse getStreamsByType(@RequestBody Map<String, String> datas, @PathVariable Integer offset, @PathVariable Integer pageSize) {
+    @PostMapping("/findAdvance/{offset}/{pageSize}")
+    public ApiResponse getStreamsByType(@RequestBody List<String> datas, @PathVariable Integer offset, @PathVariable Integer pageSize) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get stream by type";
         List<String> streamTypes = new ArrayList<>();
-        for (Map.Entry<String, String> entry : datas.entrySet()) {
-            streamTypes.add(entry.getValue());
+        for (String data : datas) {
+            streamTypes.add(data);
         }
         apiResponse.data = streamBusiness.getStreamsByNameAndType(null, streamTypes, offset, pageSize);
 
