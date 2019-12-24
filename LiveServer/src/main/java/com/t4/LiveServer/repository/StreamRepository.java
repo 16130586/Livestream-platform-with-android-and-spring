@@ -27,5 +27,7 @@ public interface StreamRepository extends JpaRepository<Stream, Integer> {
                     "where t.type_name in :streamTypes group by s.stream_id having count(s.stream_id) = :countType")
     List<Stream> findByStreamType(@Param("streamTypes") List<String> streamTypes, @Param("countType") Integer countType, Pageable pageable);
 
+    List<Stream> findAllByStatusIsNot(int streamStatus, Pageable pageable);
+
 
 }

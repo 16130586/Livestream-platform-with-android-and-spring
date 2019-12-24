@@ -30,7 +30,7 @@ import viewModel.StreamViewModel;
 public class StreamRecyclerAdapter extends
         RecyclerView.Adapter<StreamRecyclerAdapter.ViewHolder> {
     private List<StreamViewModel> listStream;
-    private final int STATUS_ENDED = -1;
+    private final int STATUS_ENDED = 2;
     private final int STATUS_ON_LIVE = 1;
     private Context context;
 

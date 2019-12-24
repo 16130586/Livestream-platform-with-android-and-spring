@@ -29,8 +29,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class StreamBusinessImp implements StreamBusiness {
@@ -168,8 +166,8 @@ public class StreamBusinessImp implements StreamBusiness {
                         result.getBody(), WowzaStream.class);
                 System.out.println(result.getBody());
                 if (stream != null && stream.state.equals("started")) {
-                    requested.setStatus(1);
                     requested.setStartTime(DateUtil.getCurrentDateInUTC());
+                    requested.setStatus(StreamStatus.STARTED);
                     Stream rs = streamRepository.saveAndFlush(requested);
                     System.out.println(rs);
                     break;
@@ -187,7 +185,7 @@ public class StreamBusinessImp implements StreamBusiness {
         if (requested == null)
             return null;
         wowzaStreamBusiness.stop(requested.getWowzaId());
-        requested.setStatus(-1);
+        requested.setStatus(StreamStatus.END);
         requested.setEndTime(DateUtil.getCurrentDateInUTC());
         requested = streamRepository.saveAndFlush(requested);
         return requested;
@@ -217,14 +215,14 @@ public class StreamBusinessImp implements StreamBusiness {
             streamTypeString.add(streamType.getTypeName());
         }
         Pageable pageable = new PageRequest(offset, pageSize);
-        return streamRepository.findAllByStreamTypeInAndStatus(streamTypeString, StreamStatus.REAL_TIME, streamTypeString.size(), pageable);
+        return streamRepository.findAllByStreamTypeInAndStatus(streamTypeString, StreamStatus.STARTED, streamTypeString.size(), pageable);
     }
 
     @Override
     public List<Stream> getRecommendForCookieUser(int page, int pageSize) {
         try {
             Pageable pageable = new PageRequest(page, pageSize, Sort.by("startTime").ascending());
-            return streamRepository.findAll(pageable).getContent();
+            return streamRepository.findAllByStatusIsNot(StreamStatus.INIT, pageable);
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
@@ -259,7 +257,7 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public Comment saveComment(Comment comment) {
         Stream requestedStream = streamRepository.getOne(comment.getStreamId());
-        if(requestedStream.getStatus() == 1){
+        if(requestedStream.getStatus() == StreamStatus.STARTED){
             java.util.Date current = DateUtil.getCurrentDateInUTC();
             java.util.Date started = requestedStream.getStartTime();
             long timeDiff = Math.abs(current.getTime() - started.getTime());
@@ -267,5 +265,11 @@ public class StreamBusinessImp implements StreamBusiness {
             comment.setVideoTime(atSecondOfLiveStream);
         }
         return commentRepository.save(comment);
+    }
+
+    @Override
+    public List<Stream> getTrendingStreams(int offset, int pageSize) {
+        Pageable pageable = new PageRequest(offset, pageSize, Sort.by("totalView").descending());
+        return streamRepository.findAll(pageable).getContent();
     }
 }
