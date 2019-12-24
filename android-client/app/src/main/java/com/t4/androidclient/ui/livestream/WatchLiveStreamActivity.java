@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,13 +62,17 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
     private CircleImageView ownerAvatarView;
     private EditText commentInput;
-    private ImageButton commentSendButton;
+    private ImageButton commentSendButton, showCommentButton;
     private LinearLayoutManager linearLayoutManager;
+    private LinearLayout commentInputContainer;
     private CommentAdapter adapter;
     private RecyclerView recyclerView;
     private List<Comment> commentList;
     private List<Integer> commentIdList;
     private Socket mSocket;
+
+    private boolean showComment = true;
+
     {
         try {
             mSocket = IO.socket(Host.SOCKET_HOST);
@@ -188,6 +194,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     public void setUp() {
         commentList = new ArrayList<>();
         commentIdList = new ArrayList<>();
+        addTen();
 
         linearLayoutManager = new LinearLayoutManager(this);
         adapter = new CommentAdapter(commentList, this);
@@ -218,6 +225,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         Glide.with(ownerAvatarView.getContext()).load(streamViewModel.getOwner().getAvatar())
                 .centerCrop().into(ownerAvatarView);
 
+        commentInputContainer = findViewById(R.id.stream_watch_comment_container);
         commentInput = findViewById(R.id.stream_watch_comment);
         commentSendButton = findViewById(R.id.stream_watch_comment_button);
         commentSendButton.setOnClickListener(new View.OnClickListener() {
@@ -242,14 +250,50 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
             }
         });
 
+        showCommentButton = findViewById(R.id.stream_watch_show_comment_button);
+        showCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showComment) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    commentInputContainer.setVisibility(View.INVISIBLE);
+                    showCommentButton.setImageResource(R.drawable.no_comment);
+                    disconnectSocket();
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    commentInputContainer.setVisibility(View.VISIBLE);
+                    showCommentButton.setImageResource(R.drawable.comment);
+                    connectSocket();
+                }
+                showComment = !showComment;
+            }
+        });
+        if (Authentication.ISLOGIN == false) {
+            commentInputContainer.setVisibility(View.GONE);
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    37.0f
+            );
+            recyclerView.setLayoutParams(param);
+        }
+
         mSocket.on("server-send-comment", onNewComment);
+        connectSocket();
+    }
+
+    public void connectSocket() {
         mSocket.connect();
-        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()) );
+        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()));
+    }
+
+    public void disconnectSocket() {
+        mSocket.disconnect();
     }
 
     public void addTen() {
         int n = 0;
-        while(n < 5){
+        while(n < 100){
             commentList.add(new Comment("jack", "messssss"));
             n++;
         }

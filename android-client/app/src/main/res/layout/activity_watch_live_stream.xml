@@ -60,12 +60,19 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="function buttons here" />
+            <ImageButton
+                android:id="@+id/stream_watch_show_comment_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/comment">
+
+            </ImageButton>
         </RelativeLayout>
     </LinearLayout>
 
@@ -146,6 +153,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/stream_watch_comment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
@@ -165,8 +173,8 @@
 
         <ImageButton
             android:id="@+id/stream_watch_comment_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:padding="20dp"
