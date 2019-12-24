@@ -67,6 +67,7 @@
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/camera_example_title"
             android:screenOrientation="fullSensor" />
         <activity

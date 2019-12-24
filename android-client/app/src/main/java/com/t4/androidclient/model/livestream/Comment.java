@@ -11,7 +11,7 @@ public class Comment {
     private Integer commentSource;
     private Integer videoTime;
     private String ownerName;
-
+    private int ownerId;
     public Comment() {
 
     }
@@ -97,5 +97,13 @@ public class Comment {
 
     public void setVideoTime(Integer videoTime) {
         this.videoTime = videoTime;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 }

@@ -18,6 +18,7 @@ import com.t4.LiveServer.model.wowza.WowzaStream;
 import com.t4.LiveServer.repository.CommentRepository;
 import com.t4.LiveServer.repository.StreamRepository;
 import com.t4.LiveServer.repository.StreamTypeRepository;
+import com.t4.LiveServer.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +29,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class StreamBusinessImp implements StreamBusiness {
@@ -166,6 +169,7 @@ public class StreamBusinessImp implements StreamBusiness {
                 System.out.println(result.getBody());
                 if (stream != null && stream.state.equals("started")) {
                     requested.setStatus(1);
+                    requested.setStartTime(DateUtil.getCurrentDateInUTC());
                     Stream rs = streamRepository.saveAndFlush(requested);
                     System.out.println(rs);
                     break;
@@ -184,6 +188,7 @@ public class StreamBusinessImp implements StreamBusiness {
             return null;
         wowzaStreamBusiness.stop(requested.getWowzaId());
         requested.setStatus(-1);
+        requested.setEndTime(DateUtil.getCurrentDateInUTC());
         requested = streamRepository.saveAndFlush(requested);
         return requested;
     }
@@ -217,7 +222,6 @@ public class StreamBusinessImp implements StreamBusiness {
 
     @Override
     public List<Stream> getRecommendForCookieUser(int page, int pageSize) {
-
         try {
             Pageable pageable = new PageRequest(page, pageSize, Sort.by("startTime").ascending());
             return streamRepository.findAll(pageable).getContent();
@@ -225,7 +229,6 @@ public class StreamBusinessImp implements StreamBusiness {
             e.printStackTrace();
             return Collections.emptyList();
         }
-
     }
 
     @Override
@@ -255,6 +258,14 @@ public class StreamBusinessImp implements StreamBusiness {
 
     @Override
     public Comment saveComment(Comment comment) {
+        Stream requestedStream = streamRepository.getOne(comment.getStreamId());
+        if(requestedStream.getStatus() == 1){
+            java.util.Date current = DateUtil.getCurrentDateInUTC();
+            java.util.Date started = requestedStream.getStartTime();
+            long timeDiff = Math.abs(current.getTime() - started.getTime());
+            int atSecondOfLiveStream = (int)timeDiff / 1000;
+            comment.setVideoTime(atSecondOfLiveStream);
+        }
         return commentRepository.save(comment);
     }
 }

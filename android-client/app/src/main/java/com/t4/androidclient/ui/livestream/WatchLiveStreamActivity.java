@@ -236,7 +236,6 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                         System.out.println(output);
                         Comment comment = CommentHelper.parseComment(output);
                         System.out.println("================================ " + comment.toString());
-                        //commentIdList.add(comment.getCommentId());
                     }
                 });
                 pushCommentTask.execute(comment);
@@ -245,15 +244,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
         mSocket.on("server-send-comment", onNewComment);
         mSocket.connect();
-        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()) );
-    }
-
-    public void addTen() {
-        int n = 0;
-        while(n < 5){
-            commentList.add(new Comment("jack", "messssss"));
-            n++;
-        }
+        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()));
     }
 
     private Emitter.Listener onNewComment = new Emitter.Listener() {
@@ -316,9 +307,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
     public void addMessage(String username, String message) {
         commentList.add(new Comment(username, message));
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemRangeChanged(commentList.size() - 1 , 1);
         recyclerView.scrollToPosition(commentList.size() - 1);
     }
-
-
 }

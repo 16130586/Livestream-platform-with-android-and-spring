@@ -63,7 +63,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     ImageView app_logo;
     MakeSuggestion makeSuggestion = this;
     NavigationView slide_view;
-    User user;
+    public static User user;
     public ProgressBar progressBar;
     private asyn a = null;
     private LoginButton mBtnFacebook;
