@@ -3,12 +3,14 @@ package com.t4.androidclient.model.livestream;
 import java.util.Date;
 
 public class Comment {
-    private String ownerName;
+    private Integer commentId;
     private String message;
     private Date createTime;
+    private Integer streamId;
     private Integer streamStatus;
     private Integer commentSource;
     private Integer videoTime;
+    private String ownerName;
 
     public Comment() {
 
@@ -17,6 +19,36 @@ public class Comment {
     public Comment(String ownerName, String message) {
         this.ownerName = ownerName;
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentId=" + commentId +
+                ", message='" + message + '\'' +
+                ", createTime=" + createTime +
+                ", streamId=" + streamId +
+                ", streamStatus=" + streamStatus +
+                ", commentSource=" + commentSource +
+                ", videoTime=" + videoTime +
+                ", ownerName='" + ownerName + '\'' +
+                '}';
+    }
+
+    public Integer getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
+    }
+
+    public Integer getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(Integer streamId) {
+        this.streamId = streamId;
     }
 
     public String getOwnerName() {

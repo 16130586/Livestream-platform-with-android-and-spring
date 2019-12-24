@@ -26,6 +26,7 @@ import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.model.helper.CommentHelper;
 import com.t4.androidclient.model.livestream.Comment;
 
 import java.net.URISyntaxException;
@@ -63,6 +64,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private CommentAdapter adapter;
     private RecyclerView recyclerView;
     private List<Comment> commentList;
+    private List<Integer> commentIdList;
     private Socket mSocket;
     {
         try {
@@ -170,12 +172,21 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                 .centerCrop().into(videoView.getCoverView());
         videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSocket.disconnect();
+    }
+
     private void bindNavigateData(Intent previousNavigationData) {
         this.streamViewModel = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA") , StreamViewModel.class);
     }
 
     public void setUp() {
         commentList = new ArrayList<>();
+        commentIdList = new ArrayList<>();
         addTen();
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -217,11 +228,14 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                 comment.setMessage(commentInput.getText().toString());
 
                 commentInput.setText("");
-                mSocket.emit("client-send-comment", JsonHelper.serialize(comment));
+                //mSocket.emit("client-send-comment", JsonHelper.serialize(comment));
                 PushCommentTask pushCommentTask = new PushCommentTask(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
                         System.out.println(output);
+                        Comment comment = CommentHelper.parseComment(output);
+                        System.out.println("================================ " + comment.toString());
+                        //commentIdList.add(comment.getCommentId());
                     }
                 });
                 pushCommentTask.execute(comment);
@@ -230,7 +244,6 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
         mSocket.on("server-send-comment", onNewComment);
         mSocket.connect();
-
         mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()) );
     }
 
@@ -252,16 +265,19 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                     System.out.println(data.toString());
                     String ownerName;
                     String message;
+                    int commentId;
                     try {
                         ownerName = data.getString("ownerName");
                         message = data.getString("message");
-                        System.out.println(ownerName + " ====== " + message);
+                        commentId = data.getInt("commentId");
+                        System.out.println(ownerName + " ====== " + message + " ===== " + commentId);
                     } catch (JSONException e) {
                         return;
                     }
 
-                    // add the message to view
-                    addMessage(ownerName, message);
+                    // add the message to view if not conflict id
+                        addMessage(ownerName, message);
+
                 }
             });
         }
@@ -281,6 +297,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
             Comment comment = comments[0];
             keyValues.put("message", comment.getMessage());
             keyValues.put("streamStatus", streamViewModel.getStatus().toString());
+            keyValues.put("ownerName", MainScreenActivity.user.nickname);
             keyValues.put("videoTime", "200");
             Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
             return HttpClient.execute(request);
