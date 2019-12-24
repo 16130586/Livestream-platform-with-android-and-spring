@@ -23,6 +23,7 @@ import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CommentAdapter;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
@@ -68,7 +69,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("http://192.168.1.4:3000");
+            mSocket = IO.socket(Host.SOCKET_HOST);
         } catch (URISyntaxException e) {}
     }
 
