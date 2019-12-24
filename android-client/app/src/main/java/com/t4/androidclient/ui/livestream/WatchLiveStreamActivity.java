@@ -194,7 +194,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     public void setUp() {
         commentList = new ArrayList<>();
         commentIdList = new ArrayList<>();
-        addTen();
+        //addTen();
 
         linearLayoutManager = new LinearLayoutManager(this);
         adapter = new CommentAdapter(commentList, this);
