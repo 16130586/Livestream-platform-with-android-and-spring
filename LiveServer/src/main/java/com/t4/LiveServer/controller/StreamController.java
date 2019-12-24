@@ -160,6 +160,7 @@ public class StreamController {
         comment.setOwnerId(user.getUserId());
         comment.setStreamId(streamId);
         comment.setMessage(datas.get("message"));
+        comment.setOwnerName(datas.get("ownerName"));
         comment.setStreamStatus(Integer.parseInt(datas.get("streamStatus")));
         comment.setVideoTime(Integer.parseInt(datas.get("videoTime")));
         comment.setCommentSource(CommentSource.INTERNAL);
