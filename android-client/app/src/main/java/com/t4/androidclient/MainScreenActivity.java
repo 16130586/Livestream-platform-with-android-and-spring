@@ -1,4 +1,4 @@
-﻿package com.t4.androidclient;
+package com.t4.androidclient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -64,7 +64,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     ImageView app_logo;
     MakeSuggestion makeSuggestion = this;
     NavigationView slide_view;
-    User user;
+    public static User user;
     public ProgressBar progressBar;
     private asyn a = null;
     private LoginButton mBtnFacebook;
@@ -134,9 +134,9 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         progressBar.setVisibility(View.VISIBLE);
                         mDrawerLayout.closeDrawers();
                         int id = menuItem.getItemId();
-                        if (id == R.id.your_videos) {
-                            System.out.println("Chọn 1");
-                        }
+//  doan nay can phai confirm lai                      if (id == R.id.your_videos) {
+//                            System.out.println("Chọn 1");
+//                        }
                         progressBar.setVisibility(View.GONE);
                         return true;
                     }

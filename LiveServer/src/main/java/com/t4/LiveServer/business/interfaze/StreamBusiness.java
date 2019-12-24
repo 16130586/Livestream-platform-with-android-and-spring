@@ -6,7 +6,6 @@ import com.t4.LiveServer.model.Comment;
 import com.t4.LiveServer.model.Stream;
 import com.t4.LiveServer.model.StreamType;
 
-import java.util.Date;
 import java.util.List;
 
 public interface StreamBusiness {
@@ -22,4 +21,5 @@ public interface StreamBusiness {
     Comment saveComment(Comment comment);
 	List<Stream> listStreamByTypeOfUser(int userID,int typeID);
 	List<Stream>  getWatchedStreamsByUserID(int userID);
+    List<Stream> getTrendingStreams(int offset, int pageSize);
 }

@@ -97,10 +97,10 @@ function kafkaMessageBroker(msg) {
 	console.log(msg);
 	switch(msg.data.eventType) {
 		case 'CREATE':
-			onCreate(msg.data.id);
+			onCreate(msg.data.stream_id);
 			break;
 		case 'DELETE':
-			onDelete(msg.data.id);
+			onDelete(msg.data.stream_id);
 			break;
 		case 'REPLY':
 			onReply(msg);
@@ -197,15 +197,27 @@ function initSocket(socket) {
 	// handle from client
     socket.on('client-send-data', function(data){
 		console.log(data);
-		socket.emit('server-send-data', data);
+		console.log("here");
+		var del = {
+			username: "john",
+			message: "doe"
+		}
+		console.log(del);
+		socket.emit('jojo', del);
     });
-
+	
+	socket.on('client-send-comment', function(comment){
+		console.log('comment here');
+		console.log(JSON.parse(comment));
+		socket.emit('server-send-comment', JSON.parse(comment));
+	});
 	// socket will send its own id back -> add to sockets, create a process
 	// this is just a example, later the sockerCounter replace by data.id
 	socket.on('client-send-id', function(data){
+		console.log("a client connect to stream id " + data);
 		sockets.push({
 			socket: socket,
-			socketId: data.id
+			socketId: parseInt(data)
 		});
 		socket.emit('server-send-data', data);
 	});
@@ -213,11 +225,14 @@ function initSocket(socket) {
 	socket.on('error', function(error){
 		console.log(error);
 	})
+	sockets.push(socket, 0);
 }
 
 function removeDisconnectedSockets() {
+	console.log('begin to remove unconnected socket');
+	listSockets();
 	for (var i = 0; i < sockets.length; i++) {
-		if (sockets[i].socket.connected === false) {
+		if (sockets[i].socket == undefined || sockets[i].socketId == undefined || sockets[i].socket.connected === false ) {
 			//onDelete(sockets[i].socketId);
 			console.log('remove disconnected socket', sockets[i].socketId);
 			sockets.splice(i, 1);
@@ -238,12 +253,19 @@ function listSockets() {
 	console.log(socketsString);
 }
 
-function getSocketById(id) {
+function listSockets2() {
+	for (var i = 0; i < sockets.length; i++) {
+		console.log(sockets[i]);
+	}
+}
+
+function getSocketsById(id) {
+	var socketsById = [];
 	for (var i = 0; i < sockets.length; i++){
 		if (sockets[i].socketId == id)
-			return sockets[i].socket;
+			socketsById.push(sockets[i].socket);
 	}
-	return undefined;
+	return socketsById;
 }
 
 function checkSocket(socket, id) {
@@ -311,11 +333,13 @@ function finishOnDestroy(data){
 
 function finishOnReply(data){
 	console.log('finish on reply', data.id, data.msg);
-	var socket = getSocketById(data.id);
-	if (socket == null) {
+	var socketsById = getSocketsById(data.id);
+	if (socketsById.length == 0) {
 		handleSocketError(data);
 	} else {
-		socket.emit('broker-send-reply', data);
+		socketsById.forEach(function(socket, index){
+			socket.emit('server-send-comment', data.msg);
+		})
 	}
 	
 }

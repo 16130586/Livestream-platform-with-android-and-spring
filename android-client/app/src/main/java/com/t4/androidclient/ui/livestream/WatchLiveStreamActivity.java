@@ -1,21 +1,46 @@
 package com.t4.androidclient.ui.livestream;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.t4.androidclient.MainActivity;
+import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
+import com.t4.androidclient.adapter.CommentAdapter;
+import com.t4.androidclient.contraints.Api;
+import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
+import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
+import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.model.helper.CommentHelper;
+import com.t4.androidclient.model.livestream.Comment;
 
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Request;
 import tcking.github.com.giraffeplayer2.GiraffePlayer;
 import tcking.github.com.giraffeplayer2.Option;
 import tcking.github.com.giraffeplayer2.PlayerListener;
@@ -25,10 +50,34 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
 import tcking.github.com.giraffeplayer2.VideoView;
 import viewModel.StreamViewModel;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+import com.github.nkzawa.emitter.Emitter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class WatchLiveStreamActivity extends AppCompatActivity {
-    StreamViewModel streamViewModel;
-    TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
-    CircleImageView ownerAvatarView;
+    private StreamViewModel streamViewModel;
+    private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
+    private CircleImageView ownerAvatarView;
+    private EditText commentInput;
+    private ImageButton commentSendButton, showCommentButton;
+    private LinearLayoutManager linearLayoutManager;
+    private LinearLayout commentInputContainer;
+    private CommentAdapter adapter;
+    private RecyclerView recyclerView;
+    private List<Comment> commentList;
+    private List<Integer> commentIdList;
+    private Socket mSocket;
+
+    private boolean showComment = true;
+
+    {
+        try {
+            mSocket = IO.socket(Host.SOCKET_HOST);
+        } catch (URISyntaxException e) {}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +180,30 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         if(streamViewModel.getHlsPlayBackUrl() != null)
             videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mSocket.disconnect();
+    }
+
     private void bindNavigateData(Intent previousNavigationData) {
         this.streamViewModel = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA") , StreamViewModel.class);
     }
 
     public void setUp() {
+        commentList = new ArrayList<>();
+        commentIdList = new ArrayList<>();
+        //addTen();
+
+        linearLayoutManager = new LinearLayoutManager(this);
+        adapter = new CommentAdapter(commentList, this);
+
+        recyclerView = (RecyclerView) findViewById(R.id.list_comment);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         tagView = findViewById(R.id.stream_watch_tag);
         tagView.setText(streamViewModel.getTag());
 
@@ -157,5 +225,135 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         ownerAvatarView = findViewById(R.id.stream_watch_owner_avatar);
         Glide.with(ownerAvatarView.getContext()).load(streamViewModel.getOwner().getAvatar())
                 .centerCrop().into(ownerAvatarView);
+
+        commentInputContainer = findViewById(R.id.stream_watch_comment_container);
+        commentInput = findViewById(R.id.stream_watch_comment);
+        commentSendButton = findViewById(R.id.stream_watch_comment_button);
+        commentSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Comment comment = new Comment();
+                comment.setOwnerName(MainScreenActivity.user.nickname);
+                comment.setMessage(commentInput.getText().toString());
+                commentInput.setText("");
+                //mSocket.emit("client-send-comment", JsonHelper.serialize(comment));
+
+                PushCommentTask pushCommentTask = new PushCommentTask(new AsyncResponse() {
+                    @Override
+                    public void processFinish(String output) {
+                        System.out.println(output);
+                        Comment comment = CommentHelper.parseComment(output);
+                        System.out.println("================================ " + comment.toString());
+                    }
+                });
+                pushCommentTask.execute(comment);
+            }
+        });
+
+        showCommentButton = findViewById(R.id.stream_watch_show_comment_button);
+        showCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (showComment) {
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    commentInputContainer.setVisibility(View.INVISIBLE);
+                    showCommentButton.setImageResource(R.drawable.no_comment);
+                    disconnectSocket();
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    commentInputContainer.setVisibility(View.VISIBLE);
+                    showCommentButton.setImageResource(R.drawable.comment);
+                    connectSocket();
+                }
+                showComment = !showComment;
+            }
+        });
+        if (Authentication.ISLOGIN == false) {
+            commentInputContainer.setVisibility(View.GONE);
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    37.0f
+            );
+            recyclerView.setLayoutParams(param);
+        }
+
+        mSocket.on("server-send-comment", onNewComment);
+        connectSocket();
+    }
+
+    public void connectSocket() {
+        mSocket.connect();
+        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()));
+
+    }
+
+    public void disconnectSocket() {
+        mSocket.disconnect();
+    }
+
+
+    private Emitter.Listener onNewComment = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    System.out.println(data.toString());
+                    String ownerName;
+                    String message;
+                    int commentId;
+                    try {
+                        ownerName = data.getString("ownerName");
+                        message = data.getString("message");
+                        commentId = data.getInt("commentId");
+                        System.out.println(ownerName + " ====== " + message + " ===== " + commentId);
+                    } catch (JSONException e) {
+                        return;
+                    }
+
+                    // add the message to view if not conflict id
+                        addMessage(ownerName, message);
+
+                }
+            });
+        }
+    };
+
+    private class PushCommentTask extends AsyncTask<Comment, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public PushCommentTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(Comment... comments) {
+            String url =Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/comment";
+            Map<String, String> keyValues = new HashMap<>();
+            Comment comment = comments[0];
+            keyValues.put("message", comment.getMessage());
+            keyValues.put("streamStatus", streamViewModel.getStatus().toString());
+            keyValues.put("ownerName", MainScreenActivity.user.nickname);
+            keyValues.put("videoTime", "200");
+            Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    public Activity getActivity() {
+        return this;
+    }
+
+    public void addMessage(String username, String message) {
+        commentList.add(new Comment(username, message));
+        adapter.notifyItemRangeChanged(commentList.size() - 1 , 1);
+        recyclerView.scrollToPosition(commentList.size() - 1);
     }
 }

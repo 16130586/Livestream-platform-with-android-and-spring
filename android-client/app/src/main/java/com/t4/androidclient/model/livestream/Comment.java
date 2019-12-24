@@ -3,11 +3,61 @@ package com.t4.androidclient.model.livestream;
 import java.util.Date;
 
 public class Comment {
+    private Integer commentId;
     private String message;
     private Date createTime;
+    private Integer streamId;
     private Integer streamStatus;
     private Integer commentSource;
     private Integer videoTime;
+    private String ownerName;
+    private int ownerId;
+    public Comment() {
+
+    }
+
+    public Comment(String ownerName, String message) {
+        this.ownerName = ownerName;
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentId=" + commentId +
+                ", message='" + message + '\'' +
+                ", createTime=" + createTime +
+                ", streamId=" + streamId +
+                ", streamStatus=" + streamStatus +
+                ", commentSource=" + commentSource +
+                ", videoTime=" + videoTime +
+                ", ownerName='" + ownerName + '\'' +
+                '}';
+    }
+
+    public Integer getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
+    }
+
+    public Integer getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(Integer streamId) {
+        this.streamId = streamId;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public String getMessage() {
         return message;
@@ -47,5 +97,13 @@ public class Comment {
 
     public void setVideoTime(Integer videoTime) {
         this.videoTime = videoTime;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 }

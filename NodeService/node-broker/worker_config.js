@@ -1,5 +1,5 @@
 module.exports = {
-    replyWaitTime: 10000,
+    replyWaitTime: 100000,
     checkCount: 6
 };
   

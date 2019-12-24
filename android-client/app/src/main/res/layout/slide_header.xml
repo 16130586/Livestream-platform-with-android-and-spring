@@ -65,7 +65,6 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:textColor="#333"
-        android:textSize="18sp"
         android:text="Buy Subscription"
         android:textSize="16sp"
         android:layout_marginLeft="15sp"
