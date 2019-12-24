@@ -257,4 +257,10 @@ public class StreamBusinessImp implements StreamBusiness {
     public Comment saveComment(Comment comment) {
         return commentRepository.save(comment);
     }
+
+    @Override
+    public List<Stream> getTrendingStreams(int offset, int pageSize) {
+        Pageable pageable = new PageRequest(offset, pageSize, Sort.by("totalView").descending());
+        return streamRepository.findAll(pageable).getContent();
+    }
 }

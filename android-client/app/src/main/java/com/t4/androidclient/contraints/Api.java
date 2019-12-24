@@ -16,5 +16,6 @@ public class Api {
     public static final String URL_GET_SUBSCRIPTION_COOKIE_USER = Host.API_HOST_IP + "/streams/find";
     public static final String URL_START_A_LIVE_STREAM = Host.API_HOST_IP + "/streams/auth/{id}/start";
     public static final String URL_STOP_A_LIVE_STREAM = Host.API_HOST_IP + "/streams/auth/{id}/stop";
+    public static final String URL_GET_TRENDING_STREAMS = Host.API_HOST_IP + "/streams/trend/";
 
 }

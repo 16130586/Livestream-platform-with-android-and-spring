@@ -167,4 +167,13 @@ public class StreamController {
         apiResponse.data = streamBusiness.saveComment(comment);
         return apiResponse;
     }
+
+    @GetMapping("/trend/{offset}/{pageSize}")
+    public ApiResponse getTrendingStreams(@PathVariable Integer offset, @PathVariable Integer pageSize) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get trending streams";
+        apiResponse.data = streamBusiness.getTrendingStreams(offset, pageSize);
+        return apiResponse;
+    }
 }
