@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface StreamBusiness {
     Object create(CreatingStreamEntryParams entryParams);
-    Object start(String id);
+    Stream start(String id);
     Object stop(String id);
     List<Stream> getRecommendForCookieUser(int offset, int pageSize);
     List<Stream> getRecommendForUser(int userId, int offset, int pageSize);

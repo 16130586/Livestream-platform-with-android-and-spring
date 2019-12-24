@@ -18,17 +18,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.t4.androidclient.CameraActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CreateLiveGenreAdapter;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.model.helper.GenreHelper;
 import com.t4.androidclient.model.livestream.FacebookUser;
@@ -42,10 +46,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import viewModel.StreamViewModel;
 
 public class CreateLiveActivity extends Activity {
     private List<String> genreList, genreListByUser, platformListByUser;
@@ -53,6 +60,7 @@ public class CreateLiveActivity extends Activity {
     private TextView tokenPermissionChecker;
 
     private Button btnSave, btnGallery;
+    private View btnSpinKit;
     private ImageButton btnFacebook;
     private LoginButton btnLoginFacebook;
 
@@ -122,6 +130,7 @@ public class CreateLiveActivity extends Activity {
     private void setUp() {
         getGenreListFromServer();
 
+        btnSpinKit = findViewById(R.id.btn_spin_kit);
         genreListByUser = new ArrayList<>();
         platformListByUser = new ArrayList<>();
         liveStream = new LiveStream();
@@ -135,9 +144,11 @@ public class CreateLiveActivity extends Activity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnSpinKit.setVisibility(View.VISIBLE);
+                btnSave.setVisibility(View.GONE);
                 saveLiveStream();
-                System.out.println(liveStream.toString());
                 sendLiveStreamToServer();
+
             }
         });
 
@@ -233,8 +244,17 @@ public class CreateLiveActivity extends Activity {
         CreateLiveStream createLiveStream = new CreateLiveStream(new AsyncResponse() {
             @Override
             public void processFinish(String output) {
-                // TODO handle output stream & display
-                System.out.println(output);
+                btnSpinKit.setVisibility(View.GONE);
+                btnSave.setVisibility(View.VISIBLE);
+                ApiResponse response = JsonHelper.deserialize(output , ApiResponse.class);
+                if(response.statusCode < 400){
+                    Toast.makeText(getBaseContext(), "Navigate to livestream", Toast.LENGTH_SHORT).show();
+                    StreamViewModel svm = JsonHelper.deserialize((Map)response.data , StreamViewModel.class);
+                    Intent t = new Intent(getBaseContext(), CameraActivity.class);
+                    t.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    t.putExtra("DATA", JsonHelper.serialize(svm));
+                    getBaseContext().startActivity(t);
+                }
             }
         });
         createLiveStream.execute();

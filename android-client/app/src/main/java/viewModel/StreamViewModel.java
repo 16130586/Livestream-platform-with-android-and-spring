@@ -51,7 +51,11 @@ public class StreamViewModel {
 
     @JsonIgnore
     public String getDateStatus() {
+        if (status == 1)
+            return "Live NOW";
         Date dateNow = new Date();
+        if(startTime == null)
+            startTime = new Date();
         long diff = Math.abs(startTime.getTime() - dateNow.getTime());
         System.out.println(" =========== " + startTime.toString() + " ========== " + dateNow.toString());
 

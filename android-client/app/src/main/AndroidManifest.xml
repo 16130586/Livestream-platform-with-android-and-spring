@@ -119,6 +119,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/stream_player_title"
             android:screenOrientation="fullSensor" />
+        <activity android:name=".ui.search.SearchActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

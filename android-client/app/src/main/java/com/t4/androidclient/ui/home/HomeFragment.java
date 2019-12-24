@@ -16,14 +16,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.httpclient.HttpClient;
-import com.t4.androidclient.model.helper.LiveStreamHelper;
-import com.t4.androidclient.model.livestream.LiveStream;
 import com.t4.androidclient.ulti.EndlessRecyclerViewScrollListener;
 import com.t4.androidclient.ulti.adapter.StreamRecyclerAdapter;
 
@@ -33,7 +32,6 @@ import java.util.Map;
 
 import okhttp3.Request;
 import viewModel.StreamViewModel;
-import viewModel.UserModelView;
 
 
 public class HomeFragment extends Fragment {
@@ -104,9 +102,11 @@ public class HomeFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                ((MainScreenActivity) getActivity()).progressBar.setVisibility(View.GONE);
             }
         });
         task.execute(requestNextResourceURL);
+        ((MainScreenActivity) getActivity()).progressBar.setVisibility(View.VISIBLE);
     }
 
     private class GetNextStreamsTask extends AsyncTask<String, Void, String> {

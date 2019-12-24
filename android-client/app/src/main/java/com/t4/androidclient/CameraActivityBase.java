@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -46,7 +47,6 @@ import java.util.List;
 
 abstract public class CameraActivityBase extends GoCoderSDKActivityBase
         implements WOWZCameraView.PreviewStatusListener{
-
     private final static String BASE_TAG = CameraActivityBase.class.getSimpleName();
 
     private final static String[] CAMERA_CONFIG_PREFS_SORTED = new String[]{"wz_video_enabled", "wz_video_frame_size", "wz_video_preset"};
@@ -115,7 +115,6 @@ abstract public class CameraActivityBase extends GoCoderSDKActivityBase
             mWZCameraView.setVideoBackgroundColor(WOWZColor.DARKGREY);
 
             CameraActivityBase base = this;
-
 
             // Setup up a shared preferences change listener to update the camera preview
             // as the related preference values change

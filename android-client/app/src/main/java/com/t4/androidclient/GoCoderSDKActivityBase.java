@@ -1,16 +1,16 @@
 /**
- *  This is sample code provided by Wowza Media Systems, LLC.  All sample code is intended to be a reference for the
- *  purpose of educating developers, and is not intended to be used in any production environment.
- *
- *  IN NO EVENT SHALL WOWZA MEDIA SYSTEMS, LLC BE LIABLE TO YOU OR ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL,
- *  OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION,
- *  EVEN IF WOWZA MEDIA SYSTEMS, LLC HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- *  WOWZA MEDIA SYSTEMS, LLC SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. ALL CODE PROVIDED HEREUNDER IS PROVIDED "AS IS".
- *  WOWZA MEDIA SYSTEMS, LLC HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
- *
- *  © 2015 – 2019 Wowza Media Systems, LLC. All rights reserved.
+ * This is sample code provided by Wowza Media Systems, LLC.  All sample code is intended to be a reference for the
+ * purpose of educating developers, and is not intended to be used in any production environment.
+ * <p>
+ * IN NO EVENT SHALL WOWZA MEDIA SYSTEMS, LLC BE LIABLE TO YOU OR ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL,
+ * OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION,
+ * EVEN IF WOWZA MEDIA SYSTEMS, LLC HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * <p>
+ * WOWZA MEDIA SYSTEMS, LLC SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. ALL CODE PROVIDED HEREUNDER IS PROVIDED "AS IS".
+ * WOWZA MEDIA SYSTEMS, LLC HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+ * <p>
+ * © 2015 – 2019 Wowza Media Systems, LLC. All rights reserved.
  */
 
 package com.t4.androidclient;
@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -34,6 +35,7 @@ import android.view.WindowManager;
 import androidx.core.app.ActivityCompat;
 
 import com.t4.androidclient.config.GoCoderSDKPrefs;
+import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.AboutFragment;
 import com.wowza.gocoder.sdk.api.WowzaGoCoder;
 import com.wowza.gocoder.sdk.api.broadcast.WOWZBroadcast;
@@ -48,12 +50,14 @@ import com.wowza.gocoder.sdk.api.monitor.WOWZStreamingStat;
 import com.wowza.gocoder.sdk.api.status.WOWZStatus;
 import com.wowza.gocoder.sdk.api.status.WOWZStatusCallback;
 
+import viewModel.StreamViewModel;
+
 public abstract class GoCoderSDKActivityBase extends Activity
         implements WOWZStatusCallback {
 
     private final static String TAG = GoCoderSDKActivityBase.class.getSimpleName();
 
-//    private static final String SDK_SAMPLE_APP_LICENSE_KEY = "GOSK-5442-0101-750D-4A14-FB5C";
+    //    private static final String SDK_SAMPLE_APP_LICENSE_KEY = "GOSK-5442-0101-750D-4A14-FB5C";
     private static final String SDK_SAMPLE_APP_LICENSE_KEY = "GOSK-0D47-010C-A8E4-7B90-BB94";
 
     private static final int PERMISSIONS_REQUEST_CODE = 0x1;
@@ -85,6 +89,13 @@ public abstract class GoCoderSDKActivityBase extends Activity
     private CameraActivityBase.PermissionCallbackInterface callbackFunction = null;
 
     protected WOWZBroadcastConfig mWZBroadcastConfig = null;
+
+    protected StreamViewModel svm;
+
+    private void bindNavigateData(Intent previousNavigationData) {
+        this.svm = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA"), StreamViewModel.class);
+    }
+
     public WOWZBroadcastConfig getBroadcastConfig() {
         return mWZBroadcastConfig;
     }
@@ -93,7 +104,7 @@ public abstract class GoCoderSDKActivityBase extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        bindNavigateData(getIntent());
         if (sGoCoderSDK == null) {
             // Enable detailed logging from the GoCoder SDK
             WOWZLog.LOGGING_ENABLED = true;
@@ -119,7 +130,7 @@ public abstract class GoCoderSDKActivityBase extends Activity
         }
     }
 
-    protected void hasDevicePermissionToAccess(CameraActivityBase.PermissionCallbackInterface callback){
+    protected void hasDevicePermissionToAccess(CameraActivityBase.PermissionCallbackInterface callback) {
         this.callbackFunction = callback;
         if (mWZBroadcast != null) {
             boolean result = true;
@@ -128,20 +139,18 @@ public abstract class GoCoderSDKActivityBase extends Activity
                 if (!result && !hasRequestedPermissions) {
                     ActivityCompat.requestPermissions(this, mRequiredPermissions, PERMISSIONS_REQUEST_CODE);
                     hasRequestedPermissions = true;
-                }
-                else {
+                } else {
                     this.callbackFunction.onPermissionResult(result);
                 }
-            }
-            else {
+            } else {
                 this.callbackFunction.onPermissionResult(result);
             }
         }
     }
 
-    protected boolean hasDevicePermissionToAccess(String source){
+    protected boolean hasDevicePermissionToAccess(String source) {
 
-        String[] permissionRequestArr = new String[] {
+        String[] permissionRequestArr = new String[]{
                 source
         };
         boolean result = false;
@@ -154,7 +163,7 @@ public abstract class GoCoderSDKActivityBase extends Activity
         return result;
     }
 
-    protected boolean hasDevicePermissionToAccess(){
+    protected boolean hasDevicePermissionToAccess() {
         boolean result = false;
         if (mWZBroadcast != null) {
             result = true;
@@ -177,7 +186,7 @@ public abstract class GoCoderSDKActivityBase extends Activity
         super.onResume();
 
         mPermissionsGranted = this.hasDevicePermissionToAccess();
-        if (mPermissionsGranted){
+        if (mPermissionsGranted) {
             syncPreferences();
         }
     }
@@ -207,12 +216,11 @@ public abstract class GoCoderSDKActivityBase extends Activity
 
     // Return correctly from any fragments launched and placed on the back stack
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -222,14 +230,14 @@ public abstract class GoCoderSDKActivityBase extends Activity
         mPermissionsGranted = true;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_CODE: {
-                for(int grantResult : grantResults) {
+                for (int grantResult : grantResults) {
                     if (grantResult != PackageManager.PERMISSION_GRANTED) {
                         mPermissionsGranted = false;
                     }
                 }
             }
         }
-        if(this.callbackFunction!=null)
+        if (this.callbackFunction != null)
             this.callbackFunction.onPermissionResult(mPermissionsGranted);
     }
 
@@ -326,7 +334,11 @@ public abstract class GoCoderSDKActivityBase extends Activity
             streamMetadata.put("deviceModel", Build.MODEL);
 
             mWZBroadcastConfig.setStreamMetadata(streamMetadata);
-
+            mWZBroadcastConfig.setApplicationName(svm.getApplication());
+            mWZBroadcastConfig.setStreamName(svm.getStreamName());
+            mWZBroadcastConfig.setPortNumber(svm.getHostPort());
+            String url = svm.getPrimaryServerURL();
+            mWZBroadcastConfig.setHostAddress(url.substring(url.indexOf("://") + 3, url.lastIndexOf("/")));
             //
             // An example of adding query strings for use with the getQueryStr() method of
             // the IClient interface of the Wowza Streaming Engine Java API for server modules.
@@ -371,7 +383,7 @@ public abstract class GoCoderSDKActivityBase extends Activity
 //                mWZBroadcast.registerAdaptiveFrameRateListener(abrHandler);
 //                mWZBroadcastConfig.setFrameRateLowBandwidthSkipCount(1);
 
-                WOWZLog.debug("***** [FPS]GoCoderSDKActivity "+mWZBroadcastConfig.getVideoFramerate());
+                WOWZLog.debug("***** [FPS]GoCoderSDKActivity " + mWZBroadcastConfig.getVideoFramerate());
                 mWZBroadcast.startBroadcast(mWZBroadcastConfig, this);
             }
         } else {
@@ -380,33 +392,32 @@ public abstract class GoCoderSDKActivityBase extends Activity
         return configValidationError;
     }
 
-    class ListenToABRChanges implements WOWZBroadcastAPI.AdaptiveChangeListener
-    {
+    class ListenToABRChanges implements WOWZBroadcastAPI.AdaptiveChangeListener {
         @Override
         public int adaptiveBitRateChange(WOWZStreamingStat broadcastStat, int newBitRate) {
-            WOWZLog.debug(TAG, "adaptiveBitRateChange["+newBitRate+"]");
+            WOWZLog.debug(TAG, "adaptiveBitRateChange[" + newBitRate + "]");
 
             return 500;
         }
 
         @Override
         public int adaptiveFrameRateChange(WOWZStreamingStat broadcastStat, int newFrameRate) {
-            WOWZLog.debug(TAG, "adaptiveFrameRateChange["+newFrameRate+"]");
+            WOWZLog.debug(TAG, "adaptiveFrameRateChange[" + newFrameRate + "]");
             return 20;
         }
     }
 
     protected synchronized void endBroadcast(boolean appPausing) {
-        WOWZLog.debug("MP4","endBroadcast");
+        WOWZLog.debug("MP4", "endBroadcast");
         if (!mWZBroadcast.getStatus().isIdle()) {
-            WOWZLog.debug("MP4","endBroadcast-notidle");
+            WOWZLog.debug("MP4", "endBroadcast-notidle");
             if (appPausing) {
                 // Stop any active live stream
                 sBroadcastEnded = false;
                 mWZBroadcast.endBroadcast(new WOWZStatusCallback() {
                     @Override
                     public void onWZStatus(WOWZStatus wzStatus) {
-                        WOWZLog.debug("MP4","onWZStatus::"+wzStatus.toString());
+                        WOWZLog.debug("MP4", "onWZStatus::" + wzStatus.toString());
                         synchronized (sBroadcastLock) {
                             sBroadcastEnded = true;
                             sBroadcastLock.notifyAll();
@@ -415,7 +426,7 @@ public abstract class GoCoderSDKActivityBase extends Activity
 
                     @Override
                     public void onWZError(WOWZStatus wzStatus) {
-                        WOWZLog.debug("MP4","onWZStatus::"+wzStatus.getLastError());
+                        WOWZLog.debug("MP4", "onWZStatus::" + wzStatus.getLastError());
                         WOWZLog.error(TAG, wzStatus.getLastError());
                         synchronized (sBroadcastLock) {
                             sBroadcastEnded = true;
@@ -424,15 +435,16 @@ public abstract class GoCoderSDKActivityBase extends Activity
                     }
                 });
 
-                while(!sBroadcastEnded) {
-                    try{
+                while (!sBroadcastEnded) {
+                    try {
                         sBroadcastLock.wait();
-                    } catch (InterruptedException e) {}
+                    } catch (InterruptedException e) {
+                    }
                 }
             } else {
                 mWZBroadcast.endBroadcast(this);
             }
-        }  else {
+        } else {
             WOWZLog.error(TAG, "endBroadcast() called without an active broadcast");
         }
     }
@@ -475,8 +487,8 @@ public abstract class GoCoderSDKActivityBase extends Activity
             });
 
             builder.create().show();
+        } catch (Exception ex) {
         }
-        catch(Exception ex){}
     }
 
     /**
