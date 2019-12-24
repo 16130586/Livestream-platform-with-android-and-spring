@@ -165,7 +165,7 @@ public class StreamBusinessImp implements StreamBusiness {
                         result.getBody(), WowzaStream.class);
                 System.out.println(result.getBody());
                 if (stream != null && stream.state.equals("started")) {
-                    requested.setStatus(1);
+                    requested.setStatus(StreamStatus.STARTED);
                     Stream rs = streamRepository.saveAndFlush(requested);
                     System.out.println(rs);
                     break;
@@ -183,7 +183,7 @@ public class StreamBusinessImp implements StreamBusiness {
         if (requested == null)
             return null;
         wowzaStreamBusiness.stop(requested.getWowzaId());
-        requested.setStatus(-1);
+        requested.setStatus(StreamStatus.END);
         requested = streamRepository.saveAndFlush(requested);
         return requested;
     }
@@ -212,7 +212,7 @@ public class StreamBusinessImp implements StreamBusiness {
             streamTypeString.add(streamType.getTypeName());
         }
         Pageable pageable = new PageRequest(offset, pageSize);
-        return streamRepository.findAllByStreamTypeInAndStatus(streamTypeString, StreamStatus.REAL_TIME, streamTypeString.size(), pageable);
+        return streamRepository.findAllByStreamTypeInAndStatus(streamTypeString, StreamStatus.STARTED, streamTypeString.size(), pageable);
     }
 
     @Override
@@ -220,7 +220,7 @@ public class StreamBusinessImp implements StreamBusiness {
 
         try {
             Pageable pageable = new PageRequest(page, pageSize, Sort.by("startTime").ascending());
-            return streamRepository.findAll(pageable).getContent();
+            return streamRepository.findAllByStatusIsNot(StreamStatus.INIT, pageable);
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

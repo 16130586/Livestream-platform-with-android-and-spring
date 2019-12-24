@@ -63,7 +63,7 @@ public class Stream {
 
     public Stream(WowzaStream liveWowza) {
         setWowzaId(liveWowza.id);
-        setStatus(-1);
+        setStatus(StreamStatus.INIT);
         setPrimaryServerURL(liveWowza.sourceConnectionInformation.primaryServer);
         setApplication(primaryServerURL.substring(primaryServerURL.lastIndexOf("/") + 1));
         setHostPort(liveWowza.sourceConnectionInformation.hostPort);
