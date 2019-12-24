@@ -188,7 +188,6 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     public void setUp() {
         commentList = new ArrayList<>();
         commentIdList = new ArrayList<>();
-        addTen();
 
         linearLayoutManager = new LinearLayoutManager(this);
         adapter = new CommentAdapter(commentList, this);
@@ -227,9 +226,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                 Comment comment = new Comment();
                 comment.setOwnerName(MainScreenActivity.user.nickname);
                 comment.setMessage(commentInput.getText().toString());
-
                 commentInput.setText("");
                 //mSocket.emit("client-send-comment", JsonHelper.serialize(comment));
+
                 PushCommentTask pushCommentTask = new PushCommentTask(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
