@@ -107,7 +107,6 @@ function kafkaMessageBroker(msg) {
 			break;
 		default:
 			console.log('error kafka event', msg);
-			sockets[0].emit('server-send-comment', msg.data);
 			break;
 	}
 }
@@ -230,8 +229,10 @@ function initSocket(socket) {
 }
 
 function removeDisconnectedSockets() {
+	console.log('begin to remove unconnected socket');
+	listSockets();
 	for (var i = 0; i < sockets.length; i++) {
-		if (sockets[i].socket.connected === false) {
+		if (sockets[i].socket == undefined || sockets[i].socketId == undefined || sockets[i].socket.connected === false ) {
 			//onDelete(sockets[i].socketId);
 			console.log('remove disconnected socket', sockets[i].socketId);
 			sockets.splice(i, 1);
@@ -258,12 +259,13 @@ function listSockets2() {
 	}
 }
 
-function getSocketById(id) {
+function getSocketsById(id) {
+	var socketsById = [];
 	for (var i = 0; i < sockets.length; i++){
 		if (sockets[i].socketId == id)
-			return sockets[i].socket;
+			socketsById.push(sockets[i].socket);
 	}
-	return undefined;
+	return socketsById;
 }
 
 function checkSocket(socket, id) {
@@ -331,11 +333,13 @@ function finishOnDestroy(data){
 
 function finishOnReply(data){
 	console.log('finish on reply', data.id, data.msg);
-	var socket = getSocketById(data.id);
-	if (socket == null) {
+	var socketsById = getSocketsById(data.id);
+	if (socketsById.length == 0) {
 		handleSocketError(data);
 	} else {
-		socket.emit('server-send-comment', data.msg);
+		socketsById.forEach(function(socket, index){
+			socket.emit('server-send-comment', data.msg);
+		})
 	}
 	
 }

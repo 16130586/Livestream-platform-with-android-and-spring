@@ -72,6 +72,7 @@ function onReply(msg) {
 	setCheckCount(config.checkCount);
 	// refactor the payload
 	msg.data.ownerName = msg.data.owner_name;
+	msg.data.commentId = msg.data.comment_id;
 	process.send({
 		event: 'onReply',
 		data: {
