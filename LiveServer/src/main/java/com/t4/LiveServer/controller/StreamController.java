@@ -244,4 +244,13 @@ public class StreamController {
         apiResponse.data = streamBusiness.getTrendingStreams(offset, pageSize);
         return apiResponse;
     }
+
+    @PostMapping("/upView/{streamId}")
+    public ApiResponse upView(@PathVariable Integer streamId) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "increase stream's view";
+        apiResponse.data = streamBusiness.upView(streamId);
+        return apiResponse;
+    }
 }
