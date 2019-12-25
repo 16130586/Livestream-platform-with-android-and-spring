@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -23,12 +24,19 @@ import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CommentAdapter;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
+import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
 import com.t4.androidclient.model.helper.CommentHelper;
+import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.model.livestream.Comment;
+import com.t4.androidclient.model.livestream.User;
+import com.t4.androidclient.ui.channel.ChannelActivity;
+import com.t4.androidclient.ui.login.LoginRegisterActivity;
+import com.t4.androidclient.ui.mychannel.MyChannelActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,8 +70,8 @@ public class WatchVideoActivity extends AppCompatActivity {
     private List<Comment> commentList;
     private VideoView videoView;
     private GetCommentWhenPlayingThread getCommentThread;
-
-
+    private User currentUser;
+    int totalSub;
     private boolean showComment = true;
 
 
@@ -72,8 +80,10 @@ public class WatchVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_live_stream);
 
+
         bindNavigateData(getIntent());
         setUp();
+        funcSubscribeAndGoChannel();
 
         PlayerManager.getInstance().getDefaultVideoInfo().addOption(Option.create(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "multiple_requests", 1L));
         videoView = findViewById(R.id.video_view);
@@ -183,6 +193,132 @@ public class WatchVideoActivity extends AppCompatActivity {
         if (streamViewModel.getStoredUrl() != null)
             videoView.setVideoPath(streamViewModel.getStoredUrl());
     }
+    public void funcSubscribeAndGoChannel() {
+        int ownerID = streamViewModel.getOwner().getId();
+        Button subscribleButton = findViewById(R.id.watch_live_btn_subscrible);
+        SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getApplicationContext());
+        Authentication.TOKEN = db.getToken();
+        //Check login status
+        if (Authentication.TOKEN == null || Authentication.TOKEN.isEmpty()) {
+            subscribleButton.setText("Subscribe");
+            subscribleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), "Please login to subscrible channel !",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else{
+
+            // Check status subscribe with channel owner , place before to call below
+            CheckSubscribeTask checkSubscribeTask = new CheckSubscribeTask(new AsyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                    if (response != null && response.statusCode == 200) {
+                        boolean result = (boolean) response.data;
+                        if (result == true) { // True - Can subscrible
+                            subscribleButton.setText("Subscribe");
+                            subscribleButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (currentUser.getId() == ownerID) {
+                                        Toast.makeText(getApplicationContext(), "Do you want subscribe yourself ? LOL", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        SubscribeTask subscribeTask = new SubscribeTask(new AsyncResponse() {
+                                            @Override
+                                            public void processFinish(String output) {
+                                                ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                                                if (response != null && response.statusCode == 200) {
+                                                    boolean result = (boolean) response.data;
+                                                    if (result == true) {
+                                                        Toast.makeText(getApplicationContext(), "Subscribe channel successfully !",
+                                                                Toast.LENGTH_SHORT).show();
+                                                        // Reload current fragment
+
+                                                        int totalSubNew = totalSub+1;
+                                                        getIntent().putExtra("totalSub",totalSubNew);
+
+                                                        finish();
+                                                        overridePendingTransition(0, 0);
+                                                        startActivity(getIntent());
+                                                       overridePendingTransition(0, 0);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                        String[] subData = new String[2];
+                                        subData[0] = currentUser.getId() + "";
+                                        subData[1] = ownerID + "";
+                                        subscribeTask.execute(subData);
+                                    }
+                                }
+                            });
+                        } else { // False - Can't subscrible
+                            subscribleButton.setText("Un Subscribe");
+                            subscribleButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    UnSubscribeTask unSubscribeTask = new UnSubscribeTask(new AsyncResponse() {
+                                        @Override
+                                        public void processFinish(String output) {
+                                            ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                                            if (response != null && response.statusCode == 200) {
+                                                boolean result = (boolean) response.data;
+                                                if (result == true) {
+                                                    Toast.makeText(getApplicationContext(), "Un Subscribe channel successfully !",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    int totalSubNew = totalSub-1;
+                                                    getIntent().putExtra("totalSub",totalSubNew);
+                                                    // Reload current fragment
+                                                   finish();
+                                                    overridePendingTransition(0, 0);
+                                                    startActivity(getIntent());
+                                                    overridePendingTransition(0, 0);
+                                                }
+                                            }
+                                        }
+                                    });
+                                    String[] subData = new String[2];
+                                    subData[0] = currentUser.getId() + "";
+                                    subData[1] = ownerID + "";
+                                    unSubscribeTask.execute(subData);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
+            // If login already then check status subscrible
+            // Get current user info to do task
+            CurrentInfo currentInfo = new CurrentInfo(new AsyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    if (output != null && !output.isEmpty()) {
+                        ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                        if (response != null && response.statusCode == 200) {
+                            Map<String, Object> rawData = (Map<String, Object>) response.data;
+                            currentUser = UserHelper.parseUserJson(rawData);
+                        }
+                    }
+                    // Get currentUser successfully , do check Status Subscribe
+                    String[] subData = new String[2];
+                    subData[0]=currentUser.getId()+"";
+                    subData[1]=ownerID+"";
+                    checkSubscribeTask.execute(subData); //Call above method
+                }
+
+            });
+            currentInfo.execute();
+        }
+    }
+
+
+
 
     private class GetCommentWhenPlayingThread extends Thread {
         private Map<Integer , Boolean> lastGet = new LinkedHashMap<>();
@@ -283,14 +419,39 @@ public class WatchVideoActivity extends AppCompatActivity {
         ownerNameView.setText(streamViewModel.getOwner().getNickname());
 
         ownerSubscribersView = findViewById(R.id.stream_watch_owner_subscribers);
-        ownerSubscribersView.setText(streamViewModel.getOwner().getSubscribeTotal() + " subscribers");
+
+        totalSub = getIntent().getIntExtra("totalSub",0);
+        if(totalSub ==0)
+            totalSub = streamViewModel.getOwner().getSubscribeTotal();
+        ownerSubscribersView.setText(totalSub + " subscribers");
+
 
         timeView = findViewById(R.id.stream_watch_time);
         timeView.setText(streamViewModel.getDateStartString() + " | " + streamViewModel.getDateStatus());
 
         ownerAvatarView = findViewById(R.id.stream_watch_owner_avatar);
-        Glide.with(ownerAvatarView.getContext()).load(streamViewModel.getOwner().getAvatar())
-                .centerCrop().into(ownerAvatarView);
+        String avatarURL = streamViewModel.getOwner().getAvatar();
+        if (avatarURL != null && !avatarURL.isEmpty())
+            Glide.with(ownerAvatarView.getContext()).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(ownerAvatarView);
+        ownerAvatarView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.print("CACS");
+                Class nextActivity = null;
+                if(currentUser.getId()==streamViewModel.getOwner().getId()){
+                    nextActivity = MyChannelActivity.class;
+                }else{
+                    nextActivity = ChannelActivity.class;
+                }
+                if (nextActivity != null) {
+                    Intent t = new Intent(getApplicationContext(), nextActivity);
+                    t.putExtra("owner_id", streamViewModel.getOwner().getId());
+                    t.putExtra("channel_name", streamViewModel.getOwner().getNickname());
+                    startActivity(t);
+                }
+            }
+        });
 
         commentInputContainer = findViewById(R.id.stream_watch_comment_container);
         commentInput = findViewById(R.id.stream_watch_comment);
@@ -381,6 +542,83 @@ public class WatchVideoActivity extends AppCompatActivity {
             return HttpClient.execute(request);
         }
 
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+
+    private class CurrentInfo extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+
+        public CurrentInfo(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... data) {
+            Request request = HttpClient.buildGetRequest(Api.URL_GET_INFO, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class CheckSubscribeTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+        public CheckSubscribeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String,String> dataMap = new HashMap<>();
+            dataMap.put("subscriberID",data[0]);
+            dataMap.put("publisherID",data[1]);
+            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_CHECK_SUBSCRIBE,dataMap);
+            return HttpClient.execute(request);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class SubscribeTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+        public SubscribeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String,String> dataMap = new HashMap<>();
+            dataMap.put("subscriberID",data[0]);
+            dataMap.put("publisherID",data[1]);
+            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_SUBSCRIBE,dataMap);
+            return HttpClient.execute(request);
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class UnSubscribeTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+        public UnSubscribeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String,String> dataMap = new HashMap<>();
+            dataMap.put("subscriberID",data[0]);
+            dataMap.put("publisherID",data[1]);
+            Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_UNSUBSCRIBE,dataMap);
+            return HttpClient.execute(request);
+        }
         @Override
         protected void onPostExecute(String result) {
             asyncResponse.processFinish(result);

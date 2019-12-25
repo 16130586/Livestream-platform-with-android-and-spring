@@ -81,7 +81,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private List<Comment> commentList;
     private List<Integer> commentIdList;
     private Socket mSocket;
-
+    private int totalSub;
     private boolean showComment = true;
     private User currentUser;
     {
@@ -210,9 +210,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
             subscribleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "Please login to subscrible channel !",
+                    Toast.makeText(getApplicationContext(), "Please login to subscrible channel !",
                             Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
                     startActivity(intent);
                 }
             });
@@ -243,6 +243,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                                                             Toast.makeText(getActivity(), "Subscribe channel successfully !",
                                                                     Toast.LENGTH_SHORT).show();
                                                             // Reload current fragment
+                                                            int totalSubNew = totalSub+1;
+                                                            getIntent().putExtra("totalSub",totalSubNew);
+
                                                             getActivity().finish();
                                                             getActivity().overridePendingTransition(0, 0);
                                                             startActivity(getActivity().getIntent());
@@ -273,6 +276,10 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                                                     if (result == true) {
                                                         Toast.makeText(getActivity(), "Un Subscribe channel successfully !",
                                                                 Toast.LENGTH_SHORT).show();
+
+                                                        int totalSubNew = totalSub-1;
+                                                        getIntent().putExtra("totalSub",totalSubNew);
+
                                                         // Reload current fragment
                                                         getActivity().finish();
                                                         getActivity().overridePendingTransition(0, 0);
@@ -354,7 +361,11 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         ownerNameView.setText(streamViewModel.getOwner().getNickname());
 
         ownerSubscribersView = findViewById(R.id.stream_watch_owner_subscribers);
-        ownerSubscribersView.setText(streamViewModel.getOwner().getSubscribeTotal() + " subscribers");
+
+        totalSub = getIntent().getIntExtra("totalSub",0);
+        if(totalSub ==0)
+            totalSub = streamViewModel.getOwner().getSubscribeTotal();
+        ownerSubscribersView.setText(totalSub + " subscribers");
 
         timeView = findViewById(R.id.stream_watch_time);
         timeView.setText(streamViewModel.getDateStartString() + " | " + streamViewModel.getDateStatus());
@@ -374,6 +385,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         ownerAvatarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.print("CACS");
                 Class nextActivity = null;
                 if(currentUser.getId()==streamViewModel.getOwner().getId()){
                      nextActivity = MyChannelActivity.class;
@@ -381,7 +393,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                      nextActivity = ChannelActivity.class;
                 }
                 if (nextActivity != null) {
-                    Intent t = new Intent(getActivity(), nextActivity);
+                    Intent t = new Intent(getApplicationContext(), nextActivity);
                     t.putExtra("owner_id", streamViewModel.getOwner().getId());
                     t.putExtra("channel_name", streamViewModel.getOwner().getNickname());
                     startActivity(t);
