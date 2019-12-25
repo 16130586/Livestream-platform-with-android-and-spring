@@ -13,12 +13,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `nick_name` varchar(255) DEFAULT NULL,
-  `description` nvarchar(255) DEFAULT NULL,
+  `avatar` text DEFAULT NULL,
   `gmail` varchar(255) DEFAULT NULL,
   `forgot_token` varchar(255) DEFAULT NULL,
   `subscribe_total` int(11) DEFAULT NULL,
-  `avatar` text DEFAULT NULL,
   `background` text DEFAULT NULL,
+  `description` nvarchar(255) DEFAULT NULL,
+
   PRIMARY KEY (`user_id`)
 );
 

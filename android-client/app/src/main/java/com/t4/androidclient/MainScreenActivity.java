@@ -1,4 +1,4 @@
-﻿package com.t4.androidclient;
+package com.t4.androidclient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -114,11 +114,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             });
             infoUser.execute();
         }
-        /**
-         =======================================================================================================================================
-         END LOGIN
-         =======================================================================================================================================
-         */
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -126,22 +121,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         actionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-
-        slide_view.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        mDrawerLayout.closeDrawers();
-                        int id = menuItem.getItemId();
-                        if (id == R.id.your_videos) {
-                            System.out.println("Chọn 1");
-                        }
-                        progressBar.setVisibility(View.GONE);
-                        return true;
-                    }
-
-                });
 
 
         mDrawerLayout.addDrawerListener(
@@ -222,6 +201,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         mDrawerLayout.closeDrawers();
+                        progressBar.setVisibility(View.VISIBLE);
                         int id = menuItem.getItemId();
                         if (id == R.id.your_streams) {
                             if (Authentication.ISLOGIN) {
@@ -259,6 +239,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                                 startActivity(intent);
                             }
                         }
+                        progressBar.setVisibility(View.GONE);
                         return true;
                     }
 
