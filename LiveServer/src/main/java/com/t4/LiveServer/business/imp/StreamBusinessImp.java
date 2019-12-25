@@ -283,6 +283,9 @@ public class StreamBusinessImp implements StreamBusiness {
     }
 
     @Override
+    public List<Comment> getCommentByVideoTime(int streamId, int videoTime) {
+        return commentRepository.findAllByStreamIdAndVideoTime(streamId, videoTime);
+    }
     public boolean upView(int streamId) {
         try {
             Stream stream = streamRepository.findById(streamId).get();

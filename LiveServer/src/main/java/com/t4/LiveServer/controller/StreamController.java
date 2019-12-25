@@ -167,6 +167,18 @@ public class StreamController {
         apiResponse.data = streamBusiness.saveComment(comment);
         return apiResponse;
     }
+    @GetMapping("/{streamId}/comments/{videoTime}")
+    public ApiResponse getCommentByVideoTime(@PathVariable Integer streamId, @PathVariable Integer videoTime) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "List comment of time: " + videoTime;
+        List<Comment> returns = streamBusiness.getCommentByVideoTime(streamId , videoTime);
+        if(returns == null){
+            apiResponse.statusCode = 404;
+        }
+        apiResponse.data = returns;
+        return apiResponse;
+    }
 	@GetMapping("/listByUserType/{userID}/{typeID}/{offset}/{limit}")
 	public ApiResponse getStreamsByTypeOfUser(@PathVariable(name = "userID") int userID,@PathVariable(name = "typeID") int typeID
 	 , @PathVariable(name = "offset") int offset
