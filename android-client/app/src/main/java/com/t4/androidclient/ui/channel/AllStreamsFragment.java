@@ -35,6 +35,7 @@ public class AllStreamsFragment extends Fragment {
     private View root;
     private ChannelStreamAdapter channelStreamAdapter;
     private RecyclerView recyclerView;
+    private ImageView channelBackground;
     private List<StreamViewModel> listStreamView;
     private int ownerID;
 

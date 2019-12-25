@@ -242,5 +242,9 @@ public class Stream {
         return this.getStreamId() == s.getStreamId();
     }
     
-    
+    public synchronized void upView() {
+        if (totalView == null || totalView < 0)
+            totalView = 0;
+        totalView++;
+    }
 }

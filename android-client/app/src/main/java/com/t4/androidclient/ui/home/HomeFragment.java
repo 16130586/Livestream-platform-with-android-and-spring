@@ -48,10 +48,10 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        clip_ads = root.findViewById(R.id.clip_ads);
-        Uri videoUrl = Uri.parse("android.resource://" + getActivity().getApplicationContext().getPackageName() + "/" + R.raw.clip_ads_example);
-        clip_ads.setVideoURI(videoUrl);
-        clip_ads.requestFocus();
+//        clip_ads = root.findViewById(R.id.clip_ads);
+//        Uri videoUrl = Uri.parse("android.resource://" + getActivity().getApplicationContext().getPackageName() + "/" + R.raw.clip_ads_example);
+//        clip_ads.setVideoURI(videoUrl);
+//        clip_ads.requestFocus();
 //        clip_ads.start();
 
         listStream = new LinkedList<>();

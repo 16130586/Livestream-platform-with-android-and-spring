@@ -21,6 +21,7 @@ import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.livestream.WatchLiveStreamActivity;
+import com.t4.androidclient.ui.livestream.WatchVideoActivity;
 
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class StreamRecyclerAdapter extends
         Class nextActivity = null;
         switch (modelClicked.getStatus()) {
             case STATUS_ENDED:
-                nextActivity = null;
+                nextActivity = WatchVideoActivity.class;
                 Toast.makeText(context, "Navigate to see video!", Toast.LENGTH_SHORT).show();
                 break;
             case STATUS_ON_LIVE:

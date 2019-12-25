@@ -167,6 +167,18 @@ public class StreamController {
         apiResponse.data = streamBusiness.saveComment(comment);
         return apiResponse;
     }
+    @GetMapping("/{streamId}/comments/{videoTime}")
+    public ApiResponse getCommentByVideoTime(@PathVariable Integer streamId, @PathVariable Integer videoTime) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "List comment of time: " + videoTime;
+        List<Comment> returns = streamBusiness.getCommentByVideoTime(streamId , videoTime);
+        if(returns == null){
+            apiResponse.statusCode = 404;
+        }
+        apiResponse.data = returns;
+        return apiResponse;
+    }
 	@GetMapping("/listByUserType/{userID}/{typeID}/{offset}/{limit}")
 	public ApiResponse getStreamsByTypeOfUser(@PathVariable(name = "userID") int userID,@PathVariable(name = "typeID") int typeID
 	 , @PathVariable(name = "offset") int offset
@@ -230,6 +242,15 @@ public class StreamController {
         apiResponse.statusCode = 200;
         apiResponse.message = "get trending streams";
         apiResponse.data = streamBusiness.getTrendingStreams(offset, pageSize);
+        return apiResponse;
+    }
+
+    @PostMapping("/upView/{streamId}")
+    public ApiResponse upView(@PathVariable Integer streamId) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "increase stream's view";
+        apiResponse.data = streamBusiness.upView(streamId);
         return apiResponse;
     }
 }

@@ -22,4 +22,6 @@ public interface StreamBusiness {
 	List<Stream> listStreamByTypeOfUser(int userID,int typeID);
 	List<Stream>  getWatchedStreamsByUserID(int userID);
     List<Stream> getTrendingStreams(int offset, int pageSize);
+    List<Comment> getCommentByVideoTime(int streamId , int videoTime);
+    boolean upView(int streamId);
 }

@@ -24,7 +24,8 @@ public class Api {
     public static final String URL_GET_SUBSCRIBED_CHANNELS = Host.API_HOST_IP + "/user/listSubscribedByUserID";
     public static final String URL_START_A_LIVE_STREAM = Host.API_HOST_IP + "/streams/auth/{id}/start";
     public static final String URL_STOP_A_LIVE_STREAM = Host.API_HOST_IP + "/streams/auth/{id}/stop";
+    public static final String URL_GET_COMMENT_BY_VIDEO_TIME = Host.API_HOST_IP + "/streams/{streamId}/comments/{videoTime}";
     public static final String URL_GET_TRENDING_STREAMS = Host.API_HOST_IP + "/streams/trend/";
-
+    public static final String URL_UP_VIEW = Host.API_HOST_IP + "/streams/upView/";
 
 }

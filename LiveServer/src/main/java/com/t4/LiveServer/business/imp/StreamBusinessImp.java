@@ -281,4 +281,20 @@ public class StreamBusinessImp implements StreamBusiness {
         Pageable pageable = new PageRequest(offset, pageSize, Sort.by("totalView").descending());
         return streamRepository.findAll(pageable).getContent();
     }
+
+    @Override
+    public List<Comment> getCommentByVideoTime(int streamId, int videoTime) {
+        return commentRepository.findAllByStreamIdAndVideoTime(streamId, videoTime);
+    }
+    public boolean upView(int streamId) {
+        try {
+            Stream stream = streamRepository.findById(streamId).get();
+            stream.upView();
+            streamRepository.save(stream);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

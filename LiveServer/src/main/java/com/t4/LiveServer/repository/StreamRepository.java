@@ -41,6 +41,4 @@ public interface StreamRepository extends JpaRepository<Stream, Integer> {
 
     List<Stream> findAllByStatusIsNot(int streamStatus, Pageable pageable);
 
-
-
 }

@@ -36,11 +36,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.livestream.WatchLiveStreamActivity"
-            android:label="@string/title_activity_watch_live_stream"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".ui.livestream.WatchVideoActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.livestream.WatchLiveStreamActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_watch_live_stream"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.channel.ChannelActivity" />
         <activity android:name=".ui.channel.ChannelStreamsOfTypeActivity" />
         <activity android:name=".ui.mychannel.MyChannelActivity" />
@@ -61,7 +65,7 @@
             android:name=".activity.CreateLiveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/camera_example_title"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".external.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -69,9 +73,9 @@
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/camera_example_title"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".EventActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -122,7 +126,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/stream_player_title"
             android:screenOrientation="fullSensor" />
-        <activity android:name=".ui.search.SearchActivity"/>
+        <activity android:name=".ui.search.SearchActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

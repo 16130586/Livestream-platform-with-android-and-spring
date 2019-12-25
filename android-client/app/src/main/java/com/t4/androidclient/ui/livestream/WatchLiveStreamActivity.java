@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -80,6 +81,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private List<Comment> commentList;
     private List<Integer> commentIdList;
     private Socket mSocket;
+
     private boolean showComment = true;
     private User currentUser;
     {
@@ -143,8 +145,14 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             @Override
             public void onStart(GiraffePlayer giraffePlayer) {
-
                 Toast.makeText(getBaseContext(), "onStart: old : " + giraffePlayer.getCurrentPosition() , Toast.LENGTH_SHORT).show();
+                UpView upView = new UpView(new AsyncResponse() {
+                    @Override
+                    public void processFinish(String output) {
+                        Log.i(WatchLiveStreamActivity.this.getClass().getSimpleName(), "stream id: " + streamViewModel.getStreamId() + " increase 1 view!");
+                    }
+                });
+                upView.execute();
             }
 
             @Override
@@ -493,6 +501,26 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
             keyValues.put("ownerName", MainScreenActivity.user.nickname);
             keyValues.put("videoTime", "200");
             Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class UpView extends AsyncTask<Comment, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public UpView(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(Comment... comments) {
+            String url =Api.URL_UP_VIEW + streamViewModel.getStreamId();
+            Request request = HttpClient.buildPostRequest(url, null);
             return HttpClient.execute(request);
         }
 
