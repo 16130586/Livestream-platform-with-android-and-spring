@@ -316,6 +316,7 @@ public class WatchVideoActivity extends AppCompatActivity {
                         commentList.add(comment);
                         adapter.notifyItemRangeChanged(commentList.size() - 2, 1);
                         commentInput.setText("");
+                        recyclerView.scrollToPosition(commentList.size() - 1);
                     }
                 });
                 pushCommentTask.execute(comment);
