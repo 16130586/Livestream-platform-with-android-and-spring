@@ -37,7 +37,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.livestream.WatchVideoActivity"
-            android:label="@string/title_activity_watch_video"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.livestream.WatchLiveStreamActivity"

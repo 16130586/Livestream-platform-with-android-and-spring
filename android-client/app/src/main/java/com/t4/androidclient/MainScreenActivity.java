@@ -405,6 +405,15 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
         //  Thêm button logout vào slide khi da dang nhap
         btn_logout = slide_view.getHeaderView(0).findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainScreenActivity.this, MainScreenActivity.class);
+                startActivity(intent);
+                slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                logout();
+            }
+        });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
         profile_fullname.setText("Hi " + user.getNickname() );
 //        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
