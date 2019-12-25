@@ -14,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
@@ -35,18 +37,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Request;
 
 public class AboutFragment extends Fragment {
     User getUser = null ;
     User currentUser = null ;
-
     TextView channelName;
     TextView channelSubNumber;
     Button subscribleButton;
     Button blockButton;
     TextView channelTypes;
     TextView description;
+    CircleImageView channelImage;
     int ownerID;
     List<StreamType> typeList = new ArrayList<StreamType>();
 
@@ -60,7 +63,13 @@ public class AboutFragment extends Fragment {
         channelTypes = root.findViewById(R.id.channel_type);
         description = root.findViewById(R.id.description);
         subscribleButton = root.findViewById(R.id.btn_subscrible);
+        channelImage = root.findViewById(R.id.channel_image);
         ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
+
+
+
+
+
 
         SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
         Authentication.TOKEN = db.getToken();
@@ -183,6 +192,10 @@ public class AboutFragment extends Fragment {
                         getUser = userHelper.parseUserJson(userJSON);
                         // Render UImà
                         channelName.setText(getUser.getNickname());
+                        String avatarURL = getUser.getAvatar();
+                        if (avatarURL != null && !avatarURL.isEmpty())
+                            Glide.with(channelImage.getContext()).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
+                                    .placeholder(R.drawable.ic_fire).centerCrop().into(channelImage);
                         channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
                         description.setText(getUser.getDescription());
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
@@ -197,7 +210,7 @@ public class AboutFragment extends Fragment {
                                             for (int i = 0; i < typeList.size() - 1; i++) {
                                                 types += typeList.get(i).getTypeName() + ", ";
                                             }
-                                            types += typeList.get(typeList.size()-1).getTypeName() + " .";
+                                            types += typeList.get(typeList.size()-1).getTypeName() ;
                                             channelTypes.setText(types);
                                         }
                                     }

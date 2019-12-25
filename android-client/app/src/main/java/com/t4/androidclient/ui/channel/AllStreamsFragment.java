@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.ChannelStreamAdapter;
 import com.t4.androidclient.contraints.Host;
@@ -33,6 +35,7 @@ public class AllStreamsFragment extends Fragment {
     private View root;
     private ChannelStreamAdapter channelStreamAdapter;
     private RecyclerView recyclerView;
+    private ImageView channelBackground;
     private List<StreamViewModel> listStreamView;
     private int ownerID;
 
@@ -70,7 +73,7 @@ public class AllStreamsFragment extends Fragment {
                                 if (liveStream != null) {
                                     StreamViewModel streamView = new StreamViewModel();
                                     streamView.setStreamId(liveStream.getStreamId());
-                                    streamView.setStreamName(liveStream.getName());
+                                    streamView.setTitle(liveStream.getName());
                                     streamView.setEndTime(liveStream.getEndTime() != null ? liveStream.getEndTime() : new Date(1573837200)); //16/11/2019
                                     streamView.setTotalView(liveStream.getTotalView() != null ? liveStream.getTotalView() : 69069);
                                     streamView.setThumbnail(liveStream.getThumbnail() != null ? liveStream.getThumbnail() : "");

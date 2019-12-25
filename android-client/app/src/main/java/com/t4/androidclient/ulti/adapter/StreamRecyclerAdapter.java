@@ -82,6 +82,7 @@ public class StreamRecyclerAdapter extends
         });
         ownerAvatarView.setOnClickListener(e -> {
             Toast.makeText(context, "Click on owner avatar " + position + " !", Toast.LENGTH_SHORT).show();
+
             Class nextActivity = ChannelActivity.class;
             if (nextActivity != null) {
                 Intent t = new Intent(context, nextActivity);

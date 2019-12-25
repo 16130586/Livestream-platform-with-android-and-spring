@@ -63,7 +63,7 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
         }
 
         TextView streamNameView = holder.streamName;
-        streamNameView.setText(streamViewModel.getStreamName());
+        streamNameView.setText(streamViewModel.getTitle());
 
         TextView streamPublishTimeView = holder.streamPublishTime;
         Date endTimeDate = streamViewModel.getEndTime();

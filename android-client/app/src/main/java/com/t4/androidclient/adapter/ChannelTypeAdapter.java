@@ -102,7 +102,6 @@ public class ChannelTypeAdapter extends RecyclerView.Adapter<ChannelTypeAdapter.
                     int typeID = listTypeView.get(getAdapterPosition()).getId();
                     int numberOfType= listTypeView.get(getAdapterPosition()).getNumberOfType();
                     String typeName= listTypeView.get(getAdapterPosition()).getTypeName();
-                    System.out.println(typeID+" asd s "+numberOfType);
                     Intent intent=new Intent(context, ChannelStreamsOfTypeActivity.class);
                     intent.putExtra("type_id",typeID);
                     intent.putExtra("owner_id",Integer.valueOf(dataList.get(0)));

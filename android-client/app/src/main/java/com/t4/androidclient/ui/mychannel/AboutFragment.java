@@ -147,7 +147,7 @@ public class AboutFragment extends Fragment {
                                             for (int i = 0; i < typeList.size() - 1; i++) {
                                                 types += typeList.get(i).getTypeName() + ", ";
                                             }
-                                            types += typeList.get(typeList.size()-1).getTypeName() + " .";
+                                            types += typeList.get(typeList.size()-1).getTypeName() ;
                                             channelTypes.setText(types);
                                         }
                                     }
