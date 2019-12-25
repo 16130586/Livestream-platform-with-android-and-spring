@@ -125,7 +125,7 @@ public class StreamRecyclerAdapter extends
         }
         if (nextActivity != null) {
             Intent t = new Intent(context, nextActivity);
-            t.putExtra("owner_id", JsonHelper.serialize(modelClicked));
+            t.putExtra("DATA", JsonHelper.serialize(modelClicked));
             context.startActivity(t);
         }
     }

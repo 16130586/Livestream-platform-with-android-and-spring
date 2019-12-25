@@ -1,4 +1,4 @@
-﻿package com.t4.androidclient;
+ package com.t4.androidclient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -121,22 +121,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         actionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-
-        slide_view.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        mDrawerLayout.closeDrawers();
-                        int id = menuItem.getItemId();
-//  doan nay can phai confirm lai                      if (id == R.id.your_videos) {
-//                            System.out.println("Chọn 1");
-//                        }
-                        progressBar.setVisibility(View.GONE);
-                        return true;
-                    }
-
-                });
 
 
         mDrawerLayout.addDrawerListener(
