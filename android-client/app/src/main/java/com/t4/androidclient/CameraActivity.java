@@ -515,11 +515,14 @@ public class CameraActivity extends CameraActivityBase {
                                                 popupMessage.setText("");
                                                 msgInput.setText("");
 
-                                                Comment pushComment = new Comment();
-                                                pushComment.setMessage("@" + cmt.getOwnerName() + " " + msg);
-
                                                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                                                Comment pushComment = new Comment();
+                                                if(msg.isEmpty()){
+                                                    return;
+                                                }
+
+                                                pushComment.setMessage("@" + cmt.getOwnerName() + " " + msg);
                                                 new PushCommentTask(new AsyncResponse() {
                                                     @Override
                                                     public void processFinish(String output) {
