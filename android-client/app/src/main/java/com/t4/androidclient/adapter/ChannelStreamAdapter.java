@@ -2,6 +2,7 @@ package com.t4.androidclient.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.model.CompareDate;
 
 import java.util.Date;
@@ -25,7 +28,6 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
     private Context context;
 
     byte[] imageBytes;
-    Bitmap thumnailImage;
 
     public ChannelStreamAdapter(List<StreamViewModel> listStreamView, Context context) {
         this.listStreamView = listStreamView;
@@ -50,17 +52,12 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StreamViewModel streamViewModel = listStreamView.get(position);
 
-        if (streamViewModel.getThumbnail() != null) {
-            //get thumnail link - lay image thumnail tu do
-            // imageBytes = Base64.decode(stream.getAvatar(), Base64.URL_SAFE);
-            //thumnailImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        }
-        ImageView thumnailImgView = holder.thumnailImage;
-        if (thumnailImage != null && thumnailImage.getByteCount() > 0) {
-            thumnailImgView.setImageBitmap(thumnailImage);
-        } else {
-            thumnailImgView.setImageDrawable(context.getDrawable(R.drawable.background_channel));
-        }
+        ImageView thumnailView = holder.thumnailImage;
+
+        String thumbnailURL = streamViewModel.getThumbnail();
+        if (thumbnailURL != null && !thumbnailURL.isEmpty())
+            Glide.with(thumnailView.getContext()).load(thumbnailURL.startsWith("http") ? thumbnailURL : Host.API_HOST_IP + thumbnailURL) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(thumnailView);
 
         TextView streamNameView = holder.streamName;
         streamNameView.setText(streamViewModel.getTitle());

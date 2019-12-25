@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,8 @@ public class AboutFragment extends Fragment {
     Button blockButton;
     TextView channelTypes;
     TextView description;
+     ImageView channelBackground;
+
     CircleImageView channelImage;
     int ownerID;
     List<StreamType> typeList = new ArrayList<StreamType>();
@@ -64,6 +67,7 @@ public class AboutFragment extends Fragment {
         description = root.findViewById(R.id.description);
         subscribleButton = root.findViewById(R.id.btn_subscrible);
         channelImage = root.findViewById(R.id.channel_image);
+        channelBackground =  root.findViewById(R.id.background_channel);
         ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
 
 
@@ -196,6 +200,12 @@ public class AboutFragment extends Fragment {
                         if (avatarURL != null && !avatarURL.isEmpty())
                             Glide.with(channelImage.getContext()).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
                                     .placeholder(R.drawable.ic_fire).centerCrop().into(channelImage);
+
+                        String backgroundURL = getUser.getBackground();
+                        if (backgroundURL != null && !backgroundURL.isEmpty())
+                            Glide.with(channelBackground.getContext()).load(avatarURL.startsWith("http") ? backgroundURL : Host.API_HOST_IP + backgroundURL) // plays as url
+                                    .placeholder(R.drawable.ic_fire).centerCrop().into(channelBackground);
+
                         channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
                         description.setText(getUser.getDescription());
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
