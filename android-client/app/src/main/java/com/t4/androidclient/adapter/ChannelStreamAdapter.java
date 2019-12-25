@@ -27,7 +27,6 @@ public class ChannelStreamAdapter extends RecyclerView.Adapter<ChannelStreamAdap
     private List<StreamViewModel> listStreamView;
     private Context context;
 
-    byte[] imageBytes;
 
     public ChannelStreamAdapter(List<StreamViewModel> listStreamView, Context context) {
         this.listStreamView = listStreamView;

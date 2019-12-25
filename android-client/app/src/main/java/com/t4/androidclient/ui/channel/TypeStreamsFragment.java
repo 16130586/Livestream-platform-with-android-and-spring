@@ -60,6 +60,7 @@ public class TypeStreamsFragment extends Fragment {
                         String userString = data.getString("data");
                         JSONObject userJSON = new JSONObject(userString);
                         getUser = userHelper.parseUserJson(userJSON);
+                        channelBackground = root.findViewById(R.id.background_channel);
                         String backgroundURL = getUser.getBackground();
                         if (backgroundURL != null && !backgroundURL.isEmpty())
                             Glide.with(channelBackground.getContext()).load(backgroundURL.startsWith("http") ? backgroundURL : Host.API_HOST_IP + backgroundURL) // plays as url
@@ -70,10 +71,10 @@ public class TypeStreamsFragment extends Fragment {
                 }
             }
         });
-        String[] infos = new String[2];
-        infos[0] = "userID";
-        infos[1] = String.valueOf(ownerID);
-        channelInfo.execute(infos);
+//        String[] infos = new String[2];
+//        infos[0] = "userID";
+//        infos[1] = String.valueOf(ownerID);
+//        channelInfo.execute(infos);
 
         TypeStreamsFragment.StreamTypes streamTypes = new TypeStreamsFragment.StreamTypes(new AsyncResponse() {
             @Override
@@ -108,6 +109,7 @@ public class TypeStreamsFragment extends Fragment {
         String[] values = new String[2];
         values[0] = "userID";
         values[1] = String.valueOf(ownerID);
+        channelInfo.execute(values);
         streamTypes.execute(values);
         return root;
     }
