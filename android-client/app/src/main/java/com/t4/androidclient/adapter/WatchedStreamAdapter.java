@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.model.CompareDate;
 
 import java.util.Date;
@@ -23,9 +25,6 @@ import viewModel.StreamViewModel;
 public class WatchedStreamAdapter extends RecyclerView.Adapter<WatchedStreamAdapter.ViewHolder>{
     private List<StreamViewModel> listStreamView;
     private Context context;
-
-    byte[] imageBytes;
-    Bitmap thumnailImage;
 
     public WatchedStreamAdapter(List<StreamViewModel> listStreamView, Context context) {
         this.listStreamView = listStreamView;
@@ -46,17 +45,11 @@ public class WatchedStreamAdapter extends RecyclerView.Adapter<WatchedStreamAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StreamViewModel streamViewModel = listStreamView.get(position);
 
-        if (streamViewModel.getThumbnail() != null) {
-            //get thumnail link - lay image thumnail tu do
-            // imageBytes = Base64.decode(stream.getAvatar(), Base64.URL_SAFE);
-            //thumnailImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        }
-        ImageView thumnailImgView = holder.thumnailImage;
-        if (thumnailImage != null && thumnailImage.getByteCount() > 0) {
-            thumnailImgView.setImageBitmap(thumnailImage);
-        } else {
-            thumnailImgView.setImageDrawable(context.getDrawable(R.drawable.background_channel));
-        }
+        ImageView thumnailView = holder.thumnailImage;
+        String thumbnailURL = streamViewModel.getThumbnail();
+        if (thumbnailURL != null && !thumbnailURL.isEmpty())
+            Glide.with(thumnailView.getContext()).load(thumbnailURL.startsWith("http") ? thumbnailURL : Host.API_HOST_IP + thumbnailURL) // plays as url
+                    .placeholder(R.drawable.ic_fire).centerCrop().into(thumnailView);
 
         TextView streamNameView = holder.streamName;
         streamNameView.setText(streamViewModel.getStreamName());

@@ -33,10 +33,9 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
-            app:civ_circle_background_color="#6B323D"
+            app:civ_circle_background_color="#834D0212"
             android:src="@drawable/ic_fire"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp" />
+            app:civ_border_color="#FF000000"/>
 
 
         <TextView
@@ -134,7 +133,7 @@
             android:layout_below="@id/title_channel_type"
             android:layout_marginTop="5dp"
             android:textColor="#000000"
-
+            android:gravity="center"
             android:textSize="14sp"
             android:text=""/>
 

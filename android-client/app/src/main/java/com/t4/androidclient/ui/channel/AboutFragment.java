@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,13 +44,14 @@ import okhttp3.Request;
 public class AboutFragment extends Fragment {
     User getUser = null ;
     User currentUser = null ;
-
     TextView channelName;
     TextView channelSubNumber;
     Button subscribleButton;
     Button blockButton;
     TextView channelTypes;
     TextView description;
+     ImageView channelBackground;
+
     CircleImageView channelImage;
     int ownerID;
     List<StreamType> typeList = new ArrayList<StreamType>();
@@ -65,7 +67,13 @@ public class AboutFragment extends Fragment {
         description = root.findViewById(R.id.description);
         subscribleButton = root.findViewById(R.id.btn_subscrible);
         channelImage = root.findViewById(R.id.channel_image);
+        channelBackground =  root.findViewById(R.id.background_channel);
         ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
+
+
+
+
+
 
         SqliteAuthenticationHelper db = new SqliteAuthenticationHelper(getContext());
         Authentication.TOKEN = db.getToken();
@@ -192,6 +200,12 @@ public class AboutFragment extends Fragment {
                         if (avatarURL != null && !avatarURL.isEmpty())
                             Glide.with(channelImage.getContext()).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
                                     .placeholder(R.drawable.ic_fire).centerCrop().into(channelImage);
+
+                        String backgroundURL = getUser.getBackground();
+                        if (backgroundURL != null && !backgroundURL.isEmpty())
+                            Glide.with(channelBackground.getContext()).load(avatarURL.startsWith("http") ? backgroundURL : Host.API_HOST_IP + backgroundURL) // plays as url
+                                    .placeholder(R.drawable.ic_fire).centerCrop().into(channelBackground);
+
                         channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
                         description.setText(getUser.getDescription());
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
@@ -206,7 +220,7 @@ public class AboutFragment extends Fragment {
                                             for (int i = 0; i < typeList.size() - 1; i++) {
                                                 types += typeList.get(i).getTypeName() + ", ";
                                             }
-                                            types += typeList.get(typeList.size()-1).getTypeName() + " .";
+                                            types += typeList.get(typeList.size()-1).getTypeName() ;
                                             channelTypes.setText(types);
                                         }
                                     }

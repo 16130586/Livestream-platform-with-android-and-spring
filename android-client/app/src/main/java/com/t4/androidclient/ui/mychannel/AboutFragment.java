@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.t4.androidclient.R;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
@@ -54,6 +56,8 @@ public class AboutFragment extends Fragment {
     int ownerID;
     List<StreamType> typeList = new ArrayList<StreamType>();
     boolean editStatus = false;
+    ImageView channelBackground;
+    ImageView channelImage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class AboutFragment extends Fragment {
         description = root.findViewById(R.id.description);
         changeAboutButton = root.findViewById(R.id.btn_change_about);
         changeImageButton = root.findViewById(R.id.btn_change_image);
+        channelImage =  root.findViewById(R.id.channel_image);
+
         ownerID = getActivity().getIntent().getIntExtra("owner_id",-1);
 
         changeAboutButton.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +141,17 @@ public class AboutFragment extends Fragment {
                         channelName.setText(getUser.getNickname());
                         channelSubNumber.setText(getUser.getSubscribeTotal()+" người theo dõi");
                         description.setText(getUser.getDescription());
+
+                        String avatarURL = getUser.getAvatar();
+                        if (avatarURL != null && !avatarURL.isEmpty())
+                            Glide.with(channelImage.getContext()).load(avatarURL.startsWith("http") ? avatarURL : Host.API_HOST_IP + avatarURL) // plays as url
+                                    .placeholder(R.drawable.ic_fire).centerCrop().into(channelImage);
+                        channelBackground = root.findViewById(R.id.background_channel);
+                        String backgroundURL = getUser.getBackground();
+                        if (backgroundURL != null && !backgroundURL.isEmpty())
+                            Glide.with(channelBackground.getContext()).load(avatarURL.startsWith("http") ? backgroundURL : Host.API_HOST_IP + backgroundURL) // plays as url
+                                    .placeholder(R.drawable.ic_fire).centerCrop().into(channelBackground);
+
                         AboutFragment.StreamTypes streamTypes = new AboutFragment.StreamTypes(new AsyncResponse() {
                             @Override
                             public void processFinish(String output) {
@@ -147,7 +164,7 @@ public class AboutFragment extends Fragment {
                                             for (int i = 0; i < typeList.size() - 1; i++) {
                                                 types += typeList.get(i).getTypeName() + ", ";
                                             }
-                                            types += typeList.get(typeList.size()-1).getTypeName() + " .";
+                                            types += typeList.get(typeList.size()-1).getTypeName() ;
                                             channelTypes.setText(types);
                                         }
                                     }

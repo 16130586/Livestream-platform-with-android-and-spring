@@ -386,7 +386,10 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     public void doProcessLoggedin() {
         Authentication.ISLOGIN = true;
         slide_view.getMenu().clear();
-        slide_view.inflateHeaderView(R.layout.slide_header);
+                                slide_view.removeHeaderView(slide_view.getHeaderView(0));
+                                slide_view.inflateHeaderView(R.layout.slide_header);
+                                slide_view.inflateMenu(R.menu.menu_slide);
+
         CircleImageView profileImage = slide_view.getHeaderView(0).findViewById(R.id.profile_image);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
 //        if (user.getSubscription() != null) {
