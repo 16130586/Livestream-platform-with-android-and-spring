@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `types` (
 CREATE TABLE IF NOT EXISTS `comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_id` int(11) DEFAULT NULL,
+  `owner_name` varchar(255) DEFAULT NULL,
   `stream_id` int(11) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
   `created_time` datetime DEFAULT NULL,

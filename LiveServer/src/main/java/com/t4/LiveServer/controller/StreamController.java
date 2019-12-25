@@ -159,6 +159,7 @@ public class StreamController {
         comment.setOwnerId(user.getUserId());
         comment.setStreamId(streamId);
         comment.setMessage(datas.get("message"));
+        comment.setOwnerName(datas.get("ownerName"));
         comment.setStreamStatus(Integer.parseInt(datas.get("streamStatus")));
         comment.setVideoTime(Integer.parseInt(datas.get("videoTime")));
         comment.setCommentSource(CommentSource.INTERNAL);
@@ -166,7 +167,6 @@ public class StreamController {
         apiResponse.data = streamBusiness.saveComment(comment);
         return apiResponse;
     }
-	
 	@GetMapping("/listByUserType/{userID}/{typeID}/{offset}/{limit}")
 	public ApiResponse getStreamsByTypeOfUser(@PathVariable(name = "userID") int userID,@PathVariable(name = "typeID") int typeID
 	 , @PathVariable(name = "offset") int offset
@@ -224,4 +224,12 @@ public class StreamController {
 		response.data = requestedData;
 		return response;
 	}
+    @GetMapping("/trend/{offset}/{pageSize}")
+    public ApiResponse getTrendingStreams(@PathVariable Integer offset, @PathVariable Integer pageSize) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get trending streams";
+        apiResponse.data = streamBusiness.getTrendingStreams(offset, pageSize);
+        return apiResponse;
+    }
 }

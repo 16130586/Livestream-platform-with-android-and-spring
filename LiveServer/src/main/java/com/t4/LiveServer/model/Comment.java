@@ -15,6 +15,7 @@ public class Comment {
     private Integer streamStatus;
     private Integer commentSource;
     private Integer videoTime;
+    private String ownerName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,11 @@ public class Comment {
     public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
+
+    @Column(name = "owner_name")
+    public String getOwnerName() { return ownerName; }
+
+    public void setOwnerName(String ownerName) {this.ownerName = ownerName;}
 
     @Column(name = "stream_id")
     public Integer getStreamId() {

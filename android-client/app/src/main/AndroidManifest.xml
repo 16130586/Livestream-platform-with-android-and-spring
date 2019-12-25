@@ -39,6 +39,7 @@
             android:name=".ui.livestream.WatchLiveStreamActivity"
             android:label="@string/title_activity_watch_live_stream"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.channel.ChannelActivity" />
         <activity android:name=".ui.channel.ChannelStreamsOfTypeActivity" />
@@ -68,6 +69,7 @@
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/camera_example_title"
             android:screenOrientation="fullSensor" />
         <activity

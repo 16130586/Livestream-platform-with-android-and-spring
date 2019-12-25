@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void loadNextDataFromApi(int offset) {
+        ((MainScreenActivity) getActivity()).progressBar.setVisibility(View.VISIBLE);
         int pageSize = 7;
         String requestNextResourceURL = Api.URL_GET_RECOMMEND_COOKIE_USER + "/" + offset + "/" + pageSize;
         GetNextStreamsTask task = new GetNextStreamsTask(new AsyncResponse() {
@@ -106,7 +107,6 @@ public class HomeFragment extends Fragment {
             }
         });
         task.execute(requestNextResourceURL);
-        ((MainScreenActivity) getActivity()).progressBar.setVisibility(View.VISIBLE);
     }
 
     private class GetNextStreamsTask extends AsyncTask<String, Void, String> {

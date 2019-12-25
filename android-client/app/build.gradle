@@ -55,6 +55,7 @@ dependencies {
 
     //https://square.github.io/okhttp/
     implementation("com.squareup.okhttp3:okhttp:4.2.0")
+    implementation 'org.conscrypt:conscrypt-android:2.2.1'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.facebook.android:facebook-login:5.11.0'
@@ -68,5 +69,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     api 'com.github.tcking:giraffeplayer2:0.1.25'
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
 }
