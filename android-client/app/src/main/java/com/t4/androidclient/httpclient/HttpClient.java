@@ -15,9 +15,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 public class HttpClient {
     private static final OkHttpClient httpClient = new OkHttpClient.Builder()
-            .connectTimeout(3, TimeUnit.MINUTES)
-            .writeTimeout(3, TimeUnit.MINUTES)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.MINUTES)
+            .writeTimeout(10, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.MINUTES)
             .build();
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 

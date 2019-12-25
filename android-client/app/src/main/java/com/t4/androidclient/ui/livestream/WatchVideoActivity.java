@@ -313,10 +313,10 @@ public class WatchVideoActivity extends AppCompatActivity {
                 PushCommentTask pushCommentTask = new PushCommentTask(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
-                        commentList.add(comment);
-                        adapter.notifyItemRangeChanged(commentList.size() - 2, 1);
-                        commentInput.setText("");
-                        recyclerView.scrollToPosition(commentList.size() - 1);
+                        ApiResponse response = JsonHelper.deserialize(output , ApiResponse.class);
+                        if(response.statusCode < 400){
+                            commentInput.setText("");
+                        }
                     }
                 });
                 pushCommentTask.execute(comment);

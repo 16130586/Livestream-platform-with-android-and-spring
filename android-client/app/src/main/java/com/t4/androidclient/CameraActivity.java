@@ -87,10 +87,10 @@ public class CameraActivity extends CameraActivityBase {
     private RelativeLayout containerComments = null;
     private LinearLayout containerCommentPopup = null;
     private CommentBuffer commentBuffer;
-    private final int ANIMATION_DURATION = 3000;
+    private final int ANIMATION_DURATION = 5000;
     private final DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
     private final int DX = (int) (16 * displayMetrics.density);
-    private final int DY = (int) (64 * displayMetrics.density);
+    private final int DY = (int) (32 * displayMetrics.density);
     private Socket mSocket;
     private AnimationThread animationThread;
 
@@ -134,8 +134,9 @@ public class CameraActivity extends CameraActivityBase {
             new StartALiveStreamCaller(new AsyncResponse() {
                 @Override
                 public void processFinish(String output) {
+                    ApiResponse response = null;
                     if (output != null) {
-                        ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                        response = JsonHelper.deserialize(output, ApiResponse.class);
                         if (response.statusCode == 200) {
                             btnBroastCast.setVisibility(View.VISIBLE);
                             btnLoading.setVisibility(View.GONE);
@@ -161,7 +162,7 @@ public class CameraActivity extends CameraActivityBase {
                             }
                         }
                     } else {
-                        displayDialog("Starting live stream is failed!", "Error");
+                        displayDialog("Starting live stream is failed! with response error code: " + response.statusCode + " -- msg: " + response.message , "Error");
                     }
                 }
             }).execute(Api.URL_START_A_LIVE_STREAM.replace("{id}", svm.getStreamId() + ""));
@@ -493,11 +494,14 @@ public class CameraActivity extends CameraActivityBase {
                                 String rawText = cmt.getOwnerName() + ": " + cmt.getMessage();
                                 String displayText = rawText.length() > 25 ? (rawText.substring(0, 24) + "...") : rawText;
                                 t.setText(displayText);
-                                t.setWidth(DX * displayText.length());
+                                t.setBackground(getDrawable(R.drawable.rounded));
+                                t.setBackgroundResource(R.color.metal_black_light);
+                                t.setWidth((int)(280 * displayMetrics.density));
                                 t.setHeight(DY);
                                 t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                                 // 8 - 9 ki tu cho 1 dong -> max ~ 27 ki tu cho 1 cmt, nhieu hon cat ra
-                                t.setTextColor(Color.BLUE);
+                                t.setTextColor(Color.WHITE);
+                                t.setPadding(6, 6, 6, 6);
                                 t.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -555,7 +559,7 @@ public class CameraActivity extends CameraActivityBase {
                                         , 0f);
                                 move.setDuration(ANIMATION_DURATION + counter * 200);
 
-                                ObjectAnimator alpha2 = ObjectAnimator.ofFloat(t, "alpha", 1f, 0f);
+                                ObjectAnimator alpha2 = ObjectAnimator.ofFloat(t, "alpha", .5f, 1f);
                                 alpha2.setDuration(ANIMATION_DURATION + counter * 200);
                                 AnimatorSet animset = new AnimatorSet();
                                 animset.play(alpha2).with(move);

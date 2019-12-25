@@ -1,6 +1,8 @@
 package com.t4.androidclient.ui.livestream;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -27,6 +30,7 @@ import com.t4.androidclient.adapter.CommentAdapter;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
 import com.t4.androidclient.contraints.Host;
+import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
@@ -78,7 +82,8 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     {
         try {
             mSocket = IO.socket(Host.SOCKET_HOST);
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
     }
 
     @Override
@@ -130,12 +135,12 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             @Override
             public void onRelease(GiraffePlayer giraffePlayer) {
-                Toast.makeText(getBaseContext(), "onRelease:" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "onRelease:", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onStart(GiraffePlayer giraffePlayer) {
-                Toast.makeText(getBaseContext(), "onStart: old : " + giraffePlayer.getCurrentPosition() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "onStart: old : " + giraffePlayer.getCurrentPosition(), Toast.LENGTH_SHORT).show();
                 UpView upView = new UpView(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
@@ -147,7 +152,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             @Override
             public void onTargetStateChange(int oldState, int newState) {
-                Toast.makeText(getBaseContext(), "onTargetStateChange: currentPosition : " + videoView.getPlayer().getCurrentPosition() + "  -  new: " + newState , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "onTargetStateChange: currentPosition : " + videoView.getPlayer().getCurrentPosition() + "  -  new: " + newState, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -162,7 +167,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             @Override
             public void onPreparing(GiraffePlayer giraffePlayer) {
-                Toast.makeText(getBaseContext(), "onPreparing: " , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "onPreparing: ", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -182,10 +187,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         });
 
 
-
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
-        if(streamViewModel.getHlsPlayBackUrl() != null)
+        if (streamViewModel.getHlsPlayBackUrl() != null)
             videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
     }
 
@@ -197,7 +201,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     }
 
     private void bindNavigateData(Intent previousNavigationData) {
-        this.streamViewModel = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA") , StreamViewModel.class);
+        this.streamViewModel = JsonHelper.deserialize(previousNavigationData.getStringExtra("DATA"), StreamViewModel.class);
     }
 
     public void setUp() {
@@ -243,15 +247,16 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                 Comment comment = new Comment();
                 comment.setOwnerName(MainScreenActivity.user.nickname);
                 comment.setMessage(commentInput.getText().toString());
-                commentInput.setText("");
+
                 //mSocket.emit("client-send-comment", JsonHelper.serialize(comment));
 
                 PushCommentTask pushCommentTask = new PushCommentTask(new AsyncResponse() {
                     @Override
                     public void processFinish(String output) {
-                        System.out.println(output);
-                        Comment comment = CommentHelper.parseComment(output);
-                        System.out.println("================================ " + comment.toString());
+                        ApiResponse r = JsonHelper.deserialize(output, ApiResponse.class);
+                        commentInput.setText("");
+                        if (r.statusCode >= 400)
+                            displayDialog("Error when sending message to server !" + r.statusCode + " - " + r.message, "Error");
                     }
                 });
                 pushCommentTask.execute(comment);
@@ -292,7 +297,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
     public void connectSocket() {
         mSocket.connect();
-        mSocket.emit("client-send-id",JsonHelper.serialize(streamViewModel.getStreamId()));
+        mSocket.emit("client-send-id", JsonHelper.serialize(streamViewModel.getStreamId()));
 
     }
 
@@ -322,7 +327,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                     }
 
                     // add the message to view if not conflict id
-                        addMessage(ownerName, message);
+                    addMessage(ownerName, message);
 
                 }
             });
@@ -338,7 +343,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Comment... comments) {
-            String url =Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/comment";
+            String url = Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/comment";
             Map<String, String> keyValues = new HashMap<>();
             Comment comment = comments[0];
             keyValues.put("message", comment.getMessage());
@@ -364,7 +369,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Comment... comments) {
-            String url =Api.URL_UP_VIEW + streamViewModel.getStreamId();
+            String url = Api.URL_UP_VIEW + streamViewModel.getStreamId();
             Request request = HttpClient.buildPostRequest(url, null);
             return HttpClient.execute(request);
         }
@@ -381,7 +386,22 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
     public void addMessage(String username, String message) {
         commentList.add(new Comment(username, message));
-        adapter.notifyItemRangeChanged(commentList.size() - 1 , 1);
+        adapter.notifyItemRangeChanged(commentList.size() - 1, 1);
         recyclerView.scrollToPosition(commentList.size() - 1);
+    }
+
+    protected void displayDialog(String msg, String title) {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+            builder.setMessage(msg)
+                    .setTitle(title);
+            builder.setPositiveButton(R.string.dialog_button_close, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        } catch (Exception ex) {
+        }
     }
 }
