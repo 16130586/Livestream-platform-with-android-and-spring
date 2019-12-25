@@ -10,77 +10,77 @@
     android:weightSum="100">
 
 
-    <VideoView
-        android:id="@+id/clip_ads"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp" />
+<!--    <VideoView-->
+<!--        android:id="@+id/clip_ads"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="160dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        android:layout_marginTop="5dp" />-->
 
-    <RelativeLayout
-        android:id="@+id/info_ads"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-       >
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/info_ads"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="1dp"-->
+<!--       >-->
 
-        <TextView
-            android:id="@+id/span_ads"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:background="#FFCC03"
-            android:text="Quảng cáo"
-            android:fontFamily="sans-serif"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/span_ads"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:background="#FFCC03"-->
+<!--            android:text="Quảng cáo"-->
+<!--            android:fontFamily="sans-serif"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:textSize="14sp" />-->
 
-        <TextView
-            android:id="@+id/stream_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@id/span_ads"
-            android:text="Hãy đến cùng Shopeeeeeee !"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/stream_title"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:layout_toRightOf="@id/span_ads"-->
+<!--            android:text="Hãy đến cùng Shopeeeeeee !"-->
+<!--            android:textSize="14sp"-->
+<!--            android:textStyle="bold" />-->
 
-        <TextView
-            android:id="@+id/ads_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/span_ads"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:fontFamily="sans-serif"
-            android:text="Trang thương mại điện tử hàng đầu Việt Nam với các mặt hàng trên toàn cõi thiên đường ..."
-            android:textSize="12sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/ads_detail"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/span_ads"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:fontFamily="sans-serif"-->
+<!--            android:text="Trang thương mại điện tử hàng đầu Việt Nam với các mặt hàng trên toàn cõi thiên đường ..."-->
+<!--            android:textSize="12sp" />-->
 
-        <Button
-            android:id="@+id/get_ads"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@id/ads_detail"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="10dp"
-            android:background="#E7EEF7"
-            android:text="THỬ NGAY"
-            android:textStyle="bold"
-            android:textColor="#0000BB"
-            android:textSize="12sp" />
+<!--        <Button-->
+<!--            android:id="@+id/get_ads"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_below="@id/ads_detail"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="2dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:background="#E7EEF7"-->
+<!--            android:text="THỬ NGAY"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="#0000BB"-->
+<!--            android:textSize="12sp" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_stream"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="74dp"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:clipToPadding="false"
