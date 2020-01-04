@@ -1,12 +1,10 @@
 package com.t4.androidclient.model.livestream;
 
-import java.util.Date;
-
 public class Subscription {
+
+    Integer id;
     String name;
-    Date startTime;
-    Date endTime;
-    Double amount;
+    Integer type;
 
     public String getName() {
         return name;
@@ -16,27 +14,19 @@ public class Subscription {
         this.name = name;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Integer getId() {
+        return id;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Integer getType() {
+        return type;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

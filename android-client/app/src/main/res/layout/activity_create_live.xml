@@ -90,6 +90,7 @@
         </GridView>
 
         <TextView
+            android:id="@+id/text_forward"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -98,6 +99,7 @@
             android:text="Forwards"/>
 
         <LinearLayout
+            android:id="@+id/box_forward_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">

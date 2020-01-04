@@ -186,7 +186,6 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     public List<PaySubscription> getPaySubscriptions() {
         return paySubscriptions;
     }

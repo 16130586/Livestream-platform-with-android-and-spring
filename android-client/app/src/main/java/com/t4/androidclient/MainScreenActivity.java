@@ -51,6 +51,7 @@ import com.t4.androidclient.ui.mychannel.MyChannelActivity;
 import com.t4.androidclient.ui.search.SearchActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -392,15 +393,13 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
 
         CircleImageView profileImage = slide_view.getHeaderView(0).findViewById(R.id.profile_image);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
-//        if (user.getSubscription() != null) {
-//            TextView iconVIP = slide_view.findViewById(R.id.icon_vip);
-//            iconVIP.setVisibility(View.VISIBLE);
-//            buySubscription.setText("Your subscription will expires on " + user.subscription.getEndTime());
-//            buySubscription.setTextSize(14);
-//        } else {
+        if (checkExpiredSubscription()) {
+            buySubscription.setText("Premium Account!");
+            buySubscription.setTextSize(12);
+        } else {
             buySubscription.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + user.getId() + "\"> Upgrade To Premium Account</a>"));
             buySubscription.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
-//        }
+        }
 
         if (user.avatar != null && !user.avatar.isEmpty())
             Glide.with(this).load(user.avatar.startsWith("http") ? user.avatar : Host.API_HOST_IP + user.avatar) // plays as url
@@ -413,7 +412,6 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
             public void onClick(View view) {
                 Intent intent = new Intent(MainScreenActivity.this, MainScreenActivity.class);
                 startActivity(intent);
-                slide_view.removeHeaderView(slide_view.getHeaderView(0));
                 logout();
             }
         });
@@ -429,11 +427,22 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     public void logout() {
         new SqliteAuthenticationHelper(MainScreenActivity.this).deleteToken();
         MainScreenActivity.this.user = null;
-        doProcessNotLogin();
     }
+
+    // validate subscription
+    public static boolean checkExpiredSubscription() {
+        if (user.getPaySubscriptions() == null || user.getPaySubscriptions().size() == 0)
+            return false;
+        Date endTime = user.getPaySubscriptions().get(user.getPaySubscriptions().size()-1).getEndTime();
+        if (endTime == null)
+            return false;
+        return (endTime.compareTo(new Date()) >= 0);
+    }
+
 }
 
 ///////////// Thêm slide menu navigation
+
 
 
 

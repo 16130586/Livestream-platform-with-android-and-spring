@@ -18,10 +18,10 @@ public class User {
     public String background;
 
     public List<Notification> notifications;
-    public List<Genre> favouriteType;
+    public List<StreamType> favouriteType;
     public List<FavouriteSaved> favouriteSaveds;
-    public Subscription subscription;
     public List<LiveStream> streams;
+    public List<PaySubscription> paySubscriptions;
 
     public User() {
 
@@ -99,11 +99,11 @@ public class User {
         this.notifications = notifications;
     }
 
-    public List<Genre> getFavouriteType() {
+    public List<StreamType> getFavouriteType() {
         return favouriteType;
     }
 
-    public void setFavouriteType(List<Genre> favouriteType) {
+    public void setFavouriteType(List<StreamType> favouriteType) {
         this.favouriteType = favouriteType;
     }
 
@@ -115,14 +115,6 @@ public class User {
         this.favouriteSaveds = favouriteSaveds;
     }
 
-    public Subscription getSubscription() {
-        return subscription;
-    }
-
-    public void setSubscriptions(Subscription subscription) {
-        this.subscription = subscription;
-    }
-
     public List<LiveStream> getStreams() {
         return streams;
     }
@@ -131,4 +123,11 @@ public class User {
         this.streams = streams;
     }
 
+    public List<PaySubscription> getPaySubscriptions() {
+        return paySubscriptions;
+    }
+
+    public void setPaySubscriptions(List<PaySubscription> paySubscriptions) {
+        this.paySubscriptions = paySubscriptions;
+    }
 }

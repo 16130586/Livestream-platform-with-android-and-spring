@@ -2,12 +2,17 @@ package com.t4.androidclient.model.helper;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.t4.androidclient.model.livestream.PaySubscription;
+import com.t4.androidclient.model.livestream.Subscription;
 import com.t4.androidclient.model.livestream.User;
 import com.t4.androidclient.model.livestream.UserList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +58,27 @@ public class UserHelper {
             user.setSubscribeTotal(jsonObject.getInt("subscribeTotal"));
             user.setAvatar(jsonObject.getString("avatar"));
             user.setBackground(jsonObject.getString("background"));
+            JSONArray jsonPaySubscriptions = jsonObject.getJSONArray("paySubscriptions");
+            List<PaySubscription> paySubscriptions = new ArrayList<>();
+            PaySubscription paySubscription;
+            Subscription subscription;
+            for (int i = 0; i < jsonPaySubscriptions.length(); i++) {
+                paySubscription = new PaySubscription();
+                JSONObject jsonPaySubscription = jsonPaySubscriptions.getJSONObject(i);
+                paySubscription.setId(jsonPaySubscription.getInt("id"));
+                paySubscription.setAmount(jsonPaySubscription.getDouble("amount"));
+                paySubscription.setEndTime(new Date(jsonPaySubscription.getLong("endTime")));
+                paySubscription.setStartTime(new Date(jsonPaySubscription.getLong("startTime")));
+                JSONObject jsSubscription = jsonPaySubscription.getJSONObject("subscription");
+                subscription = new Subscription();
+                subscription.setId(jsSubscription.getInt("id"));
+                subscription.setName(jsSubscription.getString("name"));
+                subscription.setType(jsSubscription.getInt("type"));
+                paySubscription.setSubscription(subscription);
+                paySubscriptions.add(paySubscription);
+            }
+            user.setPaySubscriptions(paySubscriptions);
+
             return user;
         } catch (Exception e) {
             e.printStackTrace();

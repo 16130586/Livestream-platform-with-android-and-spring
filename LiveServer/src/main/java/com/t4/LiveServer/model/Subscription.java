@@ -1,5 +1,7 @@
 package com.t4.LiveServer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ public class Subscription {
     private Integer id;
     private String name;
     private Integer type;
+    @JsonIgnore
     private Double unitPrice;
 
     @Id

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Adapter;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +28,12 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.t4.androidclient.CameraActivity;
+import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CreateLiveGenreAdapter;
 import com.t4.androidclient.contraints.Api;
 import com.t4.androidclient.contraints.Authentication;
+import com.t4.androidclient.contraints.Host;
 import com.t4.androidclient.core.ApiResponse;
 import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
@@ -79,6 +83,14 @@ public class CreateLiveActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_live);
         setUp();
+        if (!MainScreenActivity.checkExpiredSubscription()) {
+            LinearLayout boxForward = findViewById(R.id.box_forward_button);
+            boxForward.setVisibility(View.GONE);
+            TextView textForward = findViewById(R.id.text_forward);
+            textForward.setText(Html.fromHtml("<a href=\"" + Host.API_HOST_IP + "/user/subscription/" + MainScreenActivity.user.getId() + "\"> Upgrade Account To Forward Multi Flatform</a>"));
+            textForward.setTextSize(14);
+            textForward.setMovementMethod(android.text.method.LinkMovementMethod.getInstance());
+        }
     }
 
     @Override
