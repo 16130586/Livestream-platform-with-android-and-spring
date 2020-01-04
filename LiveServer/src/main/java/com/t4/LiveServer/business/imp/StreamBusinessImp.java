@@ -18,6 +18,7 @@ import com.t4.LiveServer.model.wowza.WowzaStream;
 import com.t4.LiveServer.repository.CommentRepository;
 import com.t4.LiveServer.repository.StreamRepository;
 import com.t4.LiveServer.repository.StreamTypeRepository;
+import com.t4.LiveServer.repository.UserLikeRepository;
 import com.t4.LiveServer.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -29,6 +30,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 public class StreamBusinessImp implements StreamBusiness {
@@ -38,7 +40,8 @@ public class StreamBusinessImp implements StreamBusiness {
     private WOWZAStreamBusiness wowzaStreamBusiness;
     @Autowired
     private FacebookLiveBusiness facebookLiveBusiness;
-
+    @Autowired
+    private UserLikeRepository userLikeRepository;
     @Autowired
     private StreamRepository streamRepository;
     @Autowired
@@ -71,13 +74,13 @@ public class StreamBusinessImp implements StreamBusiness {
                     }
                 }
             }
-        // trong dtb, user chua co wowza stream id, chinh lai cai model, update sql init, sql import
-        // khi user yeu cau tao 1 stream tren app cua minh
-        // thi m se lay len cai wowza stream cua thang user do
-        // neu chua co -> tao moi
-        // neu co roi -> stop cai stream do thong qua wowza business
-        // stop xong
-        // update cai wowza cu thanh wowza voi thong tin tu entryParams
+            // trong dtb, user chua co wowza stream id, chinh lai cai model, update sql init, sql import
+            // khi user yeu cau tao 1 stream tren app cua minh
+            // thi m se lay len cai wowza stream cua thang user do
+            // neu chua co -> tao moi
+            // neu co roi -> stop cai stream do thong qua wowza business
+            // stop xong
+            // update cai wowza cu thanh wowza voi thong tin tu entryParams
             List<StreamTarget> forwardTargets = new ArrayList<>();
             if (entryParams.forwards != null) {
                 for (StreamingForward fw : entryParams.forwards) {
@@ -257,25 +260,26 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public Comment saveComment(Comment comment) {
         Stream requestedStream = streamRepository.getOne(comment.getStreamId());
-        if(requestedStream.getStatus() == StreamStatus.STARTED){
+        if (requestedStream.getStatus() == StreamStatus.STARTED) {
             java.util.Date current = DateUtil.getCurrentDateInUTC();
             java.util.Date started = requestedStream.getStartTime();
             long timeDiff = Math.abs(current.getTime() - started.getTime());
-            int atSecondOfLiveStream = (int)timeDiff / 1000;
+            int atSecondOfLiveStream = (int) timeDiff / 1000;
             comment.setVideoTime(atSecondOfLiveStream);
         }
         return commentRepository.save(comment);
     }
 
-	@Override
-	public List<Stream> listStreamByTypeOfUser(int userID, int typeID){
-		return streamRepository.repoListStreamByTypeOfUser(userID,typeID);
-	}
-	
-	@Override
-	public List<Stream> getWatchedStreamsByUserID(int userID){
-		return streamRepository.repoGetWatchedStreamsByUserID(userID);
-	}
+    @Override
+    public List<Stream> listStreamByTypeOfUser(int userID, int typeID) {
+        return streamRepository.repoListStreamByTypeOfUser(userID, typeID);
+    }
+
+    @Override
+    public List<Stream> getWatchedStreamsByUserID(int userID) {
+        return streamRepository.repoGetWatchedStreamsByUserID(userID);
+    }
+
     @Override
     public List<Stream> getTrendingStreams(int offset, int pageSize) {
         Pageable pageable = new PageRequest(offset, pageSize, Sort.by("totalView").descending());
@@ -286,6 +290,7 @@ public class StreamBusinessImp implements StreamBusiness {
     public List<Comment> getCommentByVideoTime(int streamId, int videoTime) {
         return commentRepository.findAllByStreamIdAndVideoTime(streamId, videoTime);
     }
+
     public boolean upView(int streamId) {
         try {
             Stream stream = streamRepository.findById(streamId).get();
@@ -295,6 +300,39 @@ public class StreamBusinessImp implements StreamBusiness {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+
+    public Stream likeStream(int userId, int streamId) {
+        Stream requestedStream = streamRepository.findById(streamId).get();
+        requestedStream.setLikeCount(requestedStream.getLikeCount() + 1);
+        UserLike userLike = new UserLike();
+        userLike.setUserId(userId);
+        userLike.setStreamId(streamId);
+        userLikeRepository.save(userLike);
+        return streamRepository.save(requestedStream);
+    }
+
+    @Override
+    @Transactional
+    public Stream dislikeStream(int userId, int streamId) {
+        Stream requestedStream = streamRepository.findById(streamId).get();
+        requestedStream.setLikeCount(requestedStream.getLikeCount() - 1);
+//        userLikeRepository.deleteLikeStatus(userId, streamId);
+        userLikeRepository.deleteByUserIdAndStreamId(userId, streamId);
+        return streamRepository.save(requestedStream);
+
+    }
+
+    @Override
+    public int getLikeStatus(int userId, int streamId) {
+        UserLike userLike = userLikeRepository.checkingLikeStatus(userId, streamId);
+        if (userLike == null) {
+            System.out.println("NULLLLLLLL");
+            return -1;
+        } else {
+            return 0;
         }
     }
 }

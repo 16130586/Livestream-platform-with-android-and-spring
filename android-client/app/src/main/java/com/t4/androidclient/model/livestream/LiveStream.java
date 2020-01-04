@@ -11,6 +11,7 @@ public class LiveStream {
     private List<String> genreList;
     private FacebookUser facebookUser;
     private Integer totalView;
+    private int likeCount;
     private Date startTime;
     private Date endTime;
     private Integer status;
@@ -31,6 +32,14 @@ public class LiveStream {
 
     public LiveStream() {
 
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
     public User getOwner() {

@@ -24,4 +24,7 @@ public interface StreamBusiness {
     List<Stream> getTrendingStreams(int offset, int pageSize);
     List<Comment> getCommentByVideoTime(int streamId , int videoTime);
     boolean upView(int streamId);
+    Stream likeStream(int userId, int streamId);
+    Stream dislikeStream(int userId, int streamId);
+    int getLikeStatus(int userId, int streamId);
 }

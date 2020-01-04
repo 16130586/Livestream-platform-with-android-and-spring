@@ -37,6 +37,7 @@ import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
+import com.t4.androidclient.httpclient.SqliteLikeHelper;
 import com.t4.androidclient.model.helper.CommentHelper;
 import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.model.livestream.Comment;
@@ -73,10 +74,10 @@ import org.json.JSONObject;
 
 public class WatchLiveStreamActivity extends AppCompatActivity {
     private StreamViewModel streamViewModel;
-    private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
+    private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView, likeView;
     private CircleImageView ownerAvatarView;
     private EditText commentInput;
-    private ImageButton commentSendButton, showCommentButton;
+    private ImageButton commentSendButton, showCommentButton, likeButton;
     private LinearLayoutManager linearLayoutManager;
     private LinearLayout commentInputContainer;
     private CommentAdapter adapter;
@@ -87,6 +88,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private int totalSub;
     private boolean showComment = true;
     private User currentUser;
+    private SqliteLikeHelper sqliteLikeHelper;
+    //  0 like, 1 dislike
+    private int like = -1;
 
     {
         try {
@@ -343,6 +347,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     public void setUp() {
         commentList = new ArrayList<>();
         commentIdList = new ArrayList<>();
+        sqliteLikeHelper = new SqliteLikeHelper(this);
         //addTen();
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -403,6 +408,12 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                 }
             }
         });
+        likeView = findViewById(R.id.stream_watch_like);
+        likeView.setText(streamViewModel.getLikeCount()+ "likes");
+
+        ownerAvatarView = findViewById(R.id.stream_watch_owner_avatar);
+        Glide.with(ownerAvatarView.getContext()).load(streamViewModel.getOwner().getAvatar())
+                .centerCrop().into(ownerAvatarView);
 
         commentInputContainer = findViewById(R.id.stream_watch_comment_container);
         commentInput = findViewById(R.id.stream_watch_comment);
@@ -447,6 +458,65 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                 showComment = !showComment;
             }
         });
+
+        List<Integer> likedId = sqliteLikeHelper.getLikedId();
+        if (likedId.contains(streamViewModel.getStreamId())) {
+            like = 0;
+        }
+        GetLikeStatus getLikeStatus = new GetLikeStatus(new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+                ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
+                System.out.println("O DAY NE BA OI "+ response.data);
+                like = Integer.parseInt(response.data.toString());
+                if (like == 0) {
+                    likeButton.setBackgroundResource(R.drawable.liked);
+                } else {
+                    likeButton.setBackgroundResource(R.drawable.like);
+                }
+                likeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (like != 0) {
+                            LikeTask likeTask = new LikeTask(new AsyncResponse() {
+                                @Override
+                                public void processFinish(String output) {
+                                    System.out.println(output);
+                                    streamViewModel.setLikeCount(streamViewModel.getLikeCount() + 1);
+                                    likeView.setText((streamViewModel.getLikeCount()) + " likes");
+                                    sqliteLikeHelper.saveId(streamViewModel.getStreamId());
+                                    like = 0;
+                                    likeButton.setBackgroundResource(R.drawable.liked);
+                                    likeButton.setClickable(true);
+                                }
+                            });
+                            likeTask.execute("");
+                            likeButton.setClickable(false);
+                        }
+                        else {
+                            DislikeTask dislikeTask = new DislikeTask(new AsyncResponse() {
+                                @Override
+                                public void processFinish(String output) {
+                                    System.out.println(output);
+                                    streamViewModel.setLikeCount(streamViewModel.getLikeCount() - 1);
+                                    likeView.setText((streamViewModel.getLikeCount()) + " likes");
+                                    sqliteLikeHelper.saveId(streamViewModel.getStreamId());
+                                    like = -1;
+                                    likeButton.setBackgroundResource(R.drawable.like);
+                                    likeButton.setClickable(true);
+                                }
+                            });
+                            dislikeTask.execute("");
+                            likeButton.setClickable(false);
+                        }
+
+                    }
+                });
+            }
+        });
+        likeButton = findViewById(R.id.stream_watch_show_like);
+
         if (Authentication.ISLOGIN == false) {
             commentInputContainer.setVisibility(View.GONE);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -455,6 +525,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                     37.0f
             );
             recyclerView.setLayoutParams(param);
+            likeButton.setVisibility(View.GONE);
+        } else {
+            getLikeStatus.execute("execute ne he he");
         }
 
         mSocket.on("server-send-comment", onNewComment);
@@ -537,6 +610,51 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         protected String doInBackground(Comment... comments) {
             String url = Api.URL_UP_VIEW + streamViewModel.getStreamId();
             Request request = HttpClient.buildPostRequest(url, null);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+
+
+
+    private class LikeTask extends AsyncTask<String, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public LikeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        protected String doInBackground(String... strings) {
+            String url = Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/like";
+            Map<String, String> keyValues = new HashMap<>();
+            keyValues.put("streamId", streamViewModel.getStreamId().toString());
+            Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class DislikeTask extends AsyncTask<String, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public DislikeTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String url = Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/dislike";
+            Map<String, String> keyValues = new HashMap<>();
+            keyValues.put("streamId", streamViewModel.getStreamId().toString());
+            Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
             return HttpClient.execute(request);
         }
 
@@ -647,6 +765,27 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
             dataMap.put("subscriberID", data[0]);
             dataMap.put("publisherID", data[1]);
             Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_UNSUBSCRIBE, dataMap);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class GetLikeStatus extends AsyncTask<String, Integer, String> {
+        public AsyncResponse asyncResponse = null;
+
+        public GetLikeStatus(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(String... data) {
+            Map<String, String> dataMap = new HashMap<>();
+            dataMap.put("streamId", streamViewModel.getStreamId().toString());
+            Request request = HttpClient.buildPostRequest(Api.URL_GET_LIKE_STATUS, dataMap, Authentication.TOKEN);
             return HttpClient.execute(request);
         }
 

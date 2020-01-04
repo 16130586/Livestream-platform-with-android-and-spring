@@ -8,6 +8,7 @@ import com.t4.LiveServer.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -236,6 +237,7 @@ public class StreamController {
 		response.data = requestedData;
 		return response;
 	}
+
     @GetMapping("/trend/{offset}/{pageSize}")
     public ApiResponse getTrendingStreams(@PathVariable Integer offset, @PathVariable Integer pageSize) {
         ApiResponse apiResponse = new ApiResponse();
@@ -245,12 +247,45 @@ public class StreamController {
         return apiResponse;
     }
 
+
     @PostMapping("/upView/{streamId}")
     public ApiResponse upView(@PathVariable Integer streamId) {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "increase stream's view";
         apiResponse.data = streamBusiness.upView(streamId);
+        return apiResponse;
+    }
+
+    @PostMapping("/auth/{streamId}/like")
+    public ApiResponse like(@RequestBody Map<String, String> datas, @PathVariable Integer streamId, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 201;
+        apiResponse.message = "User like to live stream";
+
+        apiResponse.data = streamBusiness.likeStream(user.getUserId(), streamId);
+        return apiResponse;
+    }
+
+    @PostMapping("/auth/{streamId}/dislike")
+    public ApiResponse dislike(@RequestBody Map<String, String> datas, @PathVariable Integer streamId, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 201;
+        apiResponse.message = "User like to live stream";
+
+        apiResponse.data = streamBusiness.dislikeStream(user.getUserId(), streamId);
+        return apiResponse;
+    }
+
+    @PostMapping("/auth/like/")
+    public ApiResponse getLikeStatus(@RequestBody Map<String, String> datas, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get trending streams";
+        apiResponse.data = streamBusiness.getLikeStatus(user.getUserId(), Integer.parseInt(datas.get("streamId")));
         return apiResponse;
     }
 }

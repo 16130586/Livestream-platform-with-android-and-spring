@@ -19,6 +19,7 @@ public class StreamViewModel {
     private Integer totalView;
     private Date startTime;
     private Date endTime;
+    private int likeCount;
     private Integer status;
     private String forwards;
     private String forwardsUrl;
@@ -77,6 +78,14 @@ public class StreamViewModel {
         if (minutes > 1) return "Live " + minutes + " minutes ago";
 
         return "Live NOW";
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
     public Integer getStreamId() {
