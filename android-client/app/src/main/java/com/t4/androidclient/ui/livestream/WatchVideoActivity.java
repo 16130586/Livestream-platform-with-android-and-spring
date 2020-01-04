@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,6 +75,8 @@ public class WatchVideoActivity extends AppCompatActivity {
     private User currentUser;
     int totalSub;
     private boolean showComment = true;
+    private Button btnSkipAds = null;
+    private boolean endAds = false;
 
 
     @Override
@@ -87,7 +91,6 @@ public class WatchVideoActivity extends AppCompatActivity {
 
         PlayerManager.getInstance().getDefaultVideoInfo().addOption(Option.create(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "multiple_requests", 1L));
         videoView = findViewById(R.id.video_view);
-
         videoView.setPlayerListener(new PlayerListener() {
             @Override
             public void onPrepared(GiraffePlayer giraffePlayer) {
@@ -106,7 +109,15 @@ public class WatchVideoActivity extends AppCompatActivity {
 
             @Override
             public void onCompletion(GiraffePlayer giraffePlayer) {
-
+                if (!endAds) {
+                    endAds = !endAds;
+                    videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
+                    videoView.getPlayer().start();
+                    if (btnSkipAds != null) {
+                        btnSkipAds.setVisibility(View.GONE);
+                        btnSkipAds = null;
+                    }
+                }
             }
 
             @Override
@@ -134,7 +145,7 @@ public class WatchVideoActivity extends AppCompatActivity {
             @Override
             public void onStart(GiraffePlayer giraffePlayer) {
 
-                if (showComment) {
+                if (endAds && showComment) {
                     if(getCommentThread != null){
                         getCommentThread.down();
                         getCommentThread.interrupt();
@@ -149,6 +160,61 @@ public class WatchVideoActivity extends AppCompatActivity {
                     getCommentThread.start();
                 }
 
+                if (endAds) {
+                    Toast.makeText(getBaseContext(), "onStart: old : " + giraffePlayer.getCurrentPosition(), Toast.LENGTH_SHORT).show();
+                    WatchVideoActivity.UpView upView = new WatchVideoActivity.UpView(new AsyncResponse() {
+                        @Override
+                        public void processFinish(String output) {
+                            Log.i(WatchVideoActivity.this.getClass().getSimpleName(), "stream id: " + streamViewModel.getStreamId() + " increase 1 view!");
+                        }
+                    });
+                    upView.execute();
+                } else {
+                    giraffePlayer.getDuration();
+                    // starts time counting thread
+                    Thread adsTimeCounter = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                while (!videoView.getPlayer().isPlaying()) {
+                                    Thread.sleep(300);
+                                }
+                                Thread.sleep(5000);
+                                if (!endAds)
+                                    viewsView.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            btnSkipAds = new Button(videoView.getContext());
+                                            btnSkipAds.setText("Skips Ads");
+                                            LinearLayout.LayoutParams params = new
+                                                    LinearLayout.LayoutParams
+                                                    (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                                            btnSkipAds.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+
+                                            videoView.addView(btnSkipAds, params);
+                                            btnSkipAds.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    endAds = !endAds;
+                                                    if (streamViewModel.getHlsPlayBackUrl() != null) {
+                                                        videoView.getPlayer().release();
+                                                        videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
+                                                        videoView.getPlayer().start();
+                                                        btnSkipAds.setVisibility(View.GONE);
+                                                        btnSkipAds = null;
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    adsTimeCounter.start();
+                }
             }
 
             @Override
@@ -190,8 +256,7 @@ public class WatchVideoActivity extends AppCompatActivity {
 
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
-        if (streamViewModel.getStoredUrl() != null)
-            videoView.setVideoPath(streamViewModel.getStoredUrl());
+        videoView.setVideoPath(Host.API_HOST_IP +"/images/clip_ads_example.mp4");
     }
     public void funcSubscribeAndGoChannel() {
         int ownerID = streamViewModel.getOwner().getId();
@@ -330,6 +395,9 @@ public class WatchVideoActivity extends AppCompatActivity {
         public void run() {
             try{
                 while (stillRun) {
+                    if(videoView.isCurrentActivePlayer() && !videoView.getPlayer().isPlaying()){
+                        Thread.sleep(300);
+                    }
                     if(!(videoView.isCurrentActivePlayer() && videoView.getPlayer().isPlaying())){
                         Thread.sleep(1000);
                     }
@@ -439,7 +507,7 @@ public class WatchVideoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.print("CACS");
                 Class nextActivity = null;
-                if(currentUser.getId()==streamViewModel.getOwner().getId()){
+                if(currentUser !=null && currentUser.getId()==streamViewModel.getOwner().getId()){
                     nextActivity = MyChannelActivity.class;
                 }else{
                     nextActivity = ChannelActivity.class;
@@ -619,6 +687,25 @@ public class WatchVideoActivity extends AppCompatActivity {
             Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_UNSUBSCRIBE,dataMap);
             return HttpClient.execute(request);
         }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+    private class UpView extends AsyncTask<Comment, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public UpView(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        protected String doInBackground(Comment... comments) {
+            String url = Api.URL_UP_VIEW + streamViewModel.getStreamId();
+            Request request = HttpClient.buildPostRequest(url, null);
+            return HttpClient.execute(request);
+        }
+
         @Override
         protected void onPostExecute(String result) {
             asyncResponse.processFinish(result);
