@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -14,18 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.t4.androidclient.MainActivity;
 import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CommentAdapter;
@@ -37,12 +36,11 @@ import com.t4.androidclient.core.AsyncResponse;
 import com.t4.androidclient.core.JsonHelper;
 import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.httpclient.SqliteAuthenticationHelper;
-import com.t4.androidclient.model.helper.CommentHelper;
 import com.t4.androidclient.model.helper.UserHelper;
 import com.t4.androidclient.model.livestream.Comment;
 
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +52,7 @@ import tcking.github.com.giraffeplayer2.GiraffePlayer;
 import tcking.github.com.giraffeplayer2.Option;
 import tcking.github.com.giraffeplayer2.PlayerListener;
 import tcking.github.com.giraffeplayer2.PlayerManager;
+import tcking.github.com.giraffeplayer2.VideoInfo;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
 import tcking.github.com.giraffeplayer2.VideoView;
@@ -63,7 +62,6 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.github.nkzawa.emitter.Emitter;
 import com.t4.androidclient.model.livestream.User;
-import com.t4.androidclient.ui.channel.AboutFragment;
 import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
 import com.t4.androidclient.ui.mychannel.MyChannelActivity;
@@ -87,6 +85,8 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private int totalSub;
     private boolean showComment = true;
     private User currentUser;
+    private Button btnSkipAds = null;
+    private boolean endAds = false;
 
     {
         try {
@@ -107,6 +107,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         PlayerManager.getInstance().getDefaultVideoInfo().addOption(Option.create(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "multiple_requests", 1L));
         final VideoView videoView = findViewById(R.id.video_view);
 
+
         videoView.setPlayerListener(new PlayerListener() {
             @Override
             public void onPrepared(GiraffePlayer giraffePlayer) {
@@ -125,7 +126,15 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             @Override
             public void onCompletion(GiraffePlayer giraffePlayer) {
-
+                if (!endAds) {
+                    endAds = !endAds;
+                    videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
+                    videoView.getPlayer().start();
+                    if (btnSkipAds != null) {
+                        btnSkipAds.setVisibility(View.GONE);
+                        btnSkipAds = null;
+                    }
+                }
             }
 
             @Override
@@ -150,14 +159,61 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
             @Override
             public void onStart(GiraffePlayer giraffePlayer) {
-                Toast.makeText(getBaseContext(), "onStart: old : " + giraffePlayer.getCurrentPosition(), Toast.LENGTH_SHORT).show();
-                UpView upView = new UpView(new AsyncResponse() {
-                    @Override
-                    public void processFinish(String output) {
-                        Log.i(WatchLiveStreamActivity.this.getClass().getSimpleName(), "stream id: " + streamViewModel.getStreamId() + " increase 1 view!");
-                    }
-                });
-                upView.execute();
+                if (endAds) {
+                    Toast.makeText(getBaseContext(), "onStart: old : " + giraffePlayer.getCurrentPosition(), Toast.LENGTH_SHORT).show();
+                    UpView upView = new UpView(new AsyncResponse() {
+                        @Override
+                        public void processFinish(String output) {
+                            Log.i(WatchLiveStreamActivity.this.getClass().getSimpleName(), "stream id: " + streamViewModel.getStreamId() + " increase 1 view!");
+                        }
+                    });
+                    upView.execute();
+                } else {
+                    giraffePlayer.getDuration();
+                    // starts time counting thread
+                    Thread adsTimeCounter = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                while (!videoView.getPlayer().isPlaying()) {
+                                    Thread.sleep(300);
+                                }
+                                Thread.sleep(5000);
+                                if (!endAds)
+                                    viewsView.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            btnSkipAds = new Button(videoView.getContext());
+                                            btnSkipAds.setText("Skips Ads");
+                                            LinearLayout.LayoutParams params = new
+                                                    LinearLayout.LayoutParams
+                                                    (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                                            btnSkipAds.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+
+                                            videoView.addView(btnSkipAds, params);
+                                            btnSkipAds.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    endAds = !endAds;
+                                                    if (streamViewModel.getHlsPlayBackUrl() != null) {
+                                                        videoView.getPlayer().release();
+                                                        videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
+                                                        videoView.getPlayer().start();
+                                                        btnSkipAds.setVisibility(View.GONE);
+                                                        btnSkipAds = null;
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    adsTimeCounter.start();
+                }
             }
 
             @Override
@@ -199,8 +255,9 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
 
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
-        if (streamViewModel.getHlsPlayBackUrl() != null)
-            videoView.setVideoPath(streamViewModel.getHlsPlayBackUrl());
+        // first mask on video view is ads
+        videoView.setVideoPath(Host.API_HOST_IP +"/images/clip_ads_example.mp4");
+//
     }
 
     public void funcSubscribeAndGoChannel() {
