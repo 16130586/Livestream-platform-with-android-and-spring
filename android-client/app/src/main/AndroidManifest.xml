@@ -35,6 +35,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.FacebookOptionActivity"></activity>
         <activity
             android:name=".ui.livestream.WatchVideoActivity"
             android:windowSoftInputMode="adjustPan"

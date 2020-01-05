@@ -37,6 +37,7 @@ import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.model.helper.GenreHelper;
 import com.t4.androidclient.model.livestream.FacebookUser;
 import com.t4.androidclient.model.livestream.LiveStream;
+import com.t4.androidclient.model.livestream.StreamingForward;
 import com.t4.androidclient.model.livestream.TokenPermission;
 import com.t4.androidclient.model.helper.TokenPermissionHelper;
 
@@ -235,6 +236,9 @@ public class CreateLiveActivity extends Activity {
 
         } else if (tokenPermissionChecker.getText().toString().equals("true")) {
             liveStream.setFacebookUser(this.facebookUser);
+            List<StreamingForward> forwards = new ArrayList<>();
+            forwards.add(new StreamingForward("FACEBOOK", facebookUser.getAccessToken()));
+            liveStream.setForwards(forwards);
         } else {
             System.out.println("facebook permission is wrong");
         }

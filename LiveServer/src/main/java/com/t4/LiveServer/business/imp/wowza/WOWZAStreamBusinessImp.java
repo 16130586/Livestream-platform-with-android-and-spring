@@ -127,6 +127,8 @@ public class WOWZAStreamBusinessImp implements WOWZAStreamBusiness {
         HttpEntity<String> entity = new HttpEntity<>(jsonData, WowzaStream.getWowzaConfigHeaders());
         ResponseEntity<String> rs = restTemplate.exchange(WowzaStream.URL_STREAM_TARGETS + "/custom", HttpMethod.POST, entity, String.class);
         customStreamtarget = JsonHelper.deserialize(DeserializationFeature.UNWRAP_ROOT_VALUE, rs.getBody(), StreamTarget.class);
+        customStreamtarget.setTargetPlatformId(streamTarget.getTargetPlatformId());
+        System.out.println(customStreamtarget.toString());
         return customStreamtarget;
     }
 

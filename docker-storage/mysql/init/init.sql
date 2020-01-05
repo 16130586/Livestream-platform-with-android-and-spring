@@ -45,7 +45,6 @@ CREATE TABLE `stream` (
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `stream_status` int(11) DEFAULT NULL,
-  `like_count` int default 0,
   `forwards` text,
   `forwards_url` text,
   `stored_url` text,

@@ -54,6 +54,7 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public Stream create(CreatingStreamEntryParams entryParams) {
         WowzaStream liveWowza = null;
+        List<StreamTarget> forwardTargets = null;
         User user = userBusiness.getUserById(entryParams.userId);
         try {
             if (user.getWowzaId() != null && !user.getWowzaId().isEmpty()) {
@@ -81,25 +82,33 @@ public class StreamBusinessImp implements StreamBusiness {
             // neu co roi -> stop cai stream do thong qua wowza business
             // stop xong
             // update cai wowza cu thanh wowza voi thong tin tu entryParams
-            List<StreamTarget> forwardTargets = new ArrayList<>();
+            forwardTargets = new ArrayList<>();
             if (entryParams.forwards != null) {
                 for (StreamingForward fw : entryParams.forwards) {
                     StreamingForward.ForwardPlatform platform = StreamingForward
                             .ForwardPlatform.valueOf(fw.platform.toUpperCase());
                     if (StreamingForward.ForwardPlatform.FACEBOOK == platform) {
                         StreamTarget toFacebookOutput = this.createStreamTargetToFacebookStream(fw);
+                        toFacebookOutput.setForwardToken(fw.token);
+                        toFacebookOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toFacebookOutput);
                     }
                     if (StreamingForward.ForwardPlatform.YOUTUBE == platform) {
                         StreamTarget toYoutubeOutput = this.createStreamTargetToYoutubeOutput(fw);
+                        toYoutubeOutput.setForwardToken(fw.token);
+                        toYoutubeOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toYoutubeOutput);
                     }
                     if (StreamingForward.ForwardPlatform.DISCORD == platform) {
                         StreamTarget toDiscordOutput = this.createStreamTargetToDiscordOutput(fw);
+                        toDiscordOutput.setForwardToken(fw.token);
+                        toDiscordOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toDiscordOutput);
                     }
                     if (StreamingForward.ForwardPlatform.TWITCH == platform) {
                         StreamTarget toTwitchOutput = this.createStreamTargetToTwitchOutput(fw);
+                        toTwitchOutput.setForwardToken(fw.token);
+                        toTwitchOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toTwitchOutput);
                     }
                 }
@@ -120,6 +129,24 @@ public class StreamBusinessImp implements StreamBusiness {
         }
         List<StreamType> streamTypes = streamTypeRepository.findByTypeNameIn(entryParams.genreList);
         Stream rs = new Stream(liveWowza);
+
+        // adding information for another module to get or reply data
+        if(forwardTargets != null && forwardTargets.size() > 0){
+            List<ForwardStream> forwards = new ArrayList<>(forwardTargets.size());
+            ForwardStream forward = null;
+           for(StreamTarget target : forwardTargets){
+               forward = new ForwardStream();
+               forward.forwardTargetToId = target.getTargetPlatformId();
+               forward.streamName = target.getStreamName();
+               forward.primaryUrl = target.getPrimaryUrl();
+               forward.provider = target.provider;
+               forward.forwardType = target.getForwardType();
+               forward.forwardTargetToken = target.getForwardToken();
+               forwards.add(forward);
+           }
+            rs.setForwards(JsonHelper.serialize(forwards));
+        }
+
         rs.setOwner(user);
         rs.setTitle(entryParams.name);
         rs.setStreamType(streamTypes);
@@ -146,8 +173,10 @@ public class StreamBusinessImp implements StreamBusiness {
         if (null == liveFbData) {
             return null;
         }
+        StreamTarget target = new StreamTarget(liveFbData);
+        target.setTargetPlatformId(liveFbData.forwardTargetToId);
         return wowzaStreamBusiness.createCustomStreamTarget(
-                new StreamTarget(liveFbData));
+                target);
     }
 
 

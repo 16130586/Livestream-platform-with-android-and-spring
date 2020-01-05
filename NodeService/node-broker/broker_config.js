@@ -1,7 +1,7 @@
 module.exports = {
     kafka: {
         kafkaHost: '127.0.0.1:9092',
-        groupId: 'ExampleTestGroup',
+        groupId: 'NormalCommentGroup',
         sessionTimeout: 15000,
         fromOffset: 'latest',
         commitOffsetsOnFirstJoin: true, 

@@ -15,7 +15,8 @@ public class LiveStream {
     private Date startTime;
     private Date endTime;
     private Integer status;
-    private String forwards;
+    public List<StreamingForward> forwards;
+    //private String forwards;
     private String forwardsUrl;
     private String storedUrl;
     private List<Comment> comments;
@@ -32,6 +33,10 @@ public class LiveStream {
 
     public LiveStream() {
 
+    }
+
+    public void setForwards(List<StreamingForward> forwards) {
+        this.forwards = forwards;
     }
 
     public int getLikeCount() {
@@ -132,14 +137,6 @@ public class LiveStream {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getForwards() {
-        return forwards;
-    }
-
-    public void setForwards(String forwards) {
-        this.forwards = forwards;
     }
 
     public String getForwardsUrl() {
