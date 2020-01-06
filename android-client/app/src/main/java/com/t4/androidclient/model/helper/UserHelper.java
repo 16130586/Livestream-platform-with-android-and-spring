@@ -3,6 +3,7 @@ package com.t4.androidclient.model.helper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.t4.androidclient.model.livestream.PaySubscription;
+import com.t4.androidclient.model.livestream.Ranking;
 import com.t4.androidclient.model.livestream.Subscription;
 import com.t4.androidclient.model.livestream.User;
 import com.t4.androidclient.model.livestream.UserList;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +60,7 @@ public class UserHelper {
             user.setSubscribeTotal(jsonObject.getInt("subscribeTotal"));
             user.setAvatar(jsonObject.getString("avatar"));
             user.setBackground(jsonObject.getString("background"));
+            // pay subscription
             JSONArray jsonPaySubscriptions = jsonObject.getJSONArray("paySubscriptions");
             List<PaySubscription> paySubscriptions = new ArrayList<>();
             PaySubscription paySubscription;
@@ -78,7 +81,29 @@ public class UserHelper {
                 paySubscriptions.add(paySubscription);
             }
             user.setPaySubscriptions(paySubscriptions);
-
+            // ranking
+            JSONArray rankingsJson = jsonObject.getJSONArray("rankings");
+            List<Ranking> rankings = new ArrayList<>();
+            Ranking ranking;
+            if (rankingsJson != null || rankingsJson.length() != 0) {
+                for (int i = 0; i < rankingsJson.length(); i++) {
+                    ranking = new Ranking();
+                    JSONObject rankingJson = rankingsJson.getJSONObject(i);
+                    ranking.setId(rankingJson.getInt("id"));
+                    ranking.setPoint(rankingJson.getInt("point"));
+                    ranking.setMonth(rankingJson.getInt("month"));
+                    ranking.setYear(rankingJson.getInt("year"));
+                    rankings.add(ranking);
+                }
+            } else {
+                Calendar calendar = Calendar.getInstance();
+                ranking = new Ranking();
+                ranking.setPoint(0);
+                ranking.setYear(calendar.get(Calendar.YEAR));
+                ranking.setMonth(calendar.get(Calendar.MONTH) + 1);
+                rankings.add(ranking);
+            }
+            user.setRankings(rankings);
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,7 +111,7 @@ public class UserHelper {
         return null;
     }
 
-    public static List<User> parseUserJson(String json) {
+    public static List<User> parseListUserJson(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {

@@ -85,7 +85,7 @@ public class SubscriptionFragment extends Fragment {
                     ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
                     if (response != null && response.statusCode == 200) {
                         System.out.println(output);
-                        List<User> userLists = UserHelper.parseUserJson(output);
+                        List<User> userLists = UserHelper.parseListUserJson(output);
                         userList.addAll(userLists);
                         if (userList != null && userList.size() > 0)
                             adapter.notifyItemRangeChanged(offset > 0 ? (offset * pageSize - 1) : 0, userList.size());

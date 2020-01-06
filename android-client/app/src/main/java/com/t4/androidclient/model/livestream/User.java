@@ -2,6 +2,7 @@ package com.t4.androidclient.model.livestream;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class User {
@@ -22,6 +23,7 @@ public class User {
     public List<FavouriteSaved> favouriteSaveds;
     public List<LiveStream> streams;
     public List<PaySubscription> paySubscriptions;
+    public List<Ranking> rankings;
 
     public User() {
 
@@ -130,4 +132,24 @@ public class User {
     public void setPaySubscriptions(List<PaySubscription> paySubscriptions) {
         this.paySubscriptions = paySubscriptions;
     }
+
+    public List<Ranking> getRankings() {
+        return rankings;
+    }
+
+    public void setRankings(List<Ranking> rankings) {
+        this.rankings = rankings;
+    }
+
+    public int currentMonthRankingPoint() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
+        for (Ranking r : rankings) {
+            if (r.getMonth() == month && r.getYear() == year)
+                return r.getPoint();
+        }
+        return 0;
+    }
+
 }

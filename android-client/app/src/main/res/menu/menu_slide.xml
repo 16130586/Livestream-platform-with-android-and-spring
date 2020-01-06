@@ -6,6 +6,10 @@
 
 
     <item
+        android:id="@+id/ranking"
+        android:title="Ranking"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/your_streams"
         android:title="Your Streams"
         app:showAsAction="always" />

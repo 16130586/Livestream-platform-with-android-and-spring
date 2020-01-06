@@ -127,6 +127,7 @@
             android:label="@string/stream_player_title"
             android:screenOrientation="fullSensor" />
         <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.ranking.RankingActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.Html;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,7 @@ import com.t4.androidclient.searching.Suggestion;
 import com.t4.androidclient.searching.asyn;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
 import com.t4.androidclient.ui.mychannel.MyChannelActivity;
+import com.t4.androidclient.ui.ranking.RankingActivity;
 import com.t4.androidclient.ui.search.SearchActivity;
 
 import java.util.ArrayList;
@@ -239,6 +241,9 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                                 intent.putExtra("fragment_des","your_subscribed_channels");
                                 startActivity(intent);
                             }
+                        } else if (id == R.id.ranking) {
+                            Intent intent = new Intent(MainScreenActivity.this, RankingActivity.class);
+                            startActivity(intent);
                         }
                         progressBar.setVisibility(View.GONE);
                         return true;
@@ -387,9 +392,9 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
     public void doProcessLoggedin() {
         Authentication.ISLOGIN = true;
         slide_view.getMenu().clear();
-                                slide_view.removeHeaderView(slide_view.getHeaderView(0));
-                                slide_view.inflateHeaderView(R.layout.slide_header);
-                                slide_view.inflateMenu(R.menu.menu_slide);
+        slide_view.removeHeaderView(slide_view.getHeaderView(0));
+        slide_view.inflateHeaderView(R.layout.slide_header);
+        slide_view.inflateMenu(R.menu.menu_slide);
 
         CircleImageView profileImage = slide_view.getHeaderView(0).findViewById(R.id.profile_image);
         TextView buySubscription = slide_view.getHeaderView(0).findViewById(R.id.buySubscription);
@@ -417,11 +422,7 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
         });
         TextView profile_fullname = slide_view.getHeaderView(0).findViewById(R.id.profile_fullname);
         profile_fullname.setText("Hi " + user.getNickname() );
-//        TextView profile_email = slide_view.getHeaderView(0).findViewById(R.id.profile_email);
-//        profile_email.setText("Your email: " + user.getGmail());
-        if (user.getAvatar() != null && !user.getAvatar().isEmpty()) {
-            // TODO show avatar
-        }
+
     }
 
     public void logout() {
