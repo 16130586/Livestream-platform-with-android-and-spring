@@ -14,10 +14,11 @@ public interface UserBusiness {
     User getUserByGmail(String gmail);
     void saveUser(User user);
     List<Notification> getNotification(int userId);
-    boolean upgradePremium(int userId, int subscriptionId, int number, double amount);
+    boolean upgradePremium(int userId, int subscriptionId, int numberOfMonth, double amount);
     void deleteNotification(Integer id);
     List<User> getSubscription(User user, int offset, int limit);
 	boolean  updateAbout(Integer userID,String newName,String newDescription);
 	List<User> getSubscribedChannelByUserID(int userID, int offset, int limit);
-	
+	void upRanking(int userId, int point);
+	List<User> getTopRankingUser(int month, int year);
 }

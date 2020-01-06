@@ -220,9 +220,12 @@ public class StreamBusinessImp implements StreamBusiness {
 
     @Override
     public List<Stream> getRecommendForCookieUser(int page, int pageSize) {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        int skip = page*pageSize;
         try {
-            Pageable pageable = new PageRequest(page, pageSize, Sort.by("startTime").ascending());
-            return streamRepository.findAllByStatusIsNot(StreamStatus.INIT, pageable);
+            return streamRepository.getRecommendForCookieUser(StreamStatus.INIT, month, year, skip, pageSize);
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

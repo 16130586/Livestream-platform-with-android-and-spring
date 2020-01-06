@@ -114,7 +114,7 @@ public class UserBusinessImp implements UserBusiness {
     }
 
     @Override
-    public boolean upgradePremium(int userId, int subscriptionId, int number, double amount) {
+    public boolean upgradePremium(int userId, int subscriptionId, int numberOfMonth, double amount) {
         try {
             Subscription subscription = subscriptionRepository.findById(subscriptionId).get();
             User user = userRepository.findById(userId).get();
@@ -123,7 +123,7 @@ public class UserBusinessImp implements UserBusiness {
             paySubscription.setAmount(amount);
             Calendar calendar = Calendar.getInstance();
             paySubscription.setStartTime(calendar.getTime());
-            calendar.add(Calendar.MONTH, number);
+            calendar.add(Calendar.MONTH, numberOfMonth);
             paySubscription.setEndTime(calendar.getTime());
             paySubscriptionRepository.save(paySubscription);
             user.addPaySubscription(paySubscription);
@@ -199,4 +199,19 @@ public class UserBusinessImp implements UserBusiness {
 		}
 		return result;
 	}
+
+    @Override
+    public void upRanking(int userId, int point) {
+        User user = getUserById(userId);
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        user.upRanking(year, month, point);
+        saveUser(user);
+    }
+
+    @Override
+    public List<User> getTopRankingUser(int month, int year) {
+        return userRepository.getTopRankingUser(month, year);
+    }
 }

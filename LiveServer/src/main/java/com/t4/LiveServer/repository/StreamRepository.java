@@ -39,6 +39,8 @@ public interface StreamRepository extends JpaRepository<Stream, Integer> {
 	  "where fs.user_id = :userID " )
 	List<Stream> repoGetWatchedStreamsByUserID(@Param("userID") int userID);
 
-    List<Stream> findAllByStatusIsNot(int streamStatus, Pageable pageable);
+	@Query(nativeQuery = true,
+	value = "SELECT s.* FROM stream as s left join ranking as r on s.owner_id = r.user_id where s.stream_status != :streamStatus and r.month = :month and r.year = :year order by r.point desc, s.start_time asc limit :skip, :pageSize")
+    List<Stream> getRecommendForCookieUser(@Param("streamStatus") int streamStatus, @Param("month") int month, @Param("year") int year, @Param("skip") int skip, @Param("pageSize") int pageSize);
 
 }

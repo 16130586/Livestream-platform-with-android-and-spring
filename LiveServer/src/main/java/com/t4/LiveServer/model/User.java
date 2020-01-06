@@ -3,6 +3,7 @@ package com.t4.LiveServer.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -32,6 +33,7 @@ public class User {
     private List<PaySubscription> paySubscriptions;
     @JsonIgnoreProperties(value = {"owner", "comments"})
     private List<Stream> streams;
+    private List<Ranking> rankings;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -205,6 +207,16 @@ public class User {
         this.streams = streams;
     }
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    public List<Ranking> getRankings() {
+        return rankings;
+    }
+
+    public void setRankings(List<Ranking> rankings) {
+        this.rankings = rankings;
+    }
+
     public boolean checkExpiredSubscription() {
         if (paySubscriptions == null || paySubscriptions.size() == 0)
             return false;
@@ -216,5 +228,26 @@ public class User {
 
     public void addPaySubscription(PaySubscription paySubscription) {
         paySubscriptions.add(paySubscription);
+    }
+
+    public Ranking getRankByYearAndMonth(int year, int month) {
+        for (Ranking rank: rankings) {
+            if (rank.getMonth() == month && rank.getYear() == year)
+                return rank;
+        }
+        return null;
+    }
+
+    public void upRanking(int year, int month, int point) {
+        Ranking ranking = getRankByYearAndMonth(year, month);
+        if (ranking != null)
+            ranking.setPoint(ranking.getPoint() + point);
+        else {
+            ranking = new Ranking();
+            ranking.setYear(year);
+            ranking.setMonth(month);
+            ranking.setPoint(point);
+            rankings.add(ranking);
+        }
     }
 }

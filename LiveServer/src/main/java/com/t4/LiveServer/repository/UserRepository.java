@@ -29,4 +29,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query(nativeQuery = true,value="select u.* from user u inner join subscriber as s on u.user_id = s.subscriber_id where s.publisher_id = :userID")
 	List<User> repoGetSubscribedChannelByUserID(@Param("userID") int userID);
+
+	@Query(nativeQuery = true,
+	value = "select u.* from user u inner join ranking as r on u.user_id = r.user_id where r.month = :month and r.year = :year order by r.point desc limit 10")
+	List<User> getTopRankingUser(@Param("month") int month, @Param("year") int year);
 }
