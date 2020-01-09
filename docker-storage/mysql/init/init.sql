@@ -315,3 +315,47 @@ LOCK TABLES `user_favourite` WRITE;
 /*!40000 ALTER TABLE `user_favourite` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_favourite` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `ranking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+CREATE TABLE `ranking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `point` int(11) DEFAULT NULL,
+  `month` int(11) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_id_rank_idx` (`user_id`),
+  CONSTRAINT `fk_user_id_rank` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+)
+--
+-- CREATE PROCEDURE TO CREATE DEFAULT RANKING FOR USER
+--
+DELIMITER //
+ 
+CREATE PROCEDURE CreateDefaultRanking()
+BEGIN
+DECLARE done INT DEFAULT 0;
+DECLARE user_id_temp INT;
+DECLARE cur CURSOR FOR select user_id from user where user_id not in (SELECT user_id  FROM ranking where month = month(current_date()) and year = year(current_date()));
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+OPEN cur;
+	REPEAT
+	FETCH cur INTO user_id_temp;
+		IF NOT done THEN
+			INSERT into ranking(user_id, point, month, year) values (user_id_temp, 0, month(current_date()), year(current_date()));
+        END IF;
+    UNTIL done END REPEAT;
+CLOSE cur;
+END //
+ 
+DELIMITER ;
+
+--
+-- SCHEDULE PROCEDURE
+--
+CREATE EVENT createDefaultRankForUser
+	ON SCHEDULE EVERY 5 MINUTE
+    DO
+		CALL CreateDefaultRanking();
+
