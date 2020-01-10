@@ -303,11 +303,7 @@ public class StreamController {
         apiResponse.statusCode = 200;
         apiResponse.message = "get trending streams";
         apiResponse.data = streamBusiness.reportStream(liveId, user.getUserId(), reason);
-        try {
-            mailBusiness.sendMailInformReport("Report", liveId);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+
         return apiResponse;
     }
 }

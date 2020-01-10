@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.t4.LiveServer.business.interfaze.UserBusiness;
 import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
+import com.t4.LiveServer.business.interfaze.mail.MailBusiness;
 import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
 import com.t4.LiveServer.config.ReportConfig;
@@ -28,12 +29,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.*;
 
 public class StreamBusinessImp implements StreamBusiness {
     private RestTemplate restTemplate = new RestTemplateBuilder().errorHandler(new RestTemplateHandleException()).build();
 
+    @Autowired
+    MailBusiness mailBusiness;
     @Autowired
     private WOWZAStreamBusiness wowzaStreamBusiness;
     @Autowired
@@ -391,6 +395,18 @@ public class StreamBusinessImp implements StreamBusiness {
                 stream.setStatus(StreamStatus.END);
             }
             stream.setIsFlagged(1);
+            User user = userBusiness.getUserById(stream.getOwner().getUserId());
+            if (user.getIsPublisher() > 0) {
+                user.setIsPublisher(user.getIsPublisher() - 1);
+            } else {
+                user.setIsActivated(-1);
+            }
+            try {
+                mailBusiness.sendMailInformReport("Report", liveId);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+            userBusiness.saveUser(user);
             streamRepository.saveAndFlush(stream);
         }
     }

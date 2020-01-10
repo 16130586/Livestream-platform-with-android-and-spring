@@ -136,7 +136,7 @@ public class MailBusinessImp implements MailBusiness {
     @Override
     public void sendMailInformReport(String subject, int streamId) throws MessagingException {
         Stream stream = streamRepository.findById(streamId).get();
-        User user = userRepository.findByStreamsContains(stream);
+        User user = stream.getOwner();
         String email = user.getGmail();
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg);
