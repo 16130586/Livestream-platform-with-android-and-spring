@@ -8,11 +8,8 @@ import com.t4.LiveServer.model.PaySubscription;
 import com.t4.LiveServer.model.Subscription;
 import com.t4.LiveServer.model.User;
 import com.t4.LiveServer.model.security.CustomUserDetails;
-import com.t4.LiveServer.repository.PaySubscriptionRepository;
-import com.t4.LiveServer.repository.SubscriptionRepository;
+import com.t4.LiveServer.repository.*;
 import com.t4.LiveServer.model.NotificationStatus;
-import com.t4.LiveServer.repository.NotificationRepository;
-import com.t4.LiveServer.repository.UserRepository;
 import com.t4.LiveServer.util.StringUtils;
 import com.t4.LiveServer.validation.form.RegistryForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,8 @@ import java.util.List;
 public class UserBusinessImp implements UserBusiness {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    StreamRepository streamRepository;
     @Autowired
     private NotificationRepository notificationRepository;
     @Autowired
@@ -213,5 +212,9 @@ public class UserBusinessImp implements UserBusiness {
     @Override
     public List<User> getTopRankingUser(int month, int year) {
         return userRepository.getTopRankingUser(month, year);
+    }
+
+    public User getUserByStreamId(int streamId) {
+        return userRepository.findByStreamsContains(streamRepository.findById(streamId).get());
     }
 }

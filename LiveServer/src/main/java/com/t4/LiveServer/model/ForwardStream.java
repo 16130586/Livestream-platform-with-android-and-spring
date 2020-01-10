@@ -7,4 +7,6 @@ public class ForwardStream {
     public String primaryUrl;
     public StreamingForward.ForwardPlatform forwardType;
     public String provider;
+    public String forwardTargetToId;
+    public String forwardTargetToken;
 }

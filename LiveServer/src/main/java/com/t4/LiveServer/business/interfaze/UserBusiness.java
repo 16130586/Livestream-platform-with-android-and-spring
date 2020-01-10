@@ -21,4 +21,5 @@ public interface UserBusiness {
 	List<User> getSubscribedChannelByUserID(int userID, int offset, int limit);
 	void upRanking(int userId, int point);
 	List<User> getTopRankingUser(int month, int year);
+	User getUserByStreamId(int streamId);
 }

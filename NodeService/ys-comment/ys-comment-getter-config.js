@@ -3,7 +3,7 @@ module.exports = {
         replyEventTime: 10000
     },
     commentSource: {
-        accessToken: 'EAAIfekA5u0MBABX8GSZAfQif6XrZB23Vt0hT5ZCk2ZB53UT0rXSry7zZAt81ZA9Dr8aUsawzMuCyPsFUF717EkZBhQJ014NUr8THbM16l2CLT2ZBJOpDZAoAI2uZCeHmC2ZCqybtHnw9cufG3hq0oDZAa0lkWc6uZCvHOplvVLCZA56q7wxgZDZD',
+        accessToken: 'EAAKClF4nNmIBALiPYVUlT2JqqFEaNTixFGNCLZBY8mxjJ0ESppXKCtB8J3fArr83R06zCZCTlMCF5UKOuyMSJiLsnjyXvbncGVnOKmVFAvGunZCSrzoJZA6IByZAkOVPAGHag3A6JAvkIDB4qEXUnBmOWo5aHmqoHgRwhvZCZAKE4NRcQ34Vf4ZC4giPF7QfjZCXB1macTm4hU8oHzxRc38onYytMKeZB1PZB0ZD',
         infoParam: 'fields=from{name,id},message',
         commentRate: 'comment_rate=one_per_two_seconds'
     }

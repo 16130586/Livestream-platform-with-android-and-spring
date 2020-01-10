@@ -2,6 +2,7 @@ package com.t4.LiveServer.repository;
 
 
 import com.t4.LiveServer.model.Notification;
+import com.t4.LiveServer.model.Stream;
 import com.t4.LiveServer.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,4 +34,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query(nativeQuery = true,
 	value = "select u.* from user u inner join ranking as r on u.user_id = r.user_id where r.month = :month and r.year = :year order by r.point desc limit 10")
 	List<User> getTopRankingUser(@Param("month") int month, @Param("year") int year);
+	User findByStreamsContains(Stream stream);
 }

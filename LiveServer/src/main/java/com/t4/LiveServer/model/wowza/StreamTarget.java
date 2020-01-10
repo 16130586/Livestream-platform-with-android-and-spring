@@ -1,7 +1,9 @@
 package com.t4.LiveServer.model.wowza;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
 import com.t4.LiveServer.model.ForwardStream;
 
 import java.util.Date;
@@ -40,12 +42,41 @@ public class StreamTarget {
     public Date updatedAt;
     @JsonProperty("username")
     public String username;
+    public String targetPlatformId;
+    @JsonIgnore
+    public StreamingForward.ForwardPlatform forwardType;
+    @JsonIgnore
+    public String forwardToken;
 
     private StreamTarget(){
 
     }
 
-    public StreamTarget(String provider ,String targetName , String primaryUrl , String streamName){
+    public String getForwardToken() {
+        return forwardToken;
+    }
+
+    public void setForwardToken(String forwardToken) {
+        this.forwardToken = forwardToken;
+    }
+
+    public StreamingForward.ForwardPlatform getForwardType() {
+        return forwardType;
+    }
+
+    public void setForwardType(StreamingForward.ForwardPlatform forwardType) {
+        this.forwardType = forwardType;
+    }
+
+    public String getTargetPlatformId() {
+        return targetPlatformId;
+    }
+
+    public void setTargetPlatformId(String targetPlatformId) {
+        this.targetPlatformId = targetPlatformId;
+    }
+
+    public StreamTarget(String provider , String targetName , String primaryUrl , String streamName){
         this.name = targetName;
         this.primaryUrl = primaryUrl;
         this.streamName = streamName;
@@ -54,7 +85,7 @@ public class StreamTarget {
     public StreamTarget(ForwardStream fw){
         this.name = fw.streamName;
         this.primaryUrl = fw.primaryUrl;
-        this.streamName = fw.forwardType.name();
+        this.streamName = fw.streamName;
         this.provider = fw.provider;
 
     }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.t4.LiveServer.model.wowza.WowzaStream;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,6 +30,8 @@ public class Stream {
     private List<Comment> comments;
     private String primaryServerURL;
     private int hostPort;
+    private int likeCount;
+    private int isFlagged;
     private String application;
     private String streamName;
     private String title;
@@ -106,6 +107,25 @@ public class Stream {
 
     public void setStreamName(String streamName) {
         this.streamName = streamName;
+    }
+
+
+    @Column(name = "is_flagged")
+    public int getIsFlagged() {
+        return isFlagged;
+    }
+
+    public void setIsFlagged(int isFlagged) {
+        this.isFlagged = isFlagged;
+    }
+
+    @Column(name = "like_count")
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
     @Id
