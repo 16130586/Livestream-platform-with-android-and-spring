@@ -41,19 +41,43 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<viewModel.StreamViewModel> listStream = new LinkedList<>();
     private StreamRecyclerAdapter adapter;
+    private boolean allowRefresh = false;
+    private View root;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (allowRefresh) {
+            allowRefresh = false;
+            setUp();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (!allowRefresh) {
+            allowRefresh = true;
+        }
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        root = inflater.inflate(R.layout.fragment_home, container, false);
 //        clip_ads = root.findViewById(R.id.clip_ads);
 //        Uri videoUrl = Uri.parse("android.resource://" + getActivity().getApplicationContext().getPackageName() + "/" + R.raw.clip_ads_example);
 //        clip_ads.setVideoURI(videoUrl);
 //        clip_ads.requestFocus();
 //        clip_ads.start();
+        setUp();
 
+        return root;
+    }
+
+    public void setUp() {
         listStream = new LinkedList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
 
@@ -77,7 +101,6 @@ public class HomeFragment extends Fragment {
                 //clip_ads.start();
             }
         });
-        return root;
     }
 
     public void loadNextDataFromApi(int offset) {
@@ -94,7 +117,7 @@ public class HomeFragment extends Fragment {
                         List<Map<String, Object>> streams = (List<Map<String, Object>>) response.data;
                         for (Map<String, Object> obj : streams) {
                             StreamViewModel smv = JsonHelper.deserialize(obj , StreamViewModel.class);
-                            if (smv == null) continue;
+                            if (smv == null || smv.getIsFlagged() != -1) continue;
                             listStream.add(smv);
                         }
                         if (streams != null && streams.size() > 0)

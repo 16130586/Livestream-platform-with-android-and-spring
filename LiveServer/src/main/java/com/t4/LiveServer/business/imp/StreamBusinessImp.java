@@ -6,6 +6,7 @@ import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
+import com.t4.LiveServer.config.ReportConfig;
 import com.t4.LiveServer.core.JsonHelper;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
@@ -15,9 +16,7 @@ import com.t4.LiveServer.model.*;
 import com.t4.LiveServer.model.wowza.StreamOutput;
 import com.t4.LiveServer.model.wowza.StreamTarget;
 import com.t4.LiveServer.model.wowza.WowzaStream;
-import com.t4.LiveServer.repository.CommentRepository;
-import com.t4.LiveServer.repository.StreamRepository;
-import com.t4.LiveServer.repository.StreamTypeRepository;
+import com.t4.LiveServer.repository.*;
 import com.t4.LiveServer.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -29,6 +28,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 public class StreamBusinessImp implements StreamBusiness {
@@ -38,7 +38,10 @@ public class StreamBusinessImp implements StreamBusiness {
     private WOWZAStreamBusiness wowzaStreamBusiness;
     @Autowired
     private FacebookLiveBusiness facebookLiveBusiness;
-
+    @Autowired
+    private ReportRepository reportRepository;
+    @Autowired
+    private UserLikeRepository userLikeRepository;
     @Autowired
     private StreamRepository streamRepository;
     @Autowired
@@ -51,6 +54,7 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public Stream create(CreatingStreamEntryParams entryParams) {
         WowzaStream liveWowza = null;
+        List<StreamTarget> forwardTargets = null;
         User user = userBusiness.getUserById(entryParams.userId);
         try {
             if (user.getWowzaId() != null && !user.getWowzaId().isEmpty()) {
@@ -71,32 +75,40 @@ public class StreamBusinessImp implements StreamBusiness {
                     }
                 }
             }
-        // trong dtb, user chua co wowza stream id, chinh lai cai model, update sql init, sql import
-        // khi user yeu cau tao 1 stream tren app cua minh
-        // thi m se lay len cai wowza stream cua thang user do
-        // neu chua co -> tao moi
-        // neu co roi -> stop cai stream do thong qua wowza business
-        // stop xong
-        // update cai wowza cu thanh wowza voi thong tin tu entryParams
-            List<StreamTarget> forwardTargets = new ArrayList<>();
+            // trong dtb, user chua co wowza stream id, chinh lai cai model, update sql init, sql import
+            // khi user yeu cau tao 1 stream tren app cua minh
+            // thi m se lay len cai wowza stream cua thang user do
+            // neu chua co -> tao moi
+            // neu co roi -> stop cai stream do thong qua wowza business
+            // stop xong
+            // update cai wowza cu thanh wowza voi thong tin tu entryParams
+            forwardTargets = new ArrayList<>();
             if (entryParams.forwards != null) {
                 for (StreamingForward fw : entryParams.forwards) {
                     StreamingForward.ForwardPlatform platform = StreamingForward
                             .ForwardPlatform.valueOf(fw.platform.toUpperCase());
                     if (StreamingForward.ForwardPlatform.FACEBOOK == platform) {
                         StreamTarget toFacebookOutput = this.createStreamTargetToFacebookStream(fw);
+                        toFacebookOutput.setForwardToken(fw.token);
+                        toFacebookOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toFacebookOutput);
                     }
                     if (StreamingForward.ForwardPlatform.YOUTUBE == platform) {
                         StreamTarget toYoutubeOutput = this.createStreamTargetToYoutubeOutput(fw);
+                        toYoutubeOutput.setForwardToken(fw.token);
+                        toYoutubeOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toYoutubeOutput);
                     }
                     if (StreamingForward.ForwardPlatform.DISCORD == platform) {
                         StreamTarget toDiscordOutput = this.createStreamTargetToDiscordOutput(fw);
+                        toDiscordOutput.setForwardToken(fw.token);
+                        toDiscordOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toDiscordOutput);
                     }
                     if (StreamingForward.ForwardPlatform.TWITCH == platform) {
                         StreamTarget toTwitchOutput = this.createStreamTargetToTwitchOutput(fw);
+                        toTwitchOutput.setForwardToken(fw.token);
+                        toTwitchOutput.setForwardType(StreamingForward.ForwardPlatform.FACEBOOK);
                         forwardTargets.add(toTwitchOutput);
                     }
                 }
@@ -117,6 +129,24 @@ public class StreamBusinessImp implements StreamBusiness {
         }
         List<StreamType> streamTypes = streamTypeRepository.findByTypeNameIn(entryParams.genreList);
         Stream rs = new Stream(liveWowza);
+
+        // adding information for another module to get or reply data
+        if(forwardTargets != null && forwardTargets.size() > 0){
+            List<ForwardStream> forwards = new ArrayList<>(forwardTargets.size());
+            ForwardStream forward = null;
+           for(StreamTarget target : forwardTargets){
+               forward = new ForwardStream();
+               forward.forwardTargetToId = target.getTargetPlatformId();
+               forward.streamName = target.getStreamName();
+               forward.primaryUrl = target.getPrimaryUrl();
+               forward.provider = target.provider;
+               forward.forwardType = target.getForwardType();
+               forward.forwardTargetToken = target.getForwardToken();
+               forwards.add(forward);
+           }
+            rs.setForwards(JsonHelper.serialize(forwards));
+        }
+
         rs.setOwner(user);
         rs.setTitle(entryParams.name);
         rs.setStreamType(streamTypes);
@@ -143,8 +173,10 @@ public class StreamBusinessImp implements StreamBusiness {
         if (null == liveFbData) {
             return null;
         }
+        StreamTarget target = new StreamTarget(liveFbData);
+        target.setTargetPlatformId(liveFbData.forwardTargetToId);
         return wowzaStreamBusiness.createCustomStreamTarget(
-                new StreamTarget(liveFbData));
+                target);
     }
 
 
@@ -260,25 +292,26 @@ public class StreamBusinessImp implements StreamBusiness {
     @Override
     public Comment saveComment(Comment comment) {
         Stream requestedStream = streamRepository.getOne(comment.getStreamId());
-        if(requestedStream.getStatus() == StreamStatus.STARTED){
+        if (requestedStream.getStatus() == StreamStatus.STARTED) {
             java.util.Date current = DateUtil.getCurrentDateInUTC();
             java.util.Date started = requestedStream.getStartTime();
             long timeDiff = Math.abs(current.getTime() - started.getTime());
-            int atSecondOfLiveStream = (int)timeDiff / 1000;
+            int atSecondOfLiveStream = (int) timeDiff / 1000;
             comment.setVideoTime(atSecondOfLiveStream);
         }
         return commentRepository.save(comment);
     }
 
-	@Override
-	public List<Stream> listStreamByTypeOfUser(int userID, int typeID){
-		return streamRepository.repoListStreamByTypeOfUser(userID,typeID);
-	}
-	
-	@Override
-	public List<Stream> getWatchedStreamsByUserID(int userID){
-		return streamRepository.repoGetWatchedStreamsByUserID(userID);
-	}
+    @Override
+    public List<Stream> listStreamByTypeOfUser(int userID, int typeID) {
+        return streamRepository.repoListStreamByTypeOfUser(userID, typeID);
+    }
+
+    @Override
+    public List<Stream> getWatchedStreamsByUserID(int userID) {
+        return streamRepository.repoGetWatchedStreamsByUserID(userID);
+    }
+
     @Override
     public List<Stream> getTrendingStreams(int offset, int pageSize) {
         Pageable pageable = new PageRequest(offset, pageSize, Sort.by("totalView").descending());
@@ -289,6 +322,7 @@ public class StreamBusinessImp implements StreamBusiness {
     public List<Comment> getCommentByVideoTime(int streamId, int videoTime) {
         return commentRepository.findAllByStreamIdAndVideoTime(streamId, videoTime);
     }
+
     public boolean upView(int streamId) {
         try {
             Stream stream = streamRepository.findById(streamId).get();
@@ -298,6 +332,66 @@ public class StreamBusinessImp implements StreamBusiness {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+
+    public Stream likeStream(int userId, int streamId) {
+        Stream requestedStream = streamRepository.findById(streamId).get();
+        requestedStream.setLikeCount(requestedStream.getLikeCount() + 1);
+        UserLike userLike = new UserLike();
+        userLike.setUserId(userId);
+        userLike.setStreamId(streamId);
+        userLikeRepository.save(userLike);
+        return streamRepository.save(requestedStream);
+    }
+
+    @Override
+    @Transactional
+    public Stream dislikeStream(int userId, int streamId) {
+        Stream requestedStream = streamRepository.findById(streamId).get();
+        requestedStream.setLikeCount(requestedStream.getLikeCount() - 1);
+//        userLikeRepository.deleteLikeStatus(userId, streamId);
+        userLikeRepository.deleteByUserIdAndStreamId(userId, streamId);
+        return streamRepository.save(requestedStream);
+
+    }
+
+    @Override
+    public int getLikeStatus(int userId, int streamId) {
+        UserLike userLike = userLikeRepository.checkingLikeStatus(userId, streamId);
+        if (userLike == null) {
+            System.out.println("NULLLLLLLL");
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public Report reportStream(int liveId, int ownerId, String reason) {
+        Report report = new Report();
+        report.setLiveId(liveId);
+        report.setOwnerId(ownerId);
+        report.setReason(reason);
+        report.setCreated(new Date());
+
+        checkingReport(liveId, reason);
+        return reportRepository.save(report);
+    }
+
+    @Override
+    public void checkingReport(int liveId, String reason) {
+        List<Report> reports = reportRepository.getReportedCount(liveId, reason);
+        System.out.println("COUNT REPORT " + reports.size());
+        if (reports.size() >= ReportConfig.FLAGGED_REPORT_TIME) {
+            Stream stream = streamRepository.findById(liveId).get();
+            if (stream.getStatus() == 1) {
+                stop(stream.getStreamId().toString());
+                stream.setStatus(StreamStatus.END);
+            }
+            stream.setIsFlagged(1);
+            streamRepository.saveAndFlush(stream);
         }
     }
 }

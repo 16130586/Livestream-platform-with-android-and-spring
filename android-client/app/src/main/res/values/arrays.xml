@@ -18,6 +18,14 @@
         <item>ERROR</item>
     </string-array>
 
+    <string-array name="report_reason">
+        <item>Sexy content</item>
+        <item>Violent or repulsive content</item>
+        <item>Hateful or abusive content</item>
+        <item>Harmful or dangerous acts</item>
+        <item>Spam or misleading</item>
+    </string-array>
+
     <string-array name="net_log_levels_values_array">
         <item>1</item>
         <item>2</item>

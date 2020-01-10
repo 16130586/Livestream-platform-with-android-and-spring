@@ -1,7 +1,6 @@
 const EventSource = require('eventsource');
 const config = require('./ys-comment-getter-config');
 
-const accessToken = config.commentSource.accessToken;
 const infoParam =  config.commentSource.infoParam;
 const commentRate = config.commentSource.commentRate;
 
@@ -10,6 +9,7 @@ const replyEventTime = config.commentGetter.replyEventTime;
 var id;
 var liveId;
 var commentSource;
+var accessToken;
 
 var comments = [];
 
@@ -49,8 +49,15 @@ function messageBroker(msg) {
 // -----------------------------------------------------------------------------
 
 function onCreate(data) {
-    liveId = data.liveId;
-    id = data.id;
+	id = data.stream_id;
+	var forwards = JSON.parse(data.forwards);
+    liveId = forwards[0].forwardTargetToId;
+	accessToken = forwards[0].forwardTargetToken;
+	
+	console.log('reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', forwards);
+	//testing, remove later
+	liveId = 770597626773150;
+	
     createCommentSource();
 }
 
@@ -105,9 +112,14 @@ function createCommentSource() {
 }
 
 function handleCommentSourceMessage(msg) {
-    //console.log(msg.data);
     var data = JSON.parse(msg.data);
-    //console.log(data.from.name, ':', data.message);
+	//custom kafka payload, name change later if can get name
+	data.comment_id = -1;
+	data.stream_id = id;
+	data.owner_id = -1;
+	data.owner_name = 'FB'
+	data.video_time = -1;
+	data.eventType = 'REPLY';
     comments.push(data);
 }
 

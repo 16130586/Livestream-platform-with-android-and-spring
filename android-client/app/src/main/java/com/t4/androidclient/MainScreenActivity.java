@@ -106,7 +106,10 @@ public class MainScreenActivity extends AppCompatActivity implements MakeSuggest
                         ApiResponse response = JsonHelper.deserialize(output, ApiResponse.class);
                         if (response != null && response.statusCode == 200) {
                             Map<String, Object> rawData = (Map<String, Object>) response.data;
+                            System.out.println(rawData.toString());
                             user = UserHelper.parseUserJson(rawData);
+                            System.out.println(user.toString());
+                            // activated
                             doProcessLoggedin();
                             return;
                         }

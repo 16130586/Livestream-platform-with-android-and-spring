@@ -41,6 +41,7 @@ import com.t4.androidclient.httpclient.HttpClient;
 import com.t4.androidclient.model.helper.GenreHelper;
 import com.t4.androidclient.model.livestream.FacebookUser;
 import com.t4.androidclient.model.livestream.LiveStream;
+import com.t4.androidclient.model.livestream.StreamingForward;
 import com.t4.androidclient.model.livestream.TokenPermission;
 import com.t4.androidclient.model.helper.TokenPermissionHelper;
 
@@ -158,9 +159,14 @@ public class CreateLiveActivity extends Activity {
             public void onClick(View view) {
                 btnSpinKit.setVisibility(View.VISIBLE);
                 btnSave.setVisibility(View.GONE);
-                saveLiveStream();
-                sendLiveStreamToServer();
-
+                if (MainScreenActivity.user.getIsPublisher() == 1) {
+                    saveLiveStream();
+                    sendLiveStreamToServer();
+                } else {
+                    btnSpinKit.setVisibility(View.GONE);
+                    btnSave.setVisibility(View.VISIBLE);
+                    Toast.makeText(CreateLiveActivity.this, "You don't have the right to publish live stream", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -247,6 +253,9 @@ public class CreateLiveActivity extends Activity {
 
         } else if (tokenPermissionChecker.getText().toString().equals("true")) {
             liveStream.setFacebookUser(this.facebookUser);
+            List<StreamingForward> forwards = new ArrayList<>();
+            forwards.add(new StreamingForward("FACEBOOK", facebookUser.getAccessToken()));
+            liveStream.setForwards(forwards);
         } else {
             System.out.println("facebook permission is wrong");
         }

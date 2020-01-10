@@ -30,12 +30,13 @@ public class FacebookLiveBusinessImp implements FacebookLiveBusiness {
         ForwardStream rs = null;
         try {
             String fullyURL = FacebookConfig.V3_BASE_URL
-                    + "/" + streamToId + "/live_videos?status=LIVE_NOW&access_token="
+                    + "/" + streamToId + "/live_videos?status=LIVE_NOW&stream_type=AMBIENT&access_token="
                     + fbConfig.accessToken;
             ResponseEntity<String> result = restTemplate.exchange(
                     fullyURL, HttpMethod.POST, null, String.class);
             LiveStream created = JsonHelper.deserialize(result.getBody(), LiveStream.class);
             rs = getForwardStreamFromRawResult(created);
+            rs.forwardTargetToId = created.id;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

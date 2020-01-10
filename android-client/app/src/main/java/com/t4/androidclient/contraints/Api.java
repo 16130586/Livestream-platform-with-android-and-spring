@@ -28,6 +28,8 @@ public class Api {
     public static final String URL_GET_TRENDING_STREAMS = Host.API_HOST_IP + "/streams/trend/";
     public static final String URL_UP_VIEW = Host.API_HOST_IP + "/streams/upView/";
     public static final String URL_GET_TOP_RANKING = Host.API_HOST_IP + "/ranks/top";
+    public static final String URL_GET_LIKE_STATUS = Host.API_HOST_IP + "/streams/auth/like/";
+    public static final String URL_REPORT_LIVE = Host.API_HOST_IP + "/streams/auth/report/";
 
 
 }
