@@ -1,6 +1,8 @@
 package com.t4.androidclient.ui.livestream;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,7 +64,7 @@ public class WatchVideoActivity extends AppCompatActivity {
     private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView;
     private CircleImageView ownerAvatarView;
     private EditText commentInput;
-    private ImageButton commentSendButton, showCommentButton;
+    private ImageButton commentSendButton, showCommentButton, reportButton;
     private LinearLayoutManager linearLayoutManager;
     private LinearLayout commentInputContainer;
     private CommentAdapter adapter;
@@ -71,6 +73,7 @@ public class WatchVideoActivity extends AppCompatActivity {
     private VideoView videoView;
     private GetCommentWhenPlayingThread getCommentThread;
     private User currentUser;
+    private String[] reportReasons;
     int totalSub;
     private boolean showComment = true;
 
@@ -509,6 +512,40 @@ public class WatchVideoActivity extends AppCompatActivity {
                 showComment = !showComment;
             }
         });
+
+        reportReasons = getResources().getStringArray(R.array.report_reason);
+        reportButton = findViewById(R.id.stream_watch_report_button);
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(WatchVideoActivity.this)
+                        .setSingleChoiceItems(reportReasons, 0, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setPositiveButton("Report", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                                int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                                // Do something useful withe the position of the selected radio button
+                                System.out.println(reportReasons[selectedPosition]);
+                                // reportId, liveId, ownerId, reason, createdDay
+                                ReportTask reportTask = new ReportTask(new AsyncResponse() {
+                                    @Override
+                                    public void processFinish(String output) {
+                                        System.out.println("REPORT REPORT REPORT "+ output);
+                                    }
+                                });
+                                reportTask.execute(reportReasons[selectedPosition]);
+                            }
+                        })
+                        .show();
+            }
+        });
+
+
         if (Authentication.ISLOGIN == false) {
             commentInputContainer.setVisibility(View.GONE);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -619,6 +656,27 @@ public class WatchVideoActivity extends AppCompatActivity {
             Request request = HttpClient.buildPostRequest(Api.URL_CHANNEL_UNSUBSCRIBE,dataMap);
             return HttpClient.execute(request);
         }
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class ReportTask extends AsyncTask<String, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public ReportTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        protected String doInBackground(String... strings) {
+            String url = Api.URL_REPORT_LIVE;
+            Map<String, String> keyValues = new HashMap<>();
+            keyValues.put("liveId", streamViewModel.getStreamId().toString());
+            keyValues.put("reason", strings[0]);
+            Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
         @Override
         protected void onPostExecute(String result) {
             asyncResponse.processFinish(result);

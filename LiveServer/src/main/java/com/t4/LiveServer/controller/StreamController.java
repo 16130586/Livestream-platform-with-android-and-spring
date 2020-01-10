@@ -2,12 +2,14 @@ package com.t4.LiveServer.controller;
 
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import com.t4.LiveServer.business.interfaze.UserBusiness;
+import com.t4.LiveServer.business.interfaze.mail.MailBusiness;
 import com.t4.LiveServer.core.ApiResponse;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ public class StreamController {
 
     @Autowired
     UserBusiness userBusiness;
+
+    @Autowired
+    MailBusiness mailBusiness;
 
     @PostMapping("/auth/create")
     public ApiResponse create(@RequestBody CreatingStreamEntryParams entryParams, HttpServletRequest request) {
@@ -294,11 +299,15 @@ public class StreamController {
         User user = (User) request.getAttribute("user");
         int liveId = Integer.parseInt(data.get("liveId"));
         String reason = data.get("reason");
-
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.statusCode = 200;
         apiResponse.message = "get trending streams";
         apiResponse.data = streamBusiness.reportStream(liveId, user.getUserId(), reason);
+        try {
+            mailBusiness.sendMailInformReport("Report", liveId);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
         return apiResponse;
     }
 }

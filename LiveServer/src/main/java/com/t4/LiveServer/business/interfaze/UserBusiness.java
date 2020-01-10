@@ -19,5 +19,5 @@ public interface UserBusiness {
     List<User> getSubscription(User user, int offset, int limit);
 	boolean  updateAbout(Integer userID,String newName,String newDescription);
 	List<User> getSubscribedChannelByUserID(int userID, int offset, int limit);
-	
+	User getUserByStreamId(int streamId);
 }
