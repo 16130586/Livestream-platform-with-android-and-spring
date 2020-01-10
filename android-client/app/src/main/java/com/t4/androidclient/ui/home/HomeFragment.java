@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                         List<Map<String, Object>> streams = (List<Map<String, Object>>) response.data;
                         for (Map<String, Object> obj : streams) {
                             StreamViewModel smv = JsonHelper.deserialize(obj , StreamViewModel.class);
-                            if (smv == null) continue;
+                            if (smv == null || smv.getIsFlagged() != -1) continue;
                             listStream.add(smv);
                         }
                         if (streams != null && streams.size() > 0)

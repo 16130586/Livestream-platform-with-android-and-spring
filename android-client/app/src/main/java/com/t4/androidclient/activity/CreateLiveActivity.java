@@ -26,6 +26,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.t4.androidclient.CameraActivity;
+import com.t4.androidclient.MainScreenActivity;
 import com.t4.androidclient.R;
 import com.t4.androidclient.adapter.CreateLiveGenreAdapter;
 import com.t4.androidclient.contraints.Api;
@@ -147,9 +148,14 @@ public class CreateLiveActivity extends Activity {
             public void onClick(View view) {
                 btnSpinKit.setVisibility(View.VISIBLE);
                 btnSave.setVisibility(View.GONE);
-                saveLiveStream();
-                sendLiveStreamToServer();
-
+                if (MainScreenActivity.user.getIsPublisher() == 1) {
+                    saveLiveStream();
+                    sendLiveStreamToServer();
+                } else {
+                    btnSpinKit.setVisibility(View.GONE);
+                    btnSave.setVisibility(View.VISIBLE);
+                    Toast.makeText(CreateLiveActivity.this, "You don't have the right to publish live stream", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

@@ -3,6 +3,7 @@ package com.t4.LiveServer.business.interfaze;
 
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.model.Comment;
+import com.t4.LiveServer.model.Report;
 import com.t4.LiveServer.model.Stream;
 import com.t4.LiveServer.model.StreamType;
 
@@ -27,4 +28,6 @@ public interface StreamBusiness {
     Stream likeStream(int userId, int streamId);
     Stream dislikeStream(int userId, int streamId);
     int getLikeStatus(int userId, int streamId);
+    Report reportStream(int liveId, int ownerId, String reason);
+    void checkingReport(int liveId, String reason);
 }

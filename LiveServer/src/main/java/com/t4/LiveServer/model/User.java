@@ -23,6 +23,8 @@ public class User {
     private Integer subscribeTotal;
 	private String avatar;
 	private String background;
+	private Integer isActivated;
+	private Integer isPublisher;
 	
 	private List<Notification> notifications;
     private List<StreamType> favouriteType;
@@ -79,6 +81,24 @@ public class User {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    @Column(name ="is_activated")
+    public Integer getIsActivated() {
+        return isActivated;
+    }
+
+    public void setIsActivated(Integer isActivated) {
+        this.isActivated = isActivated;
+    }
+
+    @Column(name ="is_publisher")
+    public Integer getIsPublisher() {
+        return isPublisher;
+    }
+
+    public void setIsPublisher(Integer isPublisher) {
+        this.isPublisher = isPublisher;
     }
 	
 	@Column(name ="description")

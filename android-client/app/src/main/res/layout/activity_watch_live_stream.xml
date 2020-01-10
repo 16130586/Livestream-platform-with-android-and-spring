@@ -102,6 +102,15 @@
 			   android:scaleType="fitCenter"
 				   />
 
+				<ImageButton
+					android:id="@+id/stream_watch_report_button"
+					android:layout_marginStart="@dimen/dp_medium"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
+					android:background="@drawable/report"
+					android:scaleType="fitCenter"
+					/>
+
            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

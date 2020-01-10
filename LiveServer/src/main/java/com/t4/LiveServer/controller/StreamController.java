@@ -288,4 +288,17 @@ public class StreamController {
         apiResponse.data = streamBusiness.getLikeStatus(user.getUserId(), Integer.parseInt(datas.get("streamId")));
         return apiResponse;
     }
+
+    @PostMapping("/auth/report/")
+    public ApiResponse reportLive(@RequestBody Map<String, String> data, HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
+        int liveId = Integer.parseInt(data.get("liveId"));
+        String reason = data.get("reason");
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.statusCode = 200;
+        apiResponse.message = "get trending streams";
+        apiResponse.data = streamBusiness.reportStream(liveId, user.getUserId(), reason);
+        return apiResponse;
+    }
 }

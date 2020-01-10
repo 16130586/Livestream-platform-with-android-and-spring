@@ -64,6 +64,7 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.github.nkzawa.emitter.Emitter;
 import com.t4.androidclient.model.livestream.User;
+import com.t4.androidclient.model.report.ReportReason;
 import com.t4.androidclient.ui.channel.AboutFragment;
 import com.t4.androidclient.ui.channel.ChannelActivity;
 import com.t4.androidclient.ui.login.LoginRegisterActivity;
@@ -77,13 +78,14 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     private TextView tagView, titleView, viewsView, ownerNameView, ownerSubscribersView, timeView, likeView;
     private CircleImageView ownerAvatarView;
     private EditText commentInput;
-    private ImageButton commentSendButton, showCommentButton, likeButton;
+    private ImageButton commentSendButton, showCommentButton, likeButton, reportButton;
     private LinearLayoutManager linearLayoutManager;
     private LinearLayout commentInputContainer;
     private CommentAdapter adapter;
     private RecyclerView recyclerView;
     private List<Comment> commentList;
     private List<Integer> commentIdList;
+    private String[] reportReasons;
     private Socket mSocket;
     private int totalSub;
     private boolean showComment = true;
@@ -347,6 +349,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
     public void setUp() {
         commentList = new ArrayList<>();
         commentIdList = new ArrayList<>();
+        reportReasons = getResources().getStringArray(R.array.report_reason);
         sqliteLikeHelper = new SqliteLikeHelper(this);
         //addTen();
 
@@ -456,6 +459,37 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
                     connectSocket();
                 }
                 showComment = !showComment;
+            }
+        });
+
+        reportButton = findViewById(R.id.stream_watch_report_button);
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(WatchLiveStreamActivity.this)
+                        .setSingleChoiceItems(reportReasons, 0, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .setPositiveButton("Report", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                                int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                                // Do something useful withe the position of the selected radio button
+                                System.out.println(reportReasons[selectedPosition]);
+                                // reportId, liveId, ownerId, reason, createdDay
+                                ReportTask reportTask = new ReportTask(new AsyncResponse() {
+                                    @Override
+                                    public void processFinish(String output) {
+                                        System.out.println("REPORT REPORT REPORT "+ output);
+                                    }
+                                });
+                                reportTask.execute(reportReasons[selectedPosition]);
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -632,6 +666,27 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
             String url = Api.URL_POST_COMMENT + "/" + streamViewModel.getStreamId() + "/like";
             Map<String, String> keyValues = new HashMap<>();
             keyValues.put("streamId", streamViewModel.getStreamId().toString());
+            Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
+            return HttpClient.execute(request);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            asyncResponse.processFinish(result);
+        }
+    }
+
+    private class ReportTask extends AsyncTask<String, Void, String> {
+        public AsyncResponse asyncResponse;
+
+        public ReportTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+        protected String doInBackground(String... strings) {
+            String url = Api.URL_REPORT_LIVE;
+            Map<String, String> keyValues = new HashMap<>();
+            keyValues.put("liveId", streamViewModel.getStreamId().toString());
+            keyValues.put("reason", strings[0]);
             Request request = HttpClient.buildPostRequest(url, keyValues, Authentication.TOKEN);
             return HttpClient.execute(request);
         }

@@ -52,7 +52,9 @@ public class UserHelper {
             user.setGmail(jsonObject.getString("gmail"));
             user.setSubscribeTotal(jsonObject.getInt("subscribeTotal"));
             user.setAvatar(jsonObject.getString("avatar"));
+            user.setIsActivated(jsonObject.getInt("isActivated"));
             user.setBackground(jsonObject.getString("background"));
+            user.setIsPublisher(jsonObject.getInt("isPublisher"));
             return user;
         } catch (Exception e) {
             e.printStackTrace();

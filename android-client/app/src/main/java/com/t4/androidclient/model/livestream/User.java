@@ -16,6 +16,8 @@ public class User {
     public Integer subscribeTotal;
     public String avatar;
     public String background;
+    public Integer isActivated;
+    public Integer isPublisher;
 
     public List<Notification> notifications;
     public List<Genre> favouriteType;
@@ -27,12 +29,44 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gmail='" + gmail + '\'' +
+                ", description='" + description + '\'' +
+                ", subscribeTotal=" + subscribeTotal +
+                ", avatar='" + avatar + '\'' +
+                ", background='" + background + '\'' +
+                ", isActivated=" + isActivated +
+                ", isPublisher=" + isPublisher +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIsPublisher() {
+        return isPublisher;
+    }
+
+    public void setIsPublisher(Integer isPublisher) {
+        this.isPublisher = isPublisher;
+    }
+
+    public Integer getIsActivated() {
+        return isActivated;
+    }
+
+    public void setIsActivated(Integer isActivated) {
+        this.isActivated = isActivated;
     }
 
     public String getUsername() {

@@ -6,6 +6,7 @@ import com.t4.LiveServer.business.interfaze.facebook.FacebookLiveBusiness;
 import com.t4.LiveServer.business.interfaze.StreamBusiness;
 import com.t4.LiveServer.business.interfaze.wowza.WOWZAStreamBusiness;
 import com.t4.LiveServer.config.FacebookConfig;
+import com.t4.LiveServer.config.ReportConfig;
 import com.t4.LiveServer.core.JsonHelper;
 import com.t4.LiveServer.entryParam.base.Stream.CreatingStreamEntryParams;
 import com.t4.LiveServer.entryParam.base.Stream.StreamingForward;
@@ -15,10 +16,7 @@ import com.t4.LiveServer.model.*;
 import com.t4.LiveServer.model.wowza.StreamOutput;
 import com.t4.LiveServer.model.wowza.StreamTarget;
 import com.t4.LiveServer.model.wowza.WowzaStream;
-import com.t4.LiveServer.repository.CommentRepository;
-import com.t4.LiveServer.repository.StreamRepository;
-import com.t4.LiveServer.repository.StreamTypeRepository;
-import com.t4.LiveServer.repository.UserLikeRepository;
+import com.t4.LiveServer.repository.*;
 import com.t4.LiveServer.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -40,6 +38,8 @@ public class StreamBusinessImp implements StreamBusiness {
     private WOWZAStreamBusiness wowzaStreamBusiness;
     @Autowired
     private FacebookLiveBusiness facebookLiveBusiness;
+    @Autowired
+    private ReportRepository reportRepository;
     @Autowired
     private UserLikeRepository userLikeRepository;
     @Autowired
@@ -362,6 +362,33 @@ public class StreamBusinessImp implements StreamBusiness {
             return -1;
         } else {
             return 0;
+        }
+    }
+
+    @Override
+    public Report reportStream(int liveId, int ownerId, String reason) {
+        Report report = new Report();
+        report.setLiveId(liveId);
+        report.setOwnerId(ownerId);
+        report.setReason(reason);
+        report.setCreated(new Date());
+
+        checkingReport(liveId, reason);
+        return reportRepository.save(report);
+    }
+
+    @Override
+    public void checkingReport(int liveId, String reason) {
+        List<Report> reports = reportRepository.getReportedCount(liveId, reason);
+        System.out.println("COUNT REPORT " + reports.size());
+        if (reports.size() >= ReportConfig.FLAGGED_REPORT_TIME) {
+            Stream stream = streamRepository.findById(liveId).get();
+            if (stream.getStatus() == 1) {
+                stop(stream.getStreamId().toString());
+                stream.setStatus(StreamStatus.END);
+            }
+            stream.setIsFlagged(1);
+            streamRepository.saveAndFlush(stream);
         }
     }
 }

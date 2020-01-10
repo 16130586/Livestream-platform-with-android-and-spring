@@ -20,6 +20,7 @@ public class StreamViewModel {
     private Date startTime;
     private Date endTime;
     private int likeCount;
+    private int isFlagged;
     private Integer status;
     private String forwards;
     private String forwardsUrl;
@@ -78,6 +79,14 @@ public class StreamViewModel {
         if (minutes > 1) return "Live " + minutes + " minutes ago";
 
         return "Live NOW";
+    }
+
+    public int getIsFlagged() {
+        return isFlagged;
+    }
+
+    public void setIsFlagged(int isFlagged) {
+        this.isFlagged = isFlagged;
     }
 
     public int getLikeCount() {
