@@ -44,8 +44,8 @@ public class UserBusinessImp implements UserBusiness {
     @Autowired
     FileBusiness fileBusiness;
 
-    private static final String ABSOLUTE_PATH_IMAGE_STORAGE = (new File("src/main/resources/image")).getAbsolutePath() + "\\";
-    private static final String DEFAULT_AVATAR_PATH = "/images/ava_default.jpg";
+    private static final String ABSOLUTE_PATH_IMAGE_STORAGE = (new File("src/main/resources/static/image")).getAbsolutePath();
+    private static final String DEFAULT_AVATAR_PATH = "/statics/image/ava_default.jpg";
 
     @Override
     public String login(String username, String password) {
@@ -74,7 +74,7 @@ public class UserBusinessImp implements UserBusiness {
         user.setNickName(registryForm.getNickName());
         if (registryForm.getAvatar() != null && !registryForm.getAvatar().isEmpty())
             if (fileBusiness.base64ToImage(registryForm.getAvatar(), path))
-                user.setAvatar("/images/" + fileName);
+                user.setAvatar("/statics/image/" + fileName);
             else
                 user.setAvatar(DEFAULT_AVATAR_PATH);
         userRepository.save(user);

@@ -30,8 +30,8 @@ public class Stream {
     private List<Comment> comments;
     private String primaryServerURL;
     private int hostPort;
-    private int likeCount;
-    private int isFlagged;
+    private int likeCount = 0;
+    private int isFlagged = -1;
     private String application;
     private String streamName;
     private String title;

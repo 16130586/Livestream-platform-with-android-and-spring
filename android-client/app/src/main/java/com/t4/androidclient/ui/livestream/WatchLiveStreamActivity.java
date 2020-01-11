@@ -259,7 +259,7 @@ public class WatchLiveStreamActivity extends AppCompatActivity {
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
         // first mask on video view is ads
-        videoView.setVideoPath(Host.API_HOST_IP +"/images/clip_ads_example.mp4");
+        videoView.setVideoPath(Host.API_HOST_IP +"/statics/image/clip_ads_example.mp4");
 //
     }
 

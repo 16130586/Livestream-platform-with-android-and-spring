@@ -97,7 +97,7 @@
         android:text="Sign Up"
         android:textSize="14sp"
         android:textColor="@color/black"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

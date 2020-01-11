@@ -259,7 +259,7 @@ public class WatchVideoActivity extends AppCompatActivity {
 
         Glide.with(videoView.getContext()).load(streamViewModel.getThumbnail())
                 .centerCrop().into(videoView.getCoverView());
-        videoView.setVideoPath(Host.API_HOST_IP +"/images/clip_ads_example.mp4");
+        videoView.setVideoPath(Host.API_HOST_IP +"/statics/image/clip_ads_example.mp4");
     }
     public void funcSubscribeAndGoChannel() {
         int ownerID = streamViewModel.getOwner().getId();

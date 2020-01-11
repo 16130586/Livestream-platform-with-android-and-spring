@@ -24,8 +24,8 @@ public class User {
     private Integer subscribeTotal;
 	private String avatar;
 	private String background;
-	private Integer isActivated;
-	private Integer isPublisher;
+	private Integer isActivated = 1;
+	private Integer isPublisher = 1;
 	
 	private List<Notification> notifications;
     private List<StreamType> favouriteType;
