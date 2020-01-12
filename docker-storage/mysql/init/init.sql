@@ -23,7 +23,7 @@ CREATE TABLE `user` (
   `subscribe_total` int(11) DEFAULT NULL,
   `avatar` text,
   `background` text,
-  `is_publisher` int() DEFAULT 1,
+  `is_publisher` int(11) DEFAULT 1,
   `is_activated` int(11) DEFAULT 1,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
