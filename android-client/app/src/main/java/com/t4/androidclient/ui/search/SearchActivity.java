@@ -49,7 +49,7 @@ public class SearchActivity extends Activity {
     private StreamRecyclerAdapter adapter;
     private String keywords ;
     private GridView gridView;
-    private String primaryUrl = Api.URL_SEARCH_STREAM;
+    private String primaryUrl = Api.URL_SEARCH_STREAM+"/";
     private String primaryUrlAdvance = Api.URL_SEARCH_STREAM_ADVANCE;
     ProgressBar progressBar;
     private Adapter genreAdapter;

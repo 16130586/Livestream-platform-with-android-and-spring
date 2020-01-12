@@ -66,7 +66,7 @@ public class UserBusinessImp implements UserBusiness {
     @Override
     public User registry(RegistryForm registryForm) {
         String fileName = StringUtils.randomString() + ".jpg";
-        String path = ABSOLUTE_PATH_IMAGE_STORAGE + fileName;
+        String path = ABSOLUTE_PATH_IMAGE_STORAGE +"/"+ fileName;
         User user = new User();
         user.setUserName(registryForm.getUserName());
         user.setPassword(new BCryptPasswordEncoder().encode(registryForm.getPassword())); // encode password

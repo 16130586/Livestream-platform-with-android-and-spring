@@ -20,7 +20,7 @@ public class Stream {
     @JsonIgnoreProperties(value = {"streams", "notifications", "favouriteType", "favouriteSaved"})
     private User owner;
     private String thumbnail;
-    private Integer totalView;
+    private Integer totalView = 0;
     private Date startTime;
     private Date endTime;
     private Integer status;

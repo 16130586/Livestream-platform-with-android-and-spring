@@ -4,13 +4,28 @@ GRANT ALL on *.* to 'maxwell'@'%';
 GRANT SELECT, REPLICATION CLIENT, REPLICATION SLAVE on *.* to 'maxwell'@'%';
 flush privileges;
 
-DROP DATABASE IF EXISTS `livestream`;
-
 CREATE SCHEMA IF NOT EXISTS `livestream`;
 USE `livestream`;
 
+-- drop table
+DROP TABLE IF EXISTS `notification_user`;
+DROP TABLE IF EXISTS `subscriber`;
+DROP TABLE IF EXISTS `notification`;
+DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS `stream_type`;
+DROP TABLE IF EXISTS `user_favourite`;
+DROP TABLE IF EXISTS `types`;
+DROP TABLE IF EXISTS `favourite_saved`;
+DROP TABLE IF EXISTS `pay_subscription`;
+DROP TABLE IF EXISTS `subscription`;
+DROP TABLE IF EXISTS `user_like`;
+DROP TABLE IF EXISTS `ranking`;
+DROP TABLE IF EXISTS `report`;
+DROP TABLE IF EXISTS `stream`;
 DROP TABLE IF EXISTS `user`;
- SET character_set_client = utf8mb4 ;
+-- end drop
+
+SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `wowza_id` varchar(255) DEFAULT NULL,
@@ -26,11 +41,10 @@ CREATE TABLE `user` (
   `is_publisher` int(11) DEFAULT 1,
   `is_activated` int(11) DEFAULT 1,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `stream`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
+
 CREATE TABLE `stream` (
   `stream_id` int(11) NOT NULL AUTO_INCREMENT,
   `wowza_id` varchar(255) DEFAULT NULL,
@@ -55,28 +69,15 @@ CREATE TABLE `stream` (
   KEY `owner_id` (`owner_id`),
   CONSTRAINT `stream_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `stream`
---
 
-DROP TABLE IF EXISTS `types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `types` (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,
   `type_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `types`
---
-
-DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -94,14 +95,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`stream_id`) REFERENCES `stream` (`stream_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `comment`
---
-
-DROP TABLE IF EXISTS `favourite_saved`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `favourite_saved` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -115,15 +109,9 @@ CREATE TABLE `favourite_saved` (
   CONSTRAINT `favourite_saved_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `favourite_saved_ibfk_2` FOREIGN KEY (`stream_id`) REFERENCES `stream` (`stream_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `favourite_saved`
---
 
-DROP TABLE IF EXISTS `notification`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
 CREATE TABLE `notification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stream_id` int(11) DEFAULT NULL,
@@ -134,15 +122,10 @@ CREATE TABLE `notification` (
   KEY `stream_id_fk3_idx` (`stream_id`),
   CONSTRAINT `stream_id_fk3` FOREIGN KEY (`stream_id`) REFERENCES `stream` (`stream_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `notification`
---
 
-DROP TABLE IF EXISTS `notification_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
+
 CREATE TABLE `notification_user` (
   `notify_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -151,15 +134,12 @@ CREATE TABLE `notification_user` (
   CONSTRAINT `notification_user_ibfk_1` FOREIGN KEY (`notify_id`) REFERENCES `notification` (`id`),
   CONSTRAINT `notification_user_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `notification_user`
---
 
-DROP TABLE IF EXISTS `stream_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
+
+
+
 CREATE TABLE `stream_type` (
   `stream_id` int(11) NOT NULL,
   `type_id` int(11) DEFAULT NULL,
@@ -168,15 +148,12 @@ CREATE TABLE `stream_type` (
   CONSTRAINT `stream_type_ibfk_1` FOREIGN KEY (`stream_id`) REFERENCES `stream` (`stream_id`),
   CONSTRAINT `stream_type_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `types` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `stream_type`
---
 
-DROP TABLE IF EXISTS `subscriber`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
+
+
+
 CREATE TABLE `subscriber` (
   `subscriber_id` int(11) DEFAULT NULL,
   `publisher_id` int(11) DEFAULT NULL,
@@ -185,15 +162,9 @@ CREATE TABLE `subscriber` (
   CONSTRAINT `subscriber_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `subscriber_ibfk_2` FOREIGN KEY (`publisher_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `subscriber`
---
 
-DROP TABLE IF EXISTS `subscription`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
 CREATE TABLE `subscription` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -201,15 +172,11 @@ CREATE TABLE `subscription` (
   `unit_price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `subscription`
---
 
-DROP TABLE IF EXISTS `pay_subscription`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+
+
+
 CREATE TABLE `pay_subscription` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subscription_id` int(11) DEFAULT NULL,
@@ -223,14 +190,9 @@ CREATE TABLE `pay_subscription` (
   CONSTRAINT `pay_subscription_ibfk_1` FOREIGN KEY (`subscription_id`) REFERENCES `subscription` (`id`),
   CONSTRAINT `pay_subscription_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `pay_subscription`
---
 
-DROP TABLE IF EXISTS `user_favourite`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_favourite` (
   `user_id` int(11) DEFAULT NULL,
@@ -240,13 +202,10 @@ CREATE TABLE `user_favourite` (
   CONSTRAINT `user_favourite_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `user_favourite_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `types` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `user_favourite`
---
-DROP TABLE IF EXISTS `ranking`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+
+
 CREATE TABLE `ranking` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -256,14 +215,12 @@ CREATE TABLE `ranking` (
   PRIMARY KEY (`id`),
   KEY `fk_user_id_rank_idx` (`user_id`),
   CONSTRAINT `fk_user_id_rank` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-);
-DROP TABLE IF EXISTS `user_like`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `user_like` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `stream_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `stream_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `user_id` (`user_id`),
@@ -272,9 +229,7 @@ CREATE TABLE `user_like` (
   CONSTRAINT `user_like_ibfk_2` FOREIGN KEY (`stream_id`) REFERENCES `stream` (`stream_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `report`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `report` (
   `report_id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_id` int(11) DEFAULT NULL,
@@ -287,7 +242,7 @@ CREATE TABLE `report` (
   KEY `live_id` (`live_id`),
   CONSTRAINT `report_owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `report_stream_id` FOREIGN KEY (`live_id`) REFERENCES `stream` (`stream_id`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
